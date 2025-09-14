@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Billing Dashboard</h2>
+  <form method="POST" enctype="multipart/form-data">
+    <input type="file" name="bill" required>
+    <button type="submit" class="btn btn-primary">Upload</button>
+  </form>
+
+  <h3 class="mt-4">Uploaded Bills</h3>
+  <ul>
+    {% for bill in bills %}
+      <li>{{ bill }}</li>
+    {% else %}
+      <li>No bills uploaded yet.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

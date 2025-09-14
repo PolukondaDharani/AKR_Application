@@ -1,0 +1,7 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #181818; /* Dark background */
+    color: #f5f5f5;      /* Light text */
+}
