@@ -1,0 +1,16 @@
+admin interface
+
+team meeting,
+storing files and file structure
+event calender,
+dashboards,
+
+user interface
+
+home page--company name, events, future plans,
+about page--vision and mission, services,awards
+our team-- more about us--team and there info(actors,directors,marketing,makeup,dop's,musicians)
+about--get in touch --login page--hire
+production-
+language change--feature
+collabration,markting team--collbration forms

@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Hero Section -->
+
+<section class="position-relative text-center text-white" 
+         style="background: url('{{ url_for('static', filename='images/collab.png') }}') center/cover no-repeat; height: 50vh;">
+  <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(0, 0, 0, 0.404);"></div>
+  <div class="d-flex flex-column justify-content-center align-items-center h-100">
+    <h1 class="display-4 fw-bold" style="text-shadow: 2px 2px 8px rgb(0, 0, 0);">Collaborate With Us</h1>
+    <p class="lead mt-3" style="text-shadow: 1px 1px 6px rgb(0, 0, 0);">Join hands with us to create cinematic experiences</p>
+  </div>
+</section>
+
+<!-- Partners Section -->
+<section class="py-5 bg-dark">
+  <div class="container">
+    <h2 class="text-center text-white mb-5">Our Partners</h2>
+    <div class="row g-4">
+      {% for partner in partners %}
+      <div class="col-md-4">
+        <div class="card bg-light border-0 shadow-lg h-100 text-center transform-on-hover">
+          <img src="{{ url_for('static', filename='images/' ~ partner.logo) }}" 
+               class="card-img-top p-4" 
+               alt="{{ partner.name }}" 
+               style="height: 200px; object-fit: contain;">
+          <div class="card-body">
+            <h5 class="card-title fw-bold">{{ partner.name }}</h5>
+            <p class="card-text text-muted">{{ partner.description }}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Form Section -->
+ <!-- need to add upload file and link: reflecting there portfolio, there contact number -->
+<section class="py-5" style="background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);">
+  <div class="container">
+    <h3 class="text-center text-white mb-4">Interested in Collaborating?</h3>
+    <p class="text-center text-light mb-5">Fill the form below and let's create magic together!</p>
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <form method="POST" action="{{ url_for('collaboration') }}" class="p-5 bg-white rounded shadow-lg">
+          {{ form.hidden_tag() }}
+          <div class="mb-3">
+            {{ form.name.label(class="form-label fw-bold") }}
+            {{ form.name(class="form-control form-control-lg", placeholder="Enter your full name") }}
+          </div>
+          <div class="mb-3">
+            {{ form.email.label(class="form-label fw-bold") }}
+            {{ form.email(class="form-control form-control-lg", placeholder="Enter your email") }}
+          </div>
+          <div class="mb-3">
+            {{ form.organization.label(class="form-label fw-bold") }}
+            {{ form.organization(class="form-control form-control-lg", placeholder="Your company/organization") }}
+          </div>
+          <div class="mb-3">
+            {{ form.message.label(class="form-label fw-bold") }}
+            {{ form.message(class="form-control form-control-lg", rows="5", placeholder="Tell us how you'd like to collaborate") }}
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg w-100">Send Request</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Optional: Add subtle animation for cards -->
+<style>
+  .transform-on-hover {
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .transform-on-hover:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  }
+</style>
+
+{% endblock %}

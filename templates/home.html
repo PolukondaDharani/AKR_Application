@@ -1,7 +1,210 @@
 {% extends "base.html" %}
 {% block content %}
-  <div class="text-center">
-    <h1>Welcome to My Portfolio</h1>
-    <p class="lead">Actor • Producer • Creative Visionary</p>
+<style>
+  body {
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                url('/static/images/film.png') center/cover no-repeat fixed;
+    min-height: 100vh;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+  }
+</style>
+
+<main class="text-white">
+
+  <!-- Hero Section -->
+  <section class="d-flex flex-column justify-content-center align-items-center text-center"
+           style="min-height: 90vh;">
+    <h1 class="display-1 fw-bold mb-3" style="text-shadow: 0 5px 30px rgba(0,0,0,0.9);">
+      🎬 AKR Productions
+    </h1>
+    <p class="lead fs-3 mb-4" style="text-shadow: 0 3px 15px rgba(0,0,0,0.9);">
+      Innovating Entertainment • Creating Experiences
+    </p>
+    <a href="about" class="btn btn-lg btn-primary px-5 py-3 shadow-lg rounded-pill">
+      Discover More
+    </a>
+    <div class="mt-5">
+      <i class="bi bi-chevron-double-down fs-1 text-white-50"></i>
+    </div>
+  </section>
+
+  <!-- Featured Projects Section -->
+  <!-- Our Productions Advanced Section -->
+<section id="projects" class="py-5">
+  <div class="container">
+    <h2 class="text-center display-5 fw-bold mb-5">Our Productions</h2>
+    <div class="row g-4">
+
+      <!-- Production Card 1 -->
+      <div class="col-md-4">
+        <div class="card bg-dark text-white border-0 shadow-lg production-card h-100">
+          <div class="card-img-wrapper position-relative overflow-hidden">
+            <img src="/static/images/film.png" class="card-img-top" alt="Film Project">
+            <div class="overlay position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center text-center">
+              <h5 class="mb-2">The Cinematic Dream</h5>
+              <p class="small">A visual masterpiece exploring human emotions through bold storytelling.</p>
+              <a href="#" class="btn btn-sm btn-outline-light mt-2" data-bs-toggle="modal" data-bs-target="#project1Modal">Watch Trailer</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Production Card 2 -->
+      <div class="col-md-4">
+        <div class="card bg-dark text-white border-0 shadow-lg production-card h-100">
+          <div class="card-img-wrapper position-relative overflow-hidden">
+            <img src="/static/images/film.png" class="card-img-top" alt="Stage Play">
+            <div class="overlay position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center text-center">
+              <h5 class="mb-2">Stage Play: Voices Within</h5>
+              <p class="small">A theatrical journey blending drama, music, and human resilience.</p>
+              <a href="#" class="btn btn-sm btn-outline-light mt-2" data-bs-toggle="modal" data-bs-target="#project2Modal">Learn More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Production Card 3 -->
+      <div class="col-md-4">
+        <div class="card bg-dark text-white border-0 shadow-lg production-card h-100">
+          <div class="card-img-wrapper position-relative overflow-hidden">
+            <img src="/static/images/film.png" class="card-img-top" alt="Digital Content">
+            <div class="overlay position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center text-center">
+              <h5 class="mb-2">Digital Series: Untold Stories</h5>
+              <p class="small">Web content designed for modern audiences with gripping narratives.</p>
+              <a href="#" class="btn btn-sm btn-outline-light mt-2" data-bs-toggle="modal" data-bs-target="#project3Modal">Watch Trailer</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
+</section>
+
+<!-- ================= Styles ================= -->
+<style>
+.production-card .card-img-wrapper {
+  transition: transform 0.5s;
+}
+.production-card:hover .card-img-wrapper {
+  transform: scale(1.1);
+}
+.production-card .overlay {
+  background: rgba(0,0,0,0.7);
+  color: #f3ef0bd5;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.production-card:hover .overlay {
+  opacity: 1;
+}
+.production-card .overlay h5 {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+.production-card .overlay p {
+  font-size: 0.9rem;
+}
+</style>
+
+<section id="events" class="py-5" style="background: url('/static/images/cinematic-bg.jpg') no-repeat center center/cover; position: relative;">
+  <!-- Overlay for cinematic darkness -->
+  <div style="position:absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.65); z-index:1;"></div>
+
+  <div class="container position-relative" style="z-index:2;">
+    <h2 class="text-center display-4 fw-bold mb-5 text-warning" style="text-shadow: 2px 2px 15px rgba(0,0,0,0.7); font-family: 'Cinzel', serif;">
+      Upcoming Events
+    </h2>
+
+    <div class="row g-5">
+      <!-- What's Next Card -->
+      <div class="col-md-6">
+        <article class="p-5 rounded-4 shadow-lg position-relative overflow-hidden" 
+                 style="background: rgba(0,0,0,0.7); border-left: 6px solid #ffc107; transition: transform 0.4s, box-shadow 0.4s;">
+          <h3 class="text-warning mb-4" style="text-shadow: 1px 1px 5px #000;"><i class="bi bi-calendar-event"></i> What's Next?</h3>
+          <ul class="list-group list-group-flush bg-transparent">
+            <li class="list-group-item bg-transparent text-white border-0 d-flex justify-content-between align-items-center py-3" 
+                style="border-bottom: 1px solid rgba(250, 246, 9, 0.1);">
+              <strong>Annual Film Festival</strong>
+              <span class="badge bg-danger text-white" style="font-weight:bold;">July 20, 2024</span>
+            </li>
+            <li class="list-group-item bg-transparent text-white border-0 d-flex justify-content-between align-items-center py-3"
+                style="border-bottom: 1px solid rgba(250, 246, 9, 0.1);">
+              <strong>Stage Play: "Dreams Unfold"</strong>
+              <span class="badge bg-danger text-white" style="font-weight:bold;">August 15, 2024</span>
+            </li>
+            <li class="list-group-item bg-transparent text-white border-0 d-flex justify-content-between align-items-center py-3">
+              <strong>Workshop: Acting for Beginners</strong>
+              <span class="badge bg-danger text-white" style="font-weight:bold;">September 10, 2024</span>
+            </li>
+          </ul>
+          <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(135deg, rgba(224, 240, 4, 0.05) 0%, rgba(0,0,0,0.3) 100%); mix-blend-mode: overlay;"></div>
+        </article>
+      </div>
+
+      <!-- Future Plans Card -->
+      <div class="col-md-6">
+        <article class="p-5 rounded-4 shadow-lg position-relative overflow-hidden" 
+                 style="background: rgba(0,0,0,0.7); border-left: 6px solid #ffc107; transition: transform 0.4s, box-shadow 0.4s;">
+          <h3 class="text-warning mb-4" style="text-shadow: 1px 1px 5px #000;"><i class="bi bi-lightbulb"></i> Future Plans</h3>
+          <ul class="list-unstyled fs-5">
+            <li class="mb-3 d-flex align-items-center text-white">
+              <i class="bi bi-arrow-right-circle-fill text-danger me-3"></i>
+              Expand into digital content production.
+            </li>
+            <li class="mb-3 d-flex align-items-center text-white">
+              <i class="bi bi-arrow-right-circle-fill text-danger me-3"></i>
+              Collaborate with international artists and filmmakers.
+            </li>
+            <li class="d-flex align-items-center text-white">
+              <i class="bi bi-arrow-right-circle-fill text-danger me-3"></i>
+              Launch a talent development program.
+            </li>
+          </ul>
+          <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.3) 100%); mix-blend-mode: overlay;"></div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Cinematic Call to Action -->
+<section class="py-5 text-center" style="background: #111 url('/static/images/cta-bg.jpg') no-repeat center center/cover; position: relative;">
+  <div style="position:absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7);"></div>
+  <div class="container position-relative" style="z-index:2;">
+    <h2 class="fw-bold mb-3 text-warning" style="text-shadow: 2px 2px 10px #000; font-family: 'Cinzel', serif;">Be Part of Our Story</h2>
+    <p class="fs-5 mb-4 text-light">Whether you’re an artist, filmmaker, or dreamer — collaborate with us to shape the future of entertainment.</p>
+    <a href="/contact" class="btn btn-lg btn-danger px-5 py-3 shadow-lg rounded-pill"
+       style="transition: transform 0.3s, box-shadow 0.3s;">Contact Us</a>
+  </div>
+</section>
+
+<style>
+  article:hover {
+    transform: translateY(-15px) scale(1.03);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+  }
+
+  a.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 251, 0, 0.959);
+  }
+
+  /* Optional: cinematic font import */
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+</style>
+
+
+<!-- Optional Hover Effect -->
+<style>
+  article:hover {
+    transform: translateY(-10px) scale(1.02);
+  }
+  a.btn:hover {
+    transform: scale(1.05);
+  }
+</style>
+
+</main>
 {% endblock %}

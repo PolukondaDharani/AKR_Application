@@ -5,18 +5,16 @@
   <title>{{ title or "Actor-Producer Portfolio" }}</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  
 </head>
 <body>
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <a class="navbar-brand" href="{{ url_for('home') }}">Portfolio</a>
+      <a class="navbar-brand" href="{{ url_for('home') }}">Home</a>
       <ul class="navbar-nav me-auto">
         <li class="nav-item"><a class="nav-link" href="{{ url_for('about') }}">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('acting') }}">Acting</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('production') }}">Production</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('hire') }}">Hire</a></li>
+        <!-- <li class="nav-item"><a class="nav-link" href="{{ url_for('production') }}">Production</a></li> -->
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('collaboration') }}">Collaboration</a></li>
         <li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">Contact</a></li>
       </ul>
       <ul class="navbar-nav">
