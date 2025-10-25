@@ -4,13 +4,17 @@ team meeting,
 storing files and file structure
 event calender,
 dashboards,
+navbar--Meeting & calender, Docs, links, social media handler, user form seperation
 
 user interface
 
-home page--company name, events, future plans,
-about page--vision and mission, services,awards
+home page--company name, events, future plans,Production--done
+about page--vision and mission, services,awards--done
 our team-- more about us--team and there info(actors,directors,marketing,makeup,dop's,musicians)
+
 about--get in touch --login page--hire
-production-
+
 language change--feature
 collabration,markting team--collbration forms
+
+

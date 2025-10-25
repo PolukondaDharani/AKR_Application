@@ -1,0 +1,36 @@
+{% extends "admin_base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="text-center py-5">
+    
+    <!-- Icon or Animation -->
+    <div class="mb-4">
+        <i class="bi bi-shield-lock-fill" style="font-size: 4rem; color: #0d6efd;"></i>
+    </div>
+
+    <h1 class="fw-bold display-5">Welcome Back, Commander!</h1>
+    <p class="lead text-muted mb-4">
+        This is your mission control hub. Manage content, track activities, and shape the experience.
+    </p>
+
+    <!-- Action Buttons -->
+    <div class="d-flex justify-content-center gap-3 flex-wrap">
+        <a href="{{ url_for('admin_links') }}" class="btn btn-success px-4 py-2 shadow-sm">
+            <i class="bi bi-link-45deg me-1"></i> Manage Links
+        </a>
+        <a href="{{ url_for('admin_docs') }}" class="btn btn-success px-4 py-2 shadow-sm">
+            <i class="bi bi-folder2-open me-1"></i> Documents
+        </a>
+        <a href="{{ url_for('admin_meetings') }}" class="btn btn-success px-4 py-2 shadow-sm">
+            <i class="bi bi-link-45deg me-1"></i> Meetings
+        </a>
+    
+    </div>
+
+    <!-- Footer Message -->
+    <p class="mt-5 text-muted fst-italic">
+        Every click shapes the future. Handle with power.
+    </p>
+</div>
+{% endblock %}

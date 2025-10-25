@@ -1,0 +1,77 @@
+{% extends "admin_base.html" %}
+{% block content %}
+<div class="container py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-primary">Today’s Meetings</h2>
+    </div>
+
+    <!-- Add Meeting Form -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form action="{{ url_for('add_meeting') }}" method="POST" class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">Title</label>
+                    <input type="text" name="title" class="form-control" placeholder="Enter meeting title" required>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Start Time</label>
+                    <input type="datetime-local" name="start_time" class="form-control" required>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">End Time</label>
+                    <input type="datetime-local" name="end_time" class="form-control" required>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-success w-100">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Meeting List -->
+    {% if events %}
+    <div class="row g-4">
+        {% for event in events %}
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-body">
+                    <h5 class="fw-bold">{{ event.summary }}</h5>
+
+                    <p class="text-muted small mb-2">
+                        Start: {{ event.start.dateTime or event.start.date }}<br>
+                        End: {{ event.end.dateTime or event.end.date }}
+                    </p>
+
+                    {% if event.conferenceData %}
+                        <a href="{{ event.conferenceData.entryPoints[0].uri }}" target="_blank"
+                           class="btn btn-primary btn-sm me-2">Join Meet</a>
+
+                        <button class="btn btn-outline-secondary btn-sm"
+                                onclick="copyLink('{{ event.conferenceData.entryPoints[0].uri }}')">
+                            Copy Link
+                        </button>
+                    {% endif %}
+
+                    <!-- Delete button (requires delete route with event.id) -->
+                    <a href="{{ url_for('delete_meeting', event_id=event.id) }}"
+                       class="btn btn-danger btn-sm float-end">Delete</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info">No meetings scheduled for today.</div>
+    {% endif %}
+
+</div>
+
+<script>
+function copyLink(url) {
+    navigator.clipboard.writeText(url);
+    alert("Meet link copied!");
+}
+</script>
+
+{% endblock %}
