@@ -5,16 +5,112 @@ storing files and file structure
 event calender,
 dashboards,
 navbar--Meeting & calender, Docs, links, social media handler, user form seperation
+-----TODO
+meeting--add tab to share the invite -done 
+need to add mail id step are listed below
+# Excellent — you’re **very close** 🎯
+
+# That specific error message:
+
+# ```
+# (535, b'5.7.8 Username and Password not accepted... BadCredentials')
+# ```
+
+# means Gmail **rejected your login** — i.e., your `MAIL_USERNAME` or `MAIL_PASSWORD` is not valid *for SMTP access*.
+
+# ---
+
+# ## 💡 Why this happens
+
+# Google **no longer allows** direct SMTP login with your normal Gmail password.
+
+# Instead, you must use either:
+
+# * ✅ **App Password** (recommended) — if you have **2-Step Verification enabled**, or
+# * ⚠️ Allow “Less Secure Apps” (deprecated — no longer available for most accounts).
+
+# ---
+
+# ## ✅ Solution — Use a Gmail App Password
+
+# Here’s how to do it safely and permanently:
+
+# ### Step 1. Enable 2-Step Verification
+
+# * Go to 👉 [https://myaccount.google.com/security](https://myaccount.google.com/security)
+# * Turn **ON** *2-Step Verification* (if not already enabled).
+
+# ### Step 2. Create an App Password
+
+# * Visit 👉 [https://myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords)
+# * You’ll be prompted to log in again.
+# * Under **Select app**, choose **Mail**.
+# * Under **Select device**, choose **Other (Custom name)** — e.g., type `FlaskApp`.
+# * Click **Generate** — Google will show a **16-character password** (looks like `abcd efgh ijkl mnop`).
+
+# ### Step 3. Update your `app.py` config
+
+# In your app, update:
+
+# ```python
+# app.config['MAIL_USERNAME'] = 'your_email@gmail.com'
+# app.config['MAIL_PASSWORD'] = 'abcd efgh ijkl mnop'  # your generated App Password (no spaces)
+# ```
+
+# ⚠️ Make sure you paste it **without spaces**.
+
+# ---
+
+# ### Step 4. Restart Flask
+
+# Restart your Flask app and try again — it should now send emails successfully 🚀
+
+# ---
+
+# ### ✅ Optional: Verify SMTP settings
+
+# Keep these:
+
+# ```python
+# app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+# app.config['MAIL_PORT'] = 587
+# app.config['MAIL_USE_TLS'] = True
+# ```
+
+# ---
+
+# ### 🧠 Pro tip (for production)
+
+# Never hardcode credentials. Instead, load them from environment variables:
+
+# ```python
+# import os
+# app.config['MAIL_USERNAME'] = os.getenv("MAIL_USERNAME")
+# app.config['MAIL_PASSWORD'] = os.getenv("MAIL_PASSWORD")
+# ```
+
+# and set them in your `.env` file.
+
+# ---
+
+# If you’d like, I can show you how to send a **nice-looking HTML email** instead of plain text (with a “Join Meeting” button and clean layout).
+# Would you like me to add that next?
+
+docs and links access policy--read access
+social media--whatsapp msg for group of people--need to have whatsapp business account--pending
+----------------------------------------------------
 
 user interface
 
 home page--company name, events, future plans,Production--done
 about page--vision and mission, services,awards--done
 our team-- more about us--team and there info(actors,directors,marketing,makeup,dop's,musicians)
-
 about--get in touch --login page--hire
-
 language change--feature
 collabration,markting team--collbration forms
 
-
+--------TODO------------------------
+join us--to send their interest and portfolio and links--Done
+Contact page -- make navbar visible---Done
+Cards are not visible for collabrations and team page--Done
+------------------------------------

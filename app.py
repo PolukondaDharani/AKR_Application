@@ -12,6 +12,8 @@ from google.auth.transport.requests import Request
 import pickle
 import datetime
 from flask import request, send_from_directory, flash
+import os
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 app = Flask(__name__)
 app.secret_key = "supersecret"
@@ -55,8 +57,24 @@ def home():
 
 @app.route('/team')
 def team():
-    return render_template('team.html')
-
+    team_members = [
+        {
+            "name": "John Doe",
+            "role": "Actor",
+            "image": "john.jpg",
+            "bio": "Award-winning actor with 10+ years of experience in cinema.",
+            "social": {"instagram":"#", "twitter":"#", "linkedin":"#"}
+        },
+        {
+            "name": "Jane Smith",
+            "role": "Director",
+            "image": "jane.jpg",
+            "bio": "Creative director shaping unique storytelling experiences.",
+            "social": {"instagram":"#", "twitter":"#", "linkedin":"#"}
+        }
+        # Add more team members here
+    ]
+    return render_template("team.html", team_members=team_members)
 
 @app.route("/about")
 def about():
@@ -66,9 +84,60 @@ def about():
 def contact():
     return render_template("contact.html")
 
+@app.route("/join", methods=["GET", "POST"])
+def join():
+    if request.method == "POST":
+        name = request.form.get("name")
+        email = request.form.get("email")
+        interest = request.form.get("interest")
+        portfolio = request.form.get("portfolio")
+        resume = request.files.get("resume")
+
+        # Save uploaded file (optional)
+        if resume and resume.filename:
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], resume.filename)
+            resume.save(filepath)
+        else:
+            filepath = None
+
+        # Send email
+        try:
+            msg_body = f"""
+New 'Join Us' submission:
+
+Name: {name}
+Email: {email}
+Interest: {interest}
+Portfolio/Links: {portfolio}
+"""
+            msg = Message(
+                subject="New Join Us Submission",
+                recipients=["your_email@gmail.com"],
+                body=msg_body
+            )
+
+            if filepath:
+                with app.open_resource(filepath) as fp:
+                    msg.attach(resume.filename, "application/octet-stream", fp.read())
+
+            mail.send(msg)
+            flash("Your submission has been sent successfully!", "success")
+        except Exception as e:
+            print(f"Error sending email: {e}")
+            flash("There was an issue sending your submission.", "danger")
+
+        return redirect(url_for("join"))
+
+    return render_template("join.html")
+
 @app.route("/collaboration", methods=["GET", "POST"])
 def collaboration():
     form = CollaborationForm()
+    partners = [
+        {"name": "Partner 1", "description": "Film Production House", "logo": "partner1.png"},
+        {"name": "Partner 2", "description": "Event Management", "logo": "partner2.png"},
+        {"name": "Partner 3", "description": "Cultural Foundation", "logo": "partner3.png"}
+    ]
     if form.validate_on_submit():
         msg = Message(
             subject="New Collaboration Request",
@@ -86,7 +155,7 @@ Message: {form.message.data}
         flash("Thank you! Request sent.", "success")
         return redirect(url_for("collaboration"))
 
-    return render_template("collab.html", form=form)
+    return render_template("collab.html", form=form, partners=partners)
 
 # ------------------- Authentication ------------------- #
 @app.route("/login", methods=["GET", "POST"])
@@ -228,6 +297,42 @@ def delete_meeting(event_id):
         flash("Failed to delete meeting!", "danger")
 
     return redirect(url_for('meetings'))
+# ---------------- Share Meeting Invite ----------------
+@app.route("/share_invite", methods=["POST"])
+@admin_required
+def share_invite():
+    title = request.form.get("meeting_title")
+    link = request.form.get("meeting_link")
+    emails = request.form.get("emails")
+
+    if not emails:
+        flash("Please enter at least one email address.", "warning")
+        return redirect(url_for("admin_meetings"))
+
+    recipients = [e.strip() for e in emails.split(",") if e.strip()]
+
+    # Prepare the email
+    subject = f"Meeting Invite: {title}"
+    body = f"""
+You are invited to a meeting.
+
+📅 Title: {title}
+🔗 Join Link: {link}
+
+Sent via Admin Panel
+"""
+
+    # Send email to each recipient
+    try:
+        for email in recipients:
+            msg = Message(subject=subject, recipients=[email], body=body)
+            mail.send(msg)
+        flash("Meeting invite sent successfully!", "success")
+    except Exception as e:
+        print("Error sending email:", e)
+        flash("Failed to send invites.", "danger")
+
+    return redirect(url_for("admin_meetings"))
 
 @app.route('/admin/docs')
 @admin_required

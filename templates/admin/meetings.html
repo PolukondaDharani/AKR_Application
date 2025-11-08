@@ -47,13 +47,22 @@
                         <a href="{{ event.conferenceData.entryPoints[0].uri }}" target="_blank"
                            class="btn btn-primary btn-sm me-2">Join Meet</a>
 
-                        <button class="btn btn-outline-secondary btn-sm"
+                        <button class="btn btn-outline-secondary btn-sm me-2"
                                 onclick="copyLink('{{ event.conferenceData.entryPoints[0].uri }}')">
                             Copy Link
                         </button>
+
+                        <!-- Share Invite Button -->
+                        <button class="btn btn-outline-info btn-sm"
+                                data-bs-toggle="modal"
+                                data-bs-target="#shareModal"
+                                data-link="{{ event.conferenceData.entryPoints[0].uri }}"
+                                data-title="{{ event.summary }}">
+                            Share Invite
+                        </button>
                     {% endif %}
 
-                    <!-- Delete button (requires delete route with event.id) -->
+                    <!-- Delete button -->
                     <a href="{{ url_for('delete_meeting', event_id=event.id) }}"
                        class="btn btn-danger btn-sm float-end">Delete</a>
                 </div>
@@ -64,7 +73,34 @@
     {% else %}
     <div class="alert alert-info">No meetings scheduled for today.</div>
     {% endif %}
+</div>
 
+<!-- Share Invite Modal -->
+<div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content rounded-4">
+      <div class="modal-header">
+        <h5 class="modal-title" id="shareModalLabel">Share Meeting Invite</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="{{ url_for('share_invite') }}" method="POST">
+        <div class="modal-body">
+          <input type="hidden" name="meeting_title" id="meetingTitle">
+          <input type="hidden" name="meeting_link" id="meetingLink">
+
+          <div class="mb-3">
+            <label for="emails" class="form-label">Enter member emails</label>
+            <textarea name="emails" class="form-control" rows="3"
+                      placeholder="e.g. member1@example.com, member2@example.com" required></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Send Invite</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -72,6 +108,17 @@ function copyLink(url) {
     navigator.clipboard.writeText(url);
     alert("Meet link copied!");
 }
+
+// Populate modal with meeting info
+var shareModal = document.getElementById('shareModal');
+shareModal.addEventListener('show.bs.modal', function (event) {
+    var button = event.relatedTarget;
+    var link = button.getAttribute('data-link');
+    var title = button.getAttribute('data-title');
+
+    shareModal.querySelector('#meetingTitle').value = title;
+    shareModal.querySelector('#meetingLink').value = link;
+});
 </script>
 
 {% endblock %}
