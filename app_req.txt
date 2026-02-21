@@ -1,0 +1,6 @@
+google-api-python-client
+flask
+flask_mail
+flask_wtf
+google_auth_oauthlib
+gunicorn
