@@ -6,7 +6,7 @@
     position: relative;
     min-height: 100vh;
     padding: 120px 0;
-    background: url('/static/images/about_logo.jpeg') center/cover no-repeat fixed;
+    background: url('/static/images/about_logo.jpeg') center/cover no-repeat;
     overflow: hidden;
     color: white;
 }
@@ -34,9 +34,9 @@
 .cinematic-text p {
     opacity: 0;
     transform: translateY(40px);
-    transition: all 1s ease;
+    transition: all 0.9s ease;
     font-size: 1.1rem;
-    line-height: 1.2;
+    line-height: 1.6;
     margin-bottom: 18px;
     color: #f2f2f2;
 }
@@ -48,9 +48,9 @@
 
 /* Logo */
 .logo-large {
-    max-width: 350px;
+    max-width: 340px;
     opacity: 0.95;
-    transition: transform 0.6s ease;
+    transition: transform 0.5s ease;
 }
 
 .logo-large:hover {
@@ -59,20 +59,20 @@
 
 /* Founder Section */
 .founder-section {
-    margin-top: -80px;
+    margin-top: 30px;
 }
 
 .founder-line {
     width: 60px;
     height: 2px;
-    background: rgba(245, 197, 109, 0.6);
+    background: rgba(245, 197, 109, 0.7);
     margin: 0 auto 20px auto;
 }
 
 .founder-label {
     font-size: 0.85rem;
     letter-spacing: 2px;
-    color: rgba(255,255,255,0.65);
+    color: rgba(255,255,255,0.7);
     margin-bottom: 15px;
     text-transform: uppercase;
 }
@@ -80,7 +80,7 @@
 .founder-signature {
     max-width: 140px;
     opacity: 0.85;
-    transition: opacity 0.4s ease, transform 0.4s ease;
+    transition: all 0.4s ease;
 }
 
 .founder-signature:hover {
@@ -88,33 +88,33 @@
     transform: translateY(-3px);
 }
 
-/* Vision Mission */
+/* Vision & Mission */
 .vm-section {
-    margin-top: 120px;
+    margin-top: 100px;
 }
 
 .vm-card {
     background: rgba(0, 0, 0, 0.30);
-    backdrop-filter: blur(12px);
-    padding: 40px;
-    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    padding: 35px;
+    border-radius: 18px;
     border: 1px solid rgba(255,255,255,0.08);
-    transition: transform 0.4s ease, background 0.4s ease;
+    transition: all 0.4s ease;
 }
 
 .vm-card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-6px);
     background: rgba(0, 0, 0, 0.45);
 }
 
 .vm-title {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     color: #f5c56d;
     margin-bottom: 15px;
 }
 
 .vm-text {
-    line-height: 1.8;
+    line-height: 1.7;
     color: #f0f0f0;
 }
 
@@ -125,21 +125,50 @@
     padding: 14px 45px;
     font-weight: 500;
     transition: all 0.4s ease;
-    backdrop-filter: blur(5px);
 }
 
 .team-btn:hover {
     background-color: #f5c56d;
     color: #000;
     border-color: #f5c56d;
-    box-shadow: 0 0 20px rgba(245, 197, 109, 0.5);
+    box-shadow: 0 0 18px rgba(245, 197, 109, 0.5);
     transform: translateY(-3px);
 }
 
-/* Responsive */
+/* ================= MOBILE OPTIMIZATION ================= */
+
 @media (max-width: 991px) {
+
+    .about-section {
+        padding: 70px 0;
+    }
+
+    .cinematic-text {
+        margin-bottom: 40px;
+    }
+
+    .cinematic-text p {
+        font-size: 1rem;
+        line-height: 1.7;
+        margin-bottom: 16px;
+    }
+
     .logo-large {
-        margin-top: 40px;
+        max-width: 260px;
+        margin-top: 30px;
+    }
+
+    .vm-section {
+        margin-top: 60px;
+    }
+
+    .vm-card {
+        padding: 25px;
+    }
+
+    .team-btn {
+        padding: 12px 30px;
+        font-size: 0.95rem;
     }
 }
 </style>
@@ -169,38 +198,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
     <div class="container content-wrapper">
 
-        <div class="row align-items-center">
+        <div class="row align-items-start">
 
             <!-- LEFT SIDE TEXT -->
-     <div class="col-lg-7 cinematic-text mt-lg-5 pt-lg-4">
+            <div class="col-lg-7 cinematic-text mt-lg-5 pt-lg-4">
 
-    <p class="reveal">
-        <strong>Home Entertainments</strong> was built on one belief — stories have the power to move people.
-    </p>
+                <p class="reveal">
+                    <strong>Home Entertainments</strong> was built on one belief — stories have the power to move people.
+                </p>
 
-    <p class="reveal">
-        We craft films that are immersive, emotionally honest, and visually compelling.
-    </p>
+                <p class="reveal">
+                    We craft films that are immersive, emotionally honest, and visually compelling.
+                </p>
 
-    <p class="reveal">
-        Every frame is intentional. Every moment carries meaning.
-    </p>
+                <p class="reveal">
+                    Every frame is intentional. Every moment carries meaning.
+                </p>
 
-    <p class="reveal">
-        Our work blends creativity with precision, passion with purpose.
-    </p>
+                <p class="reveal">
+                    Our work blends creativity with precision, passion with purpose.
+                </p>
 
-    <p class="reveal">
-        We don’t just create cinema — we create experiences that stay long after the screen fades.
-    </p>
+                <p class="reveal">
+                    We don’t just create cinema — we create experiences that stay long after the screen fades.
+                </p>
 
-</div>
+            </div>
 
             <!-- RIGHT SIDE LOGO -->
             <div class="col-lg-5 text-center">
 
                 <img src="/static/images/logo.png"
-                     class="logo-large img-fluid mb-5"
+                     class="logo-large img-fluid mb-4"
                      alt="Home Entertainments Logo">
 
                 <div class="founder-section">
@@ -223,7 +252,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <div class="vm-card reveal">
                         <div class="vm-title">Our Vision</div>
                         <div class="vm-text">
-                            To establish a production house recognized for authenticity, integrity, and timeless storytelling.
+                            To build a production house known for authenticity, integrity, and timeless storytelling.
                         </div>
                     </div>
                 </div>
@@ -232,7 +261,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <div class="vm-card reveal">
                         <div class="vm-title">Our Mission</div>
                         <div class="vm-text">
-                            To develop compelling narratives, collaborate with passionate creatives, and deliver films that connect deeply with audiences.
+                            To create compelling narratives and collaborate with passionate creatives to deliver films that truly connect.
                         </div>
                     </div>
                 </div>
@@ -241,14 +270,14 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
 
         <!-- Centered Button -->
-        <div class="text-center mt-5 pt-5">
+        <div class="text-center mt-5 pt-4">
             <a href="{{ url_for('team') }}" 
                class="btn btn-outline-light btn-lg team-btn reveal">
                Meet Our Team
             </a>
         </div>
 
-    </div> <!-- container -->
+    </div>
 
 </section>
 
