@@ -16,78 +16,109 @@
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
   <style>
-    /* ================= NAVBAR STYLE ================= */
 
-    body {
-      padding-top: 95px; /* prevents content hiding under fixed navbar */
-    }
+/* ================= COMPACT NAVBAR ================= */
 
-    .cinematic-navbar {
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(10px);
-      padding: 10px 0;
-      transition: all 0.3s ease;
-    }
+body {
+  padding-top: 60px;   /* reduced from 95px */
+}
 
-    .navbar-brand img {
-      height: 70px;
-      transition: all 0.3s ease;
-    }
+.cinematic-navbar {
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  padding: 6px 0;      /* reduced */
+  transition: all 0.3s ease;
+}
 
-    .nav-link {
-      font-weight: 500;
-      letter-spacing: 0.5px;
-      transition: color 0.3s ease;
-    }
+/* Smaller logo */
+.navbar-brand img {
+  height: 70px;        /* reduced from 70px */
+  transition: all 0.3s ease;
+}
 
-    .nav-link:hover {
-      color: #f5c56d !important;
-    }
+/* Smaller menu text */
+.nav-link {
+  font-size: 0.95rem;  /* reduced */
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  padding: 6px 12px;   /* tighter spacing */
+  transition: color 0.3s ease;
+}
 
-    .social-icons a {
-      font-size: 18px;
-      transition: all 0.3s ease;
-    }
+.nav-link:hover {
+  color: #f5c56d !important;
+}
 
-    .social-icons a:hover {
-      color: #f5c56d !important;
-      transform: translateY(-2px);
-    }
+/* Social icons smaller */
+.social-icons a {
+  font-size: 16px;     /* reduced */
+  transition: all 0.3s ease;
+}
 
-    /* ================= MOBILE OPTIMIZATION ================= */
+.social-icons a:hover {
+  color: #f5c56d !important;
+  transform: translateY(-2px);
+}
 
-    @media (max-width: 991px) {
+.navbar .container {
+  align-items: center;
+}
 
-      body {
-        padding-top: 80px;
-      }
+/* ================= MOBILE ================= */
 
-      .navbar-brand img {
-        height: 55px;
-      }
+@media (max-width: 991px) {
 
-      .navbar-collapse {
-        background: rgba(0, 0, 0, 0.95);
-        padding: 20px;
-        border-radius: 10px;
-        margin-top: 10px;
-      }
+  body {
+    padding-top: 55px;
+  }
 
-      .navbar-nav .nav-item {
-        margin-bottom: 10px;
-      }
+  .navbar-brand img {
+    height: 60px;
+  }
 
-      .social-icons {
-        justify-content: center;
-        margin-top: 15px;
-      }
+  .navbar-collapse {
+    background: rgba(0, 0, 0, 0.95);
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 8px;
+  }
 
-      .auth-link {
-        display: block;
-        margin-top: 10px;
-      }
-    }
-  </style>
+  .navbar-nav .nav-item {
+    margin-bottom: 8px;
+  }
+
+  .nav-link {
+    font-size: 0.9rem;
+  }
+
+  .social-icons {
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .auth-link {
+    display: block;
+    margin-top: 8px;
+  }
+.navbar-toggler {
+  padding: 3px 6px;
+  border-radius: 6px;
+}
+
+.navbar-toggler-icon {
+  width: 18px;
+  height: 18px;
+}
+.navbar-toggler {
+  border: none;
+}
+
+.cinematic-navbar .container {
+  max-height: 45px;
+}
+}
+
+</style>
 </head>
 
 <body class="d-flex flex-column min-vh-100">

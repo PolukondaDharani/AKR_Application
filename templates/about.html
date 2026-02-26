@@ -2,26 +2,31 @@
 {% block content %}
 
 <style>
+
+/* ================= CINEMATIC ABOUT SECTION ================= */
+
 .about-section {
     position: relative;
     min-height: 100vh;
-    padding: 120px 0;
-    background: url('/static/images/about_logo.jpeg') center/cover no-repeat;
+    padding: 160px 0 120px 0;
+    background: url('/static/images/about_logo.jpeg') center/cover no-repeat fixed;
     overflow: hidden;
     color: white;
 }
 
-/* Cinematic overlay */
+/* Cinematic overlay with golden light depth */
 .about-section::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-        to right,
-        rgba(5, 9, 17, 0.9) 0%,
-        rgba(2, 5, 9, 0.7) 40%,
-        rgba(0, 0, 0, 0.9) 100%
-    );
+    background:
+        radial-gradient(circle at 20% 30%, rgba(36, 24, 1, 0.15), transparent 40%),
+        linear-gradient(
+            to right,
+            rgba(5, 9, 17, 0.96) 0%,
+            rgba(5, 9, 17, 0.88) 45%,
+            rgba(0, 0, 0, 0.95) 100%
+        );
     z-index: 1;
 }
 
@@ -30,254 +35,243 @@
     z-index: 2;
 }
 
-/* Cinematic Text */
-.cinematic-text p {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.9s ease;
-    font-size: 1.1rem;
-    line-height: 1.6;
-    margin-bottom: 18px;
-    color: #f2f2f2;
+/* ================= TEXT ================= */
+
+.about-subline {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    line-height: 1.9;
+    letter-spacing: 0.4px;
+    color: #dcdcdc;
 }
 
-.cinematic-text p.active {
-    opacity: 1;
-    transform: translateY(0);
-}
+/* ================= LOGO ================= */
 
-/* Logo */
 .logo-large {
-    max-width: 340px;
+    max-width: 320px;
     opacity: 0.95;
-    transition: transform 0.5s ease;
+    filter: drop-shadow(0 0 25px rgba(30, 20, 0, 0.6));
+    transition: transform 0.6s ease, filter 0.6s ease;
+    margin-bottom: 20px;
 }
 
 .logo-large:hover {
     transform: scale(1.05);
+    filter: drop-shadow(0 0 35px rgba(30, 20, 0, 0.6));
 }
 
-/* Founder Section */
+/* ================= FOUNDER ================= */
+
 .founder-section {
-    margin-top: 30px;
+    margin-top: 35px;
 }
 
 .founder-line {
     width: 60px;
     height: 2px;
-    background: rgba(245, 197, 109, 0.7);
-    margin: 0 auto 20px auto;
+    background: linear-gradient(to right, #f5c56d, transparent);
+    margin: 0 auto 15px auto;
 }
 
 .founder-label {
-    font-size: 0.85rem;
-    letter-spacing: 2px;
-    color: rgba(255,255,255,0.7);
-    margin-bottom: 15px;
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 10px;
     text-transform: uppercase;
 }
 
 .founder-signature {
-    max-width: 140px;
+    max-width: 130px;
     opacity: 0.85;
-    transition: all 0.4s ease;
+    filter: drop-shadow(0 0 15px rgba(28, 18, 1, 0.3));
 }
 
-.founder-signature:hover {
-    opacity: 1;
-    transform: translateY(-3px);
-}
+/* ================= VISION & MISSION ================= */
 
-/* Vision & Mission */
 .vm-section {
-    margin-top: 100px;
+    margin-top: 120px;
 }
 
 .vm-card {
-    background: rgba(0, 0, 0, 0.30);
-    backdrop-filter: blur(10px);
-    padding: 35px;
-    border-radius: 18px;
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(4px);
+    padding: 40px;
+    border-radius: 16px;
     border: 1px solid rgba(255,255,255,0.08);
-    transition: all 0.4s ease;
+    transition: all 0.5s ease;
+    height: 100%;
 }
 
 .vm-card:hover {
-    transform: translateY(-6px);
-    background: rgba(0, 0, 0, 0.45);
+    transform: translateY(-8px);
+    border: 1px solid rgba(245,197,109,0.6);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
 }
 
 .vm-title {
-    font-size: 1.25rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 20px;
     color: #f5c56d;
-    margin-bottom: 15px;
+    letter-spacing: 1px;
 }
 
 .vm-text {
-    line-height: 1.7;
-    color: #f0f0f0;
+    color: #dcdcdc;
+    line-height: 1.8;
 }
 
-/* Team Button */
+/* ================= BUTTON ================= */
+
 .team-btn {
-    border-radius: 50px;
-    letter-spacing: 1px;
-    padding: 14px 45px;
-    font-weight: 500;
+    padding: 14px 40px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-radius: 40px;
+    border: 1px solid #f5c56d;
     transition: all 0.4s ease;
 }
 
 .team-btn:hover {
-    background-color: #f5c56d;
+    background: #f5c56d;
     color: #000;
-    border-color: #f5c56d;
-    box-shadow: 0 0 18px rgba(245, 197, 109, 0.5);
-    transform: translateY(-3px);
+    box-shadow: 0 0 30px rgba(245,197,109,0.6);
 }
 
-/* ================= MOBILE OPTIMIZATION ================= */
+/* ================= REVEAL ANIMATION ================= */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    animation: fadeUp 3s ease forwards;
+}
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ================= MOBILE ================= */
 
 @media (max-width: 991px) {
 
     .about-section {
-        padding: 70px 0;
+        padding: 10px 0 80px 0;
+        background-attachment: scroll;
     }
-
-    .cinematic-text {
-        margin-bottom: 40px;
-    }
-
-    .cinematic-text p {
-        font-size: 1rem;
-        line-height: 1.7;
-        margin-bottom: 16px;
-    }
+    /* .about-section {
+    padding-top: 120px;  /* adjust based on navbar height */
+    /* padding-bottom: 100px; */
+/* } */
 
     .logo-large {
-        max-width: 260px;
-        margin-top: 30px;
+        max-width: 240px;
+    }
+
+    .about-subline {
+        font-size: 1rem;
+        text-align: center;
     }
 
     .vm-section {
         margin-top: 60px;
     }
 
-    .vm-card {
-        padding: 25px;
-    }
-
-    .team-btn {
-        padding: 12px 30px;
-        font-size: 0.95rem;
-    }
+    .about-section {
+    position: relative;
+    min-height: 70vh;
+    padding: 40px 0 120px 0;
+    background: url('/static/images/about_logo.jpeg') center/cover no-repeat fixed;
+    overflow: hidden;
+    color: white;
 }
+.logo-large {
+    max-width: 320px;
+    opacity: 0.95;
+    filter: drop-shadow(0 0 25px rgba(30, 20, 0, 0.6));
+    transition: transform 0.6s ease, filter 0.6s ease;
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+
+}
+
 </style>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const reveals = document.querySelectorAll(".reveal");
-
-    function revealOnScroll() {
-        reveals.forEach((element) => {
-            const windowHeight = window.innerHeight;
-            const elementTop = element.getBoundingClientRect().top;
-            const revealPoint = 100;
-
-            if (elementTop < windowHeight - revealPoint) {
-                element.classList.add("active");
-            }
-        });
-    }
-
-    window.addEventListener("scroll", revealOnScroll);
-    revealOnScroll();
-});
-</script>
 
 <section class="about-section">
 
-    <div class="container content-wrapper">
+<div class="container content-wrapper">
 
-        <div class="row align-items-start">
+    <div class="row align-items-center justify-content-center">
+        <div class="col-lg-6 text-center">
 
-            <!-- LEFT SIDE TEXT -->
-            <div class="col-lg-7 cinematic-text mt-lg-5 pt-lg-4">
+            <img src="/static/images/logo.png"
+                 class="logo-large img-fluid reveal"
+                 alt="Home Entertainments Logo">
 
-                <p class="reveal">
-                    <strong>Home Entertainments</strong> was built on one belief — stories have the power to move people.
-                </p>
+            <p class="about-subline reveal">
+                Built on authenticity. Driven by emotion. Crafted with purpose.
+                <strong>Home Entertainments</strong> believes cinema is more than visuals-
+                it is emotion captured in motion.
+                We create immersive films that blend honesty, artistry, and meaningful storytelling.
+                Every frame is intentional. Every project is a promise of quality and integrity.
+            </p>
 
-                <p class="reveal">
-                    We craft films that are immersive, emotionally honest, and visually compelling.
-                </p>
-
-                <p class="reveal">
-                    Every frame is intentional. Every moment carries meaning.
-                </p>
-
-                <p class="reveal">
-                    Our work blends creativity with precision, passion with purpose.
-                </p>
-
-                <p class="reveal">
-                    We don’t just create cinema — we create experiences that stay long after the screen fades.
-                </p>
-
-            </div>
-
-            <!-- RIGHT SIDE LOGO -->
-            <div class="col-lg-5 text-center">
-
-                <img src="/static/images/logo.png"
-                     class="logo-large img-fluid mb-4"
-                     alt="Home Entertainments Logo">
-
-                <div class="founder-section">
-                    <div class="founder-line"></div>
-                    <p class="founder-label">Founded & Created By</p>
-                    <img src="/static/images/akr_logo.png"
-                         class="founder-signature"
-                         alt="Founder Logo">
-                </div>
-
+            <div class="founder-section reveal">
+                <div class="founder-line"></div>
+                <p class="founder-label">Founded & Created By</p>
+                <img src="/static/images/akr_logo.png"
+                     class="founder-signature"
+                     alt="Founder Logo">
             </div>
 
         </div>
-
-        <!-- Vision & Mission -->
-        <div class="vm-section">
-            <div class="row">
-
-                <div class="col-md-6 mb-4">
-                    <div class="vm-card reveal">
-                        <div class="vm-title">Our Vision</div>
-                        <div class="vm-text">
-                            To build a production house known for authenticity, integrity, and timeless storytelling.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 mb-4">
-                    <div class="vm-card reveal">
-                        <div class="vm-title">Our Mission</div>
-                        <div class="vm-text">
-                            To create compelling narratives and collaborate with passionate creatives to deliver films that truly connect.
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- Centered Button -->
-        <div class="text-center mt-5 pt-4">
-            <a href="{{ url_for('team') }}" 
-               class="btn btn-outline-light btn-lg team-btn reveal">
-               Meet Our Team
-            </a>
-        </div>
-
     </div>
+
+    <!-- Vision & Mission -->
+
+    <div class="vm-section">
+        <div class="row">
+
+            <div class="col-md-6 mb-4">
+                <div class="vm-card reveal">
+                    <div class="vm-title">Our Vision</div>
+                    <div class="vm-text">
+                        To build a production house known for authenticity, integrity,
+                        and timeless storytelling.
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <div class="vm-card reveal">
+                    <div class="vm-title">Our Mission</div>
+                    <div class="vm-text">
+                        To create compelling narratives and collaborate with passionate
+                        creatives to deliver films that truly connect.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Button -->
+
+    <div class="text-center mt-5 pt-4">
+        <a href="{{ url_for('team') }}"
+           class="btn btn-outline-light btn-lg team-btn reveal">
+           Meet Our Team
+        </a>
+    </div>
+
+</div>
 
 </section>
 
