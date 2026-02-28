@@ -71,6 +71,27 @@ def team():
             "image": "jane.jpg",
             "bio": "Creative director shaping unique storytelling experiences.",
             "social": {"instagram":"#", "twitter":"#", "linkedin":"#"}
+        },
+        {
+            "name": "John Doe",
+            "role": "Actor",
+            "image": "john.jpg",
+            "bio": "Award-winning actor with 10+ years of experience in cinema.",
+            "social": {"instagram":"#", "twitter":"#", "linkedin":"#"}
+        },
+        {
+            "name": "John Doe",
+            "role": "Actor",
+            "image": "john.jpg",
+            "bio": "Award-winning actor with 10+ years of experience in cinema.",
+            "social": {"instagram":"#", "twitter":"#", "linkedin":"#"}
+        },
+        {
+            "name": "John Doe",
+            "role": "Actor",
+            "image": "john.jpg",
+            "bio": "Award-winning actor with 10+ years of experience in cinema.",
+            "social": {"instagram":"#", "twitter":"#", "linkedin":"#"}
         }
         # Add more team members here
     ]

@@ -16,108 +16,85 @@
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
   <style>
-
-/* ================= COMPACT NAVBAR ================= */
+/* ================= SLIM CINEMATIC NAVBAR ================= */
 
 body {
-  padding-top: 60px;   /* reduced from 95px */
+  padding-top: 60px; /* Space for fixed navbar */
 }
 
 .cinematic-navbar {
-  background: rgba(0, 0, 0, 0.85);
+  background: #000000; /* Solid black to prevent gaps/transparency issues */
   backdrop-filter: blur(8px);
-  padding: 6px 0;      /* reduced */
-  transition: all 0.3s ease;
-}
-
-/* Smaller logo */
-.navbar-brand img {
-  height: 70px;        /* reduced from 70px */
-  transition: all 0.3s ease;
-}
-
-/* Smaller menu text */
-.nav-link {
-  font-size: 0.95rem;  /* reduced */
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  padding: 6px 12px;   /* tighter spacing */
-  transition: color 0.3s ease;
-}
-
-.nav-link:hover {
-  color: #f5c56d !important;
-}
-
-/* Social icons smaller */
-.social-icons a {
-  font-size: 16px;     /* reduced */
-  transition: all 0.3s ease;
-}
-
-.social-icons a:hover {
-  color: #f5c56d !important;
-  transform: translateY(-2px);
-}
-
-.navbar .container {
+  padding: 0;          /* Remove padding to force slimness */
+  min-height: 60px;    /* Fixed height for laptop */
+  display: flex;
   align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,0.1); /* Subtle divider */
 }
 
-/* ================= MOBILE ================= */
+/* Logo - Laptop View */
+.navbar-brand img {
+  height: 60px;        /* Controlled height for laptop */
+  width: auto;
+  transition: all 0.3s ease;
+  margin-top: -3px;    /* Micro-adjustment to nudge logo up */
+}
+
+.nav-link {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ================= MOBILE FIXES ================= */
 
 @media (max-width: 991px) {
-
   body {
-    padding-top: 55px;
+    padding-top: 50px;
   }
 
+  .cinematic-navbar {
+    min-height: 50px;  /* Even slimmer on mobile */
+  }
+
+  .cinematic-navbar .container {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    height: 50px;
+  }
+
+  /* Logo - Mobile View */
   .navbar-brand img {
-    height: 60px;
+    height: 60px;      /* Smaller height to prevent breaking the navbar */
+    margin-top: -2px;  /* Nudges logo up to center visually */
   }
 
+  /* Remove any margin/padding that creates white space */
+  .navbar-brand {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .navbar-toggler {
+    border: none;
+    padding: 0;
+    margin-right: 5px;
+  }
+
+  .navbar-toggler-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* The Dropdown Menu */
   .navbar-collapse {
-    background: rgba(0, 0, 0, 0.95);
+    background: #000000;
+    margin-top: 0;     /* Align flush with navbar bottom */
+    border-top: 1px solid #333;
     padding: 15px;
-    border-radius: 6px;
-    margin-top: 8px;
   }
-
-  .navbar-nav .nav-item {
-    margin-bottom: 8px;
-  }
-
-  .nav-link {
-    font-size: 0.9rem;
-  }
-
-  .social-icons {
-    justify-content: center;
-    margin-top: 10px;
-  }
-
-  .auth-link {
-    display: block;
-    margin-top: 8px;
-  }
-.navbar-toggler {
-  padding: 3px 6px;
-  border-radius: 6px;
 }
-
-.navbar-toggler-icon {
-  width: 18px;
-  height: 18px;
-}
-.navbar-toggler {
-  border: none;
-}
-
-.cinematic-navbar .container {
-  max-height: 45px;
-}
-}
-
 </style>
 </head>
 

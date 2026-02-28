@@ -2,277 +2,202 @@
 {% block content %}
 
 <style>
+/* ================= THE GAP KILLER ================= */
 
-/* ================= CINEMATIC ABOUT SECTION ================= */
-
+/* 1. Reset the section to start exactly at the navbar bottom */
 .about-section {
     position: relative;
     min-height: 100vh;
-    padding: 160px 0 120px 0;
+    padding-top: 20px !important; /* Extremely small top padding */
+    padding-bottom: 80px;
+    margin-top: -40px !important;     /* Ensure no top margin */
     background: url('/static/images/about_logo.jpeg') center/cover no-repeat fixed;
     overflow: hidden;
     color: white;
 }
 
-/* Cinematic overlay with golden light depth */
+/* 2. Tighten the content wrapper to remove internal vertical spacing */
+.content-wrapper {
+    position: relative;
+    z-index: 2;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* 3. Pull the first row (Logo & Intro) even higher if needed */
+.main-intro-row {
+    margin-top: -10px !important; /* Pulls content up towards the navbar */
+}
+
+/* Cinematic overlay */
 .about-section::before {
     content: "";
     position: absolute;
     inset: 0;
-    background:
-        radial-gradient(circle at 20% 30%, rgba(36, 24, 1, 0.15), transparent 40%),
-        linear-gradient(
-            to right,
-            rgba(5, 9, 17, 0.96) 0%,
-            rgba(5, 9, 17, 0.88) 45%,
-            rgba(0, 0, 0, 0.95) 100%
-        );
+    background: linear-gradient(to bottom, 
+        rgba(0,0,0,1) 0%, 
+        rgba(5, 9, 17, 0.7) 40%, 
+        rgba(0,0,0,0.95) 100%);
+    z-index: 1;
+}
+/* ================= ENHANCED CINEMATIC BUTTON ================= */
+
+.team-btn-container {
+    margin-top: 60px;
+    padding-bottom: 20px;
+}
+
+.team-btn {
+    position: relative;
+    padding: 12px 45px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: #f5c56d !important; /* Golden Text */
+    background: transparent !important;
+    border: 1px solid #f5c56d !important;
+    border-radius: 0px; /* Sharp edges for a professional look */
+    text-transform: uppercase;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
     z-index: 1;
 }
 
-.content-wrapper {
-    position: relative;
-    z-index: 2;
+/* Hover "Fill" Effect */
+.team-btn:hover {
+    color: #000 !important;
+    background: #f5c56d !important;
+    box-shadow: 0 0 30px rgba(245, 197, 109, 0.5);
+    transform: translateY(-3px);
 }
 
-/* ================= TEXT ================= */
+/* ================= REVEAL TWEAKS ================= */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1.2s ease-out;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* ================= REVEAL & SLIDE EFFECTS ================= */
+.reveal {
+    opacity: 0;
+    transition: all 1.2s cubic-bezier(0.17, 0.55, 0.55, 1);
+}
+
+.slide-up { transform: translateY(30px); }
+.slide-left { transform: translateX(-60px); }
+.slide-right { transform: translateX(60px); }
+
+.reveal.active {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+}
+
+/* ================= CONTENT STYLING ================= */
+.logo-large {
+    max-width: 260px; /* Reduced slightly to save vertical space */
+    margin-bottom: -50px !important; /* Tighten gap under logo */
+}
 
 .about-subline {
-    font-size: 1.2rem;
-    opacity: 0.9;
-    margin-top: 25px;
-    margin-bottom: 25px;
-    line-height: 1.9;
-    letter-spacing: 0.4px;
-    color: #dcdcdc;
-}
-
-/* ================= LOGO ================= */
-
-.logo-large {
-    max-width: 320px;
-    opacity: 0.95;
-    filter: drop-shadow(0 0 25px rgba(30, 20, 0, 0.6));
-    transition: transform 0.6s ease, filter 0.6s ease;
-    margin-bottom: 20px;
-}
-
-.logo-large:hover {
-    transform: scale(1.05);
-    filter: drop-shadow(0 0 35px rgba(30, 20, 0, 0.6));
-}
-
-/* ================= FOUNDER ================= */
-
-.founder-section {
-    margin-top: 35px;
-}
-
-.founder-line {
-    width: 60px;
-    height: 2px;
-    background: linear-gradient(to right, #f5c56d, transparent);
-    margin: 0 auto 15px auto;
-}
-
-.founder-label {
-    font-size: 0.75rem;
-    letter-spacing: 4px;
-    color: rgba(255,255,255,0.6);
-    margin-bottom: 10px;
-    text-transform: uppercase;
-}
-
-.founder-signature {
-    max-width: 130px;
-    opacity: 0.85;
-    filter: drop-shadow(0 0 15px rgba(28, 18, 1, 0.3));
-}
-
-/* ================= VISION & MISSION ================= */
-
-.vm-section {
-    margin-top: 120px;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #e0e0e0;
+    max-width: 800px;
+    margin: 10px auto 30px auto !important; /* Tightened margins */
 }
 
 .vm-card {
     background: rgba(255,255,255,0.03);
-    backdrop-filter: blur(4px);
-    padding: 40px;
-    border-radius: 16px;
-    border: 1px solid rgba(255,255,255,0.08);
-    transition: all 0.5s ease;
-    height: 100%;
-}
-
-.vm-card:hover {
-    transform: translateY(-8px);
-    border: 1px solid rgba(245,197,109,0.6);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-}
-
-.vm-title {
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin-bottom: 20px;
-    color: #f5c56d;
-    letter-spacing: 1px;
-}
-
-.vm-text {
-    color: #dcdcdc;
-    line-height: 1.8;
-}
-
-/* ================= BUTTON ================= */
-
-.team-btn {
-    padding: 14px 40px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    border-radius: 40px;
-    border: 1px solid #f5c56d;
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border: 1px solid rgba(255,255,255,0.1);
     transition: all 0.4s ease;
 }
 
-.team-btn:hover {
-    background: #f5c56d;
-    color: #000;
-    box-shadow: 0 0 30px rgba(245,197,109,0.6);
-}
-
-/* ================= REVEAL ANIMATION ================= */
-
-.reveal {
-    opacity: 0;
-    transform: translateY(40px);
-    animation: fadeUp 3s ease forwards;
-}
-
-@keyframes fadeUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ================= MOBILE ================= */
+.vm-card:hover { border-color: #f5c56d; background: rgba(245, 197, 109, 0.05); }
+.vm-title { color: #f5c56d; font-size: 1.4rem; margin-bottom: 10px; }
 
 @media (max-width: 991px) {
-
-    .about-section {
-        padding: 10px 0 80px 0;
-        background-attachment: scroll;
-    }
-    /* .about-section {
-    padding-top: 120px;  /* adjust based on navbar height */
-    /* padding-bottom: 100px; */
-/* } */
-
-    .logo-large {
-        max-width: 240px;
-    }
-
-    .about-subline {
-        font-size: 1rem;
-        text-align: center;
-    }
-
-    .vm-section {
-        margin-top: 60px;
-    }
-
-    .about-section {
-    position: relative;
-    min-height: 70vh;
-    padding: 40px 0 120px 0;
-    background: url('/static/images/about_logo.jpeg') center/cover no-repeat fixed;
-    overflow: hidden;
-    color: white;
+    .about-section { padding-top: 10px !important; }
+    .main-intro-row { margin-top: 0 !important; }
+    .slide-left, .slide-right { transform: translateY(20px); }
 }
-.logo-large {
-    max-width: 320px;
-    opacity: 0.95;
-    filter: drop-shadow(0 0 25px rgba(30, 20, 0, 0.6));
-    transition: transform 0.6s ease, filter 0.6s ease;
-    margin-top: 0px;
-    margin-bottom: 20px;
-}
-
-
-}
-
 </style>
 
 <section class="about-section">
+    <div class="container content-wrapper">
+        <div class="row main-intro-row align-items-center justify-content-center">
+            <div class="col-lg-8 text-center">
+                
+                <img src="/static/images/logo.png" 
+                     class="logo-large img-fluid reveal slide-up" 
+                     alt="Home Entertainments Logo">
 
-<div class="container content-wrapper">
+                <p class="about-subline reveal slide-up" style="transition-delay: 0.1s;">
+                    Built on authenticity. Driven by emotion. Crafted with purpose.
+                    <strong>Home Entertainments</strong> believes cinema is more than visuals—
+                    it is emotion captured in motion.
+                </p>
 
-    <div class="row align-items-center justify-content-center">
-        <div class="col-lg-6 text-center">
-
-            <img src="/static/images/logo.png"
-                 class="logo-large img-fluid reveal"
-                 alt="Home Entertainments Logo">
-
-            <p class="about-subline reveal">
-                Built on authenticity. Driven by emotion. Crafted with purpose.
-                <strong>Home Entertainments</strong> believes cinema is more than visuals-
-                it is emotion captured in motion.
-                We create immersive films that blend honesty, artistry, and meaningful storytelling.
-                Every frame is intentional. Every project is a promise of quality and integrity.
-            </p>
-
-            <div class="founder-section reveal">
-                <div class="founder-line"></div>
-                <p class="founder-label">Founded & Created By</p>
-                <img src="/static/images/akr_logo.png"
-                     class="founder-signature"
-                     alt="Founder Logo">
+                <div class="founder-section reveal slide-up" style="transition-delay: 0.2s;">
+                    <div class="founder-line" style="width: 40px; height: 1px; background: #f5c56d; margin: 0 auto 10px;"></div>
+                    <p class="founder-label" style="letter-spacing: 2px; font-size: 0.65rem; text-transform: uppercase; color: #888; margin-bottom: 5px;">Created By</p>
+                    <img src="/static/images/akr_logo.png" class="founder-signature" style="max-width: 100px;" alt="Founder Logo">
+                </div>
             </div>
-
         </div>
-    </div>
 
-    <!-- Vision & Mission -->
-
-    <div class="vm-section">
-        <div class="row">
-
-            <div class="col-md-6 mb-4">
-                <div class="vm-card reveal">
-                    <div class="vm-title">Our Vision</div>
-                    <div class="vm-text">
-                        To build a production house known for authenticity, integrity,
-                        and timeless storytelling.
+        <div class="vm-section mt-4 pt-4">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="vm-card reveal slide-left">
+                        <div class="vm-title">Our Vision</div>
+                        <div class="vm-text">To build a production house known for authenticity and timeless storytelling.</div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="vm-card reveal slide-right">
+                        <div class="vm-title">Our Mission</div>
+                        <div class="vm-text">To collaborate with passionate creatives to deliver films that truly connect.</div>
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-6 mb-4">
-                <div class="vm-card reveal">
-                    <div class="vm-title">Our Mission</div>
-                    <div class="vm-text">
-                        To create compelling narratives and collaborate with passionate
-                        creatives to deliver films that truly connect.
-                    </div>
-                </div>
-            </div>
-
         </div>
-    </div>
 
-    <!-- Button -->
-
-    <div class="text-center mt-5 pt-4">
-        <a href="{{ url_for('team') }}"
-           class="btn btn-outline-light btn-lg team-btn reveal">
-           Meet Our Team
-        </a>
-    </div>
-
+<div class="text-center team-btn-container">
+    <a href="{{ url_for('team') }}" class="btn team-btn reveal">
+        Meet Our Team
+    </a>
 </div>
-
+    </div>
 </section>
 
+<script>
+function reveal() {
+    var reveals = document.querySelectorAll(".reveal");
+    for (var i = 0; i < reveals.length; i++) {
+        var windowHeight = window.innerHeight;
+        var elementTop = reveals[i].getBoundingClientRect().top;
+        
+        // Changed from 100 to 50: Trigger earlier so bottom buttons appear
+        var elementVisible = 50; 
+        
+        if (elementTop < windowHeight - elementVisible) {
+            reveals[i].classList.add("active");
+        }
+    }
+}
+
+// Add a fallback: if the user doesn't scroll, reveal everything after 1.5 seconds
+window.addEventListener("scroll", reveal);
+document.addEventListener("DOMContentLoaded", function() {
+    reveal();
+    setTimeout(reveal, 1500); 
+});
+</script>
 {% endblock %}

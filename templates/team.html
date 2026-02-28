@@ -1,109 +1,191 @@
 {% extends "base.html" %}
 {% block content %}
 
-<section class="team-hero d-flex align-items-center justify-content-center" 
-         style="
-            width:120%;
-            min-height:80vh;
-            position: relative;
-            top: 50%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: url('{{ url_for('static', filename='images/team.png') }}') center/cover no-repeat fixed;
-            color:white;
-            text-align:center;
-            padding: 0;
-            overflow:hidden;
-         ">
-  <div style="position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);"></div>
-  <div style="position:relative; z-index:2;">
-    <h1 class="display-4 fw-bold">Our Team, Our Strength</h1>
-    <h3>Meet the talented people behind our productions.</h3>
-  </div>
-</section>
-
-<!-- ================= Team Members ================= -->
-<section class="team py-5" style="background:#f8f9fa;">
-  <div class="container">
-    <div class="row">
-      {% for member in team_members %}
-      <div class="col-md-4 mb-4">
-        <div class="team-card">
-          <div class="card-inner">
-            <!-- Front -->
-            <div class="card-front">
-              <img src="{{ url_for('static', filename='images/' + member.image) }}" alt="{{ member.name }}" class="rounded-circle shadow-lg">
-              <h5 class="mt-3">{{ member.name }}</h5>
-              <p class="text-muted">{{ member.role }}</p>
-            </div>
-            <!-- Back -->
-            <div class="card-back">
-              <p>{{ member.bio }}</p>
-              <div class="social-links mt-2">
-                {% for platform, link in member.social.items() %}
-                  <a href="{{ link }}" target="_blank">{{ platform|capitalize }}</a>
-                {% endfor %}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-</section>
-
-<!-- ================= Team Card CSS ================= -->
 <style>
+/* 1. TOP GAP KILLER - Pulls the section tight to the navbar */
+.team-hero {
+    width: 100%;
+    min-height: 40vh;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    background: url('{{ url_for('static', filename='images/team.png') }}') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.team-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+}
+
+/* 2. TEAM SECTION STYLING */
+.team-section {
+    background: #010203; 
+    padding: 40px 10px;
+}
+
+/* 3. MOBILE-FIRST GRID (2 CARDS) */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
 .team-card {
-  perspective: 1000px;
+    perspective: 1000px;
+    width: 100%;
 }
+
 .card-inner {
-  position: relative;
-  width: 100%;
-  height: 350px;
-  text-align: center;
-  transition: transform 0.8s;
-  transform-style: preserve-3d;
+    position: relative;
+    width: 100%;
+    height: 250px; 
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
 }
+
 .team-card:hover .card-inner {
-  transform: rotateY(180deg);
+    transform: rotateY(180deg);
 }
-/* Front */
+
 .card-front, .card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 15px;
-  backface-visibility: hidden;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(245, 197, 109, 0.3);
+    border-radius: 12px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.03);
 }
-.card-front {
-  background:#fff;
-}
+
+/* IMAGE FIX: Ensures image stays inside the golden circle on all screens */
 .card-front img {
-  width:120px;
-  height:120px;
-  object-fit:cover;
+    width: 80px;
+    height: 80px;
+    border: 2px solid #f5c56d;
+    object-fit: cover; /* Prevents stretching/overlapping */
+    border-radius: 50%;
+    margin-bottom: 10px;
 }
+
+.card-front h5 { color: white; font-size: 1rem; margin-bottom: 2px; }
+.card-front p { font-size: 0.75rem; color: #f5c56d; text-transform: uppercase; letter-spacing: 1px; }
+
 .card-back {
-  background:#0b0b0b;
-  color:white;
-  transform: rotateY(180deg);
+    background: #f5c56d;
+    color: #000;
+    transform: rotateY(180deg);
+    text-align: center;
 }
-.card-back .social-links a {
-  margin:0 5px;
-  color:white;
-  text-decoration:none;
+
+/* 4. LAPTOP/DESKTOP VIEW ADJUSTMENTS */
+@media (min-width: 992px) {
+    .team-grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 cards in a row */
+        gap: 40px;
+        max-width: 1100px;
+        margin: 0 auto; /* Centers the whole grid */
+    }
+
+    .card-inner {
+        height: 380px; /* Taller cards for big screens */
+    }
+
+    .card-front img {
+        width: 140px; /* Larger images for laptop */
+        height: 140px;
+    }
+
+    .card-front h5 {
+        font-size: 1.4rem;
+        margin-top: 15px;
+    }
+    .hero-content h1 {
+        font-size: 3.5rem !important;
+        text-shadow: 2px 2px 10px rgba(242, 213, 21, 0.5); 
+        padding-top: 500px;/* Adds depth */
+    }
+
+    /* Fixed Image size so they don't overlap */
+    .card-front img {
+        width: 150px !important;
+        height: 150px !important;
+        margin-top: -20px; /* Pulls image up slightly for a 'pretty' look */
+    }
+
+    /* Adds a luxury golden border on hover */
+    .team-card:hover .card-inner {
+        box-shadow: 0 0 25px rgba(245, 197, 109, 0.4);
+    }
 }
-.card-back .social-links a:hover {
-  color:#ffdd57;
+
+@media (max-width: 768px) {
+    .hero-title {
+        /* Smaller font prevents the 'side' feeling on narrow screens */
+        font-size: 4.5rem !important; 
+        line-height: 1.3;
+        letter-spacing: 1px;
+    }
+    
+    .hero-subtitle {
+        font-size: 0.9rem !important;
+        max-width: 280px; /* Constrains width to keep it centered and neat */
+        margin: 0 auto;
+    }
+    .hero-content h1 {
+        padding-top: 80px;
+        font-size: 2.5rem;/* Adds depth */
+    }
 }
 </style>
+
+<section class="team-hero" style="display: flex; justify-content: center; align-items: center; text-align: center; width: 100%;">
+    <div class="hero-content" style="width: 100%; padding-top: 150px;">
+        <h1 style="
+            display: inline-block;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 0.75rem;
+            margin: 0;
+            background: linear-gradient(to bottom, #fff9ad 0%, #f5c56d 45%, #b08d2a 50%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0px 4px 12px rgba(245, 197, 109, 0.5));">
+            OUR TEAM, OUR STRENGTH
+        </h1>
+    </div>
+</section>
+
+<section class="team-section">
+    <div class="container">
+        <div class="team-grid">
+            {% for member in team_members %}
+            <div class="team-card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <img src="{{ url_for('static', filename='images/' + member.image) }}" alt="{{ member.name }}">
+                        <h5>{{ member.name.split(' ')[0] }}</h5>
+                        <p>{{ member.role }}</p>
+                    </div>
+                    <div class="card-back">
+                        <p><strong>{{ member.name }}</strong></p>
+                        <p>{{ member.bio[:60] }}...</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
 
 {% endblock %}
