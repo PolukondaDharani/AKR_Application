@@ -59,9 +59,9 @@ def home():
 def team():
     team_members = [
         {
-            "name": "John Doe",
+            "name": "Kodanda Ram",
             "role": "Actor",
-            "image": "john.jpg",
+            "image": "image.png",
             "bio": "Award-winning actor with 10+ years of experience in cinema.",
             "social": {"instagram":"#", "twitter":"#", "linkedin":"#"}
         },
@@ -99,7 +99,46 @@ def team():
 
 @app.route("/about")
 def about():
-    return render_template("about.html")
+    team_members = [
+        {
+            "name": "Kodanda Ram",
+            "role": "Actor",
+            "image": "image.png",
+            "bio": "Award-winning actor with 10+ years of experience in cinema.",
+            "social": {"instagram":"#", "twitter":"#", "linkedin":"#"}
+        },
+        {
+            "name": "Jane Smith",
+            "role": "Director",
+            "image": "jane.jpg",
+            "bio": "Creative director shaping unique storytelling experiences.",
+            "social": {"instagram":"#", "twitter":"#", "linkedin":"#"}
+        },
+        {
+            "name": "John Doe",
+            "role": "Actor",
+            "image": "john.jpg",
+            "bio": "Award-winning actor with 10+ years of experience in cinema.",
+            "social": {"instagram":"#", "twitter":"#", "linkedin":"#"}
+        },
+        {
+            "name": "John Doe",
+            "role": "Actor",
+            "image": "john.jpg",
+            "bio": "Award-winning actor with 10+ years of experience in cinema.",
+            "social": {"instagram":"#", "twitter":"#", "linkedin":"#"}
+        },
+        {
+            "name": "John Doe",
+            "role": "Actor",
+            "image": "john.jpg",
+            "bio": "Award-winning actor with 10+ years of experience in cinema.",
+            "social": {"instagram":"#", "twitter":"#", "linkedin":"#"}
+        }
+        # Add more team members here
+    ]
+    # return render_template("team.html", team_members=team_members)
+    return render_template("about.html", team_members=team_members)
 
 @app.route("/contact")
 def contact():
@@ -460,6 +499,27 @@ def admin_user_forms():
 def dashboard():
     return redirect(url_for('admin_meetings'))
 
+
+@app.route("/movies")
+def movies():
+    # Temporary Movie storage (In a real app, this would be in a database)
+    MOVIES = [
+        {
+        "id": 1,
+        "title": "Project X: The Awakening",
+        "poster": "postercard1.jpeg",
+        "video_url": "https://www.youtube.com/embed/kzBoieupnV4",
+        "synopsis": "A gripping journey through time and space, where a group of explorers discovers an ancient secret.",
+        "director": "Christopher Nolan",
+        "writer": "Jonathan Nolan",
+        "music": "Hans Zimmer",
+        "cast": "Leonardo DiCaprio, Elliot Page",
+        "actors": "Tom Hardy, Cillian Murphy",
+        "release": "Summer 2026"
+        }
+            ]
+    # We pass the MOVIES list to the template
+    return render_template("movies.html", movies=MOVIES)
 # ------------------- Run ------------------- #
 if __name__ == "__main__":
     app.run(debug=True)

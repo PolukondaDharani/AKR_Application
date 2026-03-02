@@ -3,97 +3,201 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <title>{{ title or "Actor-Producer Portfolio" }}</title>
 
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-
-  <link rel="stylesheet"
-        href="{{ url_for('static', filename='css/style.css') }}">
-
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
   <style>
 /* ================= SLIM CINEMATIC NAVBAR ================= */
-
-body {
-  padding-top: 60px; /* Space for fixed navbar */
+body { 
+    padding-top: 50px; /* Reduced from 60px to match new slim height */
 }
 
 .cinematic-navbar {
-  background: #000000; /* Solid black to prevent gaps/transparency issues */
-  backdrop-filter: blur(8px);
-  padding: 0;          /* Remove padding to force slimness */
-  min-height: 60px;    /* Fixed height for laptop */
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid rgba(255,255,255,0.1); /* Subtle divider */
+    background: #000000;
+    backdrop-filter: blur(8px);
+    padding: 0 !important; /* Remove Bootstrap default padding */
+    min-height: 50px !important; /* Force a slimmer height */
+    height: 50px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-/* Logo - Laptop View */
-.navbar-brand img {
-  height: 60px;        /* Controlled height for laptop */
-  width: auto;
-  transition: all 0.3s ease;
-  margin-top: -3px;    /* Micro-adjustment to nudge logo up */
+.navbar-brand {
+    padding: 0; /* Remove brand padding */
+    display: flex;
+    align-items: center;
 }
 
-.nav-link {
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+.navbar-brand img { 
+    height: 60px !important; /* Shrink logo to allow the bar to be slim */
+    width: auto;
+    transition: all 0.3s ease;
+}
+
+.nav-link { 
+    font-size: 0.75rem; /* Slightly smaller text for a pro look */
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+    line-height: 50px; /* Vertically centers the text */
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Adjust the toggle button for mobile so it doesn't stretch the bar */
+.navbar-toggler {
+    padding: 2px 5px !important;
+    font-size: 0.8rem !important;
+}
+
+.nav-link { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+
+/* ================= PREMIUM FOOTER STYLES ================= */
+.main-footer {
+    background: linear-gradient(to top, #000 0%, #0a0a0a 100%);
+    border-top: 1px solid rgba(255, 193, 7, 0.2); 
+    padding: 60px 0 20px;
+    color: #e0e0e0;
+    margin-top: auto;
+}
+
+.footer-column h5 {
+    color: #ffc107;
+    font-weight: 800;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    position: relative;
+}
+
+.footer-column h5::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: -8px;
+    width: 30px; height: 2px;
+    background: #ffc107;
+}
+
+.footer-links { list-style: none; padding: 0; }
+.footer-links li { margin-bottom: 10px; }
+.footer-links a { color: #999; text-decoration: none; transition: 0.3s; font-size: 0.9rem; }
+.footer-links a:hover { color: #ffc107; padding-left: 8px; }
+
+.social-links { display: flex; gap: 12px; margin-top: 20px; }
+.social-icon {
+    width: 42px; height: 42px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; transition: all 0.4s ease;
+}
+.social-icon:hover {
+    background: #ffc107; color: #000;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(255, 193, 7, 0.3);
+}
+
+.copyright-bar {
+    margin-top: 50px;
+    padding-top: 25px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    text-align: center;
+    color: #555;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
 }
 
 /* ================= MOBILE FIXES ================= */
+@media (max-width: 768px) {
 
-@media (max-width: 991px) {
-  body {
-    padding-top: 50px;
-  }
+body { 
+    padding-top: 50px; /* Reduced from 60px to match new slim height */
+}
 
-  .cinematic-navbar {
-    min-height: 50px;  /* Even slimmer on mobile */
-  }
+.navbar-collapse {
+        background-color: #000000; /* Solid black */
+        padding: 20px;
+        border-radius: 0 0 10px 10px; /* Optional: rounds the bottom corners */
+        border-bottom: 1px solid rgba(255, 193, 7, 0.3); /* Optional: gold border to match footer */
+        margin-top: 0;
+    }
 
-  .cinematic-navbar .container {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    height: 50px;
-  }
-
-  /* Logo - Mobile View */
-  .navbar-brand img {
-    height: 60px;      /* Smaller height to prevent breaking the navbar */
-    margin-top: -2px;  /* Nudges logo up to center visually */
-  }
-
-  /* Remove any margin/padding that creates white space */
-  .navbar-brand {
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  .navbar-toggler {
-    border: none;
-    padding: 0;
-    margin-right: 5px;
-  }
-
-  .navbar-toggler-icon {
-    width: 20px;
-    height: 20px;
-  }
-
-  /* The Dropdown Menu */
-  .navbar-collapse {
+.cinematic-navbar {
     background: #000000;
-    margin-top: 0;     /* Align flush with navbar bottom */
-    border-top: 1px solid #333;
-    padding: 15px;
-  }
+    backdrop-filter: blur(8px);
+    padding: 0 !important; /* Remove Bootstrap default padding */
+    min-height: 50px !important; /* Force a slimmer height */
+    height: 50px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.navbar-brand {
+    padding: 0; /* Remove brand padding */
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand img { 
+    height: 60px !important; /* Shrink logo to allow the bar to be slim */
+    width: auto;
+    transition: all 0.3s ease;
+}
+
+.nav-link { 
+    font-size: 0.75rem; /* Slightly smaller text for a pro look */
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+    line-height: 50px; /* Vertically centers the text */
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Adjust the toggle button for mobile so it doesn't stretch the bar */
+.navbar-toggler {
+    padding: 2px 5px !important;
+    font-size: 0.8rem !important;
+}
+    .main-footer { padding: 40px 0 15px; text-align: center; }
+    .footer-column h5::after { left: 50%; transform: translateX(-50%); }
+    
+    /* Fix for overlapping/combining columns */
+    .footer-column { margin-bottom: 35px !important; }
+    .footer-links li { margin-bottom: 6px !important; }
+    
+    /* Fix for large gaps at the bottom */
+    .social-links { justify-content: center; margin-bottom: 20px !important; }
+    .copyright-bar { 
+        margin-top: 15px !important; 
+        padding-top: 15px !important; 
+    }
+
+    .social-icons {
+        display: flex !important;
+        justify-content: center !important;
+        gap: 25px !important; /* This creates the horizontal gap between icons */
+        margin-top: 20px;     /* Gap above the icon row */
+        margin-bottom: 20px;  /* Gap below the icon row */
+        padding-bottom: 15px;
+        /* border-bottom: 1px solid rgba(255, 255, 255, 0.1);  */
+    }
+
+    .social-icons i {
+        font-size: 1.4rem; /* Makes icons slightly larger for touch-friendliness */
+    }
+    
+    .auth-link {
+        margin-top: 10px;
+        font-weight: bold;
+        color: #ffc107 !important; /* Makes Login/Logout stand out */
+    }
 }
 </style>
 </head>
@@ -102,62 +206,32 @@ body {
 
 <nav class="navbar navbar-expand-lg navbar-dark cinematic-navbar fixed-top">
   <div class="container">
-
-    <!-- Logo -->
-    <a class="navbar-brand d-flex align-items-center"
-       href="{{ url_for('home') }}">
+    <a class="navbar-brand d-flex align-items-center" href="{{ url_for('home') }}">
       <img src="/static/images/logo.png" alt="Logo">
     </a>
-
-    <!-- Toggle Button -->
-    <button class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
-
-    <!-- Navbar Content -->
-    <div class="collapse navbar-collapse justify-content-between"
-         id="navbarNav">
-
-      <!-- Center Links -->
+    <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
       <ul class="navbar-nav mx-auto text-center">
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('about') }}">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Movies</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('collaboration') }}">Collaboration</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('join') }}">Join Us</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
-        </li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('about') }}">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('movies') }}">Movies</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('collaboration') }}">Collaboration</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('join') }}">Join Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">Contact</a></li>
       </ul>
-
-      <!-- Right Section -->
       <div class="d-lg-flex align-items-center gap-3 text-center social-icons">
-
-        <a href="#" class="text-white"><i class="bi bi-instagram"></i></a>
-        <a href="#" class="text-white"><i class="bi bi-youtube"></i></a>
-        <a href="#" class="text-white"><i class="bi bi-facebook"></i></a>
-        <a href="#" class="text-white"><i class="bi bi-twitter-x"></i></a>
-
-        {% if session.get('user') %}
-          <a class="nav-link text-white auth-link"
-             href="{{ url_for('logout') }}">Logout</a>
-        {% else %}
-          <a class="nav-link text-white auth-link"
-             href="{{ url_for('login') }}">Login</a>
-        {% endif %}
-
-      </div>
-
+    <a href="#" class="text-white"><i class="bi bi-instagram"></i></a>
+    <a href="#" class="text-white"><i class="bi bi-youtube"></i></a>
+    <a href="#" class="text-white"><i class="bi bi-facebook"></i></a>
+    <a href="#" class="text-white"><i class="bi bi-twitter-x"></i></a>
+    
+    <!-- {% if session.get('user') %}
+        <a class="nav-link text-white auth-link" href="{{ url_for('logout') }}">Logout</a>
+    {% else %}
+        <a class="nav-link text-white auth-link" href="{{ url_for('login') }}">Login</a>
+    {% endif %} -->
+</div>
     </div>
   </div>
 </nav>
@@ -166,7 +240,50 @@ body {
   {% block content %}{% endblock %}
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<footer class="main-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-12 footer-column">
+                <h5>Company</h5>
+                <ul class="footer-links">
+                    <li><a href="{{ url_for('about') }}">About</a></li>
+                    <li><a href="#">Movies</a></li>
+                    <li><a href="{{ url_for('collaboration') }}">Collaboration</a></li>
+                    <li><a href="{{ url_for('join') }}">Join Us</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                </ul>
+            </div>
 
+            <div class="col-md-4 col-12 footer-column">
+                <h5>Entertainment</h5>
+                <ul class="footer-links">
+                    <li><a href="#">Home Entertainment Film</a></li>
+                    <li><a href="#">Home Entertainment Music</a></li>
+                    <li><a href="#">Home Entertainment Media</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-5 col-12 footer-column">
+                <h5>Connect With Us</h5>
+                <p class="small mb-3" style="color: #ffffff !important;">Follow our journey on social media for the latest updates.</p>
+                <div class="social-links">
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-x-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 copyright-bar">
+                <p>&copy; 2026 HOME ENTERTAINMENT. ALL RIGHTS RESERVED.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

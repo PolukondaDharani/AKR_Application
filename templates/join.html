@@ -2,23 +2,16 @@
 {% block content %}
 
 <style>
-  /* ---------- BACKGROUND ANIMATION ---------- */
+  /* ---------- BACKGROUND ---------- */
   body {
     margin: 0;
-    background: linear-gradient(135deg, #001f3f, #001b2e, #00334d);
-    background-size: 400% 400%;
-    animation: gradientMove 12s ease infinite;
+    /* Deep cinematic black background */
+    background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
     color: #fff;
     overflow-x: hidden;
   }
 
-  @keyframes gradientMove {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  /* Floating particle dots */
+  /* Floating gold particle dots */
   .particles {
     position: fixed;
     top: 0; left: 0;
@@ -30,10 +23,10 @@
   .particles span {
     position: absolute;
     display: block;
-    width: 8px; height: 8px;
-    background: rgba(0,255,255,0.4);
+    width: 4px; height: 4px;
+    background: rgba(212, 175, 55, 0.3); /* Muted gold particles */
     border-radius: 50%;
-    animation: floatParticle 8s linear infinite;
+    animation: floatParticle 10s linear infinite;
   }
   @keyframes floatParticle {
     0% { transform: translateY(0) scale(1); opacity: 1; }
@@ -42,151 +35,148 @@
 
   /* ---------- CARD STYLING ---------- */
   .join-container {
-    margin-top: 100px;
+    /* Increased gap between header and form */
+    margin-top: 150px; 
     position: relative;
     z-index: 2;
+    padding-bottom: 80px;
   }
 
   .join-card {
     position: relative;
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(15px);
-    border-radius: 25px;
-    padding: 50px 40px;
-    border: 1px solid rgba(255,255,255,0.2);
-    box-shadow: 0 0 40px rgba(0,255,255,0.15);
+    background: #0a0a0a; /* True black card */
+    border-radius: 30px;
+    padding: 60px 45px;
+    /* Subtle gold border glow */
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    box-shadow: 0 15px 50px rgba(0,0,0,0.8);
     animation: fadeInUp 1.2s ease;
   }
 
   @keyframes fadeInUp {
-    0% { opacity: 0; transform: translateY(60px); }
+    0% { opacity: 0; transform: translateY(40px); }
     100% { opacity: 1; transform: translateY(0); }
   }
 
-  .join-card:hover {
-    box-shadow: 0 0 45px rgba(0,255,255,0.3);
-    transform: translateY(-6px);
-    transition: 0.4s ease;
-  }
-
-  /* ---------- HEADINGS ---------- */
-  .join-card h2 {
-    color: #00ffff;
+  /* ---------- GOLD GRADIENT TEXT ---------- */
+  .gold-text {
+    background: linear-gradient(90deg, #d4af37, #f1d592, #b8860b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     font-weight: 800;
     text-align: center;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 15px;
-    text-shadow: 0 0 20px rgba(0,255,255,0.6);
+    letter-spacing: 2px;
+    margin-bottom: 10px;
   }
 
   .join-card p {
-    color: #b8c6d1;
+    color: #999;
     text-align: center;
-    font-size: 1.1rem;
-    margin-bottom: 30px;
+    font-size: 1rem;
+    margin-bottom: 40px;
   }
 
   /* ---------- FORM STYLING ---------- */
   .form-label {
-    color: #00ffff;
-    font-weight: 500;
-    text-shadow: 0 0 10px rgba(0,255,255,0.3);
+    color: #d4af37; /* Gold labels */
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
   }
 
   .form-control {
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
+    background: #111;
+    border: 1px solid #333;
     color: #fff;
-    border-radius: 10px;
+    border-radius: 8px;
+    padding: 12px;
     transition: 0.3s ease;
   }
 
   .form-control:focus {
-    background: rgba(255,255,255,0.15);
-    border-color: #00ffff;
-    box-shadow: 0 0 15px #00ffff;
+    background: #151515;
+    border-color: #d4af37;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
     outline: none;
+    color: #fff;
   }
 
-  /* ---------- BUTTON STYLING ---------- */
+  /* ---------- GOLD GRADIENT BUTTON ---------- */
   .btn-submit {
-    background: linear-gradient(90deg, #00ffff, #00ffa6, #00c3ff);
+    background: linear-gradient(45deg, #b8860b, #d4af37, #f1d592);
     border: none;
-    color: #111;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    border-radius: 12px;
-    padding: 12px 30px;
+    color: #000;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 50px; /* Pill shape to match your 'Watch' button */
+    padding: 15px 30px;
     width: 100%;
-    transition: all 0.4s ease;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .btn-submit::before {
-    content: "";
-    position: absolute;
-    top: 0; left: -100%;
-    width: 100%; height: 100%;
-    background: rgba(255,255,255,0.3);
-    transform: skewX(-20deg);
-    transition: 0.5s;
-  }
-
-  .btn-submit:hover::before {
-    left: 200%;
+    transition: 0.4s ease;
+    cursor: pointer;
   }
 
   .btn-submit:hover {
-    box-shadow: 0 0 25px #00ffa6;
-    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+    transform: scale(1.02);
   }
 
-  /* ---------- RESPONSIVE ---------- */
+  /* ---------- MOBILE OPTIMIZATION ---------- */
   @media (max-width: 768px) {
+    .join-container {
+      margin-top: 30px; /* Slightly less on mobile but still a healthy gap */
+    }
     .join-card {
-      padding: 30px 25px;
+      padding: 40px 20px;
+      margin: 0 15px;
+    }
+    .gold-text {
+      font-size: 1.5rem;
+    }
+    .btn-submit {
+        font-size: 0.9rem;
+        padding: 12px;
     }
   }
 </style>
 
-<!-- Floating Particles -->
 <div class="particles">
-  {% for i in range(25) %}
-  <span style="left:{{ loop.index * 4 }}%; top:{{ loop.index * 3 }}%; animation-delay:{{ loop.index * 0.5 }}s;"></span>
+  {% for i in range(20) %}
+  <span style="left:{{ loop.index * 5 }}%; top:{{ loop.index * 4 }}%; animation-delay:{{ loop.index * 0.4 }}s;"></span>
   {% endfor %}
 </div>
 
-<!-- Join Us Section -->
 <div class="join-container container py-5 d-flex justify-content-center align-items-center min-vh-100">
-  <div class="join-card w-100" style="max-width: 850px;">
-    <h2>Join Our Team</h2>
-    <p>We’re always looking for passionate, creative, and driven people to grow with us. Let’s create something amazing together!</p>
+  <div class="join-card w-100" style="max-width: 750px;">
+    <h3 class="gold-text">Join Our Team</h3>
+    <p>Fuel our vision with your passion. We are scouting for the boldest storytellers.</p>
 
     <form action="{{ url_for('join') }}" method="POST" enctype="multipart/form-data" class="row g-4">
       <div class="col-md-6">
         <label class="form-label">Full Name</label>
-        <input type="text" name="name" class="form-control" required>
+        <input type="text" name="name" class="form-control" placeholder="Your Name" required>
       </div>
       <div class="col-md-6">
         <label class="form-label">Email Address</label>
-        <input type="email" name="email" class="form-control" required>
+        <input type="email" name="email" class="form-control" placeholder="email@example.com" required>
       </div>
       <div class="col-md-6">
         <label class="form-label">Area of Interest</label>
-        <input type="text" name="interest" class="form-control" placeholder="e.g. Design, Direction, Editing" required>
+        <input type="text" name="interest" class="form-control" placeholder="e.g. Editing, Acting" required>
       </div>
       <div class="col-md-6">
-        <label class="form-label">Portfolio / Social Links</label>
-        <input type="text" name="portfolio" class="form-control" placeholder="LinkedIn, Instagram, Behance...">
+        <label class="form-label">Portfolio Link</label>
+        <input type="text" name="portfolio" class="form-control" placeholder="Behance, LinkedIn, etc.">
       </div>
       <div class="col-md-12">
-        <label class="form-label">Upload Resume / Portfolio File</label>
+        <label class="form-label">Attach CV (PDF/DOC)</label>
         <input type="file" name="resume" class="form-control">
       </div>
-      <div class="col-12 mt-4">
-        <button type="submit" class="btn-submit">Send Application</button>
+      <div class="col-12 mt-5">
+        <button type="submit" class="btn-submit">Submit Application</button>
       </div>
     </form>
   </div>

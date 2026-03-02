@@ -2,202 +2,341 @@
 {% block content %}
 
 <style>
-/* ================= THE GAP KILLER ================= */
+    /* ================= CORE LAYOUT ================= */
+    .about-section {
+        position: relative;
+        min-height: 100vh;
+        padding-top: 20px !important;
+        padding-bottom: 80px;
+        margin-top: -40px !important;
+        background: url('/static/images/about_logo.jpeg') center/cover no-repeat fixed;
+        overflow-x: hidden;
+        color: white;
+    }
 
-/* 1. Reset the section to start exactly at the navbar bottom */
-.about-section {
-    position: relative;
-    min-height: 100vh;
-    padding-top: 20px !important; /* Extremely small top padding */
-    padding-bottom: 80px;
-    margin-top: -40px !important;     /* Ensure no top margin */
-    background: url('/static/images/about_logo.jpeg') center/cover no-repeat fixed;
-    overflow: hidden;
-    color: white;
-}
+    .about-section::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(5, 9, 17, 0.7) 40%, rgba(0,0,0,0.95) 100%);
+        z-index: 1;
+    }
 
-/* 2. Tighten the content wrapper to remove internal vertical spacing */
-.content-wrapper {
-    position: relative;
-    z-index: 2;
-    margin-top: 0 !important;
-    padding-top: 0 !important;
-}
+    .content-wrapper {
+        position: relative;
+        z-index: 2;
+    }
 
-/* 3. Pull the first row (Logo & Intro) even higher if needed */
-.main-intro-row {
-    margin-top: -10px !important; /* Pulls content up towards the navbar */
-}
+    .section-title {
+        color: #f5c56d;
+        letter-spacing: 3px;
+        font-weight: 700;
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+    }
 
-/* Cinematic overlay */
-.about-section::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, 
-        rgba(0,0,0,1) 0%, 
-        rgba(5, 9, 17, 0.7) 40%, 
-        rgba(0,0,0,0.95) 100%);
-    z-index: 1;
-}
-/* ================= ENHANCED CINEMATIC BUTTON ================= */
+    /* ================= TEAM SECTION ================= */
+    .team-grid {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 15px;
+        padding: 20px 15px;
+        scrollbar-width: none;
+        scroll-behavior: smooth;
+    }
 
-.team-btn-container {
-    margin-top: 60px;
-    padding-bottom: 20px;
-}
+    .team-grid::-webkit-scrollbar { display: none; }
 
-.team-btn {
-    position: relative;
-    padding: 12px 45px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    letter-spacing: 3px;
-    color: #f5c56d !important; /* Golden Text */
-    background: transparent !important;
-    border: 1px solid #f5c56d !important;
-    border-radius: 0px; /* Sharp edges for a professional look */
-    text-transform: uppercase;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden;
-    z-index: 1;
-}
+    .team-card {
+        min-width: 240px;
+        height: 300px;
+        perspective: 1000px;
+        scroll-snap-align: center;
+        flex-shrink: 0;
+    }
 
-/* Hover "Fill" Effect */
-.team-btn:hover {
-    color: #000 !important;
-    background: #f5c56d !important;
-    box-shadow: 0 0 30px rgba(245, 197, 109, 0.5);
-    transform: translateY(-3px);
-}
+    .card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        transform-style: preserve-3d;
+    }
 
-/* ================= REVEAL TWEAKS ================= */
-.reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 1.2s ease-out;
-}
+    .team-card:hover .card-inner { transform: rotateY(180deg); }
 
-.reveal.active {
-    opacity: 1;
-    transform: translateY(0);
-}
-/* ================= REVEAL & SLIDE EFFECTS ================= */
-.reveal {
-    opacity: 0;
-    transition: all 1.2s cubic-bezier(0.17, 0.55, 0.55, 1);
-}
+    .card-front, .card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(245, 197, 109, 0.2);
+        padding: 15px;
+        backdrop-filter: blur(5px);
+    }
 
-.slide-up { transform: translateY(30px); }
-.slide-left { transform: translateX(-60px); }
-.slide-right { transform: translateX(60px); }
+    .card-front img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #f5c56d;
+        margin-bottom: 10px;
+    }
 
-.reveal.active {
-    opacity: 1;
-    transform: translateX(0) translateY(0);
-}
+    .card-back {
+        background: #f5c56d;
+        color: black;
+        transform: rotateY(180deg);
+        text-align: center;
+    }
 
-/* ================= CONTENT STYLING ================= */
-.logo-large {
-    max-width: 260px; /* Reduced slightly to save vertical space */
-    margin-bottom: -50px !important; /* Tighten gap under logo */
-}
+    /* ================= SLIDER ARROWS ================= */
+    .nav-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(245, 197, 109, 0.9);
+        color: black;
+        border: none;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        cursor: pointer;
+    }
 
-.about-subline {
-    font-size: 1.1rem;
-    line-height: 1.7;
-    color: #e0e0e0;
-    max-width: 800px;
-    margin: 10px auto 30px auto !important; /* Tightened margins */
-}
+    .left-arrow { left: 5px; }
+    .right-arrow { right: 5px; }
 
-.vm-card {
-    background: rgba(255,255,255,0.03);
-    backdrop-filter: blur(10px);
-    padding: 30px;
-    border: 1px solid rgba(255,255,255,0.1);
-    transition: all 0.4s ease;
-}
+    /* ================= UI COMPONENTS ================= */
+    .glass-card, .bts-box {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 20px 10px;
+        border-radius: 10px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: 0.3s;
+    }
 
-.vm-card:hover { border-color: #f5c56d; background: rgba(245, 197, 109, 0.05); }
-.vm-title { color: #f5c56d; font-size: 1.4rem; margin-bottom: 10px; }
+    .project-img {
+        height: 80px;
+        width: 100%;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        background: rgba(255,255,255,0.1);
+    }
 
-@media (max-width: 991px) {
-    .about-section { padding-top: 10px !important; }
-    .main-intro-row { margin-top: 0 !important; }
-    .slide-left, .slide-right { transform: translateY(20px); }
-}
+    /* ================= ANIMATIONS ================= */
+    .reveal { opacity: 0; transition: all 1s ease-out; }
+    .slide-up { transform: translateY(30px); }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    /* ================= RESPONSIVE QUERIES ================= */
+    @media (max-width: 768px) {
+        /* Smaller Team Cards */
+        .team-card {
+            min-width: 160px;
+            height: 220px;
+        }
+
+        .card-front img {
+            width: 60px;
+            height: 60px;
+        }
+
+        /* Compact Channels Row */
+        .mobile-3-col {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            padding: 0 10px;
+        }
+
+        .mobile-3-col .glass-card {
+            padding: 10px 5px;
+            min-height: 80px;
+        }
+
+        .mobile-3-col .glass-card i { font-size: 1.1rem !important; }
+        .mobile-3-col h4 { font-size: 0.65rem !important; margin: 0; }
+
+        /* 2-Column Grids for BTS/Projects */
+        .mobile-2-col {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -5px;
+        }
+        .mobile-2-col > div {
+            flex: 0 0 50%;
+            max-width: 50%;
+            padding: 5px;
+        }
+
+        .section-title { font-size: 1.1rem; }
+    }
+
+    @media (min-width: 992px) {
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            overflow-x: visible;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .team-card { min-width: auto; }
+        .nav-arrow { display: none; } /* Hide arrows on desktop */
+    }
 </style>
 
 <section class="about-section">
     <div class="container content-wrapper">
-        <div class="row main-intro-row align-items-center justify-content-center">
-            <div class="col-lg-8 text-center">
-                
-                <img src="/static/images/logo.png" 
-                     class="logo-large img-fluid reveal slide-up" 
-                     alt="Home Entertainments Logo">
-
+        <div class="row align-items-center justify-content-center text-center">
+            <div class="col-lg-8">
+                <img src="/static/images/logo.png" class="logo-large img-fluid reveal slide-up" alt="Logo">
                 <p class="about-subline reveal slide-up" style="transition-delay: 0.1s;">
-                    Built on authenticity. Driven by emotion. Crafted with purpose.
-                    <strong>Home Entertainments</strong> believes cinema is more than visuals—
-                    it is emotion captured in motion.
+                    Built on authenticity. Driven by emotion. Crafted with purpose.<br>
+                    <strong>Home Entertainments</strong> believes cinema is emotion captured in motion.
                 </p>
-
                 <div class="founder-section reveal slide-up" style="transition-delay: 0.2s;">
-                    <div class="founder-line" style="width: 40px; height: 1px; background: #f5c56d; margin: 0 auto 10px;"></div>
-                    <p class="founder-label" style="letter-spacing: 2px; font-size: 0.65rem; text-transform: uppercase; color: #888; margin-bottom: 5px;">Created By</p>
-                    <img src="/static/images/akr_logo.png" class="founder-signature" style="max-width: 100px;" alt="Founder Logo">
+                    <div style="width: 40px; height: 1px; background: #f5c56d; margin: 0 auto 10px;"></div>
+                    <p style="letter-spacing: 2px; font-size: 0.6rem; text-transform: uppercase; color: #888;">Created By</p>
+                    <img src="/static/images/akr_logo.png" style="max-width: 80px;" alt="Founder">
                 </div>
             </div>
         </div>
 
-        <div class="vm-section mt-4 pt-4">
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <div class="vm-card reveal slide-left">
-                        <div class="vm-title">Our Vision</div>
-                        <div class="vm-text">To build a production house known for authenticity and timeless storytelling.</div>
+        <div class="row mt-5">
+            <div class="col-12 text-center mb-2">
+                <h2 class="section-title reveal slide-up">Meet Our Team</h2>
+            </div>
+            <div class="col-12 position-relative">
+                <button class="nav-arrow left-arrow" onclick="slideTeam('left')">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="nav-arrow right-arrow" onclick="slideTeam('right')">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <div class="team-grid" id="teamGrid">
+                    {% for member in team_members %}
+                    <div class="team-card reveal slide-up">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <img src="{{ url_for('static', filename='images/' + member.image) }}" alt="{{ member.name }}">
+                                <h5 style="color: white; font-weight: 600;">{{ member.name.split(' ')[0] }}</h5>
+                                <p style="color: #f5c56d; font-size: 0.7rem; text-transform: uppercase;">{{ member.role }}</p>
+                            </div>
+                            <div class="card-back">
+                                <p><strong>{{ member.name }}</strong></p>
+                                <p style="font-size: 0.75rem;">{{ member.bio[:70] }}...</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center my-4 reveal">
+            <h2 class="section-title">Our Channels</h2>
+            <div class="mobile-3-col">
+                <div class="glass-card">
+                    <i class="fab fa-youtube" style="color: #f5c56d;"></i>
+                    <h4>FILM</h4>
+                </div>
+                <div class="glass-card">
+                    <i class="fas fa-music" style="color: #f5c56d;"></i>
+                    <h4>MUSIC</h4>
+                </div>
+                <div class="glass-card">
+                    <i class="fas fa-broadcast-tower" style="color: #f5c56d;"></i>
+                    <h4>MEDIA</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center my-5 reveal">
+            <h2 class="section-title">BTS of Work</h2>
+            <div class="mobile-2-col justify-content-center">
+                <div>
+                    <div class="bts-box">
+                        <i class="fas fa-camera-retro mb-2" style="font-size: 1.5rem; color: #f5c56d;"></i>
+                        <h5>PHOTOS</h5>
                     </div>
                 </div>
-                <div class="col-md-6 mb-3">
-                    <div class="vm-card reveal slide-right">
-                        <div class="vm-title">Our Mission</div>
-                        <div class="vm-text">To collaborate with passionate creatives to deliver films that truly connect.</div>
+                <div>
+                    <div class="bts-box">
+                        <i class="fas fa-video mb-2" style="font-size: 1.5rem; color: #f5c56d;"></i>
+                        <h5>VIDEOS</h5>
                     </div>
                 </div>
             </div>
         </div>
 
-<div class="text-center team-btn-container">
-    <a href="{{ url_for('team') }}" class="btn team-btn reveal">
-        Meet Our Team
-    </a>
-</div>
+        <div class="text-center my-5 reveal">
+            <h2 class="section-title">Projects</h2>
+            <div class="mobile-2-col">
+                <div>
+                    <div class="glass-card">
+                        <div class="project-img d-flex align-items-center justify-content-center">C&D Web</div>
+                        <h5>C&D Series</h5>
+                    </div>
+                </div>
+                <div>
+                    <div class="glass-card">
+                        <div class="project-img d-flex align-items-center justify-content-center">Loading...</div>
+                        <h5>Upcoming</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 
 <script>
-function reveal() {
-    var reveals = document.querySelectorAll(".reveal");
-    for (var i = 0; i < reveals.length; i++) {
-        var windowHeight = window.innerHeight;
-        var elementTop = reveals[i].getBoundingClientRect().top;
-        
-        // Changed from 100 to 50: Trigger earlier so bottom buttons appear
-        var elementVisible = 50; 
-        
-        if (elementTop < windowHeight - elementVisible) {
-            reveals[i].classList.add("active");
+    // Reveal Animations
+    function reveal() {
+        var reveals = document.querySelectorAll(".reveal");
+        reveals.forEach(el => {
+            var windowHeight = window.innerHeight;
+            var elementTop = el.getBoundingClientRect().top;
+            if (elementTop < windowHeight - 50) {
+                el.classList.add("active");
+            }
+        });
+    }
+
+    // Manual Slider Scroll
+    function slideTeam(direction) {
+        const grid = document.getElementById('teamGrid');
+        const scrollAmount = 180; // Distance of one card + gap
+        if (direction === 'left') {
+            grid.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        } else {
+            grid.scrollBy({ left: scrollAmount, behavior: 'smooth' });
         }
     }
-}
 
-// Add a fallback: if the user doesn't scroll, reveal everything after 1.5 seconds
-window.addEventListener("scroll", reveal);
-document.addEventListener("DOMContentLoaded", function() {
-    reveal();
-    setTimeout(reveal, 1500); 
-});
+    window.addEventListener("scroll", reveal);
+    document.addEventListener("DOMContentLoaded", reveal);
 </script>
 {% endblock %}

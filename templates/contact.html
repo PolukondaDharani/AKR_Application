@@ -2,144 +2,153 @@
 {% block content %}
 
 <style>
+  /* ---------- BACKGROUND ---------- */
   body {
-    background: url('{{ url_for('static', filename='images/vision.jpg') }}') center/cover no-repeat fixed;
-    background-size: cover;
+    margin: 0;
+    background: radial-gradient(circle at center, #141414 0%, #000000 100%);
+    color: #fff;
     overflow-x: hidden;
   }
 
+  /* Cinematic light sweep effect */
   .contact-container {
-    margin-top: 100px;
+    margin-top: 140px; /* Increased gap from header */
     position: relative;
-    z-index: 1;
+    z-index: 2;
+    padding-bottom: 60px;
   }
 
-  /* Animated gradient overlay */
-  .contact-container::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: linear-gradient(120deg, rgba(0, 255, 255, 0.2), rgba(0, 188, 212, 0.2));
-    filter: blur(60px);
-    z-index: 0;
-    animation: gradientMove 6s ease-in-out infinite alternate;
-  }
-
-  @keyframes gradientMove {
-    from { transform: translateX(-20px); }
-    to { transform: translateX(20px); }
-  }
-
-  /* Glass effect for card */
+  /* ---------- GOLD CONTACT CARD ---------- */
   .contact-card {
     position: relative;
-    background: rgba(15, 15, 15, 0.75);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(0, 255, 255, 0.2);
-    border-radius: 20px;
-    box-shadow: 0 0 40px rgba(0, 255, 255, 0.1);
-    transition: all 0.4s ease;
-    z-index: 2;
+    background: rgba(10, 10, 10, 0.9);
+    backdrop-filter: blur(20px);
+    border-radius: 30px;
+    padding: 60px 45px;
+    border: 1px solid rgba(212, 175, 55, 0.15); /* Soft Gold Border */
+    box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+    animation: fadeInUp 1.2s ease;
   }
 
-  .contact-card:hover {
-    box-shadow: 0 0 50px rgba(0, 255, 255, 0.4);
-    transform: translateY(-6px);
+  @keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
   }
 
-  .contact-card h2 {
-    color: #00ffff;
-    font-weight: 700;
-    text-shadow: 0 0 20px rgba(0,255,255,0.6);
+  /* Gold Gradient Heading */
+  .gold-heading {
+    background: linear-gradient(90deg, #d4af37, #f1d592, #b8860b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 1.8rem;
+    white-space: nowrap;
   }
 
-  /* Icons */
-  .contact-info i {
-    color: #00ffff;
-    margin-right: 12px;
+  /* Icons with Glow */
+  .contact-info p {
+    color: #999;
+    font-size: 0.95rem;
     transition: 0.3s;
   }
-  .contact-info p:hover i {
-    transform: scale(1.2);
-    color: #00ffa6;
+
+  .contact-info i {
+    color: #d4af37; /* Gold Icons */
+    margin-right: 15px;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
   }
 
-  /* Social icons */
+  /* Social Links */
   .social-links a {
-    color: #00ffff;
-    transition: all 0.3s;
-  }
-  .social-links a:hover {
-    transform: scale(1.3);
-    color: #00ffa6;
-    text-shadow: 0 0 20px #00ffa6;
+    color: #d4af37;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 
-  /* Inputs and textarea */
+  .social-links a:hover {
+    color: #fff;
+    transform: translateY(-5px);
+    text-shadow: 0 0 15px rgba(212, 175, 55, 0.8);
+  }
+
+  /* ---------- FORM ELEMENTS ---------- */
   .contact-form input,
   .contact-form textarea {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(0,255,255,0.2);
+    background: #050505;
+    border: 1px solid #222;
     color: #fff;
-    transition: all 0.3s;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    padding: 15px;
+    transition: 0.4s ease;
   }
 
   .contact-form input:focus,
   .contact-form textarea:focus {
-    background: rgba(255,255,255,0.1);
-    box-shadow: 0 0 15px #00ffff;
-    border-color: #00ffa6;
+    background: #0a0a0a;
+    border-color: #d4af37;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.1);
     outline: none;
   }
 
-  .contact-form button {
-    background: linear-gradient(90deg, #00ffff, #00ffa6);
+  /* Gold Pill Button */
+  .btn-gold {
+    background: linear-gradient(45deg, #b8860b, #d4af37, #f1d592);
     border: none;
-    color: #111;
-    font-weight: bold;
-    transition: 0.3s;
+    color: #000;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 50px;
+    padding: 15px;
+    transition: 0.4s ease;
+    margin-top: 10px;
   }
 
-  .contact-form button:hover {
-    box-shadow: 0 0 25px #00ffa6;
-    transform: scale(1.05);
+  .btn-gold:hover {
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+    transform: scale(1.03);
+    color: #000;
   }
 
-  @media (max-width: 600px) {
-    .contact-card {
-      padding: 30px 20px;
-    }
+  /* ---------- MOBILE ---------- */
+  @media (max-width: 768px) {
+    .contact-container { margin-top: 50px; }
+    .contact-card { padding: 40px 25px; margin: 0 15px; }
+    .gold-heading { font-size: 1.4rem; }
   }
 </style>
 
-<div class="contact-container d-flex justify-content-center align-items-center min-vh-100">
-  <div class="contact-card p-5 text-white shadow-lg" style="max-width: 520px; width: 100%;">
-    <h2 class="text-center mb-4">Contact Me</h2>
+<div class="contact-container container d-flex justify-content-center align-items-center">
+  <div class="contact-card text-white" style="max-width: 550px; width: 100%;">
+    <h2 class="gold-heading text-center mb-4">Get In Touch</h2>
     
-    <div class="contact-info text-center mb-4">
-      <p><i class="bi bi-telephone-fill"></i> +1 234 567 8901</p>
-      <p><i class="bi bi-envelope-fill"></i> info@akr.com</p>
-      <p><i class="bi bi-geo-alt-fill"></i> 123 Main Street, City, Country</p>
+    <div class="contact-info mb-5">
+      <div class="d-flex flex-column align-items-center gap-2">
+        <p><i class="bi bi-telephone-fill"></i> +1 234 567 8901</p>
+        <p><i class="bi bi-envelope-fill"></i> info@akr.com</p>
+        <p><i class="bi bi-geo-alt-fill"></i> 123 Main Street, City, Country</p>
+      </div>
 
-      <div class="social-links d-flex justify-content-center gap-4 mt-3">
+      <div class="social-links d-flex justify-content-center gap-4 mt-4">
         <a href="#"><i class="bi bi-linkedin fs-4"></i></a>
         <a href="#"><i class="bi bi-instagram fs-4"></i></a>
-        <a href="#"><i class="bi bi-facebook fs-4"></i></a>
+        <a href="#"><i class="bi bi-twitter-x fs-4"></i></a>
       </div>
     </div>
 
     <form class="contact-form" method="POST" action="{{ url_for('contact') }}">
       <div class="mb-3">
-        <input type="text" class="form-control form-control-lg rounded-3" placeholder="Your Name" required>
+        <input type="text" name="name" class="form-control" placeholder="YOUR NAME" required>
       </div>
       <div class="mb-3">
-        <input type="email" class="form-control form-control-lg rounded-3" placeholder="Your Email" required>
+        <input type="email" name="email" class="form-control" placeholder="EMAIL ADDRESS" required>
       </div>
-      <div class="mb-3">
-        <textarea class="form-control form-control-lg rounded-3" rows="4" placeholder="Your Message" required></textarea>
+      <div class="mb-4">
+        <textarea name="message" class="form-control" rows="4" placeholder="HOW CAN WE COLLABORATE?" required></textarea>
       </div>
-      <button type="submit" class="btn btn-lg w-100 rounded-3">Send Message</button>
+      <button type="submit" class="btn btn-gold w-100">Send Message</button>
     </form>
   </div>
 </div>

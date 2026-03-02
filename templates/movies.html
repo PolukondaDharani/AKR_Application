@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    body { background-color: #000; color: #fff; }
+
+    /* Movie Detail Container */
+    .movie-detail-card {
+        background: #111;
+        border: 1px solid rgba(255, 193, 7, 0.2);
+        border-radius: 20px;
+        overflow: hidden;
+        margin-top: 100px;
+        margin-bottom: 50px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    /* Poster Image Styling */
+    .movie-poster-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 20px 0 0 20px;
+    }
+
+    /* Video Responsive Container */
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+        height: 0;
+        overflow: hidden;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        border: 1px solid #333;
+    }
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .movie-info h1 {
+        color: #ffc107;
+        font-weight: 800;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+    }
+
+    .info-label {
+        color: #ffc107;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        margin-right: 10px;
+    }
+
+    .info-text {
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 10px;
+    }
+
+    .synopsis {
+        border-left: 3px solid #ffc107;
+        padding-left: 15px;
+        margin: 20px 0;
+        font-style: italic;
+        color: #ccc;
+    }
+
+    @media (max-width: 768px) {
+        .movie-detail-card { margin-top: 60px; }
+        .movie-poster-img { border-radius: 20px 20px 0 0; height: 400px; }
+    }
+</style>
+
+<div class="container">
+    <div class="movie-detail-card">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="/static/images/postercard1.jpeg" alt="Movie Poster" class="movie-poster-img">
+            </div>
+
+            <div class="col-md-8 p-4 p-lg-5">
+                <div class="movie-info">
+                    <h1>Project X: The Awakening</h1>
+                    
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/kzBoieupnV4" 
+                                title="YouTube video player" frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen></iframe>
+                    </div>
+
+                    <div class="synopsis">
+                        <p>What the movie is about: A gripping journey through time and space, where a group of explorers discovers an ancient secret that could change the course of human history forever.</p>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-sm-6">
+                            <p><span class="info-label">Director:</span> <span class="info-text">Christopher Nolan</span></p>
+                            <p><span class="info-label">Writer:</span> <span class="info-text">Jonathan Nolan</span></p>
+                            <p><span class="info-label">Music:</span> <span class="info-text">Hans Zimmer</span></p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p><span class="info-label">Cast:</span> <span class="info-text">Leonardo DiCaprio, Elliot Page</span></p>
+                            <p><span class="info-label">Actors:</span> <span class="info-text">Tom Hardy, Cillian Murphy</span></p>
+                            <p><span class="info-label">Release:</span> <span class="info-text">Summer 2026</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
