@@ -2,73 +2,107 @@
 {% block content %}
 
 <style>
-/* ================= RESET ================= */
-html, body {
+/* =========================================================
+   GLOBAL / PAGE
+   ========================================================= */
+
+html,
+body {
     margin: 0;
     padding: 0 !important;
     overflow-x: hidden;
-    background-color: #000;
+    background: #000;
 }
 
-/* FULL SCREEN */
+* {
+    box-sizing: border-box;
+}
+
+/* =========================================================
+   HERO / VIDEO CAROUSEL
+   ========================================================= */
+
 #homeCarousel,
 #homeCarousel .carousel-item {
-    height: 100vh;
-    height: 100dvh;
     position: relative;
+    width: 100%;
+    height: calc(100vh - 50px);
+    height: calc(100dvh - 50px);
+    min-height: 520px;
+    overflow: hidden;
 }
 
-/* Background Video */
 .bg-video {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center center;
     z-index: 1;
 }
 
-/* Dark Overlay */
 .video-overlay {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.55);
+    background: rgba(0, 0, 0, 0.55);
     z-index: 2;
 }
 
-/* LEFT SIDE TEXT */
+/* =========================================================
+   HERO CONTENT
+   ========================================================= */
+
 .custom-caption {
     position: absolute;
-    top: 50%;
-    left: 8%;
-    transform: translateY(-50%);
-    text-align: left;
     z-index: 3;
-    max-width: 600px;
-    padding: 20px;
+
+    /*
+     * Instead of fixed left/top/margin values,
+     * use flexible positioning.
+     */
+    left: clamp(1rem, 8vw, 8rem);
+    right: clamp(1rem, 8vw, 8rem);
+    bottom: clamp(3rem, 10vh, 7rem);
+
+    max-width: 700px;
+    padding: clamp(0.5rem, 2vw, 1.5rem);
 }
 
 .custom-caption h1,
 .custom-caption p {
-    text-shadow: 2px 4px 20px rgba(0,0,0,0.9);
+    text-shadow: 2px 4px 20px rgba(0, 0, 0, 0.9);
     margin-bottom: 1rem;
 }
 
-/* Watch Now button style */
+/* =========================================================
+   WATCH BUTTON
+   ========================================================= */
+
 .watch-now-btn {
     background: #ffc107;
     border: none;
-    padding: 12px 35px;
+
+    /*
+     * Fluid padding and font size.
+     */
+    padding: clamp(0.65rem, 1.2vw, 0.9rem)
+             clamp(1.5rem, 3vw, 2.5rem);
+
     border-radius: 50px;
     font-weight: 700;
-    font-size: 1rem;
-    transition: 0.3s ease;
+
+    font-size: clamp(0.75rem, 1.2vw, 1rem);
+
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease;
+
     color: #000;
     text-transform: uppercase;
+    cursor: pointer;
 }
 
 .watch-now-btn:hover {
@@ -76,17 +110,47 @@ html, body {
     transform: scale(1.05);
 }
 
-/* ================= FLIP CARD STYLE ================= */
+/* =========================================================
+   VISION / MISSION
+   ========================================================= */
+
+.vision-mission-section {
+    padding-block: clamp(2rem, 5vw, 4rem);
+}
+
+.vision-mission-grid {
+    display: grid;
+
+    /*
+     * Automatically becomes:
+     * 1 column when space is small
+     * 2 columns when space is available
+     */
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(min(100%, 280px), 1fr)
+    );
+
+    gap: clamp(1rem, 2vw, 1.5rem);
+}
+
 .flip-card {
     perspective: 1000px;
-    height: 220px;
-    margin-bottom: 15px; /* Prevent overlap */
+    width: 100%;
+
+    /*
+     * Aspect ratio prevents fixed-height problems.
+     */
+    aspect-ratio: 16 / 9;
+
+    min-height: 180px;
 }
 
 .flip-card-inner {
     position: relative;
     width: 100%;
     height: 100%;
+
     transition: transform 0.8s;
     transform-style: preserve-3d;
 }
@@ -98,44 +162,158 @@ html, body {
 .flip-card-front,
 .flip-card-back {
     position: absolute;
+    inset: 0;
+
     width: 100%;
     height: 100%;
-    border-radius: 22px;
+
+    border-radius: clamp(14px, 2vw, 22px);
+
     background: #111;
-    border: 1px solid rgba(255,255,255,0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     text-align: center;
-    padding: 20px;
+
+    padding: clamp(1rem, 3vw, 2rem);
+
     backface-visibility: hidden;
 }
 
 .flip-card-front h3 {
+    margin: 0;
+
     font-weight: 700;
-    font-size: 1.4rem;
+
+    /*
+     * Automatically scales with screen.
+     */
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+
     color: #ffc107;
 }
 
 .flip-card-back {
     transform: rotateY(180deg);
+
     color: rgba(255, 255, 255, 0.85);
-    font-size: 0.9rem;
+
+    font-size: clamp(0.8rem, 1.5vw, 0.95rem);
+
     line-height: 1.5;
-    box-shadow: 0 0 25px rgba(255,193,7,0.15);
+
+    box-shadow: 0 0 25px rgba(255, 193, 7, 0.15);
 }
 
-/* ================= POSTER SLIDER ================= */
+.flip-card-back p {
+    margin: 0;
+}
+
+/* =========================================================
+   SECTION
+   ========================================================= */
+
+.content-section {
+    padding-bottom: clamp(2rem, 5vw, 4rem);
+}
+
+.section-title {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+
+    font-weight: 800;
+
+    color: #ffc107;
+
+    margin-bottom: clamp(1rem, 3vw, 1.75rem);
+
+    text-align: center;
+}
+
+/* =========================================================
+   FILTER BUTTONS
+   ========================================================= */
+
+.filter-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: clamp(0.5rem, 2vw, 1rem);
+
+    margin-bottom: clamp(1rem, 3vw, 2rem);
+}
+
+.filter-btn {
+    background-color: #ffc107;
+    color: #000;
+
+    border: 1px solid #ffc107;
+
+    padding: clamp(0.4rem, 1vw, 0.65rem)
+             clamp(0.9rem, 2vw, 1.5rem);
+
+    border-radius: 5px;
+
+    font-weight: 700;
+
+    font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+
+    cursor: pointer;
+
+    transition:
+        background 0.3s ease,
+        transform 0.3s ease;
+}
+
+.filter-btn:hover {
+    background-color: #e0a800;
+    border-color: #e0a800;
+    transform: translateY(-2px);
+}
+
+.filter-btn.active {
+    background-color: #fff;
+    color: #000;
+    border-color: #fff;
+}
+
+/* =========================================================
+   POSTER SLIDER
+   ========================================================= */
+
 .poster-slider {
     display: flex;
-    gap: 20px;
+
+    /*
+     * The card automatically changes size depending
+     * on available screen width.
+     */
+    gap: clamp(0.75rem, 2vw, 1.25rem);
+
     overflow-x: auto;
-    /* This ensures the slider only moves when the user drags/swipes it */
-    scroll-snap-type: x proximity; 
+    overflow-y: hidden;
+
+    padding:
+        0.25rem
+        0.25rem
+        1rem;
+
+    scroll-snap-type: x proximity;
+
     -webkit-overflow-scrolling: touch;
-    padding-bottom: 20px;
+
+    scrollbar-width: thin;
 }
 
+/*
+ * Hide scrollbar on very small devices while
+ * keeping scrolling functionality.
+ */
 .poster-slider::-webkit-scrollbar {
     height: 6px;
 }
@@ -145,277 +323,805 @@ html, body {
     border-radius: 10px;
 }
 
+.poster-slider::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* =========================================================
+   POSTER CARD
+   ========================================================= */
+
 .poster-card {
-    min-width: 220px;
-    flex: 0 0 auto;
+    /*
+     * THIS IS THE IMPORTANT PART.
+     *
+     * Instead of:
+     *
+     * min-width: 220px
+     * mobile: 180px
+     *
+     * the browser automatically calculates the width.
+     */
+    flex: 0 0 clamp(170px, 22vw, 280px);
+
     background: #151515;
-    border-radius: 8px;
-    padding: 12px;
-    transition: transform 0.4s ease;
+
+    border-radius: clamp(6px, 1vw, 10px);
+
+    padding: clamp(0.5rem, 1vw, 0.75rem);
+
     border: 1px solid #222;
+
     scroll-snap-align: start;
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease;
+
+    min-width: 0;
 }
 
-.section-title {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: #ffc107;
-    margin-bottom: 25px;
-    text-align: center;
+.poster-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 193, 7, 0.5);
 }
-/* Update the filter buttons to Yellow */
-.filter-btn {
-    background-color: #ffc107; /* The yellow from your Watch button */
-    color: #000;               /* Black text for contrast */
-    border: 1px solid #ffc107;
-    padding: 10px 25px;
-    border-radius: 5px;        /* Optional: adds slight rounding */
+
+/* =========================================================
+   POSTER IMAGE
+   ========================================================= */
+
+.poster-card img,
+.poster-img {
+    display: block;
+
+    width: 100%;
+
+    /*
+     * Automatically maintains poster proportions.
+     */
+    aspect-ratio: 2 / 3;
+
+    /*
+     * Every poster gets the same visual area
+     * regardless of original image dimensions.
+     */
+    object-fit: cover;
+
+    object-position: center;
+
+    border-radius: 6px;
+}
+
+/* =========================================================
+   POSTER TEXT
+   ========================================================= */
+
+.poster-title {
+    color: #fff;
+
     font-weight: 700;
-    cursor: pointer;
-    transition: 0.3s ease;
+
+    font-size: clamp(0.75rem, 1.3vw, 1rem);
+
+    margin-top: 0.7rem;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
 }
 
-/* Style for when the button is hovered */
-.filter-btn:hover {
-    background-color: #e0a800; /* Darker yellow */
-    border-color: #e0a800;
+.poster-year {
+    color: #aaa;
+
+    font-size: clamp(0.65rem, 1vw, 0.8rem);
+
+    margin-top: 0.25rem;
 }
 
-/* Style for the 'Active' button */
-.filter-btn.active {
-    background-color: #fff;    /* White or a different shade to show it's selected */
-    color: #000;
-    border-color: #fff;
+.poster-video {
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #000;
 }
 
-/* ================= MOBILE OPTIMIZATION ================= */
-@media (max-width: 768px) {
+.poster-video iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+
+/* =========================================================
+   DIVIDER
+   ========================================================= */
+
+.section-divider {
+    border: 0;
+
+    border-top: 1px solid rgba(255, 193, 7, 0.2);
+
+    margin:
+        clamp(1.5rem, 4vw, 3rem)
+        0;
+}
+
+/* =========================================================
+   RESPONSIVE ADJUSTMENTS
+   ========================================================= */
+
+/*
+ * Tablets and smaller laptops
+ */
+@media (max-width: 991px) {
+
+    #homeCarousel,
+    #homeCarousel .carousel-item {
+        min-height: 500px;
+    }
+
     .custom-caption {
-        left: 0;
-        right: 0;
-        width: 100%;
-        text-align: center;
-        top: 60%; /* Moves text and button further down the poster */
-    }
-
-    .py-5 .row.g-3 {
-        flex-direction: row !important; /* Ensure row direction */
-        display: flex;
-        flex-wrap: nowrap; /* Prevent wrapping to new line */
-    }
-
-    .custom-caption h1 {
-        font-size: 1.8rem;
-    }
-
-    .watch-now-btn {
-        width: 40%; /* Prominent button below text */
-        margin-top: 350px;
-        font-size: 0.5rem;
-    }
-
-    /* Fix Overlapping Vision/Mission */
-    /* .py-4 .row.g-3 {
-        flex-direction: column; /* Stack them to avoid overlap */
-    } */
-    
-    .col-6.vision, .col-6.mission {
-        width: 100%;
-    }
-
-    .flip-card {
-        height: 180px;
+        left: 5%;
+        right: 5%;
+        bottom: 8%;
     }
 
     .poster-card {
-        min-width: 180px;
+        flex-basis: clamp(180px, 28vw, 240px);
+    }
+}
+
+/*
+ * Phones
+ */
+@media (max-width: 576px) {
+
+    #homeCarousel,
+    #homeCarousel .carousel-item {
+        /*
+         * Keep hero large enough for phones,
+         * but don't force huge dimensions.
+         */
+        min-height: 480px;
     }
 
-    .section-title {
-        font-size: 1.5rem;
-    }
-    .filter-container { gap: 8px; }
-    .filter-btn { padding: 5px 15px; font-size: 0.7rem; border-width: 1px; }
-
-    .carousel-caption h1 { font-size: 1.75rem; }
-    .carousel-caption p { font-size: 0.95rem; }
-    
-    .flip-card { height: 160px; }
-    .flip-card-front h3 { font-size: 1.1rem; }
-    
-    .poster-card { min-width: 180px; }
-    .poster-card img { height: 240px; }
-    .section-title { font-size: 1rem; }
-    /* 1. Reduce the forced height of the slider containers */
-    .poster-slider { 
-        min-height: auto !important; 
-        padding-bottom: 10px; 
+    .bg-video {
+        /*
+         * Cover is maintained, so different video
+         * dimensions don't break the layout.
+         */
+        object-position: center center;
     }
 
-    /* 2. Reduce the padding/margins on the sections */
-    .pb-5 { padding-bottom: 1.5rem !important; }
-    .mt-4 { margin-top: 1rem !important; }
-    .py-4 { padding-top: 1rem !important; padding-bottom: 1rem !important; }
+    .custom-caption {
+        left: 1rem;
+        right: 1rem;
 
-    /* 3. Tighten the space between the section title and the cards */
-    .section-title { margin-bottom: 10px; }
-    .filter-container { margin-bottom: 15px; }
+        bottom: 2.5rem;
 
-    /* 4. Fix any extra space from the horizontal rule */
-    hr { margin: 20px 0 !important; }
+        max-width: none;
+
+        padding: 0;
+
+        text-align: center;
+    }
+
+    .watch-now-btn {
+        /*
+         * No fixed width.
+         */
+        width: auto;
+        min-width: 120px;
+    }
+
+    .vision-mission-section {
+        padding-block: 2rem;
+    }
+
+    .poster-card {
+        /*
+         * Still responsive, but comfortable
+         * for phone swiping.
+         */
+        flex-basis: min(72vw, 220px);
+    }
+
+    .poster-slider {
+        /*
+         * Gives the first and last cards breathing room.
+         */
+        padding-inline: 0.25rem;
+    }
+
+    .filter-container {
+        padding-inline: 0.5rem;
+    }
+
+    .filter-btn {
+        flex: 0 0 auto;
+    }
+}
+
+/*
+ * Very small phones
+ */
+@media (max-width: 360px) {
+
+    #homeCarousel,
+    #homeCarousel .carousel-item {
+        min-height: 430px;
+    }
+
+    .poster-card {
+        flex-basis: 75vw;
+    }
+}
 </style>
 
-<section id="homeCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+
+<!-- =========================================================
+     HERO CAROUSEL
+     ========================================================= -->
+
+<section
+    id="homeCarousel"
+    class="carousel slide carousel-fade"
+    data-bs-ride="carousel"
+>
+
     <div class="carousel-indicators">
-        <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="0" class="active"></button>
-        <button type="button" data-bs-target="#homeCarousel" data-bs-slide-to="1"></button>
+
+        <button
+            type="button"
+            data-bs-target="#homeCarousel"
+            data-bs-slide-to="0"
+            class="active"
+            aria-label="Slide 1"
+        ></button>
+
+        <button
+            type="button"
+            data-bs-target="#homeCarousel"
+            data-bs-slide-to="1"
+            aria-label="Slide 2"
+        ></button>
+
     </div>
+
 
     <div class="carousel-inner">
+
+        <!-- HERO VIDEO 1 -->
+
         <div class="carousel-item active">
-            <video class="bg-video" autoplay muted loop playsinline>
-                <source src="/static/images/motion_poster.mp4" type="video/mp4">
+
+            <video
+                class="bg-video"
+                autoplay
+                muted
+                loop
+                playsinline
+            >
+                <source
+                    src="/static/images/motion_poster.mp4"
+                    type="video/mp4"
+                >
             </video>
+
             <div class="video-overlay"></div>
+
             <div class="custom-caption">
-                <button class="watch-now-btn" onclick="openVideo('https://www.youtube.com/watch?v=kzBoieupnV4')">
+
+                <button
+                    class="watch-now-btn"
+                    onclick="openVideo('https://www.youtube.com/watch?v=kzBoieupnV4')"
+                >
                     ▶ Watch
                 </button>
+
             </div>
+
         </div>
-        
+
+
+        <!-- HERO VIDEO 2 -->
+
         <div class="carousel-item">
-            <video class="bg-video" autoplay muted loop playsinline>
-                <source src="/static/videos/hero2.mp4" type="video/mp4">
+
+            <video
+                class="bg-video"
+                autoplay
+                muted
+                loop
+                playsinline
+            >
+                <source
+                    src="/static/videos/hero2.mp4"
+                    type="video/mp4"
+                >
             </video>
+
             <div class="video-overlay"></div>
+
             <div class="custom-caption">
-                <button class="watch-now-btn" onclick="openVideo('https://www.youtube.com/embed/YOUR_VIDEO_ID_2')">
-                    ▶ Watch 
+
+                <button
+                    class="watch-now-btn"
+                    onclick="openVideo('https://www.youtube.com/embed/YOUR_VIDEO_ID_2')"
+                >
+                    ▶ Watch
                 </button>
+
             </div>
+
         </div>
+
     </div>
+
 </section>
 
-<section class="py-5 text-light">
+
+<!-- =========================================================
+     VISION / MISSION
+     ========================================================= -->
+
+<section class="vision-mission-section text-light">
+
     <div class="container">
-        <div class="row g-3">
-            <div class="col-6 vision">
+
+        <div class="vision-mission-grid">
+
+            <!-- VISION -->
+
+            <div class="vision">
+
                 <div class="flip-card">
+
                     <div class="flip-card-inner">
-                        <div class="flip-card-front"><h3>Our Vision</h3></div>
-                        <div class="flip-card-back"><p>Inspiring storytellers through bold visuals and innovative techniques.</p></div>
+
+                        <div class="flip-card-front">
+
+                            <h3>Our Vision</h3>
+
+                        </div>
+
+                        <div class="flip-card-back">
+
+                            <p>
+                                Inspiring storytellers through bold
+                                visuals and innovative techniques.
+                            </p>
+
+                        </div>
+
                     </div>
+
                 </div>
+
             </div>
-            <div class="col-6 mission">
+
+
+            <!-- MISSION -->
+
+            <div class="mission">
+
                 <div class="flip-card">
+
                     <div class="flip-card-inner">
-                        <div class="flip-card-front"><h3>Our Mission</h3></div>
-                        <div class="flip-card-back"><p>Transforming passion into impact by creating high-quality cinema.</p></div>
+
+                        <div class="flip-card-front">
+
+                            <h3>Our Mission</h3>
+
+                        </div>
+
+                        <div class="flip-card-back">
+
+                            <p>
+                                Transforming passion into impact by
+                                creating high-quality cinema.
+                            </p>
+
+                        </div>
+
                     </div>
+
                 </div>
+
             </div>
+
         </div>
+
     </div>
+
 </section>
 
-<section class="pb-5 mt-4">
+
+<!-- =========================================================
+     MOVIES / PORTFOLIO
+     ========================================================= -->
+
+<section class="content-section">
+
     <div class="container">
-        <div class="filter-container mb-4 text-center">
-            <!-- <button class="filter-btn active" onclick="filterSelection('all')">All</button> -->
-            <button class="filter-btn" onclick="filterSelection('upcoming')">Upcoming</button>
-            <button class="filter-btn" onclick="filterSelection('released')">Released</button>
+
+        <!-- FILTER -->
+
+        <div class="filter-container">
+
+            <button
+                class="filter-btn"
+                onclick="filterSelection('upcoming', this)"
+            >
+                Upcoming
+            </button>
+
+            <button
+                class="filter-btn"
+                onclick="filterSelection('released', this)"
+            >
+                Released
+            </button>
+
         </div>
 
-        <div class="poster-slider" id="portfolioSlider">
-            <div class="poster-card upcoming">
-                <img src="/static/images/postercard1.jpeg" alt="Project X" class="img-fluid">
-                <div class="poster-title">PROJECT X</div>
-                <div class="poster-year">Upcoming</div>
-            </div>
+
+        <!-- POSTERS -->
+
+        <div
+            class="poster-slider"
+            id="portfolioSlider"
+        >
+
+            <!-- POSTER 1 -->
+
             <div class="poster-card released">
-                <img src="/static/images/postercard1.jpeg" alt="The Journey" class="img-fluid">
-                <div class="poster-title">THE JOURNEY</div>
-                <div class="poster-year">Released (2025)</div>
+
+                <img
+                    src="/static/images/songposter.png"
+                    alt="Project X"
+                    class="poster-img"
+                    loading="lazy"
+                >
+
+                <div class="poster-title">
+                    OH MY FRIEND LYRICAL VIDEO
+                </div>
+
+                <div class="poster-year">
+                    Released
+                </div>
+
             </div>
+
+
+            <!-- POSTER 2 -->
+
             <div class="poster-card upcoming">
-                <img src="/static/images/postercard1.jpeg" alt="Cinema Noir" class="img-fluid">
-                <div class="poster-title">CINEMA NOIR</div>
-                <div class="poster-year">Coming Soon</div>
+
+                <img
+                    src="/static/images/songposter2.png"
+                    alt="The Journey"
+                    class="poster-img"
+                    loading="lazy"
+                >
+
+                <div class="poster-title">
+                    Second Song - C&C
+                </div>
+
+                <div class="poster-year">
+                    Coming Soon
+                </div>
+
             </div>
+
+
+            <!-- POSTER 3 -->
+
+            <div class="poster-card upcoming">
+
+                <img
+                    src="/static/images/webseries poster.jpeg"
+                    alt="Cinema Noir"
+                    class="poster-img"
+                    loading="lazy"
+                >
+
+                <div class="poster-title">
+                    Web Series - C&C
+                </div>
+
+                <div class="poster-year">
+                    Coming Soon
+                </div>
+
+            </div>
+
+
+
+
+            <!--
+            ====================================================
+            ADD NEW POSTERS LIKE THIS
+
+            NO CSS CHANGE REQUIRED
+            ====================================================
+
             <div class="poster-card released">
-                <img src="/static/images/postercard1.jpeg" alt="Legacy" class="img-fluid">
-                <div class="poster-title">LEGACY</div>
-                <div class="poster-year">Released (2024)</div>
+
+                <img
+                    src="/static/images/new-poster.jpg"
+                    alt="New Movie"
+                    class="poster-img"
+                    loading="lazy"
+                >
+
+                <div class="poster-title">
+                    NEW MOVIE
+                </div>
+
+                <div class="poster-year">
+                    Released (2026)
+                </div>
+
             </div>
+
+            -->
+
         </div>
+
     </div>
+
 </section>
 
-<hr style="border-color: rgba(255,193,7,0.2); margin: 40px 0;">
 
-<section class="pb-5">
+<hr class="section-divider">
+
+
+<!-- =========================================================
+     NEWS & EVENTS
+     ========================================================= -->
+
+<section class="content-section">
+
     <div class="container">
-        <h2 class="section-title">NEWS & EVENTS</h2>
+
+        <h2 class="section-title">
+            NEWS & EVENTS
+        </h2>
+
         <div class="poster-slider">
+
+            <!-- EVENT 1 -->
             <div class="poster-card">
-                <img src="/static/images/postercard1.jpeg" alt="Award Ceremony" class="img-fluid">
-                <div class="poster-title">BEST AWARD</div>
-                <div class="poster-year">Event - Feb 2026</div>
+
+                <div class="poster-video">
+                    <iframe
+                        src="https://www.youtube.com/embed/kf1Zn_y61xw"
+                        title="Best Award"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+
+                <div class="poster-title">
+                    Ramaiah College Promotion
+                </div>
+
+                <div class="poster-year">
+                    Event - Feb 2026
+                </div>
+
             </div>
+
+
+            <!-- EVENT 2 -->
             <div class="poster-card">
-                <img src="/static/images/postercard1.jpeg" alt="Production News" class="img-fluid">
-                <div class="poster-title">NEW STUDIO OPENING</div>
-                <div class="poster-year">News - Jan 2026</div>
+
+                <div class="poster-video">
+                    <iframe
+                        src="https://www.youtube.com/embed/08ATLr6jF9A"
+                        title="New Studio Opening"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+
+                <div class="poster-title">
+                     Soundarya College Promotion
+                </div>
+
+                <div class="poster-year">
+                    News - Jan 2026
+                </div>
+
             </div>
+
+
+            <!-- ADD NEW EVENTS HERE -->
+
+            <div class="poster-card">
+
+                <div class="poster-video">
+                    <iframe
+                        src="https://www.youtube.com/embed/FQsPA_2LXnI"
+                        title="New Event"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+
+                <div class="poster-title">
+                    St. Claret College Promotion
+                </div>
+
+                <div class="poster-year">
+                    Event - 2026
+                </div>
+
+            </div>
+
         </div>
+
     </div>
+
 </section>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+     ========================================================= -->
 
 <script>
-function filterSelection(c) {
-    var x, i;
-    x = document.getElementsByClassName("poster-card");
-    var btns = document.getElementsByClassName("filter-btn");
-    
-    for (i = 0; i < btns.length; i++) {
-        btns[i].classList.remove("active");
+
+/*
+=========================================================
+FILTER
+=========================================================
+*/
+
+function filterSelection(category, clickedButton) {
+
+    const cards = document.querySelectorAll(
+        "#portfolioSlider .poster-card"
+    );
+
+    const buttons = document.querySelectorAll(
+        ".filter-btn"
+    );
+
+
+    /*
+     * Remove active state from all buttons.
+     */
+
+    buttons.forEach(function(button) {
+
+        button.classList.remove("active");
+
+    });
+
+
+    /*
+     * Add active state to clicked button.
+     */
+
+    if (clickedButton) {
+
+        clickedButton.classList.add("active");
+
     }
 
-    for (i = 0; i < x.length; i++) {
-        if (x[i].classList.contains('upcoming') || x[i].classList.contains('released')) {
-            if (c == "all") {
-                x[i].style.display = "block";
-            } else if (x[i].classList.contains(c)) {
-                x[i].style.display = "block";
-            } else {
-                x[i].style.display = "none";
-            }
+
+    /*
+     * Show / hide cards.
+     */
+
+    cards.forEach(function(card) {
+
+        if (card.classList.contains(category)) {
+
+            card.style.display = "";
+
+        } else {
+
+            card.style.display = "none";
+
         }
-    }
+
+    });
+
 }
+
+
+/*
+=========================================================
+OPEN VIDEO
+=========================================================
+*/
 
 function openVideo(videoUrl) {
-    // Check if videoFrame exists in your base.html or add a modal here
-    const frame = document.getElementById('videoFrame');
-    if(frame) {
-        frame.src = videoUrl + "?autoplay=1";
-        let modal = new bootstrap.Modal(document.getElementById('videoModal'));
-        modal.show();
+
+    const frame = document.getElementById("videoFrame");
+
+    /*
+     * If video modal exists in another template,
+     * use it.
+     */
+
+    if (frame) {
+
+        const separator =
+            videoUrl.includes("?") ? "&" : "?";
+
+        frame.src =
+            videoUrl + separator + "autoplay=1";
+
+
+        const modalElement =
+            document.getElementById("videoModal");
+
+
+        if (modalElement) {
+
+            const modal =
+                new bootstrap.Modal(modalElement);
+
+            modal.show();
+
+        }
+
     } else {
-        window.open(videoUrl, '_blank');
+
+        /*
+         * If modal does not exist,
+         * open the video normally.
+         */
+
+        window.open(videoUrl, "_blank");
+
     }
+
 }
 
-// Cleanup for modal
-const vModal = document.getElementById('videoModal');
-if(vModal) {
-    vModal.addEventListener('hidden.bs.modal', function () {
-        document.getElementById('videoFrame').src = "";
-    });
+
+/*
+=========================================================
+VIDEO MODAL CLEANUP
+=========================================================
+*/
+
+const videoModal =
+    document.getElementById("videoModal");
+
+
+if (videoModal) {
+
+    videoModal.addEventListener(
+        "hidden.bs.modal",
+        function () {
+
+            const frame =
+                document.getElementById("videoFrame");
+
+            if (frame) {
+
+                frame.src = "";
+
+            }
+
+        }
+    );
+
 }
+
 </script>
 
 {% endblock %}

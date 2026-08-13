@@ -11,194 +11,370 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
   <style>
-/* ================= SLIM CINEMATIC NAVBAR ================= */
-body { 
-    padding-top: 50px; /* Reduced from 60px to match new slim height */
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
 }
+
+body {
+    padding-top: 50px;
+}
+
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
 
 .cinematic-navbar {
-    background: #000000;
+    background: #000;
+
     backdrop-filter: blur(8px);
-    padding: 0 !important; /* Remove Bootstrap default padding */
-    min-height: 50px !important; /* Force a slimmer height */
+
+    padding: 0 !important;
+
     height: 50px;
+    min-height: 50px;
+
     display: flex;
     align-items: center;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.1);
 }
+
+
+/* =========================================================
+   NAVBAR BRAND
+   ========================================================= */
 
 .navbar-brand {
-    padding: 0; /* Remove brand padding */
+    padding: 0;
+
     display: flex;
     align-items: center;
 }
 
-.navbar-brand img { 
-    height: 60px !important; /* Shrink logo to allow the bar to be slim */
+.navbar-brand img {
+    /*
+     * Automatically scale the logo slightly
+     * depending on screen size.
+     */
+    height: clamp(45px, 5vw, 60px);
+
     width: auto;
+
+    object-fit: contain;
+
     transition: all 0.3s ease;
 }
 
-.nav-link { 
-    font-size: 0.75rem; /* Slightly smaller text for a pro look */
-    text-transform: uppercase; 
+
+/* =========================================================
+   NAV LINKS
+   ========================================================= */
+
+.nav-link {
+    font-size: clamp(0.7rem, 1vw, 0.85rem);
+
+    text-transform: uppercase;
+
     letter-spacing: 1px;
-    line-height: 50px; /* Vertically centers the text */
+
+    line-height: 50px;
+
     padding-top: 0 !important;
     padding-bottom: 0 !important;
+
+    white-space: nowrap;
 }
 
-/* Adjust the toggle button for mobile so it doesn't stretch the bar */
+
+/* =========================================================
+   NAVBAR TOGGLE
+   ========================================================= */
+
 .navbar-toggler {
     padding: 2px 5px !important;
+
     font-size: 0.8rem !important;
 }
 
-.nav-link { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
 
-/* ================= PREMIUM FOOTER STYLES ================= */
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
 .main-footer {
-    background: linear-gradient(to top, #000 0%, #0a0a0a 100%);
-    border-top: 1px solid rgba(255, 193, 7, 0.2); 
-    padding: 60px 0 20px;
+    background:
+        linear-gradient(
+            to top,
+            #000 0%,
+            #0a0a0a 100%
+        );
+
+    border-top:
+        1px solid rgba(255, 193, 7, 0.2);
+
+    padding:
+        clamp(2.5rem, 5vw, 4rem)
+        0
+        1.25rem;
+
     color: #e0e0e0;
+
     margin-top: auto;
 }
 
+
 .footer-column h5 {
     color: #ffc107;
+
     font-weight: 800;
+
     margin-bottom: 25px;
+
     text-transform: uppercase;
-    font-size: 0.9rem;
+
+    font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+
     letter-spacing: 2px;
+
     position: relative;
 }
 
+
 .footer-column h5::after {
     content: '';
+
     position: absolute;
-    left: 0; bottom: -8px;
-    width: 30px; height: 2px;
+
+    left: 0;
+
+    bottom: -8px;
+
+    width: 30px;
+
+    height: 2px;
+
     background: #ffc107;
 }
 
-.footer-links { list-style: none; padding: 0; }
-.footer-links li { margin-bottom: 10px; }
-.footer-links a { color: #999; text-decoration: none; transition: 0.3s; font-size: 0.9rem; }
-.footer-links a:hover { color: #ffc107; padding-left: 8px; }
 
-.social-links { display: flex; gap: 12px; margin-top: 20px; }
+.footer-links {
+    list-style: none;
+
+    padding: 0;
+}
+
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+
+.footer-links a {
+    color: #999;
+
+    text-decoration: none;
+
+    transition: 0.3s;
+
+    font-size: 0.9rem;
+}
+
+
+.footer-links a:hover {
+    color: #ffc107;
+
+    padding-left: 8px;
+}
+
+
+/* =========================================================
+   SOCIAL LINKS
+   ========================================================= */
+
+.social-links {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    margin-top: 20px;
+}
+
+
 .social-icon {
-    width: 42px; height: 42px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 42px;
+    height: 42px;
+
+    background:
+        rgba(255, 255, 255, 0.05);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.1);
+
     border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    color: #fff; transition: all 0.4s ease;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: #fff;
+
+    transition: all 0.4s ease;
 }
+
+
 .social-icon:hover {
-    background: #ffc107; color: #000;
+    background: #ffc107;
+
+    color: #000;
+
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(255, 193, 7, 0.3);
+
+    box-shadow:
+        0 10px 20px
+        rgba(255, 193, 7, 0.3);
 }
+
+
+/* =========================================================
+   COPYRIGHT
+   ========================================================= */
 
 .copyright-bar {
     margin-top: 50px;
+
     padding-top: 25px;
-    border-top: 1px solid rgba(255,255,255,0.05);
+
+    border-top:
+        1px solid rgba(255, 255, 255, 0.05);
+
     text-align: center;
+
     color: #555;
+
     font-size: 0.8rem;
+
     letter-spacing: 1px;
 }
 
-/* ================= MOBILE FIXES ================= */
+
+/* =========================================================
+   MOBILE NAVBAR
+   ========================================================= */
+
+@media (max-width: 991px) {
+
+    .navbar-collapse {
+
+        background-color: #000;
+
+        padding: 20px;
+
+        border-radius:
+            0 0 10px 10px;
+
+        border-bottom:
+            1px solid rgba(255, 193, 7, 0.3);
+    }
+
+    .nav-link {
+        line-height: 40px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE FOOTER
+   ========================================================= */
+
 @media (max-width: 768px) {
 
-body { 
-    padding-top: 50px; /* Reduced from 60px to match new slim height */
-}
+    .main-footer {
+        padding:
+            40px
+            0
+            15px;
 
-.navbar-collapse {
-        background-color: #000000; /* Solid black */
-        padding: 20px;
-        border-radius: 0 0 10px 10px; /* Optional: rounds the bottom corners */
-        border-bottom: 1px solid rgba(255, 193, 7, 0.3); /* Optional: gold border to match footer */
-        margin-top: 0;
+        text-align: center;
     }
 
-.cinematic-navbar {
-    background: #000000;
-    backdrop-filter: blur(8px);
-    padding: 0 !important; /* Remove Bootstrap default padding */
-    min-height: 50px !important; /* Force a slimmer height */
-    height: 50px;
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
 
-.navbar-brand {
-    padding: 0; /* Remove brand padding */
-    display: flex;
-    align-items: center;
-}
-
-.navbar-brand img { 
-    height: 60px !important; /* Shrink logo to allow the bar to be slim */
-    width: auto;
-    transition: all 0.3s ease;
-}
-
-.nav-link { 
-    font-size: 0.75rem; /* Slightly smaller text for a pro look */
-    text-transform: uppercase; 
-    letter-spacing: 1px;
-    line-height: 50px; /* Vertically centers the text */
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-}
-
-/* Adjust the toggle button for mobile so it doesn't stretch the bar */
-.navbar-toggler {
-    padding: 2px 5px !important;
-    font-size: 0.8rem !important;
-}
-    .main-footer { padding: 40px 0 15px; text-align: center; }
-    .footer-column h5::after { left: 50%; transform: translateX(-50%); }
-    
-    /* Fix for overlapping/combining columns */
-    .footer-column { margin-bottom: 35px !important; }
-    .footer-links li { margin-bottom: 6px !important; }
-    
-    /* Fix for large gaps at the bottom */
-    .social-links { justify-content: center; margin-bottom: 20px !important; }
-    .copyright-bar { 
-        margin-top: 15px !important; 
-        padding-top: 15px !important; 
+    .footer-column {
+        margin-bottom: 35px !important;
     }
+
+
+    .footer-column h5::after {
+        left: 50%;
+
+        transform:
+            translateX(-50%);
+    }
+
+
+    .footer-links li {
+        margin-bottom: 6px;
+    }
+
+
+    .social-links {
+        justify-content: center;
+
+        margin-bottom: 20px !important;
+    }
+
+
+    .copyright-bar {
+        margin-top: 15px !important;
+
+        padding-top: 15px !important;
+    }
+
 
     .social-icons {
         display: flex !important;
+
         justify-content: center !important;
-        gap: 25px !important; /* This creates the horizontal gap between icons */
-        margin-top: 20px;     /* Gap above the icon row */
-        margin-bottom: 20px;  /* Gap below the icon row */
+
+        gap: 25px !important;
+
+        margin-top: 20px;
+
+        margin-bottom: 20px;
+
         padding-bottom: 15px;
-        /* border-bottom: 1px solid rgba(255, 255, 255, 0.1);  */
     }
 
+
     .social-icons i {
-        font-size: 1.4rem; /* Makes icons slightly larger for touch-friendliness */
+        font-size: 1.4rem;
     }
-    
+
+
     .auth-link {
         margin-top: 10px;
+
         font-weight: bold;
-        color: #ffc107 !important; /* Makes Login/Logout stand out */
+
+        color: #ffc107 !important;
     }
+
 }
+
 </style>
 </head>
 
@@ -221,10 +397,10 @@ body {
         <li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">Contact</a></li>
       </ul>
       <div class="d-lg-flex align-items-center gap-3 text-center social-icons">
-    <a href="#" class="text-white"><i class="bi bi-instagram"></i></a>
-    <a href="#" class="text-white"><i class="bi bi-youtube"></i></a>
+    <a href="https://www.instagram.com/homeentertainments?igsh=eGtkd25zbXFxcWcw" class="text-white"><i class="bi bi-instagram"></i></a>
+    <a href="https://www.youtube.com/@HomeEntertainmentsMusic" class="text-white"><i class="bi bi-youtube"></i></a>
     <a href="#" class="text-white"><i class="bi bi-facebook"></i></a>
-    <a href="#" class="text-white"><i class="bi bi-twitter-x"></i></a>
+    <a href="https://x.com/Homeentertains" class="text-white"><i class="bi bi-twitter-x"></i></a>
     
     <!-- {% if session.get('user') %}
         <a class="nav-link text-white auth-link" href="{{ url_for('logout') }}">Logout</a>
@@ -257,9 +433,9 @@ body {
             <div class="col-md-4 col-12 footer-column">
                 <h5>Entertainment</h5>
                 <ul class="footer-links">
-                    <li><a href="#">Home Entertainment Film</a></li>
-                    <li><a href="#">Home Entertainment Music</a></li>
-                    <li><a href="#">Home Entertainment Media</a></li>
+                    <li><a href="https://www.youtube.com/@HomeEntertainmentsFilms">Home Entertainment Film</a></li>
+                    <li><a href="https://www.youtube.com/@HomeEntertainmentsMusic">Home Entertainment Music</a></li>
+                    <li><a href="https://www.youtube.com/channel/UCTNuEQxXgsPR5WeyLk9GsGA">Home Entertainment Media</a></li>
                 </ul>
             </div>
 
@@ -267,10 +443,10 @@ body {
                 <h5>Connect With Us</h5>
                 <p class="small mb-3" style="color: #ffffff !important;">Follow our journey on social media for the latest updates.</p>
                 <div class="social-links">
-                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.youtube.com/@HomeEntertainmentsMusic" class="social-icon"><i class="fab fa-youtube"></i></a>
                     <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-x-twitter"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="https://x.com/Homeentertains" class="social-icon"><i class="fab fa-x-twitter"></i></a>
+                    <a href="https://www.instagram.com/homeentertainments?igsh=eGtkd25zbXFxcWcw" class="social-icon"><i class="fab fa-instagram"></i></a>
                     <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
