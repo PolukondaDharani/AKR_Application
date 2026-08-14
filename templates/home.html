@@ -1,301 +1,708 @@
 {% extends "base.html" %}
+
 {% block content %}
 
 <style>
+
 /* =========================================================
-   GLOBAL / PAGE
+   GLOBAL PAGE RESET
    ========================================================= */
 
 html,
 body {
+
     margin: 0;
     padding: 0 !important;
+
     overflow-x: hidden;
-    background: #000;
+
+    background-color: #000;
 }
+
 
 * {
     box-sizing: border-box;
 }
 
+
 /* =========================================================
-   HERO / VIDEO CAROUSEL
+   HERO CAROUSEL
    ========================================================= */
 
-#homeCarousel,
-#homeCarousel .carousel-item {
+#homeCarousel {
+
     position: relative;
+
     width: 100%;
-    height: calc(100vh - 50px);
-    height: calc(100dvh - 50px);
-    min-height: 520px;
+
+    /*
+     * Full screen hero.
+     *
+     * IMPORTANT:
+     * Do not subtract navbar height.
+     *
+     * Navbar sits on top of the hero.
+     */
+
+    height: 100vh;
+
+    height: 100svh;
+
+    height: 100dvh;
+
+    min-height: 600px;
+
     overflow: hidden;
+
 }
+
+
+/* =========================================================
+   CAROUSEL ITEMS
+   ========================================================= */
+
+#homeCarousel .carousel-inner,
+#homeCarousel .carousel-item {
+
+    width: 100%;
+
+    height: 100%;
+
+}
+
+
+#homeCarousel .carousel-item {
+
+    position: relative;
+
+    overflow: hidden;
+
+}
+
+
+/* =========================================================
+   HERO BACKGROUND VIDEO
+   ========================================================= */
 
 .bg-video {
+
     position: absolute;
+
     inset: 0;
+
     width: 100%;
+
     height: 100%;
+
+    /*
+     * This is the important part.
+     *
+     * The video automatically fills
+     * phone / tablet / laptop screens.
+     */
+
     object-fit: cover;
+
     object-position: center center;
+
     z-index: 1;
+
 }
 
+
+/* =========================================================
+   HERO VIDEO OVERLAY
+   ========================================================= */
+
 .video-overlay {
+
     position: absolute;
+
     inset: 0;
+
     width: 100%;
+
     height: 100%;
-    background: rgba(0, 0, 0, 0.55);
+
+    /*
+     * Dark enough to make text and
+     * navbar visible.
+     */
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.30) 0%,
+            rgba(0, 0, 0, 0.20) 35%,
+            rgba(0, 0, 0, 0.55) 100%
+        );
+
     z-index: 2;
+
+    pointer-events: none;
+
 }
+
 
 /* =========================================================
    HERO CONTENT
    ========================================================= */
 
 .custom-caption {
+
     position: absolute;
+
     z-index: 3;
 
     /*
-     * Instead of fixed left/top/margin values,
-     * use flexible positioning.
+     * Responsive left/right positioning.
      */
-    left: clamp(1rem, 8vw, 8rem);
-    right: clamp(1rem, 8vw, 8rem);
-    bottom: clamp(3rem, 10vh, 7rem);
 
-    max-width: 700px;
-    padding: clamp(0.5rem, 2vw, 1.5rem);
+    left:
+        clamp(
+            1.25rem,
+            7vw,
+            7rem
+        );
+
+    right:
+        clamp(
+            1.25rem,
+            7vw,
+            7rem
+        );
+
+    /*
+     * Content stays near bottom.
+     */
+
+    bottom:
+        clamp(
+            3rem,
+            10vh,
+            7rem
+        );
+
+    max-width: 650px;
+
+    padding: 0;
+
+    text-align: left;
+
 }
+
+
+/* =========================================================
+   HERO TEXT
+   ========================================================= */
 
 .custom-caption h1,
 .custom-caption p {
-    text-shadow: 2px 4px 20px rgba(0, 0, 0, 0.9);
-    margin-bottom: 1rem;
+
+    text-shadow:
+        2px 4px 20px
+        rgba(0, 0, 0, 0.9);
+
 }
+
+
+.custom-caption h1 {
+
+    font-size:
+        clamp(
+            2rem,
+            5vw,
+            4rem
+        );
+
+    line-height: 1.1;
+
+    margin-bottom: 1rem;
+
+}
+
+
+.custom-caption p {
+
+    font-size:
+        clamp(
+            0.95rem,
+            1.8vw,
+            1.25rem
+        );
+
+    line-height: 1.6;
+
+}
+
 
 /* =========================================================
    WATCH BUTTON
    ========================================================= */
 
 .watch-now-btn {
+
     background: #ffc107;
+
     border: none;
 
-    /*
-     * Fluid padding and font size.
-     */
-    padding: clamp(0.65rem, 1.2vw, 0.9rem)
-             clamp(1.5rem, 3vw, 2.5rem);
+    padding:
+        clamp(
+            0.6rem,
+            1.2vw,
+            0.8rem
+        )
+        clamp(
+            1.5rem,
+            3vw,
+            2.2rem
+        );
 
     border-radius: 50px;
+
     font-weight: 700;
 
-    font-size: clamp(0.75rem, 1.2vw, 1rem);
+    font-size:
+        clamp(
+            0.75rem,
+            1.2vw,
+            1rem
+        );
+
+    color: #000;
+
+    text-transform: uppercase;
+
+    cursor: pointer;
 
     transition:
         transform 0.3s ease,
         background 0.3s ease;
 
-    color: #000;
-    text-transform: uppercase;
-    cursor: pointer;
 }
+
 
 .watch-now-btn:hover {
+
     background: #e0a800;
+
     transform: scale(1.05);
+
 }
 
+
 /* =========================================================
-   VISION / MISSION
+   CAROUSEL INDICATORS
+   ========================================================= */
+
+#homeCarousel .carousel-indicators {
+
+    z-index: 5;
+
+    bottom: 15px;
+
+}
+
+
+#homeCarousel .carousel-indicators button {
+
+    width: 45px;
+
+    height: 3px;
+
+    margin:
+        0 5px;
+
+}
+
+
+/* =========================================================
+   VISION & MISSION
    ========================================================= */
 
 .vision-mission-section {
-    padding-block: clamp(2rem, 5vw, 4rem);
+
+    padding-block:
+        clamp(
+            2rem,
+            5vw,
+            4rem
+        );
+
+    background: #000;
+
 }
+
 
 .vision-mission-grid {
+
     display: grid;
 
-    /*
-     * Automatically becomes:
-     * 1 column when space is small
-     * 2 columns when space is available
-     */
-    grid-template-columns: repeat(
-        auto-fit,
-        minmax(min(100%, 280px), 1fr)
-    );
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
 
-    gap: clamp(1rem, 2vw, 1.5rem);
+    gap:
+        clamp(
+            1rem,
+            3vw,
+            2rem
+        );
+
 }
 
-.flip-card {
-    perspective: 1000px;
-    width: 100%;
 
-    /*
-     * Aspect ratio prevents fixed-height problems.
-     */
-    aspect-ratio: 16 / 9;
+/* =========================================================
+   VISION / MISSION CARD
+   ========================================================= */
 
-    min-height: 180px;
-}
+.info-card {
 
-.flip-card-inner {
     position: relative;
-    width: 100%;
-    height: 100%;
 
-    transition: transform 0.8s;
-    transform-style: preserve-3d;
+    min-height:
+        clamp(
+            170px,
+            20vw,
+            220px
+        );
+
+    background:
+        linear-gradient(
+            135deg,
+            #151515,
+            #080808
+        );
+
+    border:
+        1px solid
+        rgba(255, 193, 7, 0.18);
+
+    border-radius:
+        clamp(
+            12px,
+            2vw,
+            18px
+        );
+
+    overflow: hidden;
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+
 }
 
-.flip-card:hover .flip-card-inner {
-    transform: rotateY(180deg);
-}
 
-.flip-card-front,
-.flip-card-back {
+.info-card::before {
+
+    content: "";
+
     position: absolute;
-    inset: 0;
 
-    width: 100%;
+    left: 0;
+
+    top: 0;
+
+    bottom: 0;
+
+    width: 3px;
+
+    background: #ffc107;
+
+    transform:
+        scaleY(0);
+
+    transform-origin: bottom;
+
+    transition:
+        transform 0.35s ease;
+
+}
+
+
+.info-card:hover {
+
+    transform:
+        translateY(-5px);
+
+    border-color:
+        rgba(255, 193, 7, 0.5);
+
+    box-shadow:
+        0 15px 40px
+        rgba(0, 0, 0, 0.45);
+
+}
+
+
+.info-card:hover::before {
+
+    transform:
+        scaleY(1);
+
+}
+
+
+/* =========================================================
+   VISION / MISSION CONTENT
+   ========================================================= */
+
+.info-card-content {
+
     height: 100%;
 
-    border-radius: clamp(14px, 2vw, 22px);
-
-    background: #111;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding:
+        clamp(
+            1.25rem,
+            3vw,
+            2rem
+        );
 
     display: flex;
-    align-items: center;
+
+    flex-direction: column;
+
     justify-content: center;
 
-    text-align: center;
-
-    padding: clamp(1rem, 3vw, 2rem);
-
-    backface-visibility: hidden;
 }
 
-.flip-card-front h3 {
-    margin: 0;
+
+.info-card-number {
+
+    color: #ffc107;
+
+    font-size: 0.75rem;
 
     font-weight: 700;
 
-    /*
-     * Automatically scales with screen.
-     */
-    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    letter-spacing: 2px;
+
+    margin-bottom: 0.5rem;
+
+    opacity: 0.8;
+
+}
+
+
+.info-card h3 {
+
+    margin: 0;
 
     color: #ffc107;
+
+    font-weight: 800;
+
+    font-size:
+        clamp(
+            1.1rem,
+            2vw,
+            1.5rem
+        );
+
+    letter-spacing: 1px;
+
 }
 
-.flip-card-back {
-    transform: rotateY(180deg);
 
-    color: rgba(255, 255, 255, 0.85);
+.info-line {
 
-    font-size: clamp(0.8rem, 1.5vw, 0.95rem);
+    width: 35px;
 
-    line-height: 1.5;
+    height: 2px;
 
-    box-shadow: 0 0 25px rgba(255, 193, 7, 0.15);
+    background: #ffc107;
+
+    margin:
+        0.7rem 0 0.9rem;
+
 }
 
-.flip-card-back p {
+
+.info-card p {
+
     margin: 0;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            0.7
+        );
+
+    line-height: 1.6;
+
+    font-size:
+        clamp(
+            0.8rem,
+            1.3vw,
+            0.95rem
+        );
+
+    max-width: 550px;
+
 }
+
 
 /* =========================================================
-   SECTION
+   CONTENT SECTIONS
    ========================================================= */
 
 .content-section {
-    padding-bottom: clamp(2rem, 5vw, 4rem);
+
+    padding-bottom:
+        clamp(
+            2rem,
+            5vw,
+            4rem
+        );
+
+    background: #000;
+
 }
 
+
 .section-title {
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
+
+    font-size:
+        clamp(
+            1.5rem,
+            4vw,
+            2.5rem
+        );
 
     font-weight: 800;
 
     color: #ffc107;
 
-    margin-bottom: clamp(1rem, 3vw, 1.75rem);
+    margin-bottom:
+        clamp(
+            1rem,
+            3vw,
+            1.75rem
+        );
 
     text-align: center;
+
 }
+
 
 /* =========================================================
    FILTER BUTTONS
    ========================================================= */
 
 .filter-container {
+
     display: flex;
+
     justify-content: center;
+
     align-items: center;
 
     flex-wrap: wrap;
 
-    gap: clamp(0.5rem, 2vw, 1rem);
+    gap:
+        clamp(
+            0.5rem,
+            2vw,
+            1rem
+        );
 
-    margin-bottom: clamp(1rem, 3vw, 2rem);
+    margin-bottom:
+        clamp(
+            1rem,
+            3vw,
+            2rem
+        );
+
 }
 
+
 .filter-btn {
+
     background-color: #ffc107;
+
     color: #000;
 
-    border: 1px solid #ffc107;
+    border:
+        1px solid #ffc107;
 
-    padding: clamp(0.4rem, 1vw, 0.65rem)
-             clamp(0.9rem, 2vw, 1.5rem);
+    padding:
+        clamp(
+            0.4rem,
+            1vw,
+            0.65rem
+        )
+        clamp(
+            0.9rem,
+            2vw,
+            1.5rem
+        );
 
     border-radius: 5px;
 
     font-weight: 700;
 
-    font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+    font-size:
+        clamp(
+            0.7rem,
+            1.2vw,
+            0.9rem
+        );
 
     cursor: pointer;
 
     transition:
         background 0.3s ease,
         transform 0.3s ease;
+
 }
+
 
 .filter-btn:hover {
+
     background-color: #e0a800;
+
     border-color: #e0a800;
-    transform: translateY(-2px);
+
+    transform:
+        translateY(-2px);
+
 }
 
+
 .filter-btn.active {
+
     background-color: #fff;
+
     color: #000;
+
     border-color: #fff;
+
 }
+
 
 /* =========================================================
    POSTER SLIDER
    ========================================================= */
 
 .poster-slider {
+
     display: flex;
 
-    /*
-     * The card automatically changes size depending
-     * on available screen width.
-     */
-    gap: clamp(0.75rem, 2vw, 1.25rem);
+    gap:
+        clamp(
+            0.75rem,
+            2vw,
+            1.25rem
+        );
 
     overflow-x: auto;
+
     overflow-y: hidden;
 
     padding:
@@ -303,54 +710,72 @@ body {
         0.25rem
         1rem;
 
-    scroll-snap-type: x proximity;
+    scroll-snap-type:
+        x proximity;
 
-    -webkit-overflow-scrolling: touch;
+    -webkit-overflow-scrolling:
+        touch;
 
     scrollbar-width: thin;
+
 }
 
-/*
- * Hide scrollbar on very small devices while
- * keeping scrolling functionality.
- */
+
 .poster-slider::-webkit-scrollbar {
+
     height: 6px;
+
 }
+
 
 .poster-slider::-webkit-scrollbar-thumb {
+
     background: #ffc107;
+
     border-radius: 10px;
+
 }
 
+
 .poster-slider::-webkit-scrollbar-track {
+
     background: transparent;
+
 }
+
 
 /* =========================================================
    POSTER CARD
    ========================================================= */
 
 .poster-card {
-    /*
-     * THIS IS THE IMPORTANT PART.
-     *
-     * Instead of:
-     *
-     * min-width: 220px
-     * mobile: 180px
-     *
-     * the browser automatically calculates the width.
-     */
-    flex: 0 0 clamp(170px, 22vw, 280px);
+
+    flex:
+        0 0
+        clamp(
+            170px,
+            22vw,
+            280px
+        );
 
     background: #151515;
 
-    border-radius: clamp(6px, 1vw, 10px);
+    border-radius:
+        clamp(
+            6px,
+            1vw,
+            10px
+        );
 
-    padding: clamp(0.5rem, 1vw, 0.75rem);
+    padding:
+        clamp(
+            0.5rem,
+            1vw,
+            0.75rem
+        );
 
-    border: 1px solid #222;
+    border:
+        1px solid #222;
 
     scroll-snap-align: start;
 
@@ -359,12 +784,25 @@ body {
         border-color 0.3s ease;
 
     min-width: 0;
+
 }
 
+
 .poster-card:hover {
-    transform: translateY(-5px);
-    border-color: rgba(255, 193, 7, 0.5);
+
+    transform:
+        translateY(-5px);
+
+    border-color:
+        rgba(
+            255,
+            193,
+            7,
+            0.5
+        );
+
 }
+
 
 /* =========================================================
    POSTER IMAGE
@@ -372,36 +810,38 @@ body {
 
 .poster-card img,
 .poster-img {
+
     display: block;
 
     width: 100%;
 
-    /*
-     * Automatically maintains poster proportions.
-     */
     aspect-ratio: 2 / 3;
 
-    /*
-     * Every poster gets the same visual area
-     * regardless of original image dimensions.
-     */
     object-fit: cover;
 
     object-position: center;
 
     border-radius: 6px;
+
 }
+
 
 /* =========================================================
    POSTER TEXT
    ========================================================= */
 
 .poster-title {
+
     color: #fff;
 
     font-weight: 700;
 
-    font-size: clamp(0.75rem, 1.3vw, 1rem);
+    font-size:
+        clamp(
+            0.75rem,
+            1.3vw,
+            1rem
+        );
 
     margin-top: 0.7rem;
 
@@ -410,193 +850,378 @@ body {
     overflow: hidden;
 
     text-overflow: ellipsis;
+
 }
+
 
 .poster-year {
+
     color: #aaa;
 
-    font-size: clamp(0.65rem, 1vw, 0.8rem);
+    font-size:
+        clamp(
+            0.65rem,
+            1vw,
+            0.8rem
+        );
 
     margin-top: 0.25rem;
+
 }
 
-.poster-video {
-    width: 100%;
-    aspect-ratio: 9 / 16;
-    overflow: hidden;
-    border-radius: 12px;
-    background: #000;
-}
-
-.poster-video iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    display: block;
-}
 
 /* =========================================================
-   DIVIDER
+   YOUTUBE SHORTS
+   ========================================================= */
+
+.poster-video {
+
+    width: 100%;
+
+    aspect-ratio: 9 / 16;
+
+    overflow: hidden;
+
+    border-radius: 12px;
+
+    background: #000;
+
+}
+
+
+.poster-video iframe {
+
+    width: 100%;
+
+    height: 100%;
+
+    border: none;
+
+    display: block;
+
+}
+
+
+.shorts-card {
+
+    flex-basis:
+        clamp(
+            170px,
+            20vw,
+            240px
+        );
+
+}
+
+
+/* =========================================================
+   SECTION DIVIDER
    ========================================================= */
 
 .section-divider {
+
     border: 0;
 
-    border-top: 1px solid rgba(255, 193, 7, 0.2);
+    border-top:
+        1px solid
+        rgba(
+            255,
+            193,
+            7,
+            0.2
+        );
 
     margin:
-        clamp(1.5rem, 4vw, 3rem)
+        clamp(
+            1.5rem,
+            4vw,
+            3rem
+        )
         0;
+
 }
+
 
 /* =========================================================
-   RESPONSIVE ADJUSTMENTS
+   TABLETS
    ========================================================= */
 
-/*
- * Tablets and smaller laptops
- */
 @media (max-width: 991px) {
 
-    #homeCarousel,
-    #homeCarousel .carousel-item {
-        min-height: 500px;
+    #homeCarousel {
+
+        min-height: 550px;
+
     }
 
+
     .custom-caption {
+
         left: 5%;
+
         right: 5%;
+
         bottom: 8%;
+
     }
+
 
     .poster-card {
-        flex-basis: clamp(180px, 28vw, 240px);
+
+        flex-basis:
+            clamp(
+                180px,
+                28vw,
+                240px
+            );
+
     }
+
 }
 
-/*
- * Phones
- */
-@media (max-width: 576px) {
 
-    #homeCarousel,
-    #homeCarousel .carousel-item {
-        /*
-         * Keep hero large enough for phones,
-         * but don't force huge dimensions.
-         */
-        min-height: 480px;
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    #homeCarousel {
+
+        min-height: 650px;
+
     }
 
-    .bg-video {
-        /*
-         * Cover is maintained, so different video
-         * dimensions don't break the layout.
-         */
-        object-position: center center;
+
+    /*
+     * Vision and mission stack vertically.
+     */
+
+    .vision-mission-grid {
+
+        grid-template-columns: 1fr;
+
+        gap: 1rem;
+
     }
+
+
+    .info-card {
+
+        min-height: 160px;
+
+        border-radius: 12px;
+
+    }
+
+
+    .info-card:hover {
+
+        transform: none;
+
+    }
+
+
+    .info-card-content {
+
+        padding: 1.25rem;
+
+    }
+
+
+    /*
+     * Hero text.
+     */
 
     .custom-caption {
-        left: 1rem;
-        right: 1rem;
 
-        bottom: 2.5rem;
+        left: 1.25rem;
+
+        right: 1.25rem;
+
+        bottom: 3rem;
 
         max-width: none;
 
         padding: 0;
 
-        text-align: center;
+        text-align: left;
+
     }
+
+
+    .custom-caption h1 {
+
+        font-size:
+            clamp(
+                1.8rem,
+                8vw,
+                2.8rem
+            );
+
+        line-height: 1.15;
+
+    }
+
+
+    .custom-caption p {
+
+        font-size:
+            clamp(
+                0.9rem,
+                4vw,
+                1.1rem
+            );
+
+        line-height: 1.5;
+
+    }
+
 
     .watch-now-btn {
-        /*
-         * No fixed width.
-         */
+
         width: auto;
+
         min-width: 120px;
+
     }
 
-    .vision-mission-section {
-        padding-block: 2rem;
-    }
+
+    /*
+     * Poster cards.
+     */
 
     .poster-card {
-        /*
-         * Still responsive, but comfortable
-         * for phone swiping.
-         */
-        flex-basis: min(72vw, 220px);
+
+        flex-basis:
+            min(
+                72vw,
+                220px
+            );
+
     }
+
+
+    .shorts-card {
+
+        flex-basis:
+            min(
+                62vw,
+                200px
+            );
+
+    }
+
+
+    .section-title {
+
+        font-size:
+            clamp(
+                1.25rem,
+                6vw,
+                1.75rem
+            );
+
+    }
+
 
     .poster-slider {
-        /*
-         * Gives the first and last cards breathing room.
-         */
-        padding-inline: 0.25rem;
+
+        padding-bottom: 0.75rem;
+
     }
+
 
     .filter-container {
-        padding-inline: 0.5rem;
+
+        gap: 8px;
+
+        margin-bottom: 15px;
+
     }
+
 
     .filter-btn {
-        flex: 0 0 auto;
+
+        padding:
+            6px 15px;
+
+        font-size: 0.75rem;
+
     }
+
 }
 
-/*
- * Very small phones
- */
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
 @media (max-width: 360px) {
 
-    #homeCarousel,
-    #homeCarousel .carousel-item {
-        min-height: 430px;
+    #homeCarousel {
+
+        min-height: 600px;
+
     }
 
-    .poster-card {
-        flex-basis: 75vw;
+
+    .custom-caption {
+
+        bottom: 2.5rem;
+
     }
+
+
+    .poster-card {
+
+        flex-basis: 75vw;
+
+    }
+
+
+    .shorts-card {
+
+        flex-basis: 68vw;
+
+    }
+
 }
+
 </style>
 
 
 <!-- =========================================================
-     HERO CAROUSEL
+     HERO
      ========================================================= -->
 
 <section
     id="homeCarousel"
     class="carousel slide carousel-fade"
     data-bs-ride="carousel"
+    data-bs-interval="7000"
 >
 
-    <div class="carousel-indicators">
 
-        <button
-            type="button"
-            data-bs-target="#homeCarousel"
-            data-bs-slide-to="0"
-            class="active"
-            aria-label="Slide 1"
-        ></button>
+    <!-- =====================================================
+         CAROUSEL INDICATORS
+         ===================================================== -->
 
-        <button
-            type="button"
-            data-bs-target="#homeCarousel"
-            data-bs-slide-to="1"
-            aria-label="Slide 2"
-        ></button>
-
-    </div>
+    <!--
+    You currently have only ONE hero slide,
+    so we don't need multiple indicators.
+    -->
 
 
     <div class="carousel-inner">
 
-        <!-- HERO VIDEO 1 -->
+
+        <!-- =================================================
+             HERO VIDEO
+             ================================================= -->
 
         <div class="carousel-item active">
+
 
             <video
                 class="bg-video"
@@ -604,62 +1229,75 @@ body {
                 muted
                 loop
                 playsinline
+                preload="auto"
             >
+
                 <source
                     src="/static/images/motion_poster.mp4"
                     type="video/mp4"
                 >
+
+                Your browser does not support
+                the video tag.
+
             </video>
+
+
+            <!-- =================================================
+                 DARK OVERLAY
+                 ================================================= -->
 
             <div class="video-overlay"></div>
 
+
+            <!-- =================================================
+                 HERO CONTENT
+                 ================================================= -->
+
             <div class="custom-caption">
+
+
+                <!--
+                If you want your text to appear,
+                uncomment this section.
+                -->
+
+
+                <!--
+
+                <h1>
+                    Dream. Craft. Showcase.
+                </h1>
+
+                <p>
+                    Empowering filmmakers to dream big.
+                </p>
+
+                <p>
+                    Dil Raju Dreams provides a vibrant
+                    platform for emerging talent to
+                    unleash their creativity and innovation.
+                </p>
 
                 <button
                     class="watch-now-btn"
-                    onclick="openVideo('https://www.youtube.com/watch?v=kzBoieupnV4')"
+                    onclick="openVideo(
+                        'https://www.youtube.com/watch?v=kzBoieupnV4'
+                    )"
                 >
                     ▶ Watch
                 </button>
 
-            </div>
-
-        </div>
-
-
-        <!-- HERO VIDEO 2 -->
-
-        <div class="carousel-item">
-
-            <video
-                class="bg-video"
-                autoplay
-                muted
-                loop
-                playsinline
-            >
-                <source
-                    src="/static/videos/hero2.mp4"
-                    type="video/mp4"
-                >
-            </video>
-
-            <div class="video-overlay"></div>
-
-            <div class="custom-caption">
-
-                <button
-                    class="watch-now-btn"
-                    onclick="openVideo('https://www.youtube.com/embed/YOUR_VIDEO_ID_2')"
-                >
-                    ▶ Watch
-                </button>
+                -->
 
             </div>
 
+
         </div>
+
 
     </div>
+
 
 </section>
 
@@ -668,70 +1306,71 @@ body {
      VISION / MISSION
      ========================================================= -->
 
-<section class="vision-mission-section text-light">
+<section
+    class="vision-mission-section text-light"
+>
 
     <div class="container">
 
+
         <div class="vision-mission-grid">
 
-            <!-- VISION -->
 
-            <div class="vision">
+            <!-- =================================================
+                 VISION
+                 ================================================= -->
 
-                <div class="flip-card">
+            <div class="info-card">
 
-                    <div class="flip-card-inner">
+                <div class="info-card-content">
 
-                        <div class="flip-card-front">
 
-                            <h3>Our Vision</h3>
+                    <h3>
+                        OUR VISION
+                    </h3>
 
-                        </div>
 
-                        <div class="flip-card-back">
+                    <div class="info-line"></div>
 
-                            <p>
-                                Inspiring storytellers through bold
-                                visuals and innovative techniques.
-                            </p>
 
-                        </div>
+                    <p>
+                        Inspiring storytellers through bold
+                        visuals and innovative techniques.
+                    </p>
 
-                    </div>
 
                 </div>
 
             </div>
 
 
-            <!-- MISSION -->
+            <!-- =================================================
+                 MISSION
+                 ================================================= -->
 
-            <div class="mission">
+            <div class="info-card">
 
-                <div class="flip-card">
+                <div class="info-card-content">
 
-                    <div class="flip-card-inner">
 
-                        <div class="flip-card-front">
+                    <h3>
+                        OUR MISSION
+                    </h3>
 
-                            <h3>Our Mission</h3>
 
-                        </div>
+                    <div class="info-line"></div>
 
-                        <div class="flip-card-back">
 
-                            <p>
-                                Transforming passion into impact by
-                                creating high-quality cinema.
-                            </p>
+                    <p>
+                        Transforming passion into impact
+                        by creating high-quality cinema.
+                    </p>
 
-                        </div>
-
-                    </div>
 
                 </div>
 
             </div>
+
 
         </div>
 
@@ -748,23 +1387,33 @@ body {
 
     <div class="container">
 
+
         <!-- FILTER -->
 
         <div class="filter-container">
 
+
             <button
                 class="filter-btn"
-                onclick="filterSelection('upcoming', this)"
+                onclick="filterSelection(
+                    'upcoming',
+                    this
+                )"
             >
                 Upcoming
             </button>
 
+
             <button
                 class="filter-btn"
-                onclick="filterSelection('released', this)"
+                onclick="filterSelection(
+                    'released',
+                    this
+                )"
             >
                 Released
             </button>
+
 
         </div>
 
@@ -776,101 +1425,102 @@ body {
             id="portfolioSlider"
         >
 
-            <!-- POSTER 1 -->
+
+            <!-- =================================================
+                 POSTER 1
+                 ================================================= -->
 
             <div class="poster-card released">
+
 
                 <img
                     src="/static/images/songposter.png"
-                    alt="Project X"
+                    alt="Oh My Friend Lyrical Video"
                     class="poster-img"
                     loading="lazy"
                 >
 
+
                 <div class="poster-title">
+
                     OH MY FRIEND LYRICAL VIDEO
+
                 </div>
 
+
                 <div class="poster-year">
+
                     Released
+
                 </div>
+
 
             </div>
 
 
-            <!-- POSTER 2 -->
+            <!-- =================================================
+                 POSTER 2
+                 ================================================= -->
 
             <div class="poster-card upcoming">
+
 
                 <img
                     src="/static/images/songposter2.png"
-                    alt="The Journey"
+                    alt="Second Song"
                     class="poster-img"
                     loading="lazy"
                 >
 
+
                 <div class="poster-title">
+
                     Second Song - C&C
+
                 </div>
 
+
                 <div class="poster-year">
+
                     Coming Soon
+
                 </div>
+
 
             </div>
 
 
-            <!-- POSTER 3 -->
+            <!-- =================================================
+                 POSTER 3
+                 ================================================= -->
 
             <div class="poster-card upcoming">
 
+
                 <img
                     src="/static/images/webseries poster.jpeg"
-                    alt="Cinema Noir"
+                    alt="Web Series"
                     class="poster-img"
                     loading="lazy"
                 >
 
+
                 <div class="poster-title">
+
                     Web Series - C&C
+
                 </div>
 
+
                 <div class="poster-year">
+
                     Coming Soon
+
                 </div>
+
 
             </div>
 
-
-
-
-            <!--
-            ====================================================
-            ADD NEW POSTERS LIKE THIS
-
-            NO CSS CHANGE REQUIRED
-            ====================================================
-
-            <div class="poster-card released">
-
-                <img
-                    src="/static/images/new-poster.jpg"
-                    alt="New Movie"
-                    class="poster-img"
-                    loading="lazy"
-                >
-
-                <div class="poster-title">
-                    NEW MOVIE
-                </div>
-
-                <div class="poster-year">
-                    Released (2026)
-                </div>
-
-            </div>
-
-            -->
 
         </div>
 
@@ -878,6 +1528,10 @@ body {
 
 </section>
 
+
+<!-- =========================================================
+     SECTION DIVIDER
+     ========================================================= -->
 
 <hr class="section-divider">
 
@@ -890,83 +1544,130 @@ body {
 
     <div class="container">
 
+
         <h2 class="section-title">
+
             NEWS & EVENTS
+
         </h2>
+
 
         <div class="poster-slider">
 
-            <!-- EVENT 1 -->
+
+            <!-- =================================================
+                 EVENT 1
+                 ================================================= -->
+
             <div class="poster-card">
 
+
                 <div class="poster-video">
+
                     <iframe
                         src="https://www.youtube.com/embed/kf1Zn_y61xw"
-                        title="Best Award"
-                        frameborder="0"
+                        title="Ramaiah College Promotion"
+                        loading="lazy"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
+                        allowfullscreen
+                    >
                     </iframe>
+
                 </div>
+
 
                 <div class="poster-title">
+
                     Ramaiah College Promotion
+
                 </div>
 
+
                 <div class="poster-year">
+
                     Event - Feb 2026
+
                 </div>
+
 
             </div>
 
 
-            <!-- EVENT 2 -->
+            <!-- =================================================
+                 EVENT 2
+                 ================================================= -->
+
             <div class="poster-card">
 
+
                 <div class="poster-video">
+
                     <iframe
                         src="https://www.youtube.com/embed/08ATLr6jF9A"
-                        title="New Studio Opening"
-                        frameborder="0"
+                        title="Soundarya College Promotion"
+                        loading="lazy"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
+                        allowfullscreen
+                    >
                     </iframe>
+
                 </div>
+
 
                 <div class="poster-title">
-                     Soundarya College Promotion
+
+                    Soundarya College Promotion
+
                 </div>
 
+
                 <div class="poster-year">
+
                     News - Jan 2026
+
                 </div>
+
 
             </div>
 
 
-            <!-- ADD NEW EVENTS HERE -->
+            <!-- =================================================
+                 EVENT 3
+                 ================================================= -->
 
             <div class="poster-card">
 
+
                 <div class="poster-video">
+
                     <iframe
                         src="https://www.youtube.com/embed/FQsPA_2LXnI"
-                        title="New Event"
-                        frameborder="0"
+                        title="St. Claret College Promotion"
+                        loading="lazy"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
+                        allowfullscreen
+                    >
                     </iframe>
+
                 </div>
+
 
                 <div class="poster-title">
+
                     St. Claret College Promotion
+
                 </div>
+
 
                 <div class="poster-year">
+
                     Event - 2026
+
                 </div>
 
+
             </div>
+
 
         </div>
 
@@ -981,41 +1682,53 @@ body {
 
 <script>
 
-/*
-=========================================================
-FILTER
-=========================================================
-*/
 
-function filterSelection(category, clickedButton) {
+/* =========================================================
+   FILTER
+   ========================================================= */
 
-    const cards = document.querySelectorAll(
-        "#portfolioSlider .poster-card"
-    );
+function filterSelection(
+    category,
+    clickedButton
+) {
 
-    const buttons = document.querySelectorAll(
-        ".filter-btn"
-    );
+
+    const cards =
+        document.querySelectorAll(
+            "#portfolioSlider .poster-card"
+        );
+
+
+    const buttons =
+        document.querySelectorAll(
+            ".filter-btn"
+        );
 
 
     /*
-     * Remove active state from all buttons.
+     * Remove active state.
      */
 
-    buttons.forEach(function(button) {
+    buttons.forEach(
+        function(button) {
 
-        button.classList.remove("active");
+            button.classList.remove(
+                "active"
+            );
 
-    });
+        }
+    );
 
 
     /*
-     * Add active state to clicked button.
+     * Add active state.
      */
 
     if (clickedButton) {
 
-        clickedButton.classList.add("active");
+        clickedButton.classList.add(
+            "active"
+        );
 
     }
 
@@ -1024,92 +1737,115 @@ function filterSelection(category, clickedButton) {
      * Show / hide cards.
      */
 
-    cards.forEach(function(card) {
+    cards.forEach(
+        function(card) {
 
-        if (card.classList.contains(category)) {
 
-            card.style.display = "";
+            if (
+                card.classList.contains(
+                    category
+                )
+            ) {
 
-        } else {
+                card.style.display = "";
 
-            card.style.display = "none";
+            }
+            else {
+
+                card.style.display = "none";
+
+            }
 
         }
-
-    });
+    );
 
 }
 
 
-/*
-=========================================================
-OPEN VIDEO
-=========================================================
-*/
+/* =========================================================
+   OPEN VIDEO
+   ========================================================= */
 
 function openVideo(videoUrl) {
 
-    const frame = document.getElementById("videoFrame");
 
-    /*
-     * If video modal exists in another template,
-     * use it.
-     */
+    const frame =
+        document.getElementById(
+            "videoFrame"
+        );
+
 
     if (frame) {
 
+
         const separator =
-            videoUrl.includes("?") ? "&" : "?";
+            videoUrl.includes("?")
+                ? "&"
+                : "?";
+
 
         frame.src =
-            videoUrl + separator + "autoplay=1";
+            videoUrl +
+            separator +
+            "autoplay=1";
 
 
         const modalElement =
-            document.getElementById("videoModal");
+            document.getElementById(
+                "videoModal"
+            );
 
 
         if (modalElement) {
 
+
             const modal =
-                new bootstrap.Modal(modalElement);
+                new bootstrap.Modal(
+                    modalElement
+                );
+
 
             modal.show();
 
         }
 
-    } else {
+    }
+    else {
 
-        /*
-         * If modal does not exist,
-         * open the video normally.
-         */
 
-        window.open(videoUrl, "_blank");
+        window.open(
+            videoUrl,
+            "_blank"
+        );
 
     }
 
 }
 
 
-/*
-=========================================================
-VIDEO MODAL CLEANUP
-=========================================================
-*/
+/* =========================================================
+   VIDEO MODAL CLEANUP
+   ========================================================= */
 
 const videoModal =
-    document.getElementById("videoModal");
+    document.getElementById(
+        "videoModal"
+    );
 
 
 if (videoModal) {
 
+
     videoModal.addEventListener(
         "hidden.bs.modal",
-        function () {
+        function() {
+
 
             const frame =
-                document.getElementById("videoFrame");
+                document.getElementById(
+                    "videoFrame"
+                );
+
 
             if (frame) {
 
@@ -1123,5 +1859,6 @@ if (videoModal) {
 }
 
 </script>
+
 
 {% endblock %}

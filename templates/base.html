@@ -1,16 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ title or "Actor-Producer Portfolio" }}</title>
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <meta charset="UTF-8">
 
-  <style>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>
+        {{ title or "Actor-Producer Portfolio" }}
+    </title>
+
+
+    <!-- =====================================================
+         BOOTSTRAP
+         ===================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    >
+
+
+    <!-- =====================================================
+         MAIN CSS
+         ===================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+
+    <!-- =====================================================
+         BOOTSTRAP ICONS
+         ===================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+    >
+
+
+    <!-- =====================================================
+         FONT AWESOME
+         ===================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    >
+
+
+<style>
 
 /* =========================================================
    GLOBAL
@@ -18,92 +63,777 @@
 
 html,
 body {
+
     margin: 0;
+
     padding: 0;
+
     overflow-x: hidden;
+
 }
 
+
 body {
-    padding-top: 50px;
+
+    padding-top: 80px;
+
 }
 
 
 /* =========================================================
-   NAVBAR
+   CINEMATIC NAVBAR - DESKTOP
    ========================================================= */
 
 .cinematic-navbar {
-    background: #000;
 
-    backdrop-filter: blur(8px);
+    position: absolute;
+
+    top: -10px;
+
+    left: 0;
+
+    right: 0;
+
+    width: 100%;
+
+    height: 80px;
+
+    min-height: 80px !important;
+
+    z-index: 1050;
 
     padding: 0 !important;
 
-    height: 50px;
-    min-height: 50px;
+    background: transparent !important;
 
     display: flex;
+
     align-items: center;
 
     border-bottom:
-        1px solid rgba(255, 255, 255, 0.1);
+        1px solid
+        rgba(255, 255, 255, 0.10);
+
 }
 
 
 /* =========================================================
-   NAVBAR BRAND
+   NAVBAR CONTAINER
+   ========================================================= */
+
+.cinematic-navbar > .container {
+
+    width: 100%;
+
+    max-width: none;
+
+    height: 95px;
+
+    padding: 8px 22px;
+
+    background: transparent !important;
+
+    border: none;
+
+    border-radius: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    overflow: visible;
+
+}
+
+
+/* =========================================================
+   LOGO
    ========================================================= */
 
 .navbar-brand {
-    padding: 0;
 
     display: flex;
+
     align-items: center;
+
+    justify-content: center;
+
+    padding: 0 !important;
+
+    margin: 0;
+
+    height: auto;
+
+    flex-shrink: 0;
+
 }
 
+
 .navbar-brand img {
-    /*
-     * Automatically scale the logo slightly
-     * depending on screen size.
-     */
-    height: clamp(45px, 5vw, 60px);
+
+    display: block;
+
+    height: 80px;
 
     width: auto;
 
+    max-width: none;
+
     object-fit: contain;
 
-    transition: all 0.3s ease;
+    transition:
+        transform 0.3s ease;
+
+}
+
+
+.navbar-brand img:hover {
+
+    transform:
+        scale(1.03);
+
 }
 
 
 /* =========================================================
-   NAV LINKS
+   NAVIGATION LINKS
    ========================================================= */
 
+.navbar-collapse {
+
+    align-items: center;
+
+}
+
+
+.navbar-nav {
+
+    align-items: center;
+
+    gap: 4px;
+
+}
+
+
 .nav-link {
-    font-size: clamp(0.7rem, 1vw, 0.85rem);
+
+    color: #ffffff !important;
+
+    font-size: 0.8rem;
+
+    font-weight: 500;
 
     text-transform: uppercase;
 
     letter-spacing: 1px;
 
-    line-height: 50px;
+    line-height: normal;
 
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
+    padding:
+        8px 12px !important;
 
-    white-space: nowrap;
+    transition:
+        color 0.25s ease,
+        transform 0.25s ease;
+
+}
+
+
+.nav-link:hover {
+
+    color: #ffc107 !important;
+
+    transform:
+        translateY(-1px);
+
 }
 
 
 /* =========================================================
-   NAVBAR TOGGLE
+   DESKTOP SOCIAL ICONS
+   ========================================================= */
+
+.social-icons {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 18px;
+
+}
+
+
+.social-icons a {
+
+    color: #ffffff !important;
+
+    text-decoration: none;
+
+    font-size: 1rem;
+
+    transition:
+        color 0.25s ease,
+        transform 0.25s ease;
+
+}
+
+
+.social-icons a:hover {
+
+    color: #ffc107 !important;
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+/* =========================================================
+   MOBILE ACTIONS
+   ========================================================= */
+
+.mobile-navbar-actions {
+
+    display: none;
+
+}
+
+
+/* =========================================================
+   MOBILE USER ICON
+   ========================================================= */
+
+.mobile-user-icon {
+
+    width: 40px;
+
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: #ffffff !important;
+
+    text-decoration: none;
+
+    font-size: 29px;
+
+    transition:
+        color 0.25s ease,
+        transform 0.25s ease;
+
+}
+
+
+.mobile-user-icon:hover {
+
+    color: #ffc107 !important;
+
+    transform:
+        scale(1.05);
+
+}
+
+
+/* =========================================================
+   HAMBURGER
    ========================================================= */
 
 .navbar-toggler {
-    padding: 2px 5px !important;
 
-    font-size: 0.8rem !important;
+    width: 48px;
+
+    height: 48px;
+
+    padding: 0 !important;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: transparent !important;
+
+    border: none !important;
+
+    border-radius: 0 !important;
+
+    box-shadow: none !important;
+
+}
+
+
+.navbar-toggler:focus,
+.navbar-toggler:active {
+
+    background: transparent !important;
+
+    border: none !important;
+
+    box-shadow: none !important;
+
+    outline: none !important;
+
+}
+
+
+.navbar-toggler-icon {
+
+    width: 27px;
+
+    height: 27px;
+
+}
+
+
+/* =========================================================
+   MOBILE NAVBAR
+   ========================================================= */
+
+@media (max-width: 991px) {
+
+
+    /* -----------------------------------------------------
+       BODY
+       ----------------------------------------------------- */
+
+    body {
+
+        padding-top: 115px;
+
+    }
+
+
+    /* -----------------------------------------------------
+       OUTER NAVBAR
+       ----------------------------------------------------- */
+
+    .cinematic-navbar {
+
+        position: absolute;
+
+        top: -30px;
+
+        left: 0;
+
+        right: 0;
+
+        width: 100%;
+
+        height: 105px;
+
+        min-height: 105px !important;
+
+        padding: 10px 12px !important;
+
+        background: transparent !important;
+
+        border: none;
+
+        overflow: visible;
+
+    }
+
+
+    /* -----------------------------------------------------
+       NAVBAR CARD
+       ----------------------------------------------------- */
+
+    .cinematic-navbar > .container {
+
+        width: 100%;
+
+        max-width: none;
+
+        height: 95px;
+
+        padding:
+            8px 22px;
+
+        background:
+            transparent !important;
+
+        border:
+            0px solid
+            rgba(255, 255, 255, 0.15);
+
+        border-radius: 12px;
+
+        display: flex;
+
+        align-items: center;
+
+        overflow: visible;
+
+    }
+
+
+    /* -----------------------------------------------------
+       MOBILE LOGO
+       ----------------------------------------------------- */
+
+    .navbar-brand {
+
+        height: auto;
+
+        padding: 0 !important;
+
+        margin: 0;
+
+        display: flex;
+
+        align-items: center;
+
+        flex-shrink: 0;
+
+        overflow: visible;
+
+    }
+
+
+    .navbar-brand img {
+
+        height: 90px;
+
+        width: auto;
+
+        max-width: none;
+
+        object-fit: contain;
+
+        display: block;
+
+    }
+
+
+    /* -----------------------------------------------------
+       MOBILE RIGHT SIDE
+       ----------------------------------------------------- */
+
+    .mobile-navbar-actions {
+
+        margin-left: auto;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 14px;
+
+    }
+
+
+    /* -----------------------------------------------------
+       HAMBURGER
+       ----------------------------------------------------- */
+
+    .navbar-toggler {
+
+        width: 48px;
+
+        height: 48px;
+
+        margin: 0;
+
+    }
+
+
+    /* -----------------------------------------------------
+       MOBILE MENU
+       ----------------------------------------------------- */
+
+    .navbar-collapse {
+
+        position: absolute;
+
+        top: 105px;
+
+        left: 12px;
+
+        right: 12px;
+
+        width: auto;
+
+        padding:
+            15px 20px;
+
+        /*
+         * Transparent menu instead of solid box
+         */
+
+        background:
+            rgba(0, 0, 0, 0.25) !important;
+
+        border:
+            1px solid
+            rgba(255, 255, 255, 0.15);
+
+        border-radius: 12px;
+
+        box-shadow:
+            0 10px 30px
+            rgba(0, 0, 0, 0.45);
+
+    }
+
+
+    /* -----------------------------------------------------
+       MOBILE NAV LINKS
+       ----------------------------------------------------- */
+
+    .navbar-nav {
+
+        width: 100%;
+
+        align-items: stretch;
+
+        text-align: center;
+
+        gap: 0;
+
+    }
+
+
+    .nav-item {
+
+        width: 100%;
+
+    }
+
+
+    .nav-link {
+
+        width: 100%;
+
+        line-height: 42px;
+
+        padding:
+            5px 10px !important;
+
+        font-size: 0.8rem;
+
+        border-bottom:
+            1px solid
+            rgba(255, 255, 255, 0.06);
+
+    }
+
+
+    .nav-item:last-child .nav-link {
+
+        border-bottom: none;
+
+    }
+
+
+    /* -----------------------------------------------------
+       SOCIAL ICONS IN MOBILE MENU
+       ----------------------------------------------------- */
+
+    .social-icons {
+
+        display: flex !important;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 25px;
+
+        margin-top: 15px;
+
+        padding-top: 15px;
+
+        border-top:
+            1px solid
+            rgba(255, 255, 255, 0.08);
+
+    }
+
+
+    .social-icons a {
+
+        font-size: 1.1rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+
+    body {
+
+        padding-top: 110px;
+
+    }
+
+
+    .cinematic-navbar {
+
+        position: absolute;
+
+        top: -30px;
+
+        left: 0;
+
+        right: 0;
+
+        width: 100%;
+
+        height: 105px;
+
+        min-height: 105px !important;
+
+        padding: 10px 12px !important;
+
+        background: transparent !important;
+
+        border: none;
+
+        overflow: visible;
+
+    }
+
+
+    .cinematic-navbar > .container {
+
+        height: 90px;
+
+        padding:
+            6px 18px;
+
+    }
+
+
+    /*
+     * Logo size kept exactly as provided
+     */
+
+    .navbar-brand img {
+
+        height: 100px;
+
+        width: auto;
+
+        max-width: none;
+
+    }
+
+
+    .mobile-navbar-actions {
+
+        gap: 10px;
+
+    }
+
+
+    .navbar-toggler {
+
+        width: 46px;
+
+        height: 46px;
+
+    }
+
+
+    .navbar-collapse {
+
+        top: 100px;
+
+        background:
+            rgba(0, 0, 0, 0.25) !important;
+
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+
+    body {
+
+        padding-top: 105px;
+
+    }
+
+
+    .cinematic-navbar {
+
+        position: absolute;
+
+        top: -30px;
+
+        height: 96px;
+
+        min-height: 96px !important;
+
+    }
+
+
+    .cinematic-navbar > .container {
+
+        height: 86px;
+
+        padding:
+            6px 14px;
+
+    }
+
+
+    .navbar-brand img {
+
+        height: 100px;
+
+        max-width: none;
+
+    }
+
+
+    .mobile-navbar-actions {
+
+        gap: 7px;
+
+    }
+
+
+    .navbar-toggler {
+
+        width: 42px;
+
+        height: 42px;
+
+    }
+
+
+    .navbar-collapse {
+
+        top: 96px;
+
+        background:
+            rgba(0, 0, 0, 0.25) !important;
+
+    }
+
 }
 
 
@@ -112,6 +842,7 @@ body {
    ========================================================= */
 
 .main-footer {
+
     background:
         linear-gradient(
             to top,
@@ -120,7 +851,8 @@ body {
         );
 
     border-top:
-        1px solid rgba(255, 193, 7, 0.2);
+        1px solid
+        rgba(255, 193, 7, 0.2);
 
     padding:
         clamp(2.5rem, 5vw, 4rem)
@@ -130,10 +862,16 @@ body {
     color: #e0e0e0;
 
     margin-top: auto;
+
 }
 
 
+/* =========================================================
+   FOOTER HEADINGS
+   ========================================================= */
+
 .footer-column h5 {
+
     color: #ffc107;
 
     font-weight: 800;
@@ -142,15 +880,22 @@ body {
 
     text-transform: uppercase;
 
-    font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+    font-size:
+        clamp(
+            0.8rem,
+            1.2vw,
+            0.9rem
+        );
 
     letter-spacing: 2px;
 
     position: relative;
+
 }
 
 
 .footer-column h5::after {
+
     content: '';
 
     position: absolute;
@@ -164,22 +909,32 @@ body {
     height: 2px;
 
     background: #ffc107;
+
 }
 
 
+/* =========================================================
+   FOOTER LINKS
+   ========================================================= */
+
 .footer-links {
+
     list-style: none;
 
     padding: 0;
+
 }
 
 
 .footer-links li {
+
     margin-bottom: 10px;
+
 }
 
 
 .footer-links a {
+
     color: #999;
 
     text-decoration: none;
@@ -187,21 +942,25 @@ body {
     transition: 0.3s;
 
     font-size: 0.9rem;
+
 }
 
 
 .footer-links a:hover {
+
     color: #ffc107;
 
     padding-left: 8px;
+
 }
 
 
 /* =========================================================
-   SOCIAL LINKS
+   FOOTER SOCIAL LINKS
    ========================================================= */
 
 .social-links {
+
     display: flex;
 
     flex-wrap: wrap;
@@ -209,18 +968,22 @@ body {
     gap: 12px;
 
     margin-top: 20px;
+
 }
 
 
 .social-icon {
+
     width: 42px;
+
     height: 42px;
 
     background:
         rgba(255, 255, 255, 0.05);
 
     border:
-        1px solid rgba(255, 255, 255, 0.1);
+        1px solid
+        rgba(255, 255, 255, 0.1);
 
     border-radius: 10px;
 
@@ -233,19 +996,23 @@ body {
     color: #fff;
 
     transition: all 0.4s ease;
+
 }
 
 
 .social-icon:hover {
+
     background: #ffc107;
 
     color: #000;
 
-    transform: translateY(-5px);
+    transform:
+        translateY(-5px);
 
     box-shadow:
         0 10px 20px
         rgba(255, 193, 7, 0.3);
+
 }
 
 
@@ -254,12 +1021,14 @@ body {
    ========================================================= */
 
 .copyright-bar {
+
     margin-top: 50px;
 
     padding-top: 25px;
 
     border-top:
-        1px solid rgba(255, 255, 255, 0.05);
+        1px solid
+        rgba(255, 255, 255, 0.05);
 
     text-align: center;
 
@@ -268,31 +1037,6 @@ body {
     font-size: 0.8rem;
 
     letter-spacing: 1px;
-}
-
-
-/* =========================================================
-   MOBILE NAVBAR
-   ========================================================= */
-
-@media (max-width: 991px) {
-
-    .navbar-collapse {
-
-        background-color: #000;
-
-        padding: 20px;
-
-        border-radius:
-            0 0 10px 10px;
-
-        border-bottom:
-            1px solid rgba(255, 193, 7, 0.3);
-    }
-
-    .nav-link {
-        line-height: 40px;
-    }
 
 }
 
@@ -303,49 +1047,63 @@ body {
 
 @media (max-width: 768px) {
 
+
     .main-footer {
+
         padding:
             40px
             0
             15px;
 
         text-align: center;
+
     }
 
 
     .footer-column {
+
         margin-bottom: 35px !important;
+
     }
 
 
     .footer-column h5::after {
+
         left: 50%;
 
         transform:
             translateX(-50%);
+
     }
 
 
     .footer-links li {
+
         margin-bottom: 6px;
+
     }
 
 
     .social-links {
+
         justify-content: center;
 
         margin-bottom: 20px !important;
+
     }
 
 
     .copyright-bar {
+
         margin-top: 15px !important;
 
         padding-top: 15px !important;
+
     }
 
 
     .social-icons {
+
         display: flex !important;
 
         justify-content: center !important;
@@ -357,109 +1115,524 @@ body {
         margin-bottom: 20px;
 
         padding-bottom: 15px;
+
     }
 
 
     .social-icons i {
+
         font-size: 1.4rem;
+
     }
 
 
     .auth-link {
+
         margin-top: 10px;
 
         font-weight: bold;
 
         color: #ffc107 !important;
+
     }
 
 }
 
 </style>
+
 </head>
+
 
 <body class="d-flex flex-column min-vh-100">
 
-<nav class="navbar navbar-expand-lg navbar-dark cinematic-navbar fixed-top">
-  <div class="container">
-    <a class="navbar-brand d-flex align-items-center" href="{{ url_for('home') }}">
-      <img src="/static/images/logo.png" alt="Logo">
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
-      <ul class="navbar-nav mx-auto text-center">
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('about') }}">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('movies') }}">Movies</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('collaboration') }}">Collaboration</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('join') }}">Join Us</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">Contact</a></li>
-      </ul>
-      <div class="d-lg-flex align-items-center gap-3 text-center social-icons">
-    <a href="https://www.instagram.com/homeentertainments?igsh=eGtkd25zbXFxcWcw" class="text-white"><i class="bi bi-instagram"></i></a>
-    <a href="https://www.youtube.com/@HomeEntertainmentsMusic" class="text-white"><i class="bi bi-youtube"></i></a>
-    <a href="#" class="text-white"><i class="bi bi-facebook"></i></a>
-    <a href="https://x.com/Homeentertains" class="text-white"><i class="bi bi-twitter-x"></i></a>
-    
-    <!-- {% if session.get('user') %}
-        <a class="nav-link text-white auth-link" href="{{ url_for('logout') }}">Logout</a>
-    {% else %}
-        <a class="nav-link text-white auth-link" href="{{ url_for('login') }}">Login</a>
-    {% endif %} -->
-</div>
+
+<!-- =========================================================
+     NAVBAR
+     ========================================================= -->
+
+<nav
+    class="navbar navbar-expand-lg navbar-dark cinematic-navbar"
+>
+
+    <div class="container">
+
+
+        <!-- =================================================
+             LOGO
+             ================================================= -->
+
+        <a
+            class="navbar-brand"
+            href="{{ url_for('home') }}"
+        >
+
+            <img
+                src="/static/images/logo.png"
+                alt="HOME ENTERTAINMENT"
+            >
+
+        </a>
+
+
+        <!-- =================================================
+             MOBILE ACTIONS
+             ================================================= -->
+
+        <div class="mobile-navbar-actions">
+
+
+            <!-- HAMBURGER -->
+
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+
+                <span class="navbar-toggler-icon"></span>
+
+            </button>
+
+        </div>
+
+
+        <!-- =================================================
+             NAVIGATION
+             ================================================= -->
+
+        <div
+            class="collapse navbar-collapse justify-content-between"
+            id="navbarNav"
+        >
+
+
+            <!-- NAV LINKS -->
+
+            <ul
+                class="navbar-nav mx-auto text-center"
+            >
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="{{ url_for('about') }}"
+                    >
+                        About
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="{{ url_for('movies') }}"
+                    >
+                        Movies
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="{{ url_for('collaboration') }}"
+                    >
+                        Collaboration
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="{{ url_for('join') }}"
+                    >
+                        Join Us
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="{{ url_for('contact') }}"
+                    >
+                        Contact
+                    </a>
+
+                </li>
+
+            </ul>
+
+
+            <!-- =================================================
+                 SOCIAL ICONS
+                 ================================================= -->
+
+            <div
+                class="d-lg-flex align-items-center gap-3 text-center social-icons"
+            >
+
+                <a
+                    href="https://www.instagram.com/homeentertainments?igsh=eGtkd25zbXFxcWcw"
+                    class="text-white"
+                    aria-label="Instagram"
+                >
+
+                    <i class="bi bi-instagram"></i>
+
+                </a>
+
+
+                <a
+                    href="https://www.youtube.com/@HomeEntertainmentsMusic"
+                    class="text-white"
+                    aria-label="YouTube"
+                >
+
+                    <i class="bi bi-youtube"></i>
+
+                </a>
+
+
+                <a
+                    href="#"
+                    class="text-white"
+                    aria-label="Facebook"
+                >
+
+                    <i class="bi bi-facebook"></i>
+
+                </a>
+
+
+                <a
+                    href="https://x.com/Homeentertains"
+                    class="text-white"
+                    aria-label="X"
+                >
+
+                    <i class="bi bi-twitter-x"></i>
+
+                </a>
+
+
+                <!-- LOGIN / LOGOUT - CURRENTLY DISABLED -->
+
+                <!--
+
+                {% if session.get('user') %}
+
+                    <a
+                        class="nav-link text-white auth-link"
+                        href="{{ url_for('logout') }}"
+                    >
+                        Logout
+                    </a>
+
+                {% else %}
+
+                    <a
+                        class="nav-link text-white auth-link"
+                        href="{{ url_for('login') }}"
+                    >
+                        Login
+                    </a>
+
+                {% endif %}
+
+                -->
+
+            </div>
+
+        </div>
+
     </div>
-  </div>
+
 </nav>
 
+
+<!-- =========================================================
+     MAIN CONTENT
+     ========================================================= -->
+
 <main class="flex-fill">
-  {% block content %}{% endblock %}
+
+    {% block content %}
+
+    {% endblock %}
+
 </main>
 
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
 <footer class="main-footer">
+
     <div class="container">
+
+
         <div class="row">
-            <div class="col-md-3 col-12 footer-column">
-                <h5>Company</h5>
+
+
+            <!-- =================================================
+                 COMPANY
+                 ================================================= -->
+
+            <div
+                class="col-md-3 col-12 footer-column"
+            >
+
+                <h5>
+                    Company
+                </h5>
+
+
                 <ul class="footer-links">
-                    <li><a href="{{ url_for('about') }}">About</a></li>
-                    <li><a href="#">Movies</a></li>
-                    <li><a href="{{ url_for('collaboration') }}">Collaboration</a></li>
-                    <li><a href="{{ url_for('join') }}">Join Us</a></li>
-                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
+
+                    <li>
+
+                        <a href="{{ url_for('about') }}">
+                            About
+                        </a>
+
+                    </li>
+
+
+                    <li>
+
+                        <a href="#">
+                            Movies
+                        </a>
+
+                    </li>
+
+
+                    <li>
+
+                        <a href="{{ url_for('collaboration') }}">
+                            Collaboration
+                        </a>
+
+                    </li>
+
+
+                    <li>
+
+                        <a href="{{ url_for('join') }}">
+                            Join Us
+                        </a>
+
+                    </li>
+
+
+                    <li>
+
+                        <a href="{{ url_for('contact') }}">
+                            Contact
+                        </a>
+
+                    </li>
+
                 </ul>
+
             </div>
 
-            <div class="col-md-4 col-12 footer-column">
-                <h5>Entertainment</h5>
+
+            <!-- =================================================
+                 ENTERTAINMENT
+                 ================================================= -->
+
+            <div
+                class="col-md-4 col-12 footer-column"
+            >
+
+                <h5>
+                    Entertainment
+                </h5>
+
+
                 <ul class="footer-links">
-                    <li><a href="https://www.youtube.com/@HomeEntertainmentsFilms">Home Entertainment Film</a></li>
-                    <li><a href="https://www.youtube.com/@HomeEntertainmentsMusic">Home Entertainment Music</a></li>
-                    <li><a href="https://www.youtube.com/channel/UCTNuEQxXgsPR5WeyLk9GsGA">Home Entertainment Media</a></li>
+
+                    <li>
+
+                        <a
+                            href="https://www.youtube.com/@HomeEntertainmentsFilms"
+                        >
+                            Home Entertainment Film
+                        </a>
+
+                    </li>
+
+
+                    <li>
+
+                        <a
+                            href="https://www.youtube.com/@HomeEntertainmentsMusic"
+                        >
+                            Home Entertainment Music
+                        </a>
+
+                    </li>
+
+
+                    <li>
+
+                        <a
+                            href="https://www.youtube.com/channel/UCTNuEQxXgsPR5WeyLk9GsGA"
+                        >
+                            Home Entertainment Media
+                        </a>
+
+                    </li>
+
                 </ul>
+
             </div>
 
-            <div class="col-md-5 col-12 footer-column">
-                <h5>Connect With Us</h5>
-                <p class="small mb-3" style="color: #ffffff !important;">Follow our journey on social media for the latest updates.</p>
+
+            <!-- =================================================
+                 CONNECT WITH US
+                 ================================================= -->
+
+            <div
+                class="col-md-5 col-12 footer-column"
+            >
+
+                <h5>
+                    Connect With Us
+                </h5>
+
+
+                <p
+                    class="small mb-3"
+                    style="color: #ffffff !important;"
+                >
+                    Follow our journey on social media
+                    for the latest updates.
+                </p>
+
+
                 <div class="social-links">
-                    <a href="https://www.youtube.com/@HomeEntertainmentsMusic" class="social-icon"><i class="fab fa-youtube"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://x.com/Homeentertains" class="social-icon"><i class="fab fa-x-twitter"></i></a>
-                    <a href="https://www.instagram.com/homeentertainments?igsh=eGtkd25zbXFxcWcw" class="social-icon"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+
+
+                    <!-- YOUTUBE -->
+
+                    <a
+                        href="https://www.youtube.com/@HomeEntertainmentsMusic"
+                        class="social-icon"
+                        aria-label="YouTube"
+                    >
+
+                        <i class="fab fa-youtube"></i>
+
+                    </a>
+
+
+                    <!-- FACEBOOK -->
+
+                    <a
+                        href="#"
+                        class="social-icon"
+                        aria-label="Facebook"
+                    >
+
+                        <i class="fab fa-facebook-f"></i>
+
+                    </a>
+
+
+                    <!-- X -->
+
+                    <a
+                        href="https://x.com/Homeentertains"
+                        class="social-icon"
+                        aria-label="X"
+                    >
+
+                        <i class="fab fa-x-twitter"></i>
+
+                    </a>
+
+
+                    <!-- INSTAGRAM -->
+
+                    <a
+                        href="https://www.instagram.com/homeentertainments?igsh=eGtkd25zbXFxcWcw"
+                        class="social-icon"
+                        aria-label="Instagram"
+                    >
+
+                        <i class="fab fa-instagram"></i>
+
+                    </a>
+
+
+                    <!-- LINKEDIN -->
+
+                    <a
+                        href="#"
+                        class="social-icon"
+                        aria-label="LinkedIn"
+                    >
+
+                        <i class="fab fa-linkedin-in"></i>
+
+                    </a>
+
                 </div>
+
             </div>
+
         </div>
 
+
+        <!-- =================================================
+             COPYRIGHT
+             ================================================= -->
+
         <div class="row">
+
             <div class="col-12 copyright-bar">
-                <p>&copy; 2026 HOME ENTERTAINMENT. ALL RIGHTS RESERVED.</p>
+
+                <p>
+                    &copy; 2026 HOME ENTERTAINMENT.
+                    ALL RIGHTS RESERVED.
+                </p>
+
             </div>
+
         </div>
+
     </div>
+
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- =========================================================
+     BOOTSTRAP JAVASCRIPT
+     ========================================================= -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+></script>
+
+
 </body>
+
 </html>
