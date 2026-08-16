@@ -2,117 +2,575 @@
 {% block content %}
 
 <style>
-    body { background-color: #000; color: #fff; }
 
-    /* Movie Detail Container */
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+body {
+    background: #000;
+    color: #fff;
+}
+
+
+/* =========================================================
+   MOVIE DETAIL CARD
+   ========================================================= */
+
+.movie-detail-card {
+    background: #111;
+
+    border: 1px solid rgba(255, 193, 7, 0.25);
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    max-width: 1200px;
+
+    margin: 100px auto 50px;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+
+/* =========================================================
+   POSTER
+   ========================================================= */
+
+.poster-column {
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: center;
+
+    background: #111;
+}
+
+
+.movie-poster-img {
+    display: block;
+
+    width: 100%;
+
+    height: auto;
+
+    /*
+     * Important:
+     * Do not force the poster to fill the entire card.
+     * This keeps the original poster ratio on desktop.
+     */
+    object-fit: contain;
+
+    object-position: top center;
+
+    border-radius: 20px 0 0 20px;
+}
+
+
+/* =========================================================
+   MOVIE INFORMATION
+   ========================================================= */
+
+.movie-info {
+    width: 100%;
+}
+
+
+.movie-info h1 {
+    color: #ffc107;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    font-size: 2rem;
+
+    margin: 0 0 15px;
+}
+
+
+/* =========================================================
+   VIDEO RESPONSIVE CONTAINER
+   ========================================================= */
+
+.video-container {
+    position: relative;
+
+    width: 100%;
+
+    padding-bottom: 56.25%;
+
+    height: 0;
+
+    overflow: hidden;
+
+    border-radius: 12px;
+
+    margin-bottom: 20px;
+
+    border: 1px solid #333;
+
+    background: #000;
+}
+
+
+.video-container iframe {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    border: 0;
+}
+
+
+/* =========================================================
+   SYNOPSIS
+   ========================================================= */
+
+.synopsis {
+    border-left: 3px solid #ffc107;
+
+    padding-left: 15px;
+
+    margin: 18px 0;
+
+    font-style: italic;
+
+    color: #ccc;
+
+    line-height: 1.55;
+}
+
+
+.synopsis p {
+    margin: 0;
+}
+
+
+/* =========================================================
+   INFORMATION LABELS
+   ========================================================= */
+
+.info-label {
+    color: #ffc107;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    font-size: 0.75rem;
+
+    margin-right: 6px;
+}
+
+
+.info-text {
+    color: rgba(255, 255, 255, 0.8);
+
+    font-size: 0.9rem;
+
+    line-height: 1.5;
+}
+
+
+.movie-info .row p {
+    margin-bottom: 10px;
+
+    line-height: 1.45;
+}
+
+
+/* =========================================================
+   DESKTOP
+   ========================================================= */
+
+@media (min-width: 769px) {
+
     .movie-detail-card {
-        background: #111;
-        border: 1px solid rgba(255, 193, 7, 0.2);
-        border-radius: 20px;
-        overflow: hidden;
-        margin-top: 100px;
-        margin-bottom: 50px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        /*
+         * Let the content determine the height.
+         */
+        min-height: 0;
     }
 
-    /* Poster Image Styling */
+
+    .poster-column {
+        align-items: flex-start;
+    }
+
+
     .movie-poster-img {
         width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 20px 0 0 20px;
+
+        height: auto;
+
+        object-fit: contain;
+
+        object-position: top center;
     }
 
-    /* Video Responsive Container */
-    .video-container {
-        position: relative;
-        padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-        height: 0;
-        overflow: hidden;
-        border-radius: 12px;
-        margin-bottom: 20px;
-        border: 1px solid #333;
+}
+
+
+/* =========================================================
+   MEDIUM LAPTOPS
+   ========================================================= */
+
+@media (min-width: 769px) and (max-width: 1100px) {
+
+    .movie-detail-card {
+        margin-left: 20px;
+
+        margin-right: 20px;
     }
-    .video-container iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+
+
+    .movie-info {
+        padding: 25px !important;
     }
+
 
     .movie-info h1 {
-        color: #ffc107;
-        font-weight: 800;
-        text-transform: uppercase;
+        font-size: 1.7rem;
+    }
+
+
+    .info-label {
+        font-size: 0.7rem;
+    }
+
+
+    .info-text {
+        font-size: 0.82rem;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .movie-detail-card {
+        width: calc(100% - 20px);
+
+        margin: 20px auto 30px;
+
+        border-radius: 20px;
+    }
+
+
+    .poster-column {
+        width: 100%;
+
+        display: block;
+    }
+
+
+    .movie-poster-img {
+
+        width: 100%;
+
+        /*
+         * Keep the mobile poster height
+         * that was already working well.
+         */
+        height: 510px;
+
+        object-fit: cover;
+
+        object-position: center;
+
+        border-radius: 20px 20px 0 0;
+    }
+
+
+    .movie-info {
+        padding: 25px !important;
+    }
+
+
+    .movie-info h1 {
+        font-size: 1.5rem;
+
         margin-bottom: 15px;
     }
 
-    .info-label {
-        color: #ffc107;
-        font-weight: 700;
-        text-transform: uppercase;
-        font-size: 0.85rem;
-        margin-right: 10px;
-    }
-
-    .info-text {
-        color: rgba(255, 255, 255, 0.8);
-        margin-bottom: 10px;
-    }
 
     .synopsis {
-        border-left: 3px solid #ffc107;
-        padding-left: 15px;
-        margin: 20px 0;
-        font-style: italic;
-        color: #ccc;
+        font-size: 0.9rem;
+
+        padding-left: 12px;
+
+        margin: 18px 0;
     }
 
-    @media (max-width: 768px) {
-        .movie-detail-card { margin-top: 60px; }
-        .movie-poster-img { border-radius: 20px 20px 0 0; height: 400px; }
+
+    .info-label {
+        font-size: 0.75rem;
     }
+
+
+    .info-text {
+        font-size: 0.85rem;
+    }
+
+
+    .movie-info .row {
+        margin-top: 20px !important;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .movie-detail-card {
+        width: calc(100% - 12px);
+
+        margin-top: 10px;
+    }
+
+
+    .movie-poster-img {
+        height: 480px;
+    }
+
+
+    .movie-info {
+        padding: 20px !important;
+    }
+
+
+    .movie-info h1 {
+        font-size: 1.35rem;
+    }
+
+
+    .info-label {
+        font-size: 0.7rem;
+    }
+
+
+    .info-text {
+        font-size: 0.8rem;
+    }
+
+}
+
 </style>
 
+
+<!-- =========================================================
+     MOVIE DETAIL
+     ========================================================= -->
+
 <div class="container">
+
     <div class="movie-detail-card">
+
         <div class="row g-0">
-            <div class="col-md-4">
-                <img src="/static/images/postercard1.jpeg" alt="Movie Poster" class="movie-poster-img">
+
+
+            <!-- =================================================
+                 POSTER
+                 ================================================= -->
+
+            <div class="col-md-4 poster-column">
+
+                <img
+                    src="/static/images/songposter.png"
+                    alt="C & C Movie Poster"
+                    class="movie-poster-img"
+                    loading="lazy"
+                >
+
             </div>
+
+
+            <!-- =================================================
+                 MOVIE INFORMATION
+                 ================================================= -->
 
             <div class="col-md-8 p-4 p-lg-5">
+
                 <div class="movie-info">
-                    <h1>Project X: The Awakening</h1>
-                    
+
+
+                    <!-- TITLE -->
+
+                    <h1>
+                        Project: C & C
+                    </h1>
+
+
+                    <!-- =================================================
+                         YOUTUBE VIDEO
+                         ================================================= -->
+
                     <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/kzBoieupnV4" 
-                                title="YouTube video player" frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen></iframe>
+
+                        <iframe
+                            src="https://www.youtube.com/embed/e9l3cRJWJyk"
+                            title="Oh My Friend - C and C Web Series"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+
                     </div>
+
+
+                    <!-- =================================================
+                         SYNOPSIS
+                         ================================================= -->
 
                     <div class="synopsis">
-                        <p>What the movie is about: A gripping journey through time and space, where a group of explorers discovers an ancient secret that could change the course of human history forever.</p>
+
+                        <p>
+                            Experience "Oh My Friend", the first single
+                            from the upcoming Kannada original web series
+                            C&C (Chiru & Charu). A heartfelt song
+                            celebrating friendship, emotions, and
+                            unforgettable memories.
+                        </p>
+
                     </div>
 
+
+                    <!-- =================================================
+                         PROJECT INFORMATION
+                         ================================================= -->
+
                     <div class="row mt-4">
+
+
+                        <!-- =================================================
+                             LEFT INFORMATION
+                             ================================================= -->
+
                         <div class="col-sm-6">
-                            <p><span class="info-label">Director:</span> <span class="info-text">Christopher Nolan</span></p>
-                            <p><span class="info-label">Writer:</span> <span class="info-text">Jonathan Nolan</span></p>
-                            <p><span class="info-label">Music:</span> <span class="info-text">Hans Zimmer</span></p>
+
+                            <p>
+
+                                <span class="info-label">
+                                    Director, Lyrics, Writer:
+                                </span>
+
+                                <span class="info-text">
+                                    Manoj
+                                </span>
+
+                            </p>
+
+
+                            <p>
+
+                                <span class="info-label">
+                                    Music:
+                                </span>
+
+                                <span class="info-text">
+                                    Sathya Radhakrishna
+                                </span>
+
+                            </p>
+
+
+                            <p>
+
+                                <span class="info-label">
+                                    Singers:
+                                </span>
+
+                                <span class="info-text">
+                                    Sathya Radhakrishna, Thanusha
+                                </span>
+
+                            </p>
+
                         </div>
+
+
+                        <!-- =================================================
+                             RIGHT INFORMATION
+                             ================================================= -->
+
                         <div class="col-sm-6">
-                            <p><span class="info-label">Cast:</span> <span class="info-text">Leonardo DiCaprio, Elliot Page</span></p>
-                            <p><span class="info-label">Actors:</span> <span class="info-text">Tom Hardy, Cillian Murphy</span></p>
-                            <p><span class="info-label">Release:</span> <span class="info-text">Summer 2026</span></p>
+
+                            <p>
+
+                                <span class="info-label">
+                                    Cast:
+                                </span>
+
+                                <span class="info-text">
+                                    Agraharam Kodanda Ram,
+                                    Bhargavi,
+                                    Madhur,
+                                    Vindhya,
+                                    Amar Aryan,
+                                    Pooja Shaliyan,
+                                    Harsha Ashoka,
+                                    Shivanand Hegde,
+                                    Sunil,
+                                    Sowmya Satheesh
+                                </span>
+
+                            </p>
+
+
+                            <p>
+
+                                <span class="info-label">
+                                    Actors:
+                                </span>
+
+                                <span class="info-text">
+                                    Agraharam Kodanda Ram,
+                                    Bhargavi
+                                </span>
+
+                            </p>
+
+
+                            <p>
+
+                                <span class="info-label">
+                                    Release:
+                                </span>
+
+                                <span class="info-text">
+                                    August 2026
+                                </span>
+
+                            </p>
+
                         </div>
+
                     </div>
+
                 </div>
+
             </div>
+
         </div>
+
     </div>
+
 </div>
+
 
 {% endblock %}

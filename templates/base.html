@@ -11,8 +11,15 @@
     >
 
     <title>
-        {{ title or "Actor-Producer Portfolio" }}
+        {{ title or "Homeentertainments" }}
     </title>
+
+    <link
+    rel="icon"
+    type="image/png"
+    sizes="128x128"
+    href="{{ url_for('static', filename='images/logo.png') }}"
+>
 
 
     <!-- =====================================================
@@ -173,7 +180,7 @@ body {
 
     display: block;
 
-    height: 80px;
+    height: 100px;
 
     width: auto;
 
@@ -552,6 +559,23 @@ body {
        ----------------------------------------------------- */
 
     .navbar-collapse {
+        background: rgba(0, 0, 0, 0.97) !important;
+        border-radius: 0 0 15px 15px;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+
+    .navbar-collapse .nav-link {
+        color: #ffffff !important;
+    }
+
+    .navbar-collapse .nav-link:hover,
+    .navbar-collapse .nav-link:focus {
+        color: #f5c56d !important;
+        background: black !important;
+    }
+
+    .navbar-collapse {
 
         position: absolute;
 
@@ -571,7 +595,7 @@ body {
          */
 
         background:
-            rgba(0, 0, 0, 0.25) !important;
+            rgb(23, 3, 3) !important;
 
         border:
             1px solid
@@ -581,7 +605,7 @@ body {
 
         box-shadow:
             0 10px 30px
-            rgba(0, 0, 0, 0.45);
+            rgb(17, 4, 4);
 
     }
 
@@ -756,7 +780,7 @@ body {
         top: 100px;
 
         background:
-            rgba(0, 0, 0, 0.25) !important;
+            rgba(14, 2, 2, 0.975) !important;
 
     }
 

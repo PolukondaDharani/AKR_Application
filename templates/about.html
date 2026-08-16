@@ -18,18 +18,19 @@
      * Pull the section underneath the transparent navbar.
      * This removes the white gap coming from base.html body padding.
      */
-    margin-top: -80px !important;
+    /* margin-top: -80px !important; */
 
+    margin-top: -110px !important;
     /*
      * Compensate for the negative margin so the actual
      * content stays approximately where it was.
      */
-    padding-top: 100px !important;
+    padding-top: 110px !important;
 
     padding-bottom: 80px;
 
     background:
-        url('/static/images/about_logo.jpeg')
+        url('/static/images/bg3.png')
         center/cover
         no-repeat
         fixed;
@@ -37,6 +38,7 @@
     overflow-x: hidden;
 
     color: white;
+
 
 }
 
@@ -53,13 +55,13 @@
 
     inset: 0;
 
-    background:
+    /* background:
         linear-gradient(
             to bottom,
             rgba(0,0,0,1) 0%,
             rgba(5,9,17,0.7) 40%,
             rgba(0,0,0,0.95) 100%
-        );
+        ); */
 
     z-index: 1;
 
@@ -564,7 +566,7 @@
 
         margin-top: -110px !important;
 
-        padding-top: 130px !important;
+        padding-top: 80px !important;
 
     }
 
@@ -595,34 +597,47 @@
 
                 <!-- LOGO -->
 
-                <img
+                <!-- <img
                     src="/static/images/logo.png"
                     class="logo-large img-fluid reveal slide-up"
                     alt="Home Entertainments Logo"
-                >
+                > -->
 
 
                 <!-- DESCRIPTION -->
 
-                <p
-                    class="about-subline reveal slide-up"
-                    style="transition-delay: 0.1s;"
-                >
+                <div class="about-description">
 
-                    Built on authenticity.
-                    Driven by emotion.
-                    Crafted with purpose.
+    <!-- <p class="about-tagline">
+        <strong>Built on authenticity.</strong><br>
+        <strong>Driven by emotion.</strong><br>
+        <strong>Crafted with purpose.</strong>
+    </p> -->
 
-                    <br>
+    <p>
+        At <strong>Home Entertainments</strong>, we see a production house
+        as more than a place to create films. It is a home for ideas,
+        a space where people come together, and a universe where
+        imagination finds its voice.
+    </p>
 
-                    <strong>
-                        Home Entertainments
-                    </strong>
+    <p>
+        We believe every great story starts with a feeling. From that
+        feeling comes an idea, from an idea comes a story, and from
+        a story comes cinema.
+    </p>
 
-                    believes cinema is emotion
-                    captured in motion.
+    <p>
+        We create with honesty, collaborate with passion, and strive
+        to turn every story into an experience worth remembering.
+    </p>
 
-                </p>
+    <p class="about-ending">
+        <strong>Because cinema isn't just watched.</strong><br>
+        <strong>It is felt.</strong>
+    </p>
+
+</div>
 
 
                 <!-- =================================================
