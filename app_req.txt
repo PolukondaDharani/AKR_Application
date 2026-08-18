@@ -1,4 +1,5 @@
 google-api-python-client
+email_validator
 flask
 flask_mail
 flask_wtf
