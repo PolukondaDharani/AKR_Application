@@ -36,4 +36,5 @@ urllib3==2.6.3
 Werkzeug==3.1.6
 WTForms==3.2.1
 email_validator==2.0.0
-resend==0.1.0
+resend==2.0.0
+python-dotenv==1.0.0
