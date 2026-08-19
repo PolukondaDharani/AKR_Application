@@ -4,5 +4,6 @@ flask
 flask_mail
 flask_wtf
 resend
+python-dotenv
 google_auth_oauthlib
 gunicorn
