@@ -17,7 +17,9 @@ from flask import (
 from werkzeug.utils import secure_filename
 from markupsafe import escape
 
-from flask_mail import Mail, Message
+import resend
+from dotenv import load_dotenv
+
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField
 from wtforms.validators import DataRequired, Email
@@ -33,6 +35,8 @@ from googleapiclient.discovery import build
 
 os.environ.setdefault("OAUTHLIB_INSECURE_TRANSPORT", "1")
 
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -72,44 +76,27 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 
 # ============================================================
-# Gmail / Flask-Mail Config
+# Resend Email API Configuration
 # ============================================================
 
-# Environment variables:
-#
-# MAIL_USERNAME = Gmail account used to SEND emails
-# MAIL_PASSWORD = Gmail 16-character App Password
-# MAIL_RECEIVER = Email address where submissions are RECEIVED
-#
-# MAIL_RECEIVER can be the same as MAIL_USERNAME.
-
-app.config["MAIL_SERVER"] = "smtp.gmail.com"
-app.config["MAIL_PORT"] = 587
-app.config["MAIL_USE_TLS"] = True
-app.config["MAIL_USE_SSL"] = False
-
-app.config["MAIL_USERNAME"] = os.environ.get(
-    "MAIL_USERNAME",
+RESEND_API_KEY = os.environ.get(
+    "RESEND_API_KEY",
     ""
 )
 
-app.config["MAIL_PASSWORD"] = os.environ.get(
-    "MAIL_PASSWORD",
-    ""
-)
-
-app.config["MAIL_DEFAULT_SENDER"] = os.environ.get(
-    "MAIL_USERNAME",
+RESEND_FROM_EMAIL = os.environ.get(
+    "RESEND_FROM_EMAIL",
     ""
 )
 
 MAIL_RECEIVER = os.environ.get(
     "MAIL_RECEIVER",
-    os.environ.get("MAIL_USERNAME", "")
+    ""
 )
 
-
-mail = Mail(app)
+# Configure Resend SDK
+if RESEND_API_KEY:
+    resend.api_key = RESEND_API_KEY
 
 
 # ============================================================
@@ -160,7 +147,7 @@ def get_form_data():
 
 
 # ============================================================
-# HTML Email Function
+# Resend Email API - Send Submission Email
 # ============================================================
 
 def send_submission_email(
@@ -170,34 +157,33 @@ def send_submission_email(
     uploaded_filename=None
 ):
     """
-    Send a website form submission to the configured receiver.
+    Send website form submission using Resend Email API.
 
-    The email contains:
-    - A clean HTML version
-    - A plain-text fallback
-    - Optional PDF attachment
-    - Reply-To set to visitor email when available
+    Supports:
+    - HTML email
+    - Plain-text fallback
+    - Reply-To
+    - PDF attachment
     """
 
     # --------------------------------------------------------
-    # Check mail configuration
+    # Check Resend configuration
     # --------------------------------------------------------
 
-    if not app.config["MAIL_USERNAME"]:
+    if not RESEND_API_KEY:
         raise RuntimeError(
-            "MAIL_USERNAME is not configured."
+            "RESEND_API_KEY is not configured."
         )
 
-    if not app.config["MAIL_PASSWORD"]:
+    if not RESEND_FROM_EMAIL:
         raise RuntimeError(
-            "MAIL_PASSWORD is not configured."
+            "RESEND_FROM_EMAIL is not configured."
         )
 
     if not MAIL_RECEIVER:
         raise RuntimeError(
             "MAIL_RECEIVER is not configured."
         )
-
 
     # --------------------------------------------------------
     # Find visitor email
@@ -208,7 +194,6 @@ def send_submission_email(
         or form_data.get("Email Address")
         or form_data.get("E-Mail")
     )
-
 
     # ========================================================
     # Plain Text Email
@@ -234,12 +219,10 @@ def send_submission_email(
         "Submitted from the Home Entertainments website."
     ])
 
-
     plain_text_body = "\n".join(text_lines)
 
-
     # ========================================================
-    # HTML Email
+    # HTML Email Rows
     # ========================================================
 
     rows = ""
@@ -275,6 +258,38 @@ def send_submission_email(
         </tr>
         """
 
+    # ========================================================
+    # Reply Information
+    # ========================================================
+
+    reply_information = ""
+
+    if visitor_email:
+
+        reply_information = f"""
+        <div style="
+            margin-top: 22px;
+            padding: 15px 17px;
+            background-color: #eff6ff;
+            border-left: 4px solid #2563eb;
+            border-radius: 6px;
+            color: #1e3a8a;
+            font-size: 13px;
+            line-height: 1.6;
+        ">
+
+            <strong>Quick Reply</strong><br>
+
+            Reply directly to this email to contact:
+
+            <strong>{escape(visitor_email)}</strong>
+
+        </div>
+        """
+
+    # ========================================================
+    # HTML Email
+    # ========================================================
 
     html_body = f"""
     <!DOCTYPE html>
@@ -296,7 +311,6 @@ def send_submission_email(
 
     </head>
 
-
     <body style="
         margin: 0;
         padding: 30px 15px;
@@ -304,9 +318,6 @@ def send_submission_email(
         font-family: Arial, Helvetica, sans-serif;
         color: #222222;
     ">
-
-
-        <!-- Main Card -->
 
         <div style="
             max-width: 680px;
@@ -316,7 +327,6 @@ def send_submission_email(
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         ">
-
 
             <!-- Header -->
 
@@ -342,7 +352,6 @@ def send_submission_email(
 
                 </div>
 
-
                 <h1 style="
                     margin: 0;
                     font-size: 25px;
@@ -352,7 +361,6 @@ def send_submission_email(
                     New Form Submission
 
                 </h1>
-
 
                 <p style="
                     margin: 8px 0 0;
@@ -366,13 +374,11 @@ def send_submission_email(
 
             </div>
 
-
             <!-- Content -->
 
             <div style="
                 padding: 30px;
             ">
-
 
                 <h2 style="
                     margin: 0 0 18px;
@@ -383,9 +389,6 @@ def send_submission_email(
                     Submission Details
 
                 </h2>
-
-
-                <!-- Details Table -->
 
                 <table
                     width="100%"
@@ -404,35 +407,7 @@ def send_submission_email(
 
                 </table>
 
-
-                <!-- Reply Information -->
-
-                {
-                    f'''
-                    <div style="
-                        margin-top: 22px;
-                        padding: 15px 17px;
-                        background-color: #eff6ff;
-                        border-left: 4px solid #2563eb;
-                        border-radius: 6px;
-                        color: #1e3a8a;
-                        font-size: 13px;
-                        line-height: 1.6;
-                    ">
-
-                        <strong>Quick Reply</strong><br>
-
-                        You can reply directly to this email
-                        to contact the person who submitted the form.
-
-                    </div>
-                    '''
-                    if visitor_email
-                    else ""
-                }
-
-
-                <!-- Footer Note -->
+                {reply_information}
 
                 <div style="
                     margin-top: 25px;
@@ -450,9 +425,7 @@ def send_submission_email(
 
                 </div>
 
-
             </div>
-
 
             <!-- Footer -->
 
@@ -469,59 +442,59 @@ def send_submission_email(
 
             </div>
 
-
         </div>
-
 
     </body>
 
     </html>
     """
 
+    # ========================================================
+    # Create Resend Email Parameters
+    # ========================================================
+
+    params = {
+        "from": RESEND_FROM_EMAIL,
+        "to": [MAIL_RECEIVER],
+        "subject": subject,
+        "html": html_body,
+        "text": plain_text_body
+    }
 
     # ========================================================
-    # Create Message
-    # ========================================================
-
-    msg = Message(
-        subject=subject,
-        sender=app.config["MAIL_USERNAME"],
-        recipients=[MAIL_RECEIVER],
-        body=plain_text_body,
-        html=html_body
-    )
-
-
-    # ========================================================
-    # Set Reply-To
+    # Reply-To
     # ========================================================
 
     if visitor_email:
-
-        msg.reply_to = visitor_email
-
+        params["reply_to"] = [visitor_email]
 
     # ========================================================
-    # Attach Uploaded PDF
+    # PDF Attachment
     # ========================================================
 
     if uploaded_file and uploaded_filename:
-
         uploaded_file.stream.seek(0)
+        file_data = list(uploaded_file.read())
 
-        msg.attach(
-            secure_filename(uploaded_filename),
-            uploaded_file.content_type
-            or "application/pdf",
-            uploaded_file.read()
-        )
-
+        params["attachments"] = [
+            {
+                "filename": secure_filename(uploaded_filename),
+                "content": file_data
+            }
+        ]
 
     # ========================================================
-    # Send
+    # Send Using Resend API
     # ========================================================
 
-    mail.send(msg)
+    response = resend.Emails.send(params)
+
+    app.logger.info(
+        "Email sent successfully through Resend: %s",
+        response
+    )
+
+    return response
 
 
 # ============================================================
@@ -830,7 +803,6 @@ def join():
                 "resume"
             )
 
-
             # ------------------------------------------------
             # Optional Resume
             # ------------------------------------------------
@@ -850,7 +822,6 @@ def join():
                         url_for("join")
                     )
 
-
                 send_submission_email(
                     subject="New Join Us Submission",
                     form_data=form_data,
@@ -865,12 +836,10 @@ def join():
                     form_data=form_data
                 )
 
-
             flash(
                 "Your submission has been sent successfully!",
                 "success"
             )
-
 
         except Exception as e:
 
@@ -884,11 +853,9 @@ def join():
                 "danger"
             )
 
-
         return redirect(
             url_for("join")
         )
-
 
     return render_template(
         "join.html"
@@ -906,7 +873,6 @@ def join():
 def collaboration():
 
     form = CollaborationForm()
-
 
     partners = [
 
@@ -930,7 +896,6 @@ def collaboration():
 
     ]
 
-
     if form.validate_on_submit():
 
         try:
@@ -940,7 +905,6 @@ def collaboration():
             collaboration_file = request.files.get(
                 "file"
             )
-
 
             if (
                 collaboration_file
@@ -960,7 +924,6 @@ def collaboration():
                         url_for("collaboration")
                     )
 
-
                 send_submission_email(
                     subject="New Collaboration Request",
                     form_data=form_data,
@@ -975,7 +938,6 @@ def collaboration():
                     form_data=form_data
                 )
 
-
             flash(
                 "Thank you! Your collaboration request has been sent.",
                 "success"
@@ -984,7 +946,6 @@ def collaboration():
             return redirect(
                 url_for("collaboration")
             )
-
 
         except Exception as e:
 
@@ -997,7 +958,6 @@ def collaboration():
                 "There was an issue sending your collaboration request.",
                 "danger"
             )
-
 
     return render_template(
         "collab.html",
@@ -1028,7 +988,6 @@ def login():
             ""
         )
 
-
         if (
             username == ADMIN["username"]
             and password == ADMIN["password"]
@@ -1040,12 +999,10 @@ def login():
                 url_for("admin_home")
             )
 
-
         flash(
             "Invalid login",
             "danger"
         )
-
 
     return render_template(
         "login.html"
@@ -1112,18 +1069,15 @@ def admin_meetings():
             url_for("authorize")
         )
 
-
     creds = pickle.loads(
         session["credentials"]
     )
-
 
     service = build(
         "calendar",
         "v3",
         credentials=creds
     )
-
 
     # --------------------------------------------------------
     # Fetch today's events
@@ -1135,12 +1089,10 @@ def admin_meetings():
         + "Z"
     )
 
-
     end_of_day = (
         datetime.datetime.utcnow()
         + datetime.timedelta(days=1)
     ).isoformat() + "Z"
-
 
     events_result = (
         service.events()
@@ -1154,12 +1106,10 @@ def admin_meetings():
         .execute()
     )
 
-
     events = events_result.get(
         "items",
         []
     )
-
 
     return render_template(
         "admin/meetings.html",
@@ -1183,7 +1133,6 @@ def authorize():
         )
     )
 
-
     auth_url, state = (
         flow.authorization_url(
             access_type="offline",
@@ -1191,9 +1140,7 @@ def authorize():
         )
     )
 
-
     session["state"] = state
-
 
     return redirect(
         auth_url
@@ -1205,7 +1152,6 @@ def oauth2callback():
 
     state = session["state"]
 
-
     flow = Flow.from_client_secrets_file(
         CREDENTIALS_FILE,
         scopes=SCOPES,
@@ -1216,19 +1162,15 @@ def oauth2callback():
         )
     )
 
-
     flow.fetch_token(
         authorization_response=request.url
     )
 
-
     creds = flow.credentials
-
 
     session["credentials"] = pickle.dumps(
         creds
     )
-
 
     return redirect(
         url_for("admin_meetings")
@@ -1252,11 +1194,9 @@ def add_meeting():
             url_for("authorize")
         )
 
-
     creds = pickle.loads(
         session["credentials"]
     )
-
 
     service = build(
         "calendar",
@@ -1264,11 +1204,9 @@ def add_meeting():
         credentials=creds
     )
 
-
     title = request.form.get(
         "title"
     )
-
 
     start_value = request.form.get(
         "start_time"
@@ -1277,7 +1215,6 @@ def add_meeting():
     end_value = request.form.get(
         "end_time"
     )
-
 
     if not title or not start_value or not end_value:
 
@@ -1290,15 +1227,6 @@ def add_meeting():
             url_for("admin_meetings")
         )
 
-
-    # Convert:
-    #
-    # 2026-08-18T15:00
-    #
-    # to:
-    #
-    # 2026-08-18T15:00:00+05:30
-
     start_time = (
         start_value
         + ":00+05:30"
@@ -1308,7 +1236,6 @@ def add_meeting():
         end_value
         + ":00+05:30"
     )
-
 
     event = {
 
@@ -1342,7 +1269,6 @@ def add_meeting():
 
     }
 
-
     created_event = (
         service.events()
         .insert(
@@ -1353,12 +1279,10 @@ def add_meeting():
         .execute()
     )
 
-
     flash(
         "Meeting created successfully!",
         "success"
     )
-
 
     return redirect(
         url_for("admin_meetings")
@@ -1382,18 +1306,15 @@ def delete_meeting(event_id):
             url_for("authorize")
         )
 
-
     creds = pickle.loads(
         session["credentials"]
     )
-
 
     service = build(
         "calendar",
         "v3",
         credentials=creds
     )
-
 
     try:
 
@@ -1402,12 +1323,10 @@ def delete_meeting(event_id):
             eventId=event_id
         ).execute()
 
-
         flash(
             "Meeting deleted successfully!",
             "success"
         )
-
 
     except Exception as e:
 
@@ -1420,7 +1339,6 @@ def delete_meeting(event_id):
             "Failed to delete meeting!",
             "danger"
         )
-
 
     return redirect(
         url_for("admin_meetings")
@@ -1453,7 +1371,6 @@ def share_invite():
         ""
     )
 
-
     if not emails:
 
         flash(
@@ -1465,24 +1382,13 @@ def share_invite():
             url_for("admin_meetings")
         )
 
-
     recipients = [
         email.strip()
         for email in emails.split(",")
         if email.strip()
     ]
 
-
-    # ========================================================
-    # Email Subject
-    # ========================================================
-
     subject = f"Meeting Invite: {title}"
-
-
-    # ========================================================
-    # Plain Text Body
-    # ========================================================
 
     body = f"""
 You are invited to a meeting.
@@ -1496,26 +1402,128 @@ Join Link:
 Sent via Home Entertainments Admin Panel.
 """
 
+    html_body = f"""
+    <!DOCTYPE html>
+
+    <html>
+
+    <body style="
+        margin: 0;
+        padding: 30px;
+        background-color: #f3f4f6;
+        font-family: Arial, Helvetica, sans-serif;
+    ">
+
+        <div style="
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+        ">
+
+            <div style="
+                padding: 25px;
+                background-color: #111827;
+                color: white;
+            ">
+
+                <h2 style="
+                    margin: 0;
+                ">
+                    Home Entertainments
+                </h2>
+
+            </div>
+
+            <div style="
+                padding: 30px;
+            ">
+
+                <h2>
+                    You are invited to a meeting
+                </h2>
+
+                <p>
+                    <strong>Meeting Title:</strong>
+                    {escape(title)}
+                </p>
+
+                <p>
+                    Click the button below to join the meeting.
+                </p>
+
+                <p style="
+                    margin: 30px 0;
+                ">
+
+                    <a
+                        href="{escape(link)}"
+                        style="
+                            display: inline-block;
+                            padding: 14px 24px;
+                            background-color: #111827;
+                            color: white;
+                            text-decoration: none;
+                            border-radius: 6px;
+                            font-weight: 600;
+                        "
+                    >
+                        Join Meeting
+                    </a>
+
+                </p>
+
+                <p style="
+                    color: #666;
+                    font-size: 13px;
+                ">
+                    If the button does not work, use this link:
+                </p>
+
+                <p>
+                    {escape(link)}
+                </p>
+
+            </div>
+
+            <div style="
+                padding: 18px;
+                text-align: center;
+                background-color: #f9fafb;
+                color: #999;
+                font-size: 12px;
+            ">
+
+                Home Entertainments
+
+            </div>
+
+        </div>
+
+    </body>
+
+    </html>
+    """
 
     try:
 
         for email in recipients:
 
-            msg = Message(
-                subject=subject,
-                sender=app.config["MAIL_USERNAME"],
-                recipients=[email],
-                body=body
-            )
+            params = {
+                "from": RESEND_FROM_EMAIL,
+                "to": [email],
+                "subject": subject,
+                "text": body,
+                "html": html_body
+            }
 
-            mail.send(msg)
-
+            resend.Emails.send(params)
 
         flash(
             "Meeting invite sent successfully!",
             "success"
         )
-
 
     except Exception as e:
 
@@ -1528,7 +1536,6 @@ Sent via Home Entertainments Admin Panel.
             "Failed to send invites.",
             "danger"
         )
-
 
     return redirect(
         url_for("admin_meetings")
@@ -1547,7 +1554,6 @@ def admin_docs():
         app.config["UPLOAD_FOLDER"]
     )
 
-
     def get_file_size(filename):
 
         file_path = os.path.join(
@@ -1555,14 +1561,11 @@ def admin_docs():
             filename
         )
 
-
         size = os.path.getsize(
             file_path
         )
 
-
         return f"{round(size / 1024, 2)} KB"
-
 
     return render_template(
         "admin/docs.html",
@@ -1586,7 +1589,6 @@ def upload_document():
         "document"
     )
 
-
     if not file or not file.filename:
 
         flash(
@@ -1597,7 +1599,6 @@ def upload_document():
         return redirect(
             url_for("admin_docs")
         )
-
 
     if not allowed_file(
         file.filename
@@ -1612,11 +1613,9 @@ def upload_document():
             url_for("admin_docs")
         )
 
-
     filename = secure_filename(
         file.filename
     )
-
 
     if not filename:
 
@@ -1629,7 +1628,6 @@ def upload_document():
             url_for("admin_docs")
         )
 
-
     file.save(
         os.path.join(
             app.config["UPLOAD_FOLDER"],
@@ -1637,12 +1635,10 @@ def upload_document():
         )
     )
 
-
     flash(
         "Document uploaded successfully!",
         "success"
     )
-
 
     return redirect(
         url_for("admin_docs")
@@ -1679,12 +1675,10 @@ def delete_document(filename):
         filename
     )
 
-
     file_path = os.path.join(
         app.config["UPLOAD_FOLDER"],
         safe_filename
     )
-
 
     if os.path.exists(file_path):
 
@@ -1695,7 +1689,6 @@ def delete_document(filename):
             "danger"
         )
 
-
     return redirect(
         url_for("admin_docs")
     )
@@ -1704,9 +1697,6 @@ def delete_document(filename):
 # ============================================================
 # Admin Links
 # ============================================================
-
-# Temporary Links storage.
-# Replace with database later.
 
 links = []
 
@@ -1740,7 +1730,6 @@ def add_link():
         "description"
     )
 
-
     if title and url:
 
         links.append({
@@ -1755,12 +1744,10 @@ def add_link():
 
         })
 
-
         flash(
             "Link added successfully!",
             "success"
         )
-
 
     return redirect(
         url_for("admin_links")
@@ -1775,19 +1762,16 @@ def delete_link(link_id):
 
     global links
 
-
     links = [
         link
         for link in links
         if link["id"] != link_id
     ]
 
-
     flash(
         "Link deleted!",
         "danger"
     )
-
 
     return redirect(
         url_for("admin_links")
@@ -1813,7 +1797,6 @@ def edit_link(link_id):
         "description"
     )
 
-
     for link in links:
 
         if link["id"] == link_id:
@@ -1824,14 +1807,12 @@ def edit_link(link_id):
 
             link["description"] = description
 
-
             flash(
                 "Link updated successfully!",
                 "info"
             )
 
             break
-
 
     return redirect(
         url_for("admin_links")
@@ -1923,7 +1904,6 @@ def movies():
         }
 
     ]
-
 
     return render_template(
         "movies.html",
