@@ -2,184 +2,1993 @@
 {% block content %}
 
 <style>
-  /* ---------- BACKGROUND ---------- */
-  body {
-    margin: 0;
-    /* Deep cinematic black background */
-    background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
-    color: #fff;
+
+  /* =========================================================
+   GLOBAL RESET — REMOVE WHITE SPACE
+   ========================================================= */
+
+html,
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #000000 !important;
+}
+
+body {
     overflow-x: hidden;
-  }
+}
 
-  /* Floating gold particle dots */
-  .particles {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 0;
-  }
-  .particles span {
-    position: absolute;
-    display: block;
-    width: 4px; height: 4px;
-    background: rgba(212, 175, 55, 0.3); /* Muted gold particles */
-    border-radius: 50%;
-    animation: floatParticle 10s linear infinite;
-  }
-  @keyframes floatParticle {
-    0% { transform: translateY(0) scale(1); opacity: 1; }
-    100% { transform: translateY(-100vh) scale(0); opacity: 0; }
-  }
+* {
+    box-sizing: border-box;
+}
 
-  /* ---------- CARD STYLING ---------- */
-  .join-container {
-    /* Increased gap between header and form */
-    margin-top: 150px; 
+/* =========================================================
+   HOME ENTERTAINMENTS
+   JOIN OUR TEAM PAGE
+   ========================================================= */
+
+:root {
+    --join-gold: #d4af37;
+    --join-gold-light: #f5df9b;
+    --join-gold-dark: #8f6817;
+
+    --join-black: #000000;
+    --join-dark: #080808;
+    --join-card: #0d0d0d;
+
+    --join-white: #ffffff;
+    --join-muted: rgba(255,255,255,0.58);
+    --join-border: rgba(212,175,55,0.18);
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.join-page {
+
     position: relative;
-    z-index: 2;
-    padding-bottom: 80px;
-  }
 
-  .join-card {
-    position: relative;
-    background: #0a0a0a; /* True black card */
-    border-radius: 30px;
-    padding: 60px 45px;
-    /* Subtle gold border glow */
-    border: 1px solid rgba(212, 175, 55, 0.2);
-    box-shadow: 0 15px 50px rgba(0,0,0,0.8);
-    animation: fadeInUp 1.2s ease;
-  }
-
-  @keyframes fadeInUp {
-    0% { opacity: 0; transform: translateY(40px); }
-    100% { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ---------- GOLD GRADIENT TEXT ---------- */
-  .gold-text {
-    background: linear-gradient(90deg, #d4af37, #f1d592, #b8860b);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 800;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 10px;
-  }
-
-  .join-card p {
-    color: #999;
-    text-align: center;
-    font-size: 1rem;
-    margin-bottom: 40px;
-  }
-
-  /* ---------- FORM STYLING ---------- */
-  .form-label {
-    color: #d4af37; /* Gold labels */
-    font-weight: 600;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 8px;
-  }
-
-  .form-control {
-    background: #111;
-    border: 1px solid #333;
-    color: #fff;
-    border-radius: 8px;
-    padding: 12px;
-    transition: 0.3s ease;
-  }
-
-  .form-control:focus {
-    background: #151515;
-    border-color: #d4af37;
-    box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
-    outline: none;
-    color: #fff;
-  }
-
-  /* ---------- GOLD GRADIENT BUTTON ---------- */
-  .btn-submit {
-    background: linear-gradient(45deg, #b8860b, #d4af37, #f1d592);
-    border: none;
-    color: #000;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border-radius: 50px; /* Pill shape to match your 'Watch' button */
-    padding: 15px 30px;
     width: 100%;
-    transition: 0.4s ease;
+
+    min-height: 100vh;
+
+    background: #000000;
+
+    color: #ffffff;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.join-hero {
+
+    position: relative;
+
+    min-height: 72vh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding:
+        120px 20px 90px;
+
+    background:
+
+        linear-gradient(
+            rgba(0,0,0,0.56),
+            rgba(0,0,0,0.88)
+        ),
+
+        /* url('{{ url_for("static", filename="images/collab.png") }}') */
+        center center / cover no-repeat;
+
+    border-bottom:
+        1px solid rgba(212,175,55,0.15);
+
+    overflow: hidden;
+}
+
+
+/* Cinematic glow */
+
+.join-hero::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+
+        radial-gradient(
+            circle at center,
+            rgba(212,175,55,0.12),
+            transparent 45%
+        );
+
+    pointer-events: none;
+}
+
+
+/* Bottom fade */
+
+.join-hero::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+
+    right: 0;
+
+    bottom: 0;
+
+    height: 35%;
+
+    background:
+
+        linear-gradient(
+            to bottom,
+            transparent,
+            #000000
+        );
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   HERO CONTENT
+========================================================= */
+
+.join-hero-content {
+
+    position: relative;
+
+    z-index: 2;
+
+    max-width: 900px;
+
+    margin: auto;
+}
+
+
+.join-small-title {
+
+    display: inline-block;
+
+    margin-bottom: 20px;
+
+    color: var(--join-gold-light);
+
+    font-size: 0.72rem;
+
+    font-weight: 800;
+
+    letter-spacing: 6px;
+
+    text-transform: uppercase;
+}
+
+
+.join-hero h1 {
+    margin: 0;
+
+    font-size: clamp(3.2rem, 7vw, 6.8rem);
+
+    line-height: 0.95;
+
+    font-weight: 900;
+
+    letter-spacing: 4px;
+
+    text-transform: uppercase;
+
+    background: linear-gradient(
+        to bottom,
+        #fffbd4 0%,
+        #f9d783 35%,
+        #f5c56d 62%,
+        #9a7227 100%
+    );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    filter: drop-shadow(
+        0 0 20px
+        rgba(245,197,109,0.18)
+    );
+}
+
+
+.join-hero-text {
+
+    max-width: 680px;
+
+    margin:
+        30px auto 0;
+
+    color:
+        rgba(255,255,255,0.72);
+
+    font-size: 1.05rem;
+
+    line-height: 1.85;
+}
+
+
+/* =========================================================
+   HERO BUTTON
+========================================================= */
+
+.join-hero-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-top: 35px;
+
+    padding:
+        15px 32px;
+
+    border-radius: 4px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #f5df9b,
+            #d4af37,
+            #9a721f
+        );
+
+    color: #000000;
+
+    text-decoration: none;
+
+    font-size: 0.78rem;
+
+    font-weight: 900;
+
+    letter-spacing: 1.5px;
+
+    transition:
+        0.3s ease;
+}
+
+
+.join-hero-button:hover {
+
+    color: #000000;
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 15px 40px
+        rgba(212,175,55,0.25);
+}
+
+
+/* =========================================================
+   MAIN INTRO
+========================================================= */
+
+.join-section {
+
+    position: relative;
+
+    padding:
+        100px 20px;
+
+    background: #000000;
+}
+
+
+.join-container {
+
+    max-width: 1150px;
+
+    margin: auto;
+}
+
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.join-eyebrow {
+
+    margin-bottom: 12px;
+
+    color: var(--join-gold);
+
+    font-size: 0.68rem;
+
+    font-weight: 800;
+
+    letter-spacing: 4px;
+
+    text-transform: uppercase;
+}
+
+
+.join-title {
+
+    margin:
+        0 0 20px;
+
+    color: #ffffff;
+
+    font-size:
+        clamp(2rem, 4vw, 3.4rem);
+
+    line-height: 1.1;
+
+    font-weight: 900;
+}
+
+
+.join-title span {
+
+    color:
+        var(--join-gold);
+}
+
+
+.join-description {
+
+    max-width: 760px;
+
+    margin: 0;
+
+    color:
+        rgba(255,255,255,0.52);
+
+    font-size: 0.95rem;
+
+    line-height: 1.85;
+}
+
+
+/* =========================================================
+   WHY JOIN
+========================================================= */
+
+.why-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+
+    margin-top: 55px;
+}
+
+
+.why-card {
+
+    position: relative;
+
+    padding:
+        32px 28px;
+
+    min-height: 210px;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            #121212,
+            #080808
+        );
+
+    border:
+        1px solid
+        var(--join-border);
+
+    border-radius: 8px;
+
+    overflow: hidden;
+
+    transition:
+        0.35s ease;
+}
+
+
+.why-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 130px;
+
+    height: 130px;
+
+    right: -65px;
+
+    top: -65px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(212,175,55,0.06);
+}
+
+
+.why-card:hover {
+
+    transform:
+        translateY(-8px);
+
+    border-color:
+        rgba(212,175,55,0.5);
+
+    box-shadow:
+        0 20px 50px
+        rgba(0,0,0,0.5);
+}
+
+
+.why-icon {
+
+    width: 45px;
+
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-bottom: 20px;
+
+    border:
+        1px solid
+        rgba(212,175,55,0.35);
+
+    border-radius: 50%;
+
+    color:
+        var(--join-gold);
+
+    font-size: 1.15rem;
+}
+
+
+.why-card h3 {
+
+    margin:
+        0 0 10px;
+
+    color: #ffffff;
+
+    font-size: 1rem;
+
+    font-weight: 800;
+}
+
+
+.why-card p {
+
+    margin: 0;
+
+    color:
+        rgba(255,255,255,0.45);
+
+    font-size: 0.78rem;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   AREAS
+========================================================= */
+
+.areas-section {
+
+    background:
+
+        linear-gradient(
+            180deg,
+            #000000,
+            #080808,
+            #000000
+        );
+}
+
+
+.areas-header {
+
+    text-align: center;
+
+    max-width: 700px;
+
+    margin:
+        0 auto;
+}
+
+
+.areas-header .join-description {
+
+    margin:
+        0 auto;
+}
+
+
+.areas-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 12px;
+
+    margin-top: 50px;
+}
+
+
+.area-card {
+
+    position: relative;
+
+    min-height: 155px;
+
+    padding:
+        25px 20px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    background:
+        #0c0c0c;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.07);
+
+    border-radius: 7px;
+
+    transition:
+        0.3s ease;
+}
+
+
+.area-card:hover {
+
+    background:
+        #111111;
+
+    border-color:
+        rgba(212,175,55,0.4);
+
+    transform:
+        translateY(-6px);
+}
+
+
+.area-icon {
+
+    margin-bottom: 15px;
+
+    font-size: 1.7rem;
+}
+
+
+.area-card h3 {
+
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 0.86rem;
+
+    font-weight: 800;
+
+    letter-spacing: 0.5px;
+}
+
+
+.area-card p {
+
+    margin:
+        8px 0 0;
+
+    color:
+        rgba(255,255,255,0.4);
+
+    font-size: 0.68rem;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   CULTURE STRIP
+========================================================= */
+
+.culture-section {
+
+    padding:
+        75px 20px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #050505,
+            #12100a,
+            #050505
+        );
+
+    border-top:
+        1px solid
+        var(--join-border);
+
+    border-bottom:
+        1px solid
+        var(--join-border);
+}
+
+
+.culture-grid {
+
+    max-width: 1050px;
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 20px;
+}
+
+
+.culture-item {
+
+    text-align: center;
+}
+
+
+.culture-number {
+
+    color:
+        var(--join-gold);
+
+    font-size: 1.9rem;
+
+    font-weight: 900;
+}
+
+
+.culture-item h3 {
+
+    margin:
+        8px 0;
+
+    color: #ffffff;
+
+    font-size: 0.8rem;
+
+    letter-spacing: 1px;
+
+    font-weight: 800;
+}
+
+
+.culture-item p {
+
+    margin: 0;
+
+    color:
+        rgba(255,255,255,0.38);
+
+    font-size: 0.7rem;
+}
+
+
+/* =========================================================
+   APPLICATION SECTION
+========================================================= */
+
+.application-section {
+
+    padding:
+        110px 20px;
+
+    background:
+
+        radial-gradient(
+            circle at center top,
+            rgba(212,175,55,0.07),
+            transparent 45%
+        ),
+        #000000;
+}
+
+
+.application-card {
+
+    max-width: 850px;
+
+    margin: auto;
+
+    padding:
+        55px;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            #151515,
+            #080808
+        );
+
+    border:
+        1px solid
+        rgba(212,175,55,0.22);
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 30px 90px
+        rgba(0,0,0,0.65);
+}
+
+
+/* =========================================================
+   APPLICATION HEADER
+========================================================= */
+
+.application-header {
+
+    text-align: center;
+
+    margin-bottom: 45px;
+}
+
+
+.application-header h2 {
+
+    margin:
+        0 0 15px;
+
+    color: #ffffff;
+
+    font-size:
+        clamp(1.8rem, 4vw, 2.7rem);
+
+    font-weight: 900;
+}
+
+
+.application-header h2 span {
+
+    color:
+        var(--join-gold);
+}
+
+
+.application-header p {
+
+    max-width: 600px;
+
+    margin: auto;
+
+    color:
+        rgba(255,255,255,0.48);
+
+    font-size: 0.85rem;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.join-form label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    color:
+        var(--join-gold);
+
+    font-size: 0.68rem;
+
+    font-weight: 800;
+
+    letter-spacing: 1.3px;
+
+    text-transform: uppercase;
+}
+
+
+.join-form .form-control {
+
+    min-height: 48px;
+
+    padding:
+        12px 14px;
+
+    background:
+        #080808 !important;
+
+    border:
+        1px solid #2c2c2c !important;
+
+    border-radius: 5px;
+
+    color:
+        #ffffff !important;
+
+    font-size: 0.85rem;
+
+    transition:
+        0.3s ease;
+}
+
+
+.join-form .form-control::placeholder {
+
+    color:
+        rgba(255,255,255,0.24);
+}
+
+
+.join-form .form-control:focus {
+
+    background:
+        #0b0b0b !important;
+
+    border-color:
+        var(--join-gold) !important;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(212,175,55,0.06) !important;
+
+    outline: none;
+}
+
+
+.join-form textarea.form-control {
+
+    min-height: 130px;
+
+    resize: vertical;
+}
+
+
+/* =========================================================
+   FILE INPUT
+========================================================= */
+
+.join-form input[type="file"] {
+
+    padding:
+        9px 11px;
+
     cursor: pointer;
-  }
+}
 
-  .btn-submit:hover {
-    box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
-    transform: scale(1.02);
-  }
 
-  /* ---------- MOBILE OPTIMIZATION ---------- */
-  @media (max-width: 768px) {
-    .join-container {
-      margin-top: 30px; /* Slightly less on mobile but still a healthy gap */
+.join-form input[type="file"]::file-selector-button {
+
+    margin-right: 12px;
+
+    padding:
+        8px 13px;
+
+    border: none;
+
+    border-radius: 4px;
+
+    background:
+        var(--join-gold);
+
+    color:
+        #000000;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+
+.file-help {
+
+    margin-top: 7px;
+
+    color:
+        rgba(255,255,255,0.3);
+
+    font-size: 0.65rem;
+}
+
+
+/* =========================================================
+   SUBMIT
+========================================================= */
+
+.join-submit {
+
+    width: 100%;
+
+    margin-top: 10px;
+
+    padding:
+        16px;
+
+    border: none;
+
+    border-radius: 5px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #f5df9b,
+            #d4af37,
+            #9a721f
+        );
+
+    color:
+        #000000;
+
+    font-size: 0.78rem;
+
+    font-weight: 900;
+
+    letter-spacing: 1.5px;
+
+    cursor: pointer;
+
+    transition:
+        0.3s ease;
+}
+
+
+.join-submit:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 15px 40px
+        rgba(212,175,55,0.25);
+}
+
+
+/* =========================================================
+   PRIVACY NOTE
+========================================================= */
+
+.form-privacy {
+
+    margin-top: 18px;
+
+    text-align: center;
+
+    color:
+        rgba(255,255,255,0.28);
+
+    font-size: 0.62rem;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   FINAL CTA
+========================================================= */
+
+.join-final {
+
+    position: relative;
+
+    padding:
+        100px 20px;
+
+    text-align: center;
+
+    background:
+
+        linear-gradient(
+            rgba(0,0,0,0.72),
+            rgba(0,0,0,0.95)
+        ),
+
+        /* url('{{ url_for("static", filename="images/collab.png") }}') */
+        center / cover no-repeat;
+}
+
+
+.join-final-content {
+
+    max-width: 750px;
+
+    margin: auto;
+}
+
+
+.join-final h2 {
+
+    margin:
+        0 0 18px;
+
+    color: #ffffff;
+
+    font-size:
+        clamp(2rem, 5vw, 4rem);
+
+    font-weight: 900;
+}
+
+
+.join-final h2 span {
+
+    color:
+        var(--join-gold);
+}
+
+
+.join-final p {
+
+    margin:
+        0 auto 30px;
+
+    max-width: 620px;
+
+    color:
+        rgba(255,255,255,0.55);
+
+    font-size: 0.88rem;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 991px) {
+
+    .join-hero {
+
+        min-height: 70vh;
+
+        padding:
+            120px 20px 80px;
     }
-    .join-card {
-      padding: 40px 20px;
-      margin: 0 15px;
+
+
+    .why-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
     }
-    .gold-text {
-      font-size: 1.5rem;
+
+
+    .areas-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
     }
-    .btn-submit {
-        font-size: 0.9rem;
-        padding: 12px;
+
+
+    .culture-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        row-gap: 35px;
     }
-  }
+
+
+    .application-card {
+
+        padding:
+            40px 28px;
+    }
+}
+
+
+@media (max-width: 576px) {
+
+    .join-hero h1 {
+        font-size: 2.35rem;
+        letter-spacing: 1px;
+    }
+
+    .join-hero {
+
+        min-height: 68vh;
+
+        padding:
+            130px 15px 70px;
+    }
+
+
+    .join-small-title {
+
+        font-size: 0.57rem;
+
+        letter-spacing: 3px;
+    }
+
+
+    .join-hero h1 {
+        font-size: clamp(2.5rem, 9vw, 4.8rem);
+        letter-spacing: 2px;
+    }
+
+
+    .join-hero-text {
+
+        font-size: 0.82rem;
+
+        line-height: 1.7;
+    }
+
+
+    .join-hero-button {
+
+        width: 100%;
+
+        max-width: 300px;
+    }
+
+
+    .join-section {
+
+        padding:
+            75px 17px;
+    }
+
+
+    .join-title {
+
+        font-size: 2rem;
+    }
+
+
+    .join-description {
+
+        font-size: 0.82rem;
+    }
+
+
+    .why-grid {
+
+        grid-template-columns:
+            1fr;
+
+        gap: 12px;
+    }
+
+
+    .why-card {
+
+        min-height: auto;
+    }
+
+
+    .areas-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 8px;
+    }
+
+
+    .area-card {
+
+        min-height: 145px;
+
+        padding:
+            18px 10px;
+    }
+
+
+    .area-card h3 {
+
+        font-size: 0.74rem;
+    }
+
+
+    .area-card p {
+
+        font-size: 0.61rem;
+    }
+
+
+    .culture-section {
+
+        padding:
+            60px 15px;
+    }
+
+
+    .culture-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+
+    .application-section {
+
+        padding:
+            70px 15px;
+    }
+
+
+    .application-card {
+
+        padding:
+            30px 18px;
+
+        border-radius: 10px;
+    }
+
+
+    .application-header {
+
+        margin-bottom: 32px;
+    }
+
+
+    .application-header h2 {
+
+        font-size: 1.9rem;
+    }
+
+
+    .join-final {
+
+        padding:
+            75px 18px;
+    }
+
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+.join-hero-button:focus,
+.join-submit:focus,
+.form-control:focus {
+
+    outline:
+        2px solid
+        rgba(212,175,55,0.55);
+
+    outline-offset: 2px;
+}
+
 </style>
 
-<div class="particles">
-  {% for i in range(20) %}
-  <span style="left:{{ loop.index * 5 }}%; top:{{ loop.index * 4 }}%; animation-delay:{{ loop.index * 0.4 }}s;"></span>
-  {% endfor %}
-</div>
 
-<div class="join-container container py-5 d-flex justify-content-center align-items-center min-vh-100">
-  <div class="join-card w-100" style="max-width: 750px;">
-    <h3 class="gold-text">Join Our Team</h3>
-    <p>Fuel our vision with your passion. We are scouting for the boldest storytellers.</p>
+<!-- =========================================================
+     JOIN PAGE
+========================================================= -->
 
-    <form action="{{ url_for('join') }}" method="POST" enctype="multipart/form-data" class="row g-4">
-      <div class="col-md-6">
-        <label class="form-label">Full Name</label>
-        <input type="text" name="name" class="form-control" placeholder="Your Name" required>
-      </div>
-      <div class="col-md-6">
-        <label class="form-label">Email Address</label>
-        <input type="email" name="email" class="form-control" placeholder="email@example.com" required>
-      </div>
-      <div class="col-md-6">
-        <label class="form-label">Area of Interest</label>
-        <input type="text" name="interest" class="form-control" placeholder="e.g. Editing, Acting" required>
-      </div>
-      <div class="col-md-6">
-        <label class="form-label">Portfolio Link</label>
-        <input type="text" name="portfolio" class="form-control" placeholder="Behance, LinkedIn, etc.">
-      </div>
-      <div class="col-md-12">
-        <label class="form-label">Attach CV (PDF/DOC)</label>
-        <input type="file" name="resume" class="form-control">
-      </div>
-      <div class="col-12 mt-5">
-        <button type="submit" class="btn-submit">Submit Application</button>
-      </div>
-    </form>
-  </div>
+<div class="join-page">
+
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <section class="join-hero">
+
+        <div class="join-hero-content">
+
+            <!-- <div class="join-small-title">
+                HOME ENTERTAINMENTS
+            </div> -->
+
+            <h1>
+                JOIN OUR<br>
+                TEAM
+            </h1>
+
+            <p class="join-hero-text">
+
+                Be part of the people behind the stories.
+                We're building a passionate creative team
+                and looking for people who want to learn,
+                create and grow with us.
+
+            </p>
+
+            <a
+                href="#application"
+                class="join-hero-button">
+
+                BECOME PART OF THE TEAM
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         WHY JOIN US
+    ====================================================== -->
+
+    <section class="join-section">
+
+        <div class="join-container">
+
+            <div class="join-eyebrow">
+                WHY HOME ENTERTAINMENTS
+            </div>
+
+            <h2 class="join-title">
+
+                DON'T JUST WATCH STORIES.
+                <span>HELP CREATE THEM.</span>
+
+            </h2>
+
+            <p class="join-description">
+
+                Home Entertainments is a growing entertainment
+                team focused on creating meaningful films,
+                web series, music and digital content.
+
+                <br><br>
+
+                We're looking for passionate people who want
+                to contribute to the team, develop their
+                skills and grow alongside us.
+
+            </p>
+
+
+            <div class="why-grid">
+
+
+                <div class="why-card">
+
+                    <div class="why-icon">
+                        🎬
+                    </div>
+
+                    <h3>
+                        Work On Real Projects
+                    </h3>
+
+                    <p>
+                        Get involved in real entertainment
+                        projects and experience how ideas
+                        become finished productions.
+                    </p>
+
+                </div>
+
+
+                <div class="why-card">
+
+                    <div class="why-icon">
+                        🚀
+                    </div>
+
+                    <h3>
+                        Grow With Us
+                    </h3>
+
+                    <p>
+                        Learn, experiment and develop your
+                        creative and technical skills as
+                        the team grows.
+                    </p>
+
+                </div>
+
+
+                <div class="why-card">
+
+                    <div class="why-icon">
+                        🤝
+                    </div>
+
+                    <h3>
+                        Be Part Of A Team
+                    </h3>
+
+                    <p>
+                        Work alongside passionate people
+                        who believe in creativity,
+                        collaboration and storytelling.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         AREAS
+    ====================================================== -->
+
+    <section class="join-section areas-section">
+
+        <div class="join-container">
+
+            <div class="areas-header">
+
+                <div class="join-eyebrow">
+                    WHERE YOU CAN CONTRIBUTE
+                </div>
+
+                <h2 class="join-title">
+
+                    FIND YOUR
+                    <span>PLACE.</span>
+
+                </h2>
+
+                <p class="join-description">
+
+                    You don't need to fit into just one box.
+                    If you have a skill that can help us
+                    create better stories, we want to hear
+                    from you.
+
+                </p>
+
+            </div>
+
+
+            <div class="areas-grid">
+
+
+                <div class="area-card">
+
+                    <div class="area-icon">
+                        🎬
+                    </div>
+
+                    <h3>
+                        PRODUCTION
+                    </h3>
+
+                    <p>
+                        Production & coordination
+                    </p>
+
+                </div>
+
+
+                <div class="area-card">
+
+                    <div class="area-icon">
+                        🎨
+                    </div>
+
+                    <h3>
+                        CREATIVE
+                    </h3>
+
+                    <p>
+                        Creative & design
+                    </p>
+
+                </div>
+
+
+                <div class="area-card">
+
+                    <div class="area-icon">
+                        ✂️
+                    </div>
+
+                    <h3>
+                        POST PRODUCTION
+                    </h3>
+
+                    <p>
+                        Editing & colour
+                    </p>
+
+                </div>
+
+
+                <div class="area-card">
+
+                    <div class="area-icon">
+                        📷
+                    </div>
+
+                    <h3>
+                        CAMERA
+                    </h3>
+
+                    <p>
+                        Camera & lighting
+                    </p>
+
+                </div>
+
+
+                <div class="area-card">
+
+                    <div class="area-icon">
+                        🎨
+                    </div>
+
+                    <h3>
+                        GRAPHICS
+                    </h3>
+
+                    <p>
+                        Posters & visual design
+                    </p>
+
+                </div>
+
+
+                <div class="area-card">
+
+                    <div class="area-icon">
+                        📱
+                    </div>
+
+                    <h3>
+                        DIGITAL
+                    </h3>
+
+                    <p>
+                        Social & content
+                    </p>
+
+                </div>
+
+
+                <div class="area-card">
+
+                    <div class="area-icon">
+                        🎧
+                    </div>
+
+                    <h3>
+                        SOUND
+                    </h3>
+
+                    <p>
+                        Audio & sound design
+                    </p>
+
+                </div>
+
+
+                <div class="area-card">
+
+                    <div class="area-icon">
+                        📋
+                    </div>
+
+                    <h3>
+                        MANAGEMENT
+                    </h3>
+
+                    <p>
+                        Operations & coordination
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         TEAM VALUES
+    ====================================================== -->
+
+    <section class="culture-section">
+
+        <div class="culture-grid">
+
+
+            <div class="culture-item">
+
+                <div class="culture-number">
+                    01
+                </div>
+
+                <h3>
+                    PASSION
+                </h3>
+
+                <p>
+                    Love what you create.
+                </p>
+
+            </div>
+
+
+            <div class="culture-item">
+
+                <div class="culture-number">
+                    02
+                </div>
+
+                <h3>
+                    CREATIVITY
+                </h3>
+
+                <p>
+                    Think beyond the ordinary.
+                </p>
+
+            </div>
+
+
+            <div class="culture-item">
+
+                <div class="culture-number">
+                    03
+                </div>
+
+                <h3>
+                    TEAMWORK
+                </h3>
+
+                <p>
+                    Create better together.
+                </p>
+
+            </div>
+
+
+            <div class="culture-item">
+
+                <div class="culture-number">
+                    04
+                </div>
+
+                <h3>
+                    GROWTH
+                </h3>
+
+                <p>
+                    Keep learning and improving.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         APPLICATION FORM
+    ====================================================== -->
+
+    <section
+        class="application-section"
+        id="application">
+
+        <div class="application-card">
+
+
+            <div class="application-header">
+
+                <div class="join-eyebrow">
+                    TAKE THE FIRST STEP
+                </div>
+
+                <h2>
+
+                    JOIN THE
+                    <span>JOURNEY.</span>
+
+                </h2>
+
+                <p>
+
+                    Tell us about yourself, your skills and
+                    what you would like to contribute to
+                    Home Entertainments.
+
+                </p>
+
+            </div>
+
+
+            <form
+                action="{{ url_for('join') }}"
+                method="POST"
+                enctype="multipart/form-data"
+                class="join-form">
+
+
+                <!-- NAME -->
+
+                <div class="mb-4">
+
+                    <label>
+                        FULL NAME *
+                    </label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        class="form-control"
+                        placeholder="Your full name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="mb-4">
+
+                    <label>
+                        EMAIL ADDRESS *
+                    </label>
+
+                    <input
+                        type="email"
+                        name="email"
+                        class="form-control"
+                        placeholder="email@example.com"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- INTEREST + EXPERIENCE -->
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-4">
+
+                        <label>
+                            ROLE / AREA OF INTEREST *
+                        </label>
+
+                        <select
+                            name="interest"
+                            class="form-control"
+                            required>
+
+                            <option value="">
+                                Select an area
+                            </option>
+
+                            <option value="Production">
+                                Production
+                            </option>
+
+                            <option value="Creative">
+                                Creative
+                            </option>
+
+                            <option value="Editing">
+                                Editing
+                            </option>
+
+                            <option value="Cinematography">
+                                Cinematography
+                            </option>
+
+                            <option value="Graphics">
+                                Graphics / Design
+                            </option>
+
+                            <option value="Social Media">
+                                Social Media / Digital
+                            </option>
+
+                            <option value="Sound">
+                                Sound
+                            </option>
+
+                            <option value="Management">
+                                Management / Coordination
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="col-md-6 mb-4">
+
+                        <label>
+                            EXPERIENCE
+                        </label>
+
+                        <select
+                            name="experience"
+                            class="form-control">
+
+                            <option value="">
+                                Select experience
+                            </option>
+
+                            <option value="Beginner">
+                                Beginner
+                            </option>
+
+                            <option value="Student">
+                                Student
+                            </option>
+
+                            <option value="0-2 Years">
+                                0 – 2 Years
+                            </option>
+
+                            <option value="2-5 Years">
+                                2 – 5 Years
+                            </option>
+
+                            <option value="5+ Years">
+                                5+ Years
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PORTFOLIO -->
+
+                <div class="mb-4">
+
+                    <label>
+                        PORTFOLIO / PROFESSIONAL LINK
+                    </label>
+
+                    <input
+                        type="url"
+                        name="portfolio"
+                        class="form-control"
+                        placeholder="Instagram / YouTube / LinkedIn / Website"
+                    >
+
+                </div>
+
+
+                <!-- RESUME -->
+
+                <div class="mb-4">
+
+                    <label>
+                        ATTACH CV / RESUME
+                    </label>
+
+                    <input
+                        type="file"
+                        name="resume"
+                        class="form-control"
+                        accept=".pdf,.doc,.docx"
+                    >
+
+                    <div class="file-help">
+                        PDF, DOC or DOCX format
+                    </div>
+
+                </div>
+
+
+                <!-- MESSAGE -->
+
+                <div class="mb-4">
+
+                    <label>
+                        TELL US ABOUT YOURSELF *
+                    </label>
+
+                    <textarea
+                        name="message"
+                        class="form-control"
+                        rows="5"
+                        placeholder="Tell us about your skills, experience and why you would like to join Home Entertainments..."
+                        required></textarea>
+
+                </div>
+
+
+                <!-- SUBMIT -->
+
+                <button
+                    type="submit"
+                    class="join-submit">
+
+                    SUBMIT MY PROFILE
+
+                </button>
+
+
+                <div class="form-privacy">
+
+                    By submitting your profile, you agree that
+                    Home Entertainments may contact you regarding
+                    relevant team opportunities.
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </section>
+
+
 </div>
 
 {% endblock %}

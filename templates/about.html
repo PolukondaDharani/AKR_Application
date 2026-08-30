@@ -1,1072 +1,898 @@
 {% extends "base.html" %}
-
 {% block content %}
 
 <style>
-
 /* =========================================================
-   ABOUT PAGE
+   HOME ENTERTAINMENTS — ABOUT PAGE
+   Premium cinematic / glassmorphism design
    ========================================================= */
+
+:root {
+    --gold: #f5c56d;
+    --gold-light: #ffe4a8;
+    --cream: #fff7e6;
+    --black: #050505;
+    --panel: rgba(255,255,255,.055);
+    --panel-strong: rgba(255,255,255,.085);
+    --line: rgba(245,197,109,.22);
+    --muted: rgba(255,255,255,.62);
+}
 
 .about-section {
-
     position: relative;
-
     min-height: 100vh;
-
-    /*
-     * Pull the section underneath the transparent navbar.
-     * This removes the white gap coming from base.html body padding.
-     */
-    /* margin-top: -80px !important; */
-
     margin-top: -110px !important;
-    /*
-     * Compensate for the negative margin so the actual
-     * content stays approximately where it was.
-     */
-    padding-top: 110px !important;
-
-    padding-bottom: 80px;
-
-    background:
-        url('/static/images/bg3.png')
-        center/cover
-        no-repeat
-        fixed;
-
-    overflow-x: hidden;
-
-    color: white;
-
-
+    padding: 155px 0 100px !important;
+    overflow: hidden;
+    color: #fff;
+    background: #030303;
 }
 
-
-/* =========================================================
-   DARK OVERLAY
-   ========================================================= */
-
+/* Cinematic glow */
 .about-section::before {
-
     content: "";
-
     position: absolute;
-
     inset: 0;
-
-    /* background:
-        linear-gradient(
-            to bottom,
-            rgba(0,0,0,1) 0%,
-            rgba(5,9,17,0.7) 40%,
-            rgba(0,0,0,0.95) 100%
-        ); */
-
-    z-index: 1;
-
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 50% 8%, rgba(0, 0, 0, 0), transparent 28%),
+        radial-gradient(circle at 10% 45%, rgba(0, 0, 0, 0), transparent 30%),
+        radial-gradient(circle at 90% 75%, rgba(0, 0, 0, 0), transparent 28%);
 }
 
-
-/* =========================================================
-   CONTENT
-   ========================================================= */
+.about-section::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 220px;
+    pointer-events: none;
+    background: linear-gradient(to bottom, transparent, #030303);
+}
 
 .content-wrapper {
-
     position: relative;
-
     z-index: 2;
-
 }
 
-
 /* =========================================================
-   SECTION TITLE
+   HERO / INTRO
    ========================================================= */
 
-.section-title {
+.about-hero {
+    max-width: 900px;
+    margin: 0 auto 72px;
+    text-align: center;
+}
 
-    color: #f5c56d;
-
-    letter-spacing: 3px;
-
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    color: var(--gold);
+    font-size: .68rem;
     font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
 
-    font-size: 1.5rem;
+.eyebrow::before,
+.eyebrow::after {
+    content: "";
+    width: 30px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+}
 
-    margin-bottom: 20px;
+.eyebrow::after {
+    background: linear-gradient(90deg, var(--gold), transparent);
+}
+
+.hero-title {
+    margin: 0;
+
+    font-size: clamp(3.2rem, 7vw, 6.8rem);
+
+    line-height: 0.95;
+
+    font-weight: 900;
+
+    letter-spacing: 4px;
 
     text-transform: uppercase;
 
+    background: linear-gradient(
+        to bottom,
+        #fffbd4 0%,
+        #f9d783 35%,
+        #f5c56d 62%,
+        #9a7227 100%
+    );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    filter: drop-shadow(
+        0 0 20px
+        rgba(245,197,109,0.18)
+    );
 }
 
+.hero-subtitle {
+    max-width: 680px;
+    margin: 22px auto 0;
+    color: rgba(255,255,255,.68);
+    font-size: 1rem;
+    line-height: 1.8;
+}
 
 /* =========================================================
-   TEAM SECTION
+   ABOUT COPY CARD
    ========================================================= */
 
+.about-description {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 36px 42px;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    background: linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.025));
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.38),
+        inset 0 1px 0 rgba(255,255,255,.08);
+    backdrop-filter: blur(14px);
+}
+
+.about-description::before {
+    content: "“";
+    position: absolute;
+    top: -25px;
+    left: 28px;
+    color: rgba(245,197,109,.18);
+    font-family: Georgia, serif;
+    font-size: 7rem;
+    line-height: 1;
+}
+
+.about-description p {
+    position: relative;
+    margin: 0 0 17px;
+    color: rgba(255,255,255,.74);
+    font-size: .96rem;
+    line-height: 1.9;
+}
+
+.about-description p:last-child {
+    margin-bottom: 0;
+}
+
+.about-description strong {
+    color: #fff;
+}
+
+.about-ending {
+    padding-top: 12px;
+    color: var(--gold) !important;
+    font-size: 1.05rem !important;
+    line-height: 1.65 !important;
+    letter-spacing: .5px;
+}
+
+/* =========================================================
+   FOUNDER
+   ========================================================= */
+
+.founder-section {
+    margin: 42px auto 0;
+    text-align: center;
+}
+
+.founder-line {
+    width: 55px;
+    height: 1px;
+    margin: 0 auto 13px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.founder-label {
+    margin: 0 0 12px;
+    color: #777;
+    font-size: .62rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.founder-logo {
+    width: 82px;
+    height: 82px;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 20px rgba(245,197,109,.14));
+    transition: transform .35s ease;
+}
+
+.founder-logo:hover {
+    transform: translateY(-5px) scale(1.04);
+}
+
+/* =========================================================
+   SECTION TITLES
+   ========================================================= */
+
+.section-block {
+    margin-top: 82px;
+}
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 27px;
+}
+
+.section-kicker {
+    margin-bottom: 8px;
+    color: var(--gold);
+    font-size: .58rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.section-title {
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    color: #fff;
+    font-size: 1.65rem;
+    font-weight: 750;
+    letter-spacing: 1px;
+}
+
+.section-title::after {
+    content: "";
+    display: block;
+    width: 42px;
+    height: 2px;
+    margin: 11px auto 0;
+    background: var(--gold);
+    box-shadow: 0 0 12px rgba(245,197,109,.4);
+}
+
+/* =========================================================
+   TEAM
+   ========================================================= */
+
+.team-shell {
+    position: relative;
+}
+
 .team-grid {
-
-    display: flex;
-
-    overflow-x: auto;
-
-    scroll-snap-type: x mandatory;
-
-    gap: 15px;
-
-    padding: 20px 15px;
-
-    scrollbar-width: none;
-
-    scroll-behavior: smooth;
-
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(205px, 1fr));
+    gap: 18px;
+    max-width: 1120px;
+    margin: 0 auto;
 }
-
-
-.team-grid::-webkit-scrollbar {
-
-    display: none;
-
-}
-
 
 .team-card {
-
-    min-width: 240px;
-
     height: 300px;
-
-    perspective: 1000px;
-
-    scroll-snap-align: center;
-
-    flex-shrink: 0;
-
+    perspective: 1200px;
 }
-
 
 .card-inner {
-
     position: relative;
-
     width: 100%;
-
     height: 100%;
-
-    transition:
-        transform 0.6s
-        cubic-bezier(0.4, 0, 0.2, 1);
-
+    transition: transform .7s cubic-bezier(.2,.75,.2,1);
     transform-style: preserve-3d;
-
 }
-
 
 .team-card:hover .card-inner {
-
     transform: rotateY(180deg);
-
 }
-
 
 .card-front,
 .card-back {
-
     position: absolute;
-
-    width: 100%;
-
-    height: 100%;
-
-    backface-visibility: hidden;
-
-    border-radius: 12px;
-
+    inset: 0;
     display: flex;
-
     flex-direction: column;
-
     align-items: center;
-
     justify-content: center;
-
+    padding: 22px;
+    overflow: hidden;
+    border-radius: 20px;
+    border: 1px solid rgba(245,197,109,.18);
     background:
-        rgba(255,255,255,0.05);
-
-    border:
-        1px solid
-        rgba(245,197,109,0.2);
-
-    padding: 15px;
-
-    backdrop-filter: blur(5px);
-
+        radial-gradient(circle at 50% 0%, rgba(245,197,109,.08), transparent 42%),
+        linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.025));
+    box-shadow:
+        0 18px 50px rgba(0,0,0,.28),
+        inset 0 1px 0 rgba(255,255,255,.07);
+    backdrop-filter: blur(12px);
+    backface-visibility: hidden;
 }
 
+.card-front::after {
+    content: "";
+    position: absolute;
+    inset: 9px;
+    border: 1px solid rgba(255,255,255,.045);
+    border-radius: 15px;
+    pointer-events: none;
+}
 
 .card-front img {
-
-    width: 80px;
-
-    height: 80px;
-
+    position: relative;
+    z-index: 1;
+    width: 102px;
+    height: 102px;
+    margin-bottom: 17px;
     border-radius: 50%;
-
     object-fit: cover;
-
-    border:
-        2px solid
-        #f5c56d;
-
-    margin-bottom: 10px;
-
+    border: 2px solid var(--gold);
+    box-shadow:
+        0 0 0 7px rgba(245,197,109,.07),
+        0 12px 35px rgba(0,0,0,.45);
 }
 
+.card-front h5 {
+    position: relative;
+    z-index: 1;
+    margin: 0 0 7px;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.card-front p {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    color: var(--gold);
+    font-size: .62rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
 
 .card-back {
-
-    background: #f5c56d;
-
-    color: black;
-
     transform: rotateY(180deg);
-
     text-align: center;
-
-}
-
-
-/* =========================================================
-   SLIDER ARROWS
-   ========================================================= */
-
-.nav-arrow {
-
-    position: absolute;
-
-    top: 50%;
-
-    transform: translateY(-50%);
-
     background:
-        rgba(245,197,109,0.9);
+        radial-gradient(circle at 50% 0%, rgba(255,255,255,.35), transparent 45%),
+        linear-gradient(145deg, #f8d58f, #c99a45);
+    color: #080808;
+    border-color: rgba(255,255,255,.25);
+}
 
-    color: black;
+.card-back strong {
+    font-size: 1.15rem;
+}
 
-    border: none;
+.card-back p {
+    margin: 7px 0;
+}
 
-    width: 35px;
+.card-back p:last-child {
+    font-size: .78rem;
+    line-height: 1.6;
+    opacity: .78;
+}
 
-    height: 35px;
-
-    border-radius: 50%;
-
-    z-index: 10;
-
-    display: flex;
-
+/* Mobile arrows */
+.nav-arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 5;
+    width: 38px;
+    height: 38px;
+    display: none;
     align-items: center;
-
     justify-content: center;
-
-    box-shadow:
-        0 4px 10px
-        rgba(0,0,0,0.3);
-
+    transform: translateY(-50%);
+    border: 1px solid rgba(245,197,109,.35);
+    border-radius: 50%;
+    background: rgba(8,8,8,.78);
+    color: var(--gold);
+    box-shadow: 0 8px 25px rgba(0,0,0,.4);
     cursor: pointer;
-
 }
 
-
-.left-arrow {
-
-    left: 5px;
-
-}
-
-
-.right-arrow {
-
-    right: 5px;
-
-}
-
+.left-arrow { left: -4px; }
+.right-arrow { right: -4px; }
 
 /* =========================================================
-   UI COMPONENTS
+   CHANNELS / BTS / PROJECTS
    ========================================================= */
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.two-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+    max-width: 760px;
+    margin: 0 auto;
+}
 
 .glass-card,
 .bts-box {
-
+    position: relative;
+    min-height: 125px;
+    padding: 25px 15px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.09);
+    border-radius: 18px;
     background:
-        rgba(255,255,255,0.05);
-
-    border:
-        1px solid
-        rgba(255,255,255,0.1);
-
-    padding:
-        20px 10px;
-
-    border-radius: 10px;
-
-    height: 100%;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    transition: 0.3s;
-
+        linear-gradient(145deg, rgba(255,255,255,.065), rgba(255,255,255,.018));
+    box-shadow:
+        0 16px 40px rgba(0,0,0,.22),
+        inset 0 1px 0 rgba(255,255,255,.055);
+    text-align: center;
+    backdrop-filter: blur(12px);
+    transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
 }
 
+.glass-card::before,
+.bts-box::before {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: -55px;
+    right: -35px;
+    border-radius: 50%;
+    background: rgba(245,197,109,.08);
+    filter: blur(2px);
+}
+
+.glass-card:hover,
+.bts-box:hover {
+    transform: translateY(-6px);
+    border-color: rgba(245,197,109,.35);
+    box-shadow: 0 22px 55px rgba(0,0,0,.35);
+}
+
+.glass-card i,
+.bts-box i {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 12px;
+    color: var(--gold) !important;
+    font-size: 1.55rem;
+}
+
+.glass-card h4,
+.bts-box h5 {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    color: #fff;
+    font-size: .74rem;
+    font-weight: 700;
+    letter-spacing: 1.7px;
+}
 
 .project-img {
-
-    height: 80px;
-
+    height: 82px;
     width: 100%;
-
-    border-radius: 5px;
-
-    margin-bottom: 10px;
-
-    font-size: 0.7rem;
-
-    text-transform: uppercase;
-
+    margin-bottom: 14px;
+    border: 1px solid rgba(245,197,109,.12);
+    border-radius: 12px;
     background:
-        rgba(255,255,255,0.1);
-
+        linear-gradient(135deg, rgba(245,197,109,.09), rgba(255,255,255,.025));
+    color: rgba(255,255,255,.72);
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
-
 /* =========================================================
-   ANIMATIONS
+   REVEAL
    ========================================================= */
 
 .reveal {
-
     opacity: 0;
-
-    transition:
-        all 1s ease-out;
-
+    transform: translateY(28px);
+    transition: opacity .8s ease, transform .8s ease;
 }
-
-
-.slide-up {
-
-    transform:
-        translateY(30px);
-
-}
-
 
 .reveal.active {
-
     opacity: 1;
-
-    transform:
-        translateY(0);
-
+    transform: translateY(0);
 }
 
-
 /* =========================================================
-   MOBILE
+   RESPONSIVE
    ========================================================= */
 
 @media (max-width: 991px) {
-
-    /*
-     * base.html has body padding-top: 115px
-     *
-     * Pull About section all the way to the top.
-     */
     .about-section {
-
         margin-top: -115px !important;
-
-        /*
-         * Keep the content from moving too far upward.
-         */
-        padding-top: 135px !important;
-
+        padding-top: 145px !important;
     }
-
-}
-
-
-/* =========================================================
-   TABLET / MOBILE
-   ========================================================= */
-
-@media (max-width: 768px) {
-
-    /* Smaller Team Cards */
-
-    .team-card {
-
-        min-width: 160px;
-
-        height: 220px;
-
-    }
-
-
-    .card-front img {
-
-        width: 60px;
-
-        height: 60px;
-
-    }
-
-
-    /* Compact Channels Row */
-
-    .mobile-3-col {
-
-        display: grid;
-
-        grid-template-columns:
-            repeat(3, 1fr);
-
-        gap: 8px;
-
-        padding:
-            0 10px;
-
-    }
-
-
-    .mobile-3-col .glass-card {
-
-        padding:
-            10px 5px;
-
-        min-height: 80px;
-
-    }
-
-
-    .mobile-3-col .glass-card i {
-
-        font-size:
-            1.1rem !important;
-
-    }
-
-
-    .mobile-3-col h4 {
-
-        font-size:
-            0.65rem !important;
-
-        margin: 0;
-
-    }
-
-
-    /* 2 Column Grids */
-
-    .mobile-2-col {
-
-        display: flex;
-
-        flex-wrap: wrap;
-
-        margin:
-            0 -5px;
-
-    }
-
-
-    .mobile-2-col > div {
-
-        flex:
-            0 0 50%;
-
-        max-width: 50%;
-
-        padding: 5px;
-
-    }
-
-
-    .section-title {
-
-        font-size: 1.1rem;
-
-    }
-
-}
-
-
-/* =========================================================
-   DESKTOP
-   ========================================================= */
-
-@media (min-width: 992px) {
 
     .team-grid {
-
-        display: grid;
-
-        grid-template-columns:
-            repeat(
-                auto-fit,
-                minmax(220px, 1fr)
-            );
-
-        overflow-x: visible;
-
-        max-width: 1100px;
-
-        margin:
-            0 auto;
-
+        display: flex;
+        overflow-x: auto;
+        gap: 15px;
+        padding: 10px 18px 22px;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        scroll-behavior: smooth;
     }
 
+    .team-grid::-webkit-scrollbar {
+        display: none;
+    }
 
     .team-card {
-
-        min-width: auto;
-
+        min-width: 215px;
+        flex: 0 0 215px;
+        scroll-snap-align: center;
     }
-
 
     .nav-arrow {
-
-        display: none;
-
+        display: flex;
     }
-
 }
 
+@media (max-width: 768px) {
+    .about-section {
+        padding-bottom: 70px !important;
+    }
 
-/* =========================================================
-   VERY SMALL PHONES
-   ========================================================= */
+    .about-hero {
+        margin-bottom: 50px;
+    }
+
+    .hero-title {
+        font-size: clamp(2.25rem, 13vw, 4rem);
+        letter-spacing: -1.5px;
+    }
+
+    .hero-subtitle {
+        padding: 0 15px;
+        font-size: .86rem;
+    }
+
+    .about-description {
+        padding: 30px 22px;
+        border-radius: 20px;
+    }
+
+    .about-description p {
+        font-size: .87rem;
+        line-height: 1.8;
+    }
+
+    .section-block {
+        margin-top: 62px;
+    }
+
+    .section-title {
+        font-size: 1.25rem;
+    }
+
+    .feature-grid {
+        gap: 8px;
+        padding: 0 5px;
+    }
+
+    .glass-card {
+        min-height: 92px;
+        padding: 17px 5px;
+        border-radius: 14px;
+    }
+
+    .glass-card i {
+        font-size: 1.15rem;
+        margin-bottom: 8px;
+    }
+
+    .glass-card h4 {
+        font-size: .58rem;
+        letter-spacing: 1px;
+    }
+
+    .two-grid {
+        gap: 10px;
+        padding: 0 5px;
+    }
+
+    .bts-box {
+        min-height: 105px;
+        padding: 18px 8px;
+    }
+
+    .bts-box i {
+        font-size: 1.25rem;
+    }
+
+    .bts-box h5 {
+        font-size: .62rem;
+    }
+}
 
 @media (max-width: 480px) {
-
-    /*
-     * Keep the background underneath the navbar.
-     */
     .about-section {
-
         margin-top: -110px !important;
-
-        padding-top: 80px !important;
-
+        padding-top: 125px !important;
     }
 
-}
+    .eyebrow {
+        font-size: .55rem;
+        letter-spacing: 2.5px;
+    }
 
+    .eyebrow::before,
+    .eyebrow::after {
+        width: 18px;
+    }
+
+    .about-description {
+        padding: 27px 18px;
+    }
+
+    .about-description::before {
+        font-size: 5rem;
+        top: -16px;
+    }
+
+    .team-card {
+        min-width: 190px;
+        flex-basis: 190px;
+        height: 265px;
+    }
+
+    .card-front img {
+        width: 82px;
+        height: 82px;
+    }
+
+    .left-arrow { left: -2px; }
+    .right-arrow { right: -2px; }
+}
 </style>
 
 
-<!-- =========================================================
-     ABOUT SECTION
-     ========================================================= -->
-
 <section class="about-section">
-
     <div class="container content-wrapper">
+
+        <!-- =================================================
+             HERO
+             ================================================= -->
+        <div class="about-hero reveal slide-up">
+            <div class="eyebrow">Home Entertainments</div>
+
+            <h1 class="hero-title">Stories That<br>Stay With You</h1>
+
+            <p class="hero-subtitle">
+                A creative home where ideas become stories, stories become cinema,
+                and every frame is made to be felt.
+            </p>
+        </div>
 
 
         <!-- =================================================
              INTRODUCTION
              ================================================= -->
+        <div class="row align-items-center justify-content-center text-center">
+            <div class="col-lg-9">
 
-        <div
-            class="row align-items-center justify-content-center text-center"
-        >
+                <div class="about-description reveal slide-up">
 
-            <div class="col-lg-8">
+                    <p>
+                        At <strong>Home Entertainments</strong>, we see a production house
+                        as more than a place to create films. It is a home for ideas,
+                        a space where people come together, and a universe where
+                        imagination finds its voice.
+                    </p>
 
+                    <p>
+                        We believe every great story starts with a feeling. From that
+                        feeling comes an idea, from an idea comes a story, and from
+                        a story comes cinema.
+                    </p>
 
-                <!-- LOGO -->
+                    <p>
+                        We create with honesty, collaborate with passion, and strive
+                        to turn every story into an experience worth remembering.
+                    </p>
 
-                <!-- <img
-                    src="/static/images/logo.png"
-                    class="logo-large img-fluid reveal slide-up"
-                    alt="Home Entertainments Logo"
-                > -->
+                    <p class="about-ending">
+                        <strong>Because cinema isn't just watched.</strong><br>
+                        <strong>It is felt.</strong>
+                    </p>
 
-
-                <!-- DESCRIPTION -->
-
-                <div class="about-description">
-
-    <!-- <p class="about-tagline">
-        <strong>Built on authenticity.</strong><br>
-        <strong>Driven by emotion.</strong><br>
-        <strong>Crafted with purpose.</strong>
-    </p> -->
-
-    <p>
-        At <strong>Home Entertainments</strong>, we see a production house
-        as more than a place to create films. It is a home for ideas,
-        a space where people come together, and a universe where
-        imagination finds its voice.
-    </p>
-
-    <p>
-        We believe every great story starts with a feeling. From that
-        feeling comes an idea, from an idea comes a story, and from
-        a story comes cinema.
-    </p>
-
-    <p>
-        We create with honesty, collaborate with passion, and strive
-        to turn every story into an experience worth remembering.
-    </p>
-
-    <p class="about-ending">
-        <strong>Because cinema isn't just watched.</strong><br>
-        <strong>It is felt.</strong>
-    </p>
-
-</div>
+                </div>
 
 
                 <!-- =================================================
                      FOUNDER
                      ================================================= -->
+                <div class="founder-section reveal slide-up" style="transition-delay:.15s;">
+                    <div class="founder-line"></div>
 
-                <div
-                    class="founder-section reveal slide-up"
-                    style="transition-delay: 0.2s;"
-                >
-
-                    <div
-                        style="
-                            width: 40px;
-                            height: 1px;
-                            background: #f5c56d;
-                            margin: 0 auto 10px;
-                        "
-                    >
-                    </div>
-
-
-                    <p
-                        style="
-                            letter-spacing: 2px;
-                            font-size: 0.6rem;
-                            text-transform: uppercase;
-                            color: #888;
-                        "
-                    >
-                        Created By
-                    </p>
-
+                    <p class="founder-label">Created By</p>
 
                     <img
                         src="/static/images/akr_logo.png"
-                        style="max-width: 80px;"
+                        class="founder-logo"
                         alt="Founder"
                     >
-
                 </div>
 
             </div>
-
         </div>
 
 
         <!-- =================================================
              TEAM
              ================================================= -->
-
-        <div class="row mt-5">
-
-
-            <div class="col-12 text-center mb-2">
-
-                <h2
-                    class="section-title reveal slide-up"
-                >
-                    Meet Our Team
-                </h2>
-
+        <div class="section-block">
+            <div class="section-heading reveal slide-up">
+                <div class="section-kicker">The people behind the frame</div>
+                <h2 class="section-title">Meet Our Team</h2>
             </div>
 
-
-            <div class="col-12 position-relative">
-
-
-                <!-- LEFT ARROW -->
+            <div class="team-shell">
 
                 <button
                     class="nav-arrow left-arrow"
                     onclick="slideTeam('left')"
-                    aria-label="Previous team members"
-                >
-
+                    aria-label="Previous team members">
                     <i class="fas fa-chevron-left"></i>
-
                 </button>
-
-
-                <!-- RIGHT ARROW -->
 
                 <button
                     class="nav-arrow right-arrow"
                     onclick="slideTeam('right')"
-                    aria-label="Next team members"
-                >
-
+                    aria-label="Next team members">
                     <i class="fas fa-chevron-right"></i>
-
                 </button>
 
-
-                <!-- TEAM GRID -->
-
-                <div
-                    class="team-grid"
-                    id="teamGrid"
-                >
-
+                <div class="team-grid" id="teamGrid">
                     {% for member in team_members %}
-
-                    <div
-                        class="team-card reveal slide-up"
-                    >
-
+                    <div class="team-card reveal slide-up">
                         <div class="card-inner">
 
-
-                            <!-- FRONT -->
-
                             <div class="card-front">
-
-
                                 <img
-                                    src="{{ url_for(
-                                        'static',
-                                        filename='images/' + member.image
-                                    ) }}"
+                                    src="{{ url_for('static', filename='images/' + member.image) }}"
                                     alt="{{ member.name }}"
                                 >
 
+                                <h5>{{ member.name.split(' ')[0] }}</h5>
 
-                                <h5
-                                    style="
-                                        color: white;
-                                        font-weight: 600;
-                                    "
-                                >
-                                    {{ member.name.split(' ')[0] }}
-                                </h5>
-
-
-                                <p
-                                    style="
-                                        color: #f5c56d;
-                                        font-size: 0.7rem;
-                                        text-transform: uppercase;
-                                    "
-                                >
-                                    {{ member.role }}
-                                </p>
-
+                                <p>{{ member.role }}</p>
                             </div>
 
-
-                            <!-- BACK -->
-
                             <div class="card-back">
+                                <p>
+                                    <strong>{{ member.name }}</strong>
+                                </p>
 
                                 <p>
-
-                                    <strong>
-                                        {{ member.name }}
-                                    </strong>
-
+                                    {{ member.bio[:100] }}...
                                 </p>
-
-
-                                <p
-                                    style="
-                                        font-size: 0.75rem;
-                                    "
-                                >
-
-                                    {{ member.bio[:70] }}...
-
-                                </p>
-
                             </div>
 
                         </div>
-
                     </div>
-
                     {% endfor %}
-
                 </div>
-
             </div>
-
         </div>
 
 
         <!-- =================================================
              CHANNELS
              ================================================= -->
-
-        <div
-            class="text-center my-4 reveal"
-        >
-
-            <h2 class="section-title">
-                Our Channels
-            </h2>
-
-
-            <div class="mobile-3-col">
-
-
-                <div class="glass-card">
-
-                    <i
-                        class="fab fa-youtube"
-                        style="color: #f5c56d;"
-                    >
-                    </i>
-
-                    <h4>
-                        FILM
-                    </h4>
-
-                </div>
-
-
-                <div class="glass-card">
-
-                    <i
-                        class="fas fa-music"
-                        style="color: #f5c56d;"
-                    >
-                    </i>
-
-                    <h4>
-                        MUSIC
-                    </h4>
-
-                </div>
-
-
-                <div class="glass-card">
-
-                    <i
-                        class="fas fa-broadcast-tower"
-                        style="color: #f5c56d;"
-                    >
-                    </i>
-
-                    <h4>
-                        MEDIA
-                    </h4>
-
-                </div>
-
+        <div class="section-block reveal">
+            <div class="section-heading">
+                <div class="section-kicker">Where our stories live</div>
+                <h2 class="section-title">Our Channels</h2>
             </div>
 
+            <div class="feature-grid">
+                <div class="glass-card">
+                    <i class="fab fa-youtube"></i>
+                    <h4>FILM</h4>
+                </div>
+
+                <div class="glass-card">
+                    <i class="fas fa-music"></i>
+                    <h4>MUSIC</h4>
+                </div>
+
+                <div class="glass-card">
+                    <i class="fas fa-broadcast-tower"></i>
+                    <h4>MEDIA</h4>
+                </div>
+            </div>
         </div>
 
 
         <!-- =================================================
              BTS
              ================================================= -->
-
-        <div
-            class="text-center my-5 reveal"
-        >
-
-            <h2 class="section-title">
-                BTS of Work
-            </h2>
-
-
-            <div
-                class="mobile-2-col justify-content-center"
-            >
-
-
-                <div>
-
-                    <div class="bts-box">
-
-                        <i
-                            class="fas fa-camera-retro mb-2"
-                            style="
-                                font-size: 1.5rem;
-                                color: #f5c56d;
-                            "
-                        >
-                        </i>
-
-
-                        <h5>
-                            PHOTOS
-                        </h5>
-
-                    </div>
-
-                </div>
-
-
-                <div>
-
-                    <div class="bts-box">
-
-                        <i
-                            class="fas fa-video mb-2"
-                            style="
-                                font-size: 1.5rem;
-                                color: #f5c56d;
-                            "
-                        >
-                        </i>
-
-
-                        <h5>
-                            VIDEOS
-                        </h5>
-
-                    </div>
-
-                </div>
-
+        <div class="section-block reveal">
+            <div class="section-heading">
+                <div class="section-kicker">Behind the scenes</div>
+                <h2 class="section-title">BTS of Work</h2>
             </div>
 
+            <div class="two-grid">
+                <div class="bts-box">
+                    <i class="fas fa-camera-retro"></i>
+                    <h5>PHOTOS</h5>
+                </div>
+
+                <div class="bts-box">
+                    <i class="fas fa-video"></i>
+                    <h5>VIDEOS</h5>
+                </div>
+            </div>
         </div>
 
 
         <!-- =================================================
              PROJECTS
              ================================================= -->
-
-        <div
-            class="text-center my-5 reveal"
-        >
-
-            <h2 class="section-title">
-                Projects
-            </h2>
-
-
-            <div class="mobile-2-col">
-
-
-                <div>
-
-                    <div class="glass-card">
-
-                        <div
-                            class="
-                                project-img
-                                d-flex
-                                align-items-center
-                                justify-content-center
-                            "
-                        >
-                            C&D Web
-                        </div>
-
-
-                        <h5>
-                            C&D Series
-                        </h5>
-
-                    </div>
-
-                </div>
-
-
-                <div>
-
-                    <div class="glass-card">
-
-                        <div
-                            class="
-                                project-img
-                                d-flex
-                                align-items-center
-                                justify-content-center
-                            "
-                        >
-                            Loading...
-                        </div>
-
-
-                        <h5>
-                            Upcoming
-                        </h5>
-
-                    </div>
-
-                </div>
-
+        <div class="section-block reveal">
+            <div class="section-heading">
+                <div class="section-kicker">What we're creating</div>
+                <h2 class="section-title">Projects</h2>
             </div>
 
+            <div class="two-grid">
+                <div class="glass-card">
+                    <div class="project-img d-flex align-items-center justify-content-center">
+                        C&D Web
+                    </div>
+                    <h4>C&D Series</h4>
+                </div>
+
+                <div class="glass-card">
+                    <div class="project-img d-flex align-items-center justify-content-center">
+                        Loading...
+                    </div>
+                    <h4>Upcoming</h4>
+                </div>
+            </div>
         </div>
 
     </div>
-
 </section>
 
 
-<!-- =========================================================
-     JAVASCRIPT
-     ========================================================= -->
-
 <script>
-
 /* =========================================================
    REVEAL ANIMATIONS
    ========================================================= */
 
 function reveal() {
-
-    var reveals =
-        document.querySelectorAll(".reveal");
-
+    const reveals = document.querySelectorAll(".reveal");
 
     reveals.forEach(el => {
+        const windowHeight = window.innerHeight;
+        const elementTop = el.getBoundingClientRect().top;
 
-        var windowHeight =
-            window.innerHeight;
-
-
-        var elementTop =
-            el.getBoundingClientRect().top;
-
-
-        if (
-            elementTop <
-            windowHeight - 50
-        ) {
-
+        if (elementTop < windowHeight - 50) {
             el.classList.add("active");
-
         }
-
     });
-
 }
 
 
@@ -1075,32 +901,16 @@ function reveal() {
    ========================================================= */
 
 function slideTeam(direction) {
+    const grid = document.getElementById("teamGrid");
 
-    const grid =
-        document.getElementById("teamGrid");
+    if (!grid) return;
 
+    const amount = Math.min(240, grid.clientWidth * 0.72);
 
-    const scrollAmount = 180;
-
-
-    if (
-        direction === "left"
-    ) {
-
-        grid.scrollBy({
-            left: -scrollAmount,
-            behavior: "smooth"
-        });
-
-    } else {
-
-        grid.scrollBy({
-            left: scrollAmount,
-            behavior: "smooth"
-        });
-
-    }
-
+    grid.scrollBy({
+        left: direction === "left" ? -amount : amount,
+        behavior: "smooth"
+    });
 }
 
 
@@ -1108,17 +918,9 @@ function slideTeam(direction) {
    EVENTS
    ========================================================= */
 
-window.addEventListener(
-    "scroll",
-    reveal
-);
-
-
-document.addEventListener(
-    "DOMContentLoaded",
-    reveal
-);
-
+window.addEventListener("scroll", reveal, { passive: true });
+window.addEventListener("resize", reveal);
+document.addEventListener("DOMContentLoaded", reveal);
 </script>
 
 {% endblock %}

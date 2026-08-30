@@ -1,0 +1,28 @@
+{
+    "songs": [
+        {
+            "id": 1,
+            "slug": "oh-my-friend",
+            "title": "Oh My Friend",
+            "artist": "Home Entertainments",
+            "description": "Our latest song is now available on all major streaming platforms.",
+            "cover": "songs/oh-my-friend.jpg",
+            "release_date": "2026",
+            "links": {
+                "YouTube": "https://www.youtube.com/",
+                "Spotify": "https://open.spotify.com/",
+                "Apple Music": "https://music.apple.com/",
+                "Amazon Music": "https://music.amazon.com/",
+                "JioSaavn": "https://www.jiosaavn.com/"
+            },
+            "visits": 7,
+            "clicks": {
+                "YouTube": 0,
+                "Spotify": 0,
+                "Apple Music": 0,
+                "Amazon Music": 0,
+                "JioSaavn": 0
+            }
+        }
+    ]
+}

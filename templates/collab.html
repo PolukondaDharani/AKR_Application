@@ -2,163 +2,2218 @@
 {% block content %}
 
 <style>
-  /* 1. UNIVERSAL BLACK BACKGROUND */
-  body, .main-wrapper {
-    background-color: #000000 !important;
-  }
 
-  /* 2. HERO SECTION - Dark Cinematic Look */
-  .collab-hero {
-    height: 50vh;
+/* =========================================================
+   HOME ENTERTAINMENTS
+   COLLABORATION PAGE
+   ========================================================= */
+
+:root {
+    --gold: #f5c56d;
+    --gold-light: #fff2bd;
+    --gold-dark: #a97924;
+    --black: #000000;
+    --dark: #090909;
+    --card: #111111;
+    --card-light: #161616;
+    --border: rgba(245, 197, 109, 0.18);
+    --white-soft: rgba(255,255,255,0.72);
+    --white-muted: rgba(255,255,255,0.48);
+}
+
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+body,
+.main-wrapper {
+    background: #000000 !important;
+}
+
+.collaboration-page {
+    width: 100%;
+    background: #000000;
+    color: #ffffff;
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   IMPORTANT NAVBAR FIX
+   =========================================================
+
+   DO NOT MODIFY THE NAVBAR.
+
+   base.html already has the common navbar position.
+
+   Desktop body padding = 80px
+   Mobile body padding  = 115px
+
+   We only pull THIS PAGE'S HERO upward so the image
+   appears behind the existing navbar.
+
+========================================================= */
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.collab-hero {
+
+    position: relative;
+
+    /*
+       base.html has 80px body padding.
+       Pull hero upward by the same amount.
+    */
+    margin-top: -80px !important;
+
+    min-height: 100vh;
+
+    padding:
+        170px 25px 100px;
+
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
-                url('{{ url_for('static', filename='images/collab.png') }}') center/cover no-repeat;
-    border-bottom: 1px solid rgba(245, 197, 109, 0.2);
-  }
 
-  .collab-hero h1 {
-    /* Bright Gold Gradient */
-    background: linear-gradient(to bottom, #fff9ad 0%, #f6c366 45%, #b08d2a 100%);
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    overflow: hidden;
+
+    background:
+
+        linear-gradient(
+            rgba(0,0,0,0.58),
+            rgba(0,0,0,0.88)
+        ),
+
+        /* url('{{ url_for("static", filename="images/collab.png") }}') */
+        center center / cover no-repeat;
+
+    border-bottom:
+        1px solid rgba(245,197,109,0.15);
+}
+
+
+/* Cinematic light */
+
+.collab-hero::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 45%,
+            rgba(245,197,109,0.09),
+            transparent 42%
+        );
+
+    pointer-events: none;
+}
+
+
+/* Bottom fade */
+
+.collab-hero::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 35%;
+
+    background:
+
+        linear-gradient(
+            to bottom,
+            transparent,
+            #000000
+        );
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   HERO CONTENT
+========================================================= */
+
+.collab-hero-content {
+
+    position: relative;
+
+    z-index: 3;
+
+    max-width: 950px;
+
+    width: 100%;
+
+    margin: auto;
+}
+
+
+/* Small gold heading */
+
+.collab-eyebrow {
+
+    display: inline-block;
+
+    margin-bottom: 22px;
+
+    color: var(--gold);
+
+    font-size: 0.78rem;
+
+    font-weight: 800;
+
+    letter-spacing: 7px;
+
+    text-transform: uppercase;
+}
+
+
+/* Main heading */
+
+.collab-hero h1 {
+
+    margin: 0;
+
+    font-size:
+        clamp(3.2rem, 7vw, 6.8rem);
+
+    line-height: 0.95;
+
+    font-weight: 900;
+
+    letter-spacing: 4px;
+
+    background:
+
+        linear-gradient(
+            to bottom,
+            #fffbd4 0%,
+            #f9d783 35%,
+            #f5c56d 62%,
+            #9a7227 100%
+        );
+
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+
+    filter:
+        drop-shadow(
+            0 0 20px
+            rgba(245,197,109,0.18)
+        );
+}
+
+
+/* Hero description */
+
+.collab-hero-description {
+
+    max-width: 720px;
+
+    margin:
+        30px auto 0;
+
+    color:
+        rgba(255,255,255,0.76);
+
+    font-size: 1.08rem;
+
+    line-height: 1.85;
+}
+
+
+/* =========================================================
+   HERO BUTTONS
+========================================================= */
+
+.hero-actions {
+
+    margin-top: 38px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 14px;
+
+    flex-wrap: wrap;
+}
+
+
+.gold-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 220px;
+
+    padding: 15px 28px;
+
+    border-radius: 4px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff0a5,
+            #f5c56d,
+            #c3933b
+        );
+
+    color: #000000;
+
+    font-size: 0.82rem;
+
+    font-weight: 900;
+
+    letter-spacing: 1.2px;
+
+    text-decoration: none;
+
+    transition:
+        0.3s ease;
+}
+
+
+.gold-button:hover {
+
+    color: #000000;
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 15px 35px
+        rgba(245,197,109,0.25);
+}
+
+
+.outline-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 220px;
+
+    padding: 14px 28px;
+
+    border:
+        1px solid
+        rgba(245,197,109,0.55);
+
+    border-radius: 4px;
+
+    background:
+        rgba(0,0,0,0.15);
+
+    color: var(--gold);
+
+    font-size: 0.82rem;
+
     font-weight: 800;
-    font-size: 3.5rem;
+
+    letter-spacing: 1.2px;
+
+    text-decoration: none;
+
+    transition:
+        0.3s ease;
+}
+
+
+.outline-button:hover {
+
+    background:
+        rgba(245,197,109,0.08);
+
+    border-color:
+        var(--gold);
+
+    color:
+        var(--gold-light);
+
+    transform:
+        translateY(-4px);
+}
+
+
+/* =========================================================
+   SCROLL INDICATOR
+========================================================= */
+
+.scroll-indicator {
+
+    position: absolute;
+
+    bottom: 28px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    z-index: 5;
+
+    color:
+        rgba(255,255,255,0.4);
+
+    font-size: 0.58rem;
+
+    font-weight: 700;
+
     letter-spacing: 3px;
-    filter: drop-shadow(0 0 10px rgba(245, 197, 109, 0.3));
-  }
+}
 
-  /* 3. MOBILE OPTIMIZATION */
-  @media (max-width: 768px) {
-    .collab-hero { height: 40vh; padding-top: 50px; }
-    .collab-hero h1 { 
-      font-size: 1.8rem !important; 
-      padding: 0 15px; 
+
+.scroll-line {
+
+    width: 1px;
+
+    height: 35px;
+
+    margin:
+        10px auto 0;
+
+    background:
+
+        linear-gradient(
+            to bottom,
+            var(--gold),
+            transparent
+        );
+}
+
+
+/* =========================================================
+   SECTION COMMON
+========================================================= */
+
+.collab-section {
+
+    position: relative;
+
+    padding:
+        100px 20px;
+
+    background:
+        #000000;
+}
+
+
+.section-container {
+
+    max-width: 1150px;
+
+    margin:
+        0 auto;
+}
+
+
+.section-eyebrow {
+
+    margin-bottom: 12px;
+
+    color: var(--gold);
+
+    font-size: 0.7rem;
+
+    font-weight: 800;
+
+    letter-spacing: 4px;
+
+    text-transform: uppercase;
+}
+
+
+.section-title {
+
+    margin:
+        0 0 20px;
+
+    color: #ffffff;
+
+    font-size:
+        clamp(2rem, 4vw, 3.4rem);
+
+    line-height: 1.1;
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
+}
+
+
+.section-title span {
+
+    color: var(--gold);
+}
+
+
+.section-description {
+
+    max-width: 760px;
+
+    margin: 0;
+
+    color: var(--white-muted);
+
+    font-size: 0.98rem;
+
+    line-height: 1.85;
+}
+
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.intro-section {
+
+    background:
+
+        radial-gradient(
+            circle at 20% 0%,
+            rgba(245,197,109,0.045),
+            transparent 35%
+        ),
+        #000000;
+}
+
+
+/* =========================================================
+   COLLABORATION ROLES
+========================================================= */
+
+.roles-grid {
+
+    margin-top: 55px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 15px;
+}
+
+
+.role-card {
+
+    position: relative;
+
+    min-height: 185px;
+
+    padding: 26px 22px;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            #151515,
+            #090909
+        );
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 8px;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+
+.role-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 120px;
+
+    height: 120px;
+
+    top: -65px;
+
+    right: -65px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(245,197,109,0.07);
+}
+
+
+.role-card:hover {
+
+    transform:
+        translateY(-8px);
+
+    border-color:
+        rgba(245,197,109,0.55);
+
+    box-shadow:
+        0 18px 45px
+        rgba(0,0,0,0.55);
+}
+
+
+.role-icon {
+
+    margin-bottom: 18px;
+
+    font-size: 1.75rem;
+}
+
+
+.role-card h3 {
+
+    margin:
+        0 0 9px;
+
+    color: #ffffff;
+
+    font-size: 1rem;
+
+    font-weight: 800;
+}
+
+
+.role-card p {
+
+    margin: 0;
+
+    color:
+        rgba(255,255,255,0.48);
+
+    font-size: 0.76rem;
+
+    line-height: 1.6;
+}
+
+
+.role-number {
+
+    position: absolute;
+
+    right: 15px;
+
+    bottom: 5px;
+
+    color:
+        rgba(255,255,255,0.035);
+
+    font-size: 3rem;
+
+    font-weight: 900;
+}
+
+
+/* =========================================================
+   WHAT WE CREATE
+========================================================= */
+
+.projects-section {
+
+    background:
+
+        linear-gradient(
+            180deg,
+            #000000,
+            #080808,
+            #000000
+        );
+}
+
+
+.project-grid {
+
+    margin-top: 50px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+}
+
+
+.project-card {
+
+    min-height: 165px;
+
+    padding: 30px;
+
+    background:
+        #0c0c0c;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.08);
+
+    transition:
+        0.3s ease;
+}
+
+
+.project-card:hover {
+
+    transform:
+        translateY(-6px);
+
+    background:
+        #111111;
+
+    border-color:
+        rgba(245,197,109,0.35);
+}
+
+
+.project-card h3 {
+
+    margin:
+        0 0 12px;
+
+    color: #ffffff;
+
+    font-size: 1rem;
+
+    font-weight: 800;
+}
+
+
+.project-card p {
+
+    margin: 0;
+
+    color:
+        rgba(255,255,255,0.48);
+
+    font-size: 0.8rem;
+
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   PROCESS STRIP
+========================================================= */
+
+.process-strip {
+
+    padding:
+        65px 20px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #050505,
+            #12100b,
+            #050505
+        );
+
+    border-top:
+        1px solid
+        var(--border);
+
+    border-bottom:
+        1px solid
+        var(--border);
+}
+
+
+.process-grid {
+
+    max-width: 1100px;
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 30px;
+}
+
+
+.process-item {
+
+    text-align: center;
+}
+
+
+.process-number {
+
+    color:
+        var(--gold);
+
+    font-size: 2.2rem;
+
+    font-weight: 900;
+}
+
+
+.process-item h3 {
+
+    margin:
+        8px 0;
+
+    color: #ffffff;
+
+    font-size: 0.95rem;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+
+.process-item p {
+
+    margin: 0;
+
+    color:
+        rgba(255,255,255,0.43);
+
+    font-size: 0.78rem;
+}
+
+
+/* =========================================================
+   FORM SECTION
+========================================================= */
+
+.form-section {
+
+    padding:
+        110px 20px;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(245,197,109,0.08),
+            transparent 45%
+        ),
+        #000000;
+}
+
+
+.form-wrapper {
+
+    max-width: 850px;
+
+    margin: auto;
+
+    padding:
+        50px;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            #151515,
+            #090909
+        );
+
+    border:
+        1px solid
+        rgba(245,197,109,0.2);
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 30px 90px
+        rgba(0,0,0,0.55);
+}
+
+
+/* =========================================================
+   FORM HEADING
+========================================================= */
+
+.form-heading {
+
+    margin-bottom: 42px;
+
+    text-align: center;
+}
+
+
+.form-heading .section-eyebrow {
+
+    margin-bottom: 14px;
+}
+
+
+.form-heading h2 {
+
+    margin:
+        0 0 13px;
+
+    color: #ffffff;
+
+    font-size:
+        clamp(1.8rem, 4vw, 2.6rem);
+
+    font-weight: 900;
+}
+
+
+.form-heading h2 span {
+
+    color: var(--gold);
+}
+
+
+.form-heading p {
+
+    margin: 0;
+
+    color:
+        rgba(255,255,255,0.5);
+
+    font-size: 0.88rem;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   FORM INPUTS
+========================================================= */
+
+.collab-form label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: var(--gold);
+
+    font-size: 0.7rem;
+
+    font-weight: 800;
+
+    letter-spacing: 1.3px;
+}
+
+
+.collab-form .form-control {
+
+    width: 100%;
+
+    min-height: 48px;
+
+    padding:
+        12px 14px;
+
+    background:
+        #080808 !important;
+
+    border:
+        1px solid #2d2d2d !important;
+
+    border-radius: 5px;
+
+    color:
+        #ffffff !important;
+
+    font-size: 0.88rem;
+
+    transition:
+        0.3s ease;
+}
+
+
+.collab-form .form-control::placeholder {
+
+    color:
+        rgba(255,255,255,0.25);
+}
+
+
+.collab-form .form-control:focus {
+
+    outline: none;
+
+    border-color:
+        var(--gold) !important;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(245,197,109,0.07) !important;
+}
+
+
+/* Select */
+
+.collab-form select.form-control {
+
+    appearance: auto;
+
+    cursor: pointer;
+}
+
+
+/* Textarea */
+
+.collab-form textarea.form-control {
+
+    min-height: 145px;
+
+    resize: vertical;
+}
+
+
+/* =========================================================
+   FILE INPUT
+========================================================= */
+
+.collab-form input[type="file"] {
+
+    padding:
+        10px 12px;
+
+    cursor: pointer;
+}
+
+
+.collab-form input[type="file"]::file-selector-button {
+
+    margin-right: 12px;
+
+    padding:
+        8px 13px;
+
+    border: none;
+
+    border-radius: 4px;
+
+    background:
+        var(--gold);
+
+    color:
+        #000000;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+
+.file-note {
+
+    margin-top: 7px;
+
+    color:
+        rgba(255,255,255,0.32);
+
+    font-size: 0.68rem;
+}
+
+
+/* =========================================================
+   SUBMIT BUTTON
+========================================================= */
+
+.submit-button {
+
+    width: 100%;
+
+    margin-top: 8px;
+
+    padding: 16px;
+
+    border: none;
+
+    border-radius: 5px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #fff0a5,
+            #f5c56d,
+            #c3933b
+        );
+
+    color:
+        #000000;
+
+    font-size: 0.82rem;
+
+    font-weight: 900;
+
+    letter-spacing: 1.5px;
+
+    cursor: pointer;
+
+    transition:
+        0.3s ease;
+}
+
+
+.submit-button:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 15px 35px
+        rgba(245,197,109,0.23);
+}
+
+
+/* =========================================================
+   FINAL CTA
+========================================================= */
+
+.final-cta {
+
+    position: relative;
+
+    padding:
+        115px 20px;
+
+    text-align: center;
+
+    background:
+
+        linear-gradient(
+            rgba(0,0,0,0.76),
+            rgba(0,0,0,0.95)
+        ),
+
+        /* url('{{ url_for("static", filename="images/collab.png") }}') */
+        center center / cover no-repeat;
+}
+
+
+.final-cta-content {
+
+    position: relative;
+
+    z-index: 2;
+
+    max-width: 750px;
+
+    margin: auto;
+}
+
+
+.final-cta h2 {
+
+    margin:
+        0 0 20px;
+
+    color: #ffffff;
+
+    font-size:
+        clamp(2rem, 5vw, 4rem);
+
+    line-height: 1.05;
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
+}
+
+
+.final-cta h2 span {
+
+    color:
+        var(--gold);
+}
+
+
+.final-cta p {
+
+    max-width: 650px;
+
+    margin:
+        0 auto 32px;
+
+    color:
+        rgba(255,255,255,0.58);
+
+    font-size: 0.95rem;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 991px) {
+
+    /*
+       IMPORTANT:
+
+       Do NOT change navbar.
+       Do NOT change body padding.
+
+       base.html mobile body padding is 115px.
+
+       Pull only the hero upward.
+    */
+
+    .collab-hero {
+
+        margin-top: -115px !important;
+
+        min-height: 100vh;
+
+        padding:
+            180px 20px 100px;
     }
-    /* 2 columns for partners on mobile */
-    .mobile-2-col { width: 50% !important; flex: 0 0 50% !important; }
-    .partner-card img { height: 100px !important; }
-  }
 
-  /* 4. SECTION STYLING */
-  .black-section {
-    background-color: #000000 !important;
-    padding: 60px 0;
-  }
 
-  .partner-card {
-    background: #111111 !important; /* Slightly lighter black for depth */
-    border: 1px solid rgba(245, 197, 109, 0.2) !important;
-    transition: all 0.3s ease;
-  }
+    .collab-eyebrow {
 
-  .partner-card:hover {
-    transform: translateY(-10px);
-    border-color: #f5c56d !important;
-    box-shadow: 0 10px 30px rgba(245, 197, 109, 0.2);
-  }
+        font-size: 0.65rem;
 
-  /* 5. FORM STYLING - High Contrast */
-  .collab-form-container {
-    background: #111111; 
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 40px;
-    border-radius: 15px;
-  }
+        letter-spacing: 4px;
+    }
 
-  .form-control {
-    background: #1a1a1a !important;
-    border: 1px solid #333 !important;
-    color: white !important;
-  }
 
-  .form-control:focus {
-    border-color: #f5c56d !important;
-    box-shadow: 0 0 8px rgba(245, 197, 109, 0.3);
-  }
+    .collab-hero h1 {
 
-  label { color: #f5c56d !important; margin-bottom: 5px; font-size: 0.9rem; }
+        font-size:
+            clamp(2.5rem, 9vw, 4.8rem);
+
+        letter-spacing: 2px;
+    }
+
+
+    .collab-hero-description {
+
+        max-width: 600px;
+
+        font-size: 0.92rem;
+
+        line-height: 1.75;
+    }
+
+
+    .roles-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 10px;
+    }
+
+
+    .project-grid {
+
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .process-grid {
+
+        grid-template-columns:
+            1fr;
+
+        gap: 35px;
+    }
+
+
+    .form-section {
+
+        padding:
+            80px 15px;
+    }
+
+
+    .form-wrapper {
+
+        padding:
+            35px 25px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .collab-hero {
+
+        margin-top: -115px !important;
+
+        min-height: 92vh;
+
+        padding:
+            165px 15px 80px;
+    }
+
+
+    .collab-eyebrow {
+
+        margin-bottom: 17px;
+
+        font-size: 0.58rem;
+
+        letter-spacing: 3px;
+    }
+
+
+    .collab-hero h1 {
+
+        font-size: 2.35rem;
+
+        letter-spacing: 1px;
+    }
+
+
+    .collab-hero-description {
+
+        margin-top: 22px;
+
+        font-size: 0.82rem;
+
+        line-height: 1.7;
+    }
+
+
+    .hero-actions {
+
+        margin-top: 28px;
+
+        flex-direction: column;
+
+        width: 100%;
+    }
+
+
+    .gold-button,
+    .outline-button {
+
+        width: 100%;
+
+        min-width: 0;
+    }
+
+
+    .roles-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 8px;
+    }
+
+
+    .role-card {
+
+        min-height: 160px;
+
+        padding:
+            18px 13px;
+    }
+
+
+    .role-icon {
+
+        margin-bottom: 12px;
+
+        font-size: 1.4rem;
+    }
+
+
+    .role-card h3 {
+
+        font-size: 0.8rem;
+    }
+
+
+    .role-card p {
+
+        font-size: 0.66rem;
+
+        line-height: 1.5;
+    }
+
+
+    .role-number {
+
+        font-size: 2rem;
+    }
+
+
+    .collab-section {
+
+        padding:
+            75px 17px;
+    }
+
+
+    .section-title {
+
+        font-size: 2rem;
+    }
+
+
+    .section-description {
+
+        font-size: 0.84rem;
+    }
+
+
+    .form-wrapper {
+
+        padding:
+            28px 17px;
+    }
+
+
+    .form-heading {
+
+        margin-bottom: 30px;
+    }
+
+
+    .final-cta {
+
+        padding:
+            80px 18px;
+    }
+
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+.gold-button:focus,
+.outline-button:focus,
+.submit-button:focus,
+.form-control:focus {
+
+    outline:
+        2px solid
+        rgba(245,197,109,0.6);
+
+    outline-offset: 2px;
+}
+
 </style>
 
-<section class="collab-hero">
-    <h1>COLLABORATE WITH US</h1>
-    <p class="text-white mt-2" style="opacity: 0.8;">Join hands to create cinematic magic</p>
-</section>
 
-<section class="black-section">
-  <div class="container text-center">
-    <h2 class="text-white mb-5" style="letter-spacing: 2px;">OUR PARTNERS</h2>
-    <div class="row g-3 justify-content-center">
-      {% for partner in partners %}
-      <div class="col-6 col-md-4 col-lg-3 mobile-2-col">
-        <div class="card partner-card h-100 p-2">
-          <img src="{{ url_for('static', filename='images/' ~ partner.logo) }}" 
-               class="card-img-top p-2" 
-               alt="{{ partner.name }}" 
-               style="height: 120px; object-fit: contain; filter: grayscale(1) brightness(2); transition: 0.3s;">
-          <div class="card-body">
-            <h6 class="text-white fw-bold mb-1">{{ partner.name }}</h6>
-          </div>
+<!-- =========================================================
+     COLLABORATION PAGE
+========================================================= -->
+
+<div class="collaboration-page">
+
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <section class="collab-hero">
+
+        <div class="collab-hero-content">
+<!-- 
+            <div class="collab-eyebrow">
+                HOME ENTERTAINMENTS
+            </div> -->
+
+            <h1>
+                COLLABORATE<br>
+                WITH US
+            </h1>
+
+            <p class="collab-hero-description">
+
+                Great stories begin with great people.
+                Whether you're an actor, director, writer,
+                musician or creative professional, we'd love
+                to hear from you.
+
+            </p>
+
+            <div class="hero-actions">
+
+                <a
+                    href="#collaboration-form"
+                    class="gold-button">
+
+                    START A COLLABORATION
+
+                </a>
+
+                <a
+                    href="#opportunities"
+                    class="outline-button">
+
+                    EXPLORE OPPORTUNITIES
+
+                </a>
+
+            </div>
+
         </div>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-</section>
 
-<section class="black-section">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-11 col-md-8 col-lg-6">
-        <div class="collab-form-container">
-          <h3 class="text-center text-white fw-bold mb-4">SEND REQUEST</h3>
-          
-          <form method="POST" action="{{ url_for('collaboration') }}" enctype="multipart/form-data">
-            {{ form.hidden_tag() }}
-            
-            <div class="mb-3">
-              <label>Full Name</label>
-              {{ form.name(class="form-control", placeholder="Your Name") }}
-            </div>
 
-            <div class="mb-3">
-              <label>Email Address</label>
-              {{ form.email(class="form-control", placeholder="email@example.com") }}
-            </div>
+        <div class="scroll-indicator">
 
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label>Contact Number</label>
-                    <input type="tel" name="phone" class="form-control" placeholder="+1..." required>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label>Portfolio Link</label>
-                    <input type="url" name="portfolio" class="form-control" placeholder="Behance/Vimeo">
-                </div>
-            </div>
+            SCROLL TO EXPLORE
 
-            <div class="mb-3">
-              <label>Upload CV/Portfolio (PDF)</label>
-              <input type="file" name="file" class="form-control">
-            </div>
+            <div class="scroll-line"></div>
 
-            <div class="mb-4">
-              <label>Message</label>
-              {{ form.message(class="form-control", rows="4", placeholder="How can we work together?") }}
-            </div>
-
-            <button type="submit" class="btn w-100 fw-bold py-3" 
-                    style="background: #f5c56d; color: #000; border-radius: 5px; transition: 0.3s;">
-                SUBMIT COLLABORATION
-            </button>
-          </form>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         INTRODUCTION
+    ====================================================== -->
+
+    <section class="collab-section intro-section">
+
+        <div class="section-container">
+
+            <div class="section-eyebrow">
+                OPEN FOR COLLABORATION
+            </div>
+
+            <h2 class="section-title">
+
+                YOUR TALENT.
+                <span>OUR STORIES.</span>
+
+            </h2>
+
+            <p class="section-description">
+
+                At Home Entertainments, we believe every
+                successful project begins with the right
+                people coming together.
+
+                <br><br>
+
+                We are open to collaborating with talented
+                individuals and creative teams for our
+                upcoming and future projects.
+
+                If you have the talent, passion, experience
+                or a creative idea, don't hesitate to reach
+                out to us.
+
+            </p>
+
+
+            <!-- ROLES -->
+
+            <div class="roles-grid">
+
+
+                <!-- ACTOR -->
+
+                <div class="role-card">
+
+                    <div class="role-icon">
+                        🎭
+                    </div>
+
+                    <h3>
+                        Actors & Artists
+                    </h3>
+
+                    <p>
+                        Actors, performers and emerging
+                        artists looking for meaningful roles
+                        and opportunities.
+                    </p>
+
+                    <div class="role-number">
+                        01
+                    </div>
+
+                </div>
+
+
+                <!-- DIRECTOR -->
+
+                <div class="role-card">
+
+                    <div class="role-icon">
+                        🎬
+                    </div>
+
+                    <h3>
+                        Directors
+                    </h3>
+
+                    <p>
+                        Directors and assistant directors
+                        with a strong creative vision and
+                        stories to tell.
+                    </p>
+
+                    <div class="role-number">
+                        02
+                    </div>
+
+                </div>
+
+
+                <!-- WRITER -->
+
+                <div class="role-card">
+
+                    <div class="role-icon">
+                        ✍️
+                    </div>
+
+                    <h3>
+                        Writers
+                    </h3>
+
+                    <p>
+                        Scriptwriters and storytellers
+                        with original concepts and
+                        screenplays.
+                    </p>
+
+                    <div class="role-number">
+                        03
+                    </div>
+
+                </div>
+
+
+                <!-- MUSIC -->
+
+                <div class="role-card">
+
+                    <div class="role-icon">
+                        🎵
+                    </div>
+
+                    <h3>
+                        Music & Singers
+                    </h3>
+
+                    <p>
+                        Music directors, composers,
+                        singers and musicians.
+                    </p>
+
+                    <div class="role-number">
+                        04
+                    </div>
+
+                </div>
+
+
+                <!-- CINEMATOGRAPHY -->
+
+                <div class="role-card">
+
+                    <div class="role-icon">
+                        📷
+                    </div>
+
+                    <h3>
+                        Cinematographers
+                    </h3>
+
+                    <p>
+                        DOPs, photographers and visual
+                        storytellers who create cinematic
+                        imagery.
+                    </p>
+
+                    <div class="role-number">
+                        05
+                    </div>
+
+                </div>
+
+
+                <!-- EDITING -->
+
+                <div class="role-card">
+
+                    <div class="role-icon">
+                        ✂️
+                    </div>
+
+                    <h3>
+                        Editors & Colourists
+                    </h3>
+
+                    <p>
+                        Post-production professionals
+                        who shape the final story.
+                    </p>
+
+                    <div class="role-number">
+                        06
+                    </div>
+
+                </div>
+
+
+                <!-- VFX -->
+
+                <div class="role-card">
+
+                    <div class="role-icon">
+                        ✨
+                    </div>
+
+                    <h3>
+                        VFX & SFX Artists
+                    </h3>
+
+                    <p>
+                        Artists and technicians who bring
+                        creative ideas to life.
+                    </p>
+
+                    <div class="role-number">
+                        07
+                    </div>
+
+                </div>
+
+
+                <!-- PARTNERS -->
+
+                <div class="role-card">
+
+                    <div class="role-icon">
+                        🤝
+                    </div>
+
+                    <h3>
+                        Creative Partners
+                    </h3>
+
+                    <p>
+                        Production houses, brands,
+                        sponsors and creative teams.
+                    </p>
+
+                    <div class="role-number">
+                        08
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         OPPORTUNITIES
+    ====================================================== -->
+
+    <section
+        class="collab-section projects-section"
+        id="opportunities">
+
+        <div class="section-container">
+
+            <div class="section-eyebrow">
+                FUTURE PROJECTS
+            </div>
+
+            <h2 class="section-title">
+
+                LET'S CREATE THE
+                <span>NEXT STORY.</span>
+
+            </h2>
+
+            <p class="section-description">
+
+                Our collaborations can take many forms.
+                We are open to exploring creative ideas
+                across films, web series, music and digital
+                entertainment.
+
+            </p>
+
+
+            <div class="project-grid">
+
+
+                <div class="project-card">
+
+                    <h3>
+                        🎬 Films
+                    </h3>
+
+                    <p>
+                        Feature films and independent
+                        cinematic projects built around
+                        strong stories.
+                    </p>
+
+                </div>
+
+
+                <div class="project-card">
+
+                    <h3>
+                        📺 Web Series
+                    </h3>
+
+                    <p>
+                        Character-driven web series and
+                        episodic stories for modern
+                        audiences.
+                    </p>
+
+                </div>
+
+
+                <div class="project-card">
+
+                    <h3>
+                        🎞 Short Films
+                    </h3>
+
+                    <p>
+                        Short-form storytelling and
+                        experimental cinematic projects.
+                    </p>
+
+                </div>
+
+
+                <div class="project-card">
+
+                    <h3>
+                        🎵 Music Videos
+                    </h3>
+
+                    <p>
+                        Original music videos and
+                        visually creative musical projects.
+                    </p>
+
+                </div>
+
+
+                <div class="project-card">
+
+                    <h3>
+                        📱 Digital Content
+                    </h3>
+
+                    <p>
+                        Creative digital content designed
+                        for today's audiences and platforms.
+                    </p>
+
+                </div>
+
+
+                <div class="project-card">
+
+                    <h3>
+                        🤝 Brand Collaborations
+                    </h3>
+
+                    <p>
+                        Creative partnerships, campaigns
+                        and branded entertainment projects.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         PROCESS
+    ====================================================== -->
+
+    <section class="process-strip">
+
+        <div class="process-grid">
+
+
+            <div class="process-item">
+
+                <div class="process-number">
+                    01
+                </div>
+
+                <h3>
+                    TELL US ABOUT YOU
+                </h3>
+
+                <p>
+                    Share your skills, experience and work.
+                </p>
+
+            </div>
+
+
+            <div class="process-item">
+
+                <div class="process-number">
+                    02
+                </div>
+
+                <h3>
+                    SHARE YOUR VISION
+                </h3>
+
+                <p>
+                    Tell us what you want to create.
+                </p>
+
+            </div>
+
+
+            <div class="process-item">
+
+                <div class="process-number">
+                    03
+                </div>
+
+                <h3>
+                    CREATE TOGETHER
+                </h3>
+
+                <p>
+                    If there's a fit, let's build something
+                    meaningful together.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         COLLABORATION FORM
+    ====================================================== -->
+
+    <section
+        class="form-section"
+        id="collaboration-form">
+
+        <div class="form-wrapper">
+
+
+            <div class="form-heading">
+
+                <div class="section-eyebrow">
+                    GET IN TOUCH
+                </div>
+
+                <h2>
+
+                    START A
+                    <span>CONVERSATION</span>
+
+                </h2>
+
+                <p>
+
+                    Tell us about yourself, your work and
+                    how you'd like to collaborate with us.
+
+                </p>
+
+            </div>
+
+
+            <form
+                method="POST"
+                action="{{ url_for('collaboration') }}"
+                enctype="multipart/form-data"
+                class="collab-form">
+
+
+                {{ form.hidden_tag() }}
+
+
+                <!-- NAME -->
+
+                <div class="mb-4">
+
+                    <label>
+                        FULL NAME *
+                    </label>
+
+                    {{ form.name(
+                        class="form-control",
+                        placeholder="Enter your full name",
+                        required=true
+                    ) }}
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="mb-4">
+
+                    <label>
+                        EMAIL ADDRESS *
+                    </label>
+
+                    {{ form.email(
+                        class="form-control",
+                        placeholder="you@example.com",
+                        required=true
+                    ) }}
+
+                </div>
+
+
+                <!-- PHONE + TYPE -->
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-4">
+
+                        <label>
+                            CONTACT NUMBER *
+                        </label>
+
+                        <input
+                            type="tel"
+                            name="phone"
+                            class="form-control"
+                            placeholder="+91 XXXXX XXXXX"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="col-md-6 mb-4">
+
+                        <label>
+                            COLLABORATION TYPE *
+                        </label>
+
+                        <select
+                            name="collaboration_type"
+                            class="form-control"
+                            required>
+
+                            <option value="">
+                                Select your role
+                            </option>
+
+                            <option value="Actor">
+                                Actor
+                            </option>
+
+                            <option value="Director">
+                                Director
+                            </option>
+
+                            <option value="Assistant Director">
+                                Assistant Director
+                            </option>
+
+                            <option value="Writer">
+                                Writer / Scriptwriter
+                            </option>
+
+                            <option value="Music Director">
+                                Music Director
+                            </option>
+
+                            <option value="Singer">
+                                Singer
+                            </option>
+
+                            <option value="Cinematographer">
+                                Cinematographer / DOP
+                            </option>
+
+                            <option value="Editor">
+                                Editor
+                            </option>
+
+                            <option value="Colourist">
+                                Colourist
+                            </option>
+
+                            <option value="VFX / SFX">
+                                VFX / SFX Artist
+                            </option>
+
+                            <option value="Dubbing Artist">
+                                Dubbing Artist
+                            </option>
+
+                            <option value="Production">
+                                Production / Technical Team
+                            </option>
+
+                            <option value="Content Creator">
+                                Content Creator
+                            </option>
+
+                            <option value="Brand / Sponsor">
+                                Brand / Sponsor
+                            </option>
+
+                            <option value="Production House">
+                                Production House
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PORTFOLIO -->
+
+                <div class="mb-4">
+
+                    <label>
+                        PORTFOLIO / SOCIAL MEDIA LINK
+                    </label>
+
+                    <input
+                        type="url"
+                        name="portfolio"
+                        class="form-control"
+                        placeholder="Instagram / YouTube / Behance / Vimeo / Website"
+                    >
+
+                </div>
+
+
+                <!-- FILE -->
+
+                <div class="mb-4">
+
+                    <label>
+                        UPLOAD CV / PORTFOLIO
+                    </label>
+
+                    <input
+                        type="file"
+                        name="file"
+                        class="form-control"
+                        accept=".pdf"
+                    >
+
+                    <div class="file-note">
+
+                        PDF format only
+
+                    </div>
+
+                </div>
+
+
+                <!-- MESSAGE -->
+
+                <div class="mb-4">
+
+                    <label>
+                        TELL US ABOUT YOURSELF *
+                    </label>
+
+                    {{ form.message(
+                        class="form-control",
+                        rows="5",
+                        placeholder="Tell us about your experience, skills, idea or the kind of project you'd like to collaborate on...",
+                        required=true
+                    ) }}
+
+                </div>
+
+
+                <!-- SUBMIT -->
+
+                <button
+                    type="submit"
+                    class="submit-button">
+
+                    SEND COLLABORATION REQUEST
+
+                </button>
+
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+</div>
 
 {% endblock %}
