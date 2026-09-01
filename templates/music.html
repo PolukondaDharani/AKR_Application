@@ -1,0 +1,1368 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- =========================================================
+     FONT AWESOME — STREAMING PLATFORM LOGOS
+     ========================================================= -->
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+>
+
+<style>
+
+/* =========================================================
+   GLOBAL RESET
+   ========================================================= */
+
+html,
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #000000 !important;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   GOLD VARIABLES
+   ========================================================= */
+
+:root {
+    --gold-light: #fff8ce;
+    --gold-soft: #f1d592;
+    --gold: #d4af37;
+    --gold-dark: #8f6817;
+
+    --gold-glow: rgba(212,175,55,0.14);
+    --gold-border: rgba(212,175,55,0.22);
+
+    --white: #ffffff;
+    --muted: rgba(255,255,255,0.58);
+}
+
+
+/* =========================================================
+   MAIN MUSIC PAGE
+   ========================================================= */
+
+.music-page {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at 50% 13%,
+            rgba(212,175,55,0.085),
+            transparent 30%
+        ),
+        #000000;
+
+    color: #ffffff;
+
+    overflow: hidden;
+
+    padding-bottom: 60px;
+}
+
+
+/* =========================================================
+   SUBTLE GOLD LIGHT
+   ========================================================= */
+
+.music-page::before {
+    content: "";
+
+    position: absolute;
+
+    width: 500px;
+    height: 500px;
+
+    top: -250px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(212,175,55,0.10),
+            transparent 68%
+        );
+
+    filter: blur(60px);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.music-header {
+    position: relative;
+    z-index: 2;
+
+    text-align: center;
+
+    width: 100%;
+    max-width: 950px;
+
+    margin: 0 auto;
+
+    padding:
+        115px 20px 55px;
+}
+
+
+/* =========================================================
+   HEADER CONTENT
+   ========================================================= */
+
+.music-header-content {
+    position: relative;
+    z-index: 2;
+}
+
+
+/* =========================================================
+   MAIN TITLE
+   ========================================================= */
+
+.music-header h1 {
+    margin: 0;
+
+    font-size:
+        clamp(3.2rem, 8vw, 7rem);
+
+    line-height: 0.95;
+
+    font-weight: 900;
+
+    letter-spacing: 4px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            var(--gold-light) 0%,
+            var(--gold-soft) 30%,
+            var(--gold) 65%,
+            var(--gold-dark) 100%
+        );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    background-clip: text;
+
+    filter:
+        drop-shadow(
+            0 0 20px
+            rgba(212,175,55,0.18)
+        );
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.music-header p {
+    max-width: 680px;
+
+    margin:
+        25px auto 0;
+
+    color:
+        rgba(255,255,255,0.72);
+
+    font-size: 1rem;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   MUSIC AREA
+   ========================================================= */
+
+.music-area {
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+
+    padding:
+        25px 20px 0;
+}
+
+
+/* =========================================================
+   SONG CONTAINER
+   ========================================================= */
+
+.song-container {
+    position: relative;
+
+    width: 100%;
+
+    max-width: 850px;
+
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   SONG CARD
+   ========================================================= */
+
+.song-card {
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 12px;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #151515,
+            #080808
+        );
+
+    border:
+        1px solid
+        rgba(212,175,55,0.22);
+
+    box-shadow:
+        0 30px 90px
+        rgba(0,0,0,0.70),
+
+        inset 0 1px 0
+        rgba(255,255,255,0.04);
+
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+
+.song-card:hover {
+    transform:
+        translateY(-6px);
+
+    border-color:
+        rgba(212,175,55,0.48);
+
+    box-shadow:
+        0 40px 110px
+        rgba(0,0,0,0.82),
+
+        0 0 45px
+        rgba(212,175,55,0.045);
+}
+
+
+/* =========================================================
+   POSTER
+   ========================================================= */
+
+.song-cover {
+    position: relative;
+
+    width: 100%;
+
+    aspect-ratio: 1 / 1;
+
+    overflow: hidden;
+
+    border-radius: 9px;
+
+    background: #111111;
+}
+
+
+/* =========================================================
+   YOUTUBE LINK
+   ========================================================= */
+
+.youtube-link {
+    position: relative;
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    text-decoration: none;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   POSTER IMAGE
+   ========================================================= */
+
+.song-cover img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+    transition:
+        transform 0.8s
+        cubic-bezier(.2,.7,.2,1),
+
+        filter 0.5s ease;
+}
+
+
+.song-card:hover .song-cover img {
+    transform:
+        scale(1.045);
+
+    filter:
+        brightness(0.88)
+        contrast(1.05);
+}
+
+
+/* =========================================================
+   PLAY OVERLAY
+   ========================================================= */
+
+.play-overlay {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,0,0,0.03),
+            rgba(0,0,0,0.28)
+        );
+
+    transition:
+        background 0.4s ease;
+}
+
+
+.youtube-link:hover .play-overlay {
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,0,0,0.05),
+            rgba(0,0,0,0.40)
+        );
+}
+
+
+/* =========================================================
+   PLAY BUTTON WRAPPER
+   ========================================================= */
+
+.youtube-play-wrapper {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* =========================================================
+   GOLD OUTER RING
+   ========================================================= */
+
+.youtube-play-wrapper::before {
+    content: "";
+
+    position: absolute;
+
+    width: 125px;
+    height: 125px;
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(212,175,55,0.45);
+
+    background:
+        rgba(212,175,55,0.035);
+
+    opacity: 0.85;
+
+    transition:
+        transform 0.4s ease,
+        opacity 0.4s ease;
+}
+
+
+.youtube-link:hover
+.youtube-play-wrapper::before {
+    transform:
+        scale(1.15);
+
+    opacity: 1;
+}
+
+
+/* =========================================================
+   YOUTUBE PLAY BUTTON
+   ========================================================= */
+
+.youtube-play-button {
+    position: relative;
+
+    z-index: 2;
+
+    width: 88px;
+    height: 62px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #ff0000;
+
+    border-radius: 17px;
+
+    box-shadow:
+        0 15px 45px
+        rgba(0,0,0,0.65),
+
+        0 0 30px
+        rgba(255,0,0,0.18);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+/* =========================================================
+   PLAY TRIANGLE
+   ========================================================= */
+
+.youtube-play-button span {
+    width: 0;
+    height: 0;
+
+    border-top:
+        12px solid transparent;
+
+    border-bottom:
+        12px solid transparent;
+
+    border-left:
+        19px solid #ffffff;
+
+    margin-left: 5px;
+}
+
+
+/* =========================================================
+   PLAY HOVER
+   ========================================================= */
+
+.youtube-link:hover
+.youtube-play-button {
+    transform:
+        scale(1.10);
+
+    box-shadow:
+        0 18px 55px
+        rgba(0,0,0,0.75),
+
+        0 0 40px
+        rgba(255,0,0,0.25);
+}
+
+
+/* =========================================================
+   SONG INFORMATION
+   ========================================================= */
+
+.song-info {
+    padding:
+        35px
+        28px
+        28px;
+}
+
+
+/* =========================================================
+   META ROW
+   ========================================================= */
+
+.song-meta {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 14px;
+}
+
+
+/* =========================================================
+   FIRST SINGLE
+   ========================================================= */
+
+.song-number {
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+
+    background:
+        linear-gradient(
+            to bottom,
+            var(--gold-light),
+            var(--gold),
+            var(--gold-dark)
+        );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    background-clip: text;
+}
+
+
+/* =========================================================
+   BADGE
+   ========================================================= */
+
+.song-badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    min-height: 25px;
+
+    padding:
+        0 11px;
+
+    border-radius: 100px;
+
+    background:
+        rgba(212,175,55,0.07);
+
+    border:
+        1px solid
+        rgba(212,175,55,0.22);
+
+    color:
+        var(--gold-soft);
+
+    font-size: 8px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   SONG TITLE
+   ========================================================= */
+
+.song-info h2 {
+    margin: 0;
+
+    font-size:
+        clamp(30px, 5vw, 42px);
+
+    line-height: 1;
+
+    font-weight: 900;
+
+    letter-spacing: -1.5px;
+
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   ARTIST / CREDITS
+   ========================================================= */
+
+.artist {
+    margin-top: 12px;
+
+    color:
+        rgba(255,255,255,0.52);
+
+    font-size: 12px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   DIVIDER
+   ========================================================= */
+
+.song-divider {
+    width: 100%;
+
+    height: 1px;
+
+    margin:
+        25px 0 22px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(212,175,55,0.30),
+            transparent
+        );
+}
+
+
+/* =========================================================
+   LISTEN NOW
+   ========================================================= */
+
+.streaming-title {
+    margin-bottom: 12px;
+
+    color:
+        var(--gold);
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 2.5px;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   PLATFORM BUTTONS
+   ========================================================= */
+
+.platforms {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 9px;
+}
+
+
+.platform-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    min-height: 42px;
+
+    padding:
+        0 16px;
+
+    border-radius: 6px;
+
+    border:
+        1px solid
+        rgba(212,175,55,0.18);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,0.045),
+            rgba(255,255,255,0.015)
+        );
+
+    color:
+        rgba(255,255,255,0.68);
+
+    text-decoration: none;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+/* PLATFORM LOGO */
+
+.platform-btn i {
+    font-size: 17px;
+
+    line-height: 1;
+
+    transition:
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+/* PLATFORM HOVER */
+
+.platform-btn:hover {
+    transform:
+        translateY(-3px);
+
+    background:
+        var(--gold);
+
+    color:
+        #000000;
+
+    border-color:
+        var(--gold);
+
+    box-shadow:
+        0 8px 25px
+        rgba(212,175,55,0.16);
+}
+
+
+.platform-btn:hover i {
+    color:
+        #000000;
+
+    transform:
+        scale(1.08);
+}
+
+
+/* =========================================================
+   SOUND WAVE
+   ========================================================= */
+
+.sound-wave {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 4px;
+
+    height: 25px;
+
+    margin-top: 30px;
+
+    opacity: 0.45;
+}
+
+
+.sound-wave span {
+    display: block;
+
+    width: 2px;
+
+    height: 8px;
+
+    border-radius: 10px;
+
+    background:
+        var(--gold);
+
+    animation:
+        musicWave 1.1s
+        ease-in-out infinite;
+}
+
+
+.sound-wave span:nth-child(2) {
+    height: 15px;
+    animation-delay: .1s;
+}
+
+
+.sound-wave span:nth-child(3) {
+    height: 21px;
+    animation-delay: .2s;
+}
+
+
+.sound-wave span:nth-child(4) {
+    height: 12px;
+    animation-delay: .3s;
+}
+
+
+.sound-wave span:nth-child(5) {
+    height: 18px;
+    animation-delay: .4s;
+}
+
+
+.sound-wave span:nth-child(6) {
+    height: 9px;
+    animation-delay: .5s;
+}
+
+
+.sound-wave span:nth-child(7) {
+    height: 16px;
+    animation-delay: .6s;
+}
+
+
+.sound-wave span:nth-child(8) {
+    height: 7px;
+    animation-delay: .7s;
+}
+
+
+@keyframes musicWave {
+
+    0%,
+    100% {
+        transform:
+            scaleY(.55);
+    }
+
+    50% {
+        transform:
+            scaleY(1);
+    }
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.music-footer {
+    position: relative;
+
+    z-index: 2;
+
+    text-align: center;
+
+    padding:
+        55px 20px 0;
+
+    color:
+        rgba(212,175,55,0.35);
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 991px) {
+
+    .music-header {
+        padding:
+            110px 20px 45px;
+    }
+
+    .music-area {
+        padding:
+            20px;
+    }
+
+    .song-container {
+        max-width: 760px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 576px) {
+
+    .music-header {
+        padding:
+            105px 15px 35px;
+    }
+
+
+    .music-header h1 {
+        font-size: 2.7rem;
+
+        letter-spacing: 2px;
+    }
+
+
+    .music-header p {
+        font-size: 0.82rem;
+
+        line-height: 1.7;
+
+        margin-top: 20px;
+    }
+
+
+    .music-area {
+        padding:
+            15px 15px 0;
+    }
+
+
+    .song-card {
+        padding: 8px;
+
+        border-radius: 10px;
+    }
+
+
+    .song-cover {
+        border-radius: 7px;
+    }
+
+
+    .youtube-play-button {
+        width: 70px;
+        height: 49px;
+
+        border-radius: 13px;
+    }
+
+
+    .youtube-play-button span {
+        border-top-width: 10px;
+
+        border-bottom-width: 10px;
+
+        border-left-width: 16px;
+    }
+
+
+    .youtube-play-wrapper::before {
+        width: 100px;
+        height: 100px;
+    }
+
+
+    .song-info {
+        padding:
+            25px
+            12px
+            18px;
+    }
+
+
+    .song-meta {
+        align-items: flex-start;
+    }
+
+
+    .song-info h2 {
+        font-size: 29px;
+    }
+
+
+    .artist {
+        font-size: 11px;
+    }
+
+
+    .platforms {
+        gap: 7px;
+    }
+
+
+    .platform-btn {
+        min-height: 38px;
+
+        padding:
+            0 12px;
+
+        gap: 7px;
+
+        font-size: 10px;
+    }
+
+
+    .platform-btn i {
+        font-size: 15px;
+    }
+
+
+    .music-footer {
+        padding:
+            45px 20px 0;
+
+        font-size: 8px;
+    }
+}
+
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    .music-header {
+        padding:
+            95px 12px 30px;
+    }
+
+
+    .music-header h1 {
+        font-size: 2.35rem;
+    }
+
+
+    .song-meta {
+        flex-direction: column;
+
+        gap: 8px;
+    }
+
+
+    .song-info h2 {
+        font-size: 26px;
+    }
+
+
+    .platform-btn {
+        padding:
+            0 11px;
+    }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+.youtube-link:focus,
+.platform-btn:focus {
+    outline:
+        2px solid
+        rgba(212,175,55,0.55);
+
+    outline-offset: 2px;
+}
+
+</style>
+
+
+<!-- =========================================================
+     MUSIC PAGE
+     ========================================================= -->
+
+<section class="music-page">
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="music-header">
+
+        <div class="music-header-content">
+
+            <h1>
+                OUR MUSIC
+            </h1>
+
+            <p>
+                Original music from our stories, created with passion
+                and made to be heard beyond the screen.
+            </p>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MUSIC AREA
+    ====================================================== -->
+
+    <div class="music-area">
+
+        <div class="song-container">
+
+            <article class="song-card">
+
+
+                <!-- =================================================
+                     SONG COVER
+                ================================================== -->
+
+                <div class="song-cover">
+
+                    <a
+                        href="https://www.youtube.com/watch?v=e9l3cRJWJyk"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="youtube-link"
+                    >
+
+                        <img
+                            src="{{ url_for('static', filename='images/songposter.png') }}"
+                            alt="Oh My Friend"
+                        >
+
+
+                        <!-- PLAY BUTTON -->
+
+                        <div class="play-overlay">
+
+                            <div class="youtube-play-wrapper">
+
+                                <div class="youtube-play-button">
+
+                                    <span></span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+
+                <!-- =================================================
+                     SONG INFORMATION
+                ================================================== -->
+
+                <div class="song-info">
+
+
+                    <!-- META -->
+
+                    <div class="song-meta">
+
+                        <div class="song-number">
+                            FIRST SINGLE
+                        </div>
+
+                        <div class="song-badge">
+                            C & C WEB SERIES
+                        </div>
+
+                    </div>
+
+
+                    <!-- TITLE -->
+
+                    <h2>
+                        Oh My Friend
+                    </h2>
+
+
+                    <!-- CREDITS -->
+
+                    <div class="artist">
+                        Lyrics by Manoj
+                        ·
+                        Music &amp; Vocals by Satya Radhakrishna
+                    </div>
+
+
+                    <!-- DIVIDER -->
+
+                    <div class="song-divider"></div>
+
+
+                    <!-- STREAMING -->
+
+                    <div class="streaming-title">
+                        LISTEN NOW
+                    </div>
+
+
+                    <!-- =================================================
+                         PLATFORM BUTTONS
+                    ================================================== -->
+
+                    <div class="platforms">
+
+
+                        <!-- YOUTUBE -->
+
+                        <a
+                            href="https://www.youtube.com/watch?v=e9l3cRJWJyk"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="platform-btn"
+                            aria-label="Listen on YouTube"
+                        >
+
+                            <i class="fa-brands fa-youtube"></i>
+
+                            <span>
+                                YouTube
+                            </span>
+
+                        </a>
+
+
+                        <!-- SPOTIFY -->
+
+                        <a
+                            href="https://open.spotify.com/album/1duytcLt0SZjZIfF3VSbcy?si=UqLd-_MTSGuwAfAFZjXn7Q"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="platform-btn"
+                            aria-label="Listen on Spotify"
+                        >
+
+                            <i class="fa-brands fa-spotify"></i>
+
+                            <span>
+                                Spotify
+                            </span>
+
+                        </a>
+
+
+                        <!-- APPLE MUSIC -->
+
+                        <a
+                            href="https://music.apple.com/in/album/oh-my-friend-feat-c-c-webseries/6792831783?i=6792831785&ls"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="platform-btn"
+                            aria-label="Listen on Apple Music"
+                        >
+
+                            <i class="fa-brands fa-apple"></i>
+
+                            <span>
+                                Apple Music
+                            </span>
+
+                        </a>
+
+
+                        <!-- INSTAGRAM -->
+
+                        <a
+                            href="https://www.instagram.com/reels/audio/2273212450087732"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="platform-btn"
+                            aria-label="Listen on Instagram"
+                        >
+
+                            <i class="fa-brands fa-instagram"></i>
+
+                            <span>
+                                Instagram
+                            </span>
+
+                        </a>
+
+
+                        <!-- AMAZON MUSIC -->
+
+                        <a
+                            href="https://music.amazon.in/albums/B0H9NK51Q8?trackAsin=B0H9NMC17W"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="platform-btn"
+                            aria-label="Listen on Amazon Music"
+                        >
+
+                            <i class="fa-brands fa-amazon"></i>
+
+                            <span>
+                                Amazon Music
+                            </span>
+
+                        </a>
+
+
+                    </div>
+
+
+                    <!-- =================================================
+                         SOUND WAVE
+                    ================================================== -->
+
+                    <div class="sound-wave">
+
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+
+                    </div>
+
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <div class="music-footer">
+
+        © HOME ENTERTAINMENTS · ALL RIGHTS RESERVED
+
+    </div>
+
+
+</section>
+
+{% endblock %}

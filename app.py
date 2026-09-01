@@ -1856,6 +1856,9 @@ def dashboard():
         url_for("admin_meetings")
     )
 
+@app.route("/music")
+def music():
+    return render_template("music.html")
 
 # ============================================================
 # Movies
