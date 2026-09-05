@@ -11,7 +11,8 @@ from flask import (
     url_for,
     session,
     flash,
-    send_from_directory
+    send_from_directory,
+    Response
 )
 
 from werkzeug.utils import secure_filename
@@ -33,16 +34,19 @@ from googleapiclient.discovery import build
 # For production, use HTTPS and remove/disable this.
 # ============================================================
 
-os.environ.setdefault("OAUTHLIB_INSECURE_TRANSPORT", "1")
+os.environ.setdefault(
+    "OAUTHLIB_INSECURE_TRANSPORT",
+    "1"
+)
 
-# Load environment variables from .env file
+# Load environment variables
 load_dotenv()
 
 app = Flask(__name__)
 
 
 # ============================================================
-# App Config
+# APP CONFIG
 # ============================================================
 
 app.secret_key = os.environ.get(
@@ -50,6 +54,10 @@ app.secret_key = os.environ.get(
     "change-this-secret-key"
 )
 
+
+# ============================================================
+# GOOGLE CONFIG
+# ============================================================
 
 SCOPES = [
     "https://www.googleapis.com/auth/calendar.events"
@@ -59,7 +67,7 @@ CREDENTIALS_FILE = "credentials.json"
 
 
 # ============================================================
-# Upload Config
+# UPLOAD CONFIG
 # ============================================================
 
 UPLOAD_FOLDER = "uploads"
@@ -70,13 +78,18 @@ ALLOWED_UPLOAD_EXTENSIONS = {
 
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
-app.config["MAX_CONTENT_LENGTH"] = 10 * 1024 * 1024  # 10 MB
+app.config["MAX_CONTENT_LENGTH"] = (
+    10 * 1024 * 1024
+)
 
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+os.makedirs(
+    UPLOAD_FOLDER,
+    exist_ok=True
+)
 
 
 # ============================================================
-# Resend Email API Configuration
+# RESEND EMAIL API CONFIGURATION
 # ============================================================
 
 RESEND_API_KEY = os.environ.get(
@@ -94,16 +107,161 @@ MAIL_RECEIVER = os.environ.get(
     ""
 )
 
+
 # Configure Resend SDK
+
 if RESEND_API_KEY:
+
     resend.api_key = RESEND_API_KEY
 
 
 # ============================================================
-# Helper Functions
+# WEBSITE SEO INFORMATION
+# ============================================================
+
+SITE_NAME = "Home Entertainments"
+
+SITE_DESCRIPTION = (
+    "Home Entertainments is a Kannada entertainment "
+    "production house creating movies, web series, "
+    "music and original entertainment content."
+)
+
+SITE_URL = "https://www.homeentertainments.in"
+
+
+# ============================================================
+# SEO DATA
+# ============================================================
+
+SEO_DATA = {
+
+    "home": {
+        "title": (
+            "Home Entertainments | Kannada Entertainment, "
+            "Movies, Web Series & Music"
+        ),
+        "description": (
+            "Home Entertainments is a Kannada entertainment "
+            "production house creating movies, web series, "
+            "music and original entertainment content."
+        )
+    },
+
+    "about": {
+        "title": (
+            "About Home Entertainments | Kannada "
+            "Entertainment Production House"
+        ),
+        "description": (
+            "Learn about Home Entertainments, a Kannada "
+            "entertainment production house focused on "
+            "movies, web series, music and creative storytelling."
+        )
+    },
+
+    "movies": {
+        "title": (
+            "Movies & Web Series | Home Entertainments"
+        ),
+        "description": (
+            "Explore movies, web series and original "
+            "cinema projects from Home Entertainments."
+        )
+    },
+
+    "music": {
+        "title": (
+            "Music | Kannada Songs & Original Music | "
+            "Home Entertainments"
+        ),
+        "description": (
+            "Listen to original Kannada songs, lyrical videos "
+            "and music releases from Home Entertainments."
+        )
+    },
+
+    "collaboration": {
+        "title": (
+            "Collaboration | Partner With Home Entertainments"
+        ),
+        "description": (
+            "Collaborate with Home Entertainments on films, "
+            "music, web series, events and creative entertainment projects."
+        )
+    },
+
+    "join": {
+        "title": (
+            "Join Us | Careers & Opportunities | "
+            "Home Entertainments"
+        ),
+        "description": (
+            "Join Home Entertainments and explore opportunities "
+            "in acting, filmmaking, production, creative work and entertainment."
+        )
+    },
+
+    "contact": {
+        "title": (
+            "Contact Home Entertainments | Get In Touch"
+        ),
+        "description": (
+            "Contact Home Entertainments for collaborations, "
+            "projects, entertainment enquiries and business opportunities."
+        )
+    },
+
+    "team": {
+        "title": (
+            "Our Team | Home Entertainments"
+        ),
+        "description": (
+            "Meet the creative team behind Home Entertainments "
+            "and its entertainment projects."
+        )
+    }
+
+}
+
+
+# ============================================================
+# HELPER - SEO RENDER
+# ============================================================
+
+def render_seo_template(
+    template_name,
+    seo_key,
+    **context
+):
+
+    seo = SEO_DATA.get(
+        seo_key,
+        {}
+    )
+
+    context["title"] = seo.get(
+        "title",
+        f"{SITE_NAME} | Kannada Entertainment"
+    )
+
+    context["description"] = seo.get(
+        "description",
+        SITE_DESCRIPTION
+    )
+
+    return render_template(
+        template_name,
+        **context
+    )
+
+
+# ============================================================
+# HELPER FUNCTIONS
 # ============================================================
 
 def allowed_file(filename):
+
     """
     Return True only for allowed upload extensions.
     """
@@ -111,18 +269,19 @@ def allowed_file(filename):
     return (
         bool(filename)
         and "." in filename
-        and filename.rsplit(".", 1)[1].lower()
+        and filename.rsplit(
+            ".",
+            1
+        )[1].lower()
         in ALLOWED_UPLOAD_EXTENSIONS
     )
 
 
 def get_form_data():
-    """
-    Collect all submitted form fields without hard-coding
-    the field names.
 
-    This makes the Contact and Join Us routes work with
-    the field names already used by their HTML forms.
+    """
+    Collect all submitted form fields without
+    hard-coding field names.
     """
 
     data = {}
@@ -135,19 +294,24 @@ def get_form_data():
         }:
             continue
 
-        value = (value or "").strip()
+        value = (
+            value or ""
+        ).strip()
 
         if value:
 
             data[
-                key.replace("_", " ").title()
+                key.replace(
+                    "_",
+                    " "
+                ).title()
             ] = value
 
     return data
 
 
 # ============================================================
-# Resend Email API - Send Submission Email
+# RESEND EMAIL API
 # ============================================================
 
 def send_submission_email(
@@ -156,6 +320,7 @@ def send_submission_email(
     uploaded_file=None,
     uploaded_filename=None
 ):
+
     """
     Send website form submission using Resend Email API.
 
@@ -167,23 +332,27 @@ def send_submission_email(
     """
 
     # --------------------------------------------------------
-    # Check Resend configuration
+    # Check configuration
     # --------------------------------------------------------
 
     if not RESEND_API_KEY:
+
         raise RuntimeError(
             "RESEND_API_KEY is not configured."
         )
 
     if not RESEND_FROM_EMAIL:
+
         raise RuntimeError(
             "RESEND_FROM_EMAIL is not configured."
         )
 
     if not MAIL_RECEIVER:
+
         raise RuntimeError(
             "MAIL_RECEIVER is not configured."
         )
+
 
     # --------------------------------------------------------
     # Find visitor email
@@ -195,17 +364,25 @@ def send_submission_email(
         or form_data.get("E-Mail")
     )
 
+
     # ========================================================
-    # Plain Text Email
+    # PLAIN TEXT EMAIL
     # ========================================================
 
     text_lines = [
+
         "NEW WEBSITE SUBMISSION",
+
         "",
+
         f"Form: {subject}",
+
         "",
+
         "-----------------------------------",
+
     ]
+
 
     for field, value in form_data.items():
 
@@ -213,19 +390,29 @@ def send_submission_email(
             f"{field}: {value}"
         )
 
+
     text_lines.extend([
+
         "-----------------------------------",
+
         "",
+
         "Submitted from the Home Entertainments website."
+
     ])
 
-    plain_text_body = "\n".join(text_lines)
+
+    plain_text_body = "\n".join(
+        text_lines
+    )
+
 
     # ========================================================
-    # HTML Email Rows
+    # HTML EMAIL ROWS
     # ========================================================
 
     rows = ""
+
 
     for field, value in form_data.items():
 
@@ -258,11 +445,13 @@ def send_submission_email(
         </tr>
         """
 
+
     # ========================================================
-    # Reply Information
+    # REPLY INFORMATION
     # ========================================================
 
     reply_information = ""
+
 
     if visitor_email:
 
@@ -287,8 +476,9 @@ def send_submission_email(
         </div>
         """
 
+
     # ========================================================
-    # HTML Email
+    # HTML EMAIL
     # ========================================================
 
     html_body = f"""
@@ -374,6 +564,7 @@ def send_submission_email(
 
             </div>
 
+
             <!-- Content -->
 
             <div style="
@@ -427,6 +618,7 @@ def send_submission_email(
 
             </div>
 
+
             <!-- Footer -->
 
             <div style="
@@ -449,45 +641,78 @@ def send_submission_email(
     </html>
     """
 
+
     # ========================================================
-    # Create Resend Email Parameters
+    # RESEND PARAMETERS
     # ========================================================
 
     params = {
+
         "from": RESEND_FROM_EMAIL,
-        "to": [MAIL_RECEIVER],
+
+        "to": [
+            MAIL_RECEIVER
+        ],
+
         "subject": subject,
+
         "html": html_body,
+
         "text": plain_text_body
+
     }
 
+
     # ========================================================
-    # Reply-To
+    # REPLY-TO
     # ========================================================
 
     if visitor_email:
-        params["reply_to"] = [visitor_email]
 
-    # ========================================================
-    # PDF Attachment
-    # ========================================================
-
-    if uploaded_file and uploaded_filename:
-        uploaded_file.stream.seek(0)
-        file_data = list(uploaded_file.read())
-
-        params["attachments"] = [
-            {
-                "filename": secure_filename(uploaded_filename),
-                "content": file_data
-            }
+        params["reply_to"] = [
+            visitor_email
         ]
 
+
     # ========================================================
-    # Send Using Resend API
+    # PDF ATTACHMENT
     # ========================================================
 
-    response = resend.Emails.send(params)
+    if (
+        uploaded_file
+        and uploaded_filename
+    ):
+
+        uploaded_file.stream.seek(0)
+
+        file_data = list(
+            uploaded_file.read()
+        )
+
+        params["attachments"] = [
+
+            {
+
+                "filename":
+                    secure_filename(
+                        uploaded_filename
+                    ),
+
+                "content":
+                    file_data
+
+            }
+
+        ]
+
+
+    # ========================================================
+    # SEND EMAIL
+    # ========================================================
+
+    response = resend.Emails.send(
+        params
+    )
 
     app.logger.info(
         "Email sent successfully through Resend: %s",
@@ -498,7 +723,7 @@ def send_submission_email(
 
 
 # ============================================================
-# Collaboration Form
+# COLLABORATION FORM
 # ============================================================
 
 class CollaborationForm(FlaskForm):
@@ -531,29 +756,20 @@ class CollaborationForm(FlaskForm):
 
 
 # ============================================================
-# Admin Login
-# ============================================================
-
-ADMIN = {
-    "username": "admin",
-    "password": "password123"
-}
-
-
-# ============================================================
-# Public Routes
+# HOME
 # ============================================================
 
 @app.route("/")
 def home():
 
-    return render_template(
-        "home.html"
+    return render_seo_template(
+        "home.html",
+        "home"
     )
 
 
 # ============================================================
-# Team
+# TEAM
 # ============================================================
 
 @app.route("/team")
@@ -638,14 +854,16 @@ def team():
 
     ]
 
-    return render_template(
+
+    return render_seo_template(
         "team.html",
+        "team",
         team_members=team_members
     )
 
 
 # ============================================================
-# About
+# ABOUT
 # ============================================================
 
 @app.route("/about")
@@ -730,14 +948,16 @@ def about():
 
     ]
 
-    return render_template(
+
+    return render_seo_template(
         "about.html",
+        "about",
         team_members=team_members
     )
 
 
 # ============================================================
-# Contact
+# CONTACT
 # ============================================================
 
 @app.route(
@@ -778,13 +998,15 @@ def contact():
             url_for("contact")
         )
 
-    return render_template(
-        "contact.html"
+
+    return render_seo_template(
+        "contact.html",
+        "contact"
     )
 
 
 # ============================================================
-# Join Us
+# JOIN US
 # ============================================================
 
 @app.route(
@@ -803,11 +1025,13 @@ def join():
                 "resume"
             )
 
-            # ------------------------------------------------
-            # Optional Resume
-            # ------------------------------------------------
 
-            if resume and resume.filename:
+            # Optional Resume
+
+            if (
+                resume
+                and resume.filename
+            ):
 
                 if not allowed_file(
                     resume.filename
@@ -822,12 +1046,14 @@ def join():
                         url_for("join")
                     )
 
+
                 send_submission_email(
                     subject="New Join Us Submission",
                     form_data=form_data,
                     uploaded_file=resume,
                     uploaded_filename=resume.filename
                 )
+
 
             else:
 
@@ -836,10 +1062,12 @@ def join():
                     form_data=form_data
                 )
 
+
             flash(
                 "Your submission has been sent successfully!",
                 "success"
             )
+
 
         except Exception as e:
 
@@ -853,17 +1081,20 @@ def join():
                 "danger"
             )
 
+
         return redirect(
             url_for("join")
         )
 
-    return render_template(
-        "join.html"
+
+    return render_seo_template(
+        "join.html",
+        "join"
     )
 
 
 # ============================================================
-# Collaboration
+# COLLABORATION
 # ============================================================
 
 @app.route(
@@ -873,6 +1104,7 @@ def join():
 def collaboration():
 
     form = CollaborationForm()
+
 
     partners = [
 
@@ -896,6 +1128,7 @@ def collaboration():
 
     ]
 
+
     if form.validate_on_submit():
 
         try:
@@ -905,6 +1138,7 @@ def collaboration():
             collaboration_file = request.files.get(
                 "file"
             )
+
 
             if (
                 collaboration_file
@@ -924,12 +1158,14 @@ def collaboration():
                         url_for("collaboration")
                     )
 
+
                 send_submission_email(
                     subject="New Collaboration Request",
                     form_data=form_data,
                     uploaded_file=collaboration_file,
                     uploaded_filename=collaboration_file.filename
                 )
+
 
             else:
 
@@ -938,14 +1174,17 @@ def collaboration():
                     form_data=form_data
                 )
 
+
             flash(
                 "Thank you! Your collaboration request has been sent.",
                 "success"
             )
 
+
             return redirect(
                 url_for("collaboration")
             )
+
 
         except Exception as e:
 
@@ -959,965 +1198,189 @@ def collaboration():
                 "danger"
             )
 
-    return render_template(
+
+    return render_seo_template(
         "collab.html",
+        "collaboration",
         form=form,
         partners=partners
     )
 
 
 # ============================================================
-# Authentication
+# MUSIC
 # ============================================================
-
-@app.route(
-    "/login",
-    methods=["GET", "POST"]
-)
-def login():
-
-    if request.method == "POST":
-
-        username = request.form.get(
-            "username",
-            ""
-        )
-
-        password = request.form.get(
-            "password",
-            ""
-        )
-
-        if (
-            username == ADMIN["username"]
-            and password == ADMIN["password"]
-        ):
-
-            session["user"] = "admin"
-
-            return redirect(
-                url_for("admin_home")
-            )
-
-        flash(
-            "Invalid login",
-            "danger"
-        )
-
-    return render_template(
-        "login.html"
-    )
-
-
-@app.route("/logout")
-def logout():
-
-    session.clear()
-
-    return redirect(
-        url_for("home")
-    )
-
-
-# ============================================================
-# Admin Authentication Decorator
-# ============================================================
-
-def admin_required(f):
-
-    @wraps(f)
-    def wrap(*args, **kwargs):
-
-        if "user" not in session:
-
-            return redirect(
-                url_for("login")
-            )
-
-        return f(
-            *args,
-            **kwargs
-        )
-
-    return wrap
-
-
-# ============================================================
-# Admin Home
-# ============================================================
-
-@app.route("/admin")
-@admin_required
-def admin_home():
-
-    return render_template(
-        "admin/admin_home.html"
-    )
-
-
-# ============================================================
-# Admin Meetings
-# ============================================================
-
-@app.route("/admin/meetings")
-@admin_required
-def admin_meetings():
-
-    if "credentials" not in session:
-
-        return redirect(
-            url_for("authorize")
-        )
-
-    creds = pickle.loads(
-        session["credentials"]
-    )
-
-    service = build(
-        "calendar",
-        "v3",
-        credentials=creds
-    )
-
-    # --------------------------------------------------------
-    # Fetch today's events
-    # --------------------------------------------------------
-
-    now = (
-        datetime.datetime.utcnow()
-        .isoformat()
-        + "Z"
-    )
-
-    end_of_day = (
-        datetime.datetime.utcnow()
-        + datetime.timedelta(days=1)
-    ).isoformat() + "Z"
-
-    events_result = (
-        service.events()
-        .list(
-            calendarId="primary",
-            timeMin=now,
-            timeMax=end_of_day,
-            singleEvents=True,
-            orderBy="startTime"
-        )
-        .execute()
-    )
-
-    events = events_result.get(
-        "items",
-        []
-    )
-
-    return render_template(
-        "admin/meetings.html",
-        events=events
-    )
-
-
-# ============================================================
-# Google OAuth
-# ============================================================
-
-@app.route("/authorize")
-def authorize():
-
-    flow = Flow.from_client_secrets_file(
-        CREDENTIALS_FILE,
-        scopes=SCOPES,
-        redirect_uri=url_for(
-            "oauth2callback",
-            _external=True
-        )
-    )
-
-    auth_url, state = (
-        flow.authorization_url(
-            access_type="offline",
-            include_granted_scopes="true"
-        )
-    )
-
-    session["state"] = state
-
-    return redirect(
-        auth_url
-    )
-
-
-@app.route("/oauth2callback")
-def oauth2callback():
-
-    state = session["state"]
-
-    flow = Flow.from_client_secrets_file(
-        CREDENTIALS_FILE,
-        scopes=SCOPES,
-        state=state,
-        redirect_uri=url_for(
-            "oauth2callback",
-            _external=True
-        )
-    )
-
-    flow.fetch_token(
-        authorization_response=request.url
-    )
-
-    creds = flow.credentials
-
-    session["credentials"] = pickle.dumps(
-        creds
-    )
-
-    return redirect(
-        url_for("admin_meetings")
-    )
-
-
-# ============================================================
-# Add Meeting
-# ============================================================
-
-@app.route(
-    "/admin/meetings/add",
-    methods=["POST"]
-)
-@admin_required
-def add_meeting():
-
-    if "credentials" not in session:
-
-        return redirect(
-            url_for("authorize")
-        )
-
-    creds = pickle.loads(
-        session["credentials"]
-    )
-
-    service = build(
-        "calendar",
-        "v3",
-        credentials=creds
-    )
-
-    title = request.form.get(
-        "title"
-    )
-
-    start_value = request.form.get(
-        "start_time"
-    )
-
-    end_value = request.form.get(
-        "end_time"
-    )
-
-    if not title or not start_value or not end_value:
-
-        flash(
-            "Please provide meeting title, start time and end time.",
-            "danger"
-        )
-
-        return redirect(
-            url_for("admin_meetings")
-        )
-
-    start_time = (
-        start_value
-        + ":00+05:30"
-    )
-
-    end_time = (
-        end_value
-        + ":00+05:30"
-    )
-
-    event = {
-
-        "summary": title,
-
-        "start": {
-            "dateTime": start_time,
-            "timeZone": "Asia/Kolkata"
-        },
-
-        "end": {
-            "dateTime": end_time,
-            "timeZone": "Asia/Kolkata"
-        },
-
-        "conferenceData": {
-
-            "createRequest": {
-
-                "requestId": (
-                    f"meeting-{datetime.datetime.now().timestamp()}"
-                ),
-
-                "conferenceSolutionKey": {
-                    "type": "hangoutsMeet"
-                }
-
-            }
-
-        }
-
-    }
-
-    created_event = (
-        service.events()
-        .insert(
-            calendarId="primary",
-            body=event,
-            conferenceDataVersion=1
-        )
-        .execute()
-    )
-
-    flash(
-        "Meeting created successfully!",
-        "success"
-    )
-
-    return redirect(
-        url_for("admin_meetings")
-    )
-
-
-# ============================================================
-# Delete Meeting
-# ============================================================
-
-@app.route(
-    "/delete_meeting/<event_id>",
-    methods=["GET"]
-)
-@admin_required
-def delete_meeting(event_id):
-
-    if "credentials" not in session:
-
-        return redirect(
-            url_for("authorize")
-        )
-
-    creds = pickle.loads(
-        session["credentials"]
-    )
-
-    service = build(
-        "calendar",
-        "v3",
-        credentials=creds
-    )
-
-    try:
-
-        service.events().delete(
-            calendarId="primary",
-            eventId=event_id
-        ).execute()
-
-        flash(
-            "Meeting deleted successfully!",
-            "success"
-        )
-
-    except Exception as e:
-
-        app.logger.exception(
-            "Meeting deletion failed: %s",
-            e
-        )
-
-        flash(
-            "Failed to delete meeting!",
-            "danger"
-        )
-
-    return redirect(
-        url_for("admin_meetings")
-    )
-
-
-# ============================================================
-# Share Meeting Invite
-# ============================================================
-
-@app.route(
-    "/share_invite",
-    methods=["POST"]
-)
-@admin_required
-def share_invite():
-
-    title = request.form.get(
-        "meeting_title",
-        "Meeting"
-    )
-
-    link = request.form.get(
-        "meeting_link",
-        ""
-    )
-
-    emails = request.form.get(
-        "emails",
-        ""
-    )
-
-    if not emails:
-
-        flash(
-            "Please enter at least one email address.",
-            "warning"
-        )
-
-        return redirect(
-            url_for("admin_meetings")
-        )
-
-    recipients = [
-        email.strip()
-        for email in emails.split(",")
-        if email.strip()
-    ]
-
-    subject = f"Meeting Invite: {title}"
-
-    body = f"""
-You are invited to a meeting.
-
-Meeting Title:
-{title}
-
-Join Link:
-{link}
-
-Sent via Home Entertainments Admin Panel.
-"""
-
-    html_body = f"""
-    <!DOCTYPE html>
-
-    <html>
-
-    <body style="
-        margin: 0;
-        padding: 30px;
-        background-color: #f3f4f6;
-        font-family: Arial, Helvetica, sans-serif;
-    ">
-
-        <div style="
-            max-width: 600px;
-            margin: auto;
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-        ">
-
-            <div style="
-                padding: 25px;
-                background-color: #111827;
-                color: white;
-            ">
-
-                <h2 style="
-                    margin: 0;
-                ">
-                    Home Entertainments
-                </h2>
-
-            </div>
-
-            <div style="
-                padding: 30px;
-            ">
-
-                <h2>
-                    You are invited to a meeting
-                </h2>
-
-                <p>
-                    <strong>Meeting Title:</strong>
-                    {escape(title)}
-                </p>
-
-                <p>
-                    Click the button below to join the meeting.
-                </p>
-
-                <p style="
-                    margin: 30px 0;
-                ">
-
-                    <a
-                        href="{escape(link)}"
-                        style="
-                            display: inline-block;
-                            padding: 14px 24px;
-                            background-color: #111827;
-                            color: white;
-                            text-decoration: none;
-                            border-radius: 6px;
-                            font-weight: 600;
-                        "
-                    >
-                        Join Meeting
-                    </a>
-
-                </p>
-
-                <p style="
-                    color: #666;
-                    font-size: 13px;
-                ">
-                    If the button does not work, use this link:
-                </p>
-
-                <p>
-                    {escape(link)}
-                </p>
-
-            </div>
-
-            <div style="
-                padding: 18px;
-                text-align: center;
-                background-color: #f9fafb;
-                color: #999;
-                font-size: 12px;
-            ">
-
-                Home Entertainments
-
-            </div>
-
-        </div>
-
-    </body>
-
-    </html>
-    """
-
-    try:
-
-        for email in recipients:
-
-            params = {
-                "from": RESEND_FROM_EMAIL,
-                "to": [email],
-                "subject": subject,
-                "text": body,
-                "html": html_body
-            }
-
-            resend.Emails.send(params)
-
-        flash(
-            "Meeting invite sent successfully!",
-            "success"
-        )
-
-    except Exception as e:
-
-        app.logger.exception(
-            "Error sending meeting invite: %s",
-            e
-        )
-
-        flash(
-            "Failed to send invites.",
-            "danger"
-        )
-
-    return redirect(
-        url_for("admin_meetings")
-    )
-
-
-# ============================================================
-# Admin Documents
-# ============================================================
-
-@app.route("/admin/docs")
-@admin_required
-def admin_docs():
-
-    files = os.listdir(
-        app.config["UPLOAD_FOLDER"]
-    )
-
-    def get_file_size(filename):
-
-        file_path = os.path.join(
-            app.config["UPLOAD_FOLDER"],
-            filename
-        )
-
-        size = os.path.getsize(
-            file_path
-        )
-
-        return f"{round(size / 1024, 2)} KB"
-
-    return render_template(
-        "admin/docs.html",
-        files=files,
-        get_file_size=get_file_size
-    )
-
-
-# ============================================================
-# Upload Document
-# ============================================================
-
-@app.route(
-    "/upload_document",
-    methods=["POST"]
-)
-@admin_required
-def upload_document():
-
-    file = request.files.get(
-        "document"
-    )
-
-    if not file or not file.filename:
-
-        flash(
-            "Please select a document.",
-            "warning"
-        )
-
-        return redirect(
-            url_for("admin_docs")
-        )
-
-    if not allowed_file(
-        file.filename
-    ):
-
-        flash(
-            "Only PDF files are allowed.",
-            "danger"
-        )
-
-        return redirect(
-            url_for("admin_docs")
-        )
-
-    filename = secure_filename(
-        file.filename
-    )
-
-    if not filename:
-
-        flash(
-            "Invalid filename.",
-            "danger"
-        )
-
-        return redirect(
-            url_for("admin_docs")
-        )
-
-    file.save(
-        os.path.join(
-            app.config["UPLOAD_FOLDER"],
-            filename
-        )
-    )
-
-    flash(
-        "Document uploaded successfully!",
-        "success"
-    )
-
-    return redirect(
-        url_for("admin_docs")
-    )
-
-
-# ============================================================
-# Download Document
-# ============================================================
-
-@app.route(
-    "/documents/<filename>"
-)
-@admin_required
-def download_document(filename):
-
-    return send_from_directory(
-        app.config["UPLOAD_FOLDER"],
-        filename
-    )
-
-
-# ============================================================
-# Delete Document
-# ============================================================
-
-@app.route(
-    "/delete_document/<filename>"
-)
-@admin_required
-def delete_document(filename):
-
-    safe_filename = secure_filename(
-        filename
-    )
-
-    file_path = os.path.join(
-        app.config["UPLOAD_FOLDER"],
-        safe_filename
-    )
-
-    if os.path.exists(file_path):
-
-        os.remove(file_path)
-
-        flash(
-            "Document deleted!",
-            "danger"
-        )
-
-    return redirect(
-        url_for("admin_docs")
-    )
-
-
-# ============================================================
-# Admin Links
-# ============================================================
-
-links = []
-
-
-@app.route("/admin/links")
-@admin_required
-def admin_links():
-
-    return render_template(
-        "admin/links.html",
-        links=links
-    )
-
-
-@app.route(
-    "/admin/links/add",
-    methods=["POST"]
-)
-@admin_required
-def add_link():
-
-    title = request.form.get(
-        "title"
-    )
-
-    url = request.form.get(
-        "url"
-    )
-
-    description = request.form.get(
-        "description"
-    )
-
-    if title and url:
-
-        links.append({
-
-            "id": len(links) + 1,
-
-            "title": title,
-
-            "url": url,
-
-            "description": description
-
-        })
-
-        flash(
-            "Link added successfully!",
-            "success"
-        )
-
-    return redirect(
-        url_for("admin_links")
-    )
-
-
-@app.route(
-    "/admin/links/delete/<int:link_id>"
-)
-@admin_required
-def delete_link(link_id):
-
-    global links
-
-    links = [
-        link
-        for link in links
-        if link["id"] != link_id
-    ]
-
-    flash(
-        "Link deleted!",
-        "danger"
-    )
-
-    return redirect(
-        url_for("admin_links")
-    )
-
-
-@app.route(
-    "/admin/links/edit/<int:link_id>",
-    methods=["POST"]
-)
-@admin_required
-def edit_link(link_id):
-
-    title = request.form.get(
-        "title"
-    )
-
-    url = request.form.get(
-        "url"
-    )
-
-    description = request.form.get(
-        "description"
-    )
-
-    for link in links:
-
-        if link["id"] == link_id:
-
-            link["title"] = title
-
-            link["url"] = url
-
-            link["description"] = description
-
-            flash(
-                "Link updated successfully!",
-                "info"
-            )
-
-            break
-
-    return redirect(
-        url_for("admin_links")
-    )
-
-
-# ============================================================
-# Admin Social
-# ============================================================
-
-@app.route("/admin/social")
-@admin_required
-def admin_social():
-
-    return render_template(
-        "admin/social.html"
-    )
-
-
-# ============================================================
-# Admin User Forms
-# ============================================================
-
-@app.route("/admin/user_forms")
-@admin_required
-def admin_user_forms():
-
-    return render_template(
-        "admin/user_forms.html"
-    )
-
-
-# ============================================================
-# Dashboard
-# ============================================================
-
-@app.route("/dashboard")
-def dashboard():
-
-    return redirect(
-        url_for("admin_meetings")
-    )
 
 @app.route("/music")
 def music():
-    return render_template("music.html")
+
+    return render_seo_template(
+        "music.html",
+        "music"
+    )
+
 
 # ============================================================
-# Movies
+# MOVIES
 # ============================================================
 
 @app.route("/movies")
 def movies():
 
-    MOVIES = [
+    MOVIES = []
 
-        {
-            "id": 1,
 
-            "title": (
-                "Project X: The Awakening"
-            ),
-
-            "poster": "postercard1.jpeg",
-
-            "video_url": (
-                "https://www.youtube.com/embed/kzBoieupnV4"
-            ),
-
-            "synopsis": (
-                "A gripping journey through "
-                "time and space, where a group "
-                "of explorers discovers an "
-                "ancient secret."
-            ),
-
-            "director": "Christopher Nolan",
-
-            "writer": "Jonathan Nolan",
-
-            "music": "Hans Zimmer",
-
-            "cast": (
-                "Leonardo DiCaprio, Elliot Page"
-            ),
-
-            "actors": (
-                "Tom Hardy, Cillian Murphy"
-            ),
-
-            "release": "Summer 2026"
-        }
-
-    ]
-
-    return render_template(
+    return render_seo_template(
         "movies.html",
+        "movies",
         movies=MOVIES
     )
 
 
 # ============================================================
-# Run Application
+# XML SITEMAP
+# ============================================================
+
+@app.route("/sitemap.xml")
+def sitemap():
+
+    pages = [
+
+        {
+            "loc": url_for(
+                "home",
+                _external=True
+            ),
+            "priority": "1.0"
+        },
+
+        {
+            "loc": url_for(
+                "about",
+                _external=True
+            ),
+            "priority": "0.8"
+        },
+
+        {
+            "loc": url_for(
+                "movies",
+                _external=True
+            ),
+            "priority": "0.9"
+        },
+
+        {
+            "loc": url_for(
+                "music",
+                _external=True
+            ),
+            "priority": "0.9"
+        },
+
+        {
+            "loc": url_for(
+                "collaboration",
+                _external=True
+            ),
+            "priority": "0.7"
+        },
+
+        {
+            "loc": url_for(
+                "join",
+                _external=True
+            ),
+            "priority": "0.6"
+        },
+
+        {
+            "loc": url_for(
+                "contact",
+                _external=True
+            ),
+            "priority": "0.7"
+        },
+
+        {
+            "loc": url_for(
+                "team",
+                _external=True
+            ),
+            "priority": "0.6"
+        }
+
+    ]
+
+
+    today = datetime.date.today().isoformat()
+
+
+    sitemap_xml = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+    ]
+
+
+    for page in pages:
+
+        sitemap_xml.append(
+            f"""
+    <url>
+        <loc>{page["loc"]}</loc>
+        <lastmod>{today}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>{page["priority"]}</priority>
+    </url>
+"""
+        )
+
+
+    sitemap_xml.append(
+        "</urlset>"
+    )
+
+
+    return Response(
+        "\n".join(sitemap_xml),
+        mimetype="application/xml"
+    )
+
+
+# ============================================================
+# ROBOTS.TXT
+# ============================================================
+
+@app.route("/robots.txt")
+def robots():
+
+    robots_txt = f"""User-agent: *
+Allow: /
+
+Sitemap: {SITE_URL}/sitemap.xml
+"""
+
+
+    return Response(
+        robots_txt,
+        mimetype="text/plain"
+    )
+
+
+# ============================================================
+# RUN APPLICATION
 # ============================================================
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+
+    port = int(
+        os.environ.get(
+            "PORT",
+            5000
+        )
+    )
+
+    app.run(
+        host="0.0.0.0",
+        port=port
+    )

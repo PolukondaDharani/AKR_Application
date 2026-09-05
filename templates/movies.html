@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+
 {% block content %}
 
 <style>
@@ -19,19 +20,12 @@ body {
 
 .movie-detail-card {
     background: #111;
-
     border: 1px solid rgba(255, 193, 7, 0.25);
-
     border-radius: 20px;
-
     overflow: hidden;
-
     max-width: 1200px;
-
     margin: 100px auto 50px;
-
-    box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 
@@ -41,31 +35,17 @@ body {
 
 .poster-column {
     display: flex;
-
     align-items: flex-start;
-
     justify-content: center;
-
     background: #111;
 }
 
-
 .movie-poster-img {
     display: block;
-
     width: 100%;
-
     height: auto;
-
-    /*
-     * Important:
-     * Do not force the poster to fill the entire card.
-     * This keeps the original poster ratio on desktop.
-     */
     object-fit: contain;
-
     object-position: top center;
-
     border-radius: 20px 0 0 20px;
 }
 
@@ -78,55 +58,122 @@ body {
     width: 100%;
 }
 
-
 .movie-info h1 {
     color: #ffc107;
-
     font-weight: 800;
-
     text-transform: uppercase;
-
     font-size: 2rem;
-
     margin: 0 0 15px;
 }
 
 
 /* =========================================================
-   VIDEO RESPONSIVE CONTAINER
+   YOUTUBE VIDEO CONTAINER
    ========================================================= */
 
 .video-container {
     position: relative;
-
     width: 100%;
-
     padding-bottom: 56.25%;
-
     height: 0;
-
     overflow: hidden;
-
     border-radius: 12px;
-
     margin-bottom: 20px;
-
     border: 1px solid #333;
-
     background: #000;
 }
 
 
-.video-container iframe {
-    position: absolute;
+/* =========================================================
+   YOUTUBE THUMBNAIL
+   ========================================================= */
 
+.youtube-thumbnail {
+    cursor: pointer;
+}
+
+.youtube-thumbnail a {
+    position: absolute;
     top: 0;
     left: 0;
-
     width: 100%;
     height: 100%;
+    display: block;
+    text-decoration: none;
+    overflow: hidden;
+}
 
-    border: 0;
+.youtube-thumbnail img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+
+/* =========================================================
+   DARK OVERLAY
+   ========================================================= */
+
+.youtube-thumbnail a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.18);
+    z-index: 1;
+    transition: background 0.3s ease;
+}
+
+.youtube-thumbnail a:hover::after {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.youtube-thumbnail a:hover img {
+    transform: scale(1.02);
+}
+
+
+/* =========================================================
+   YOUTUBE PLAY BUTTON
+   ========================================================= */
+
+.youtube-play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 82px;
+    height: 58px;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    transition:
+        transform 0.25s ease,
+        filter 0.25s ease;
+}
+
+.youtube-play-button svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* YouTube RED background */
+.youtube-play-bg {
+    fill: #ff0000;
+}
+
+/* YouTube WHITE play triangle */
+.youtube-play-triangle {
+    fill: #ffffff;
+}
+
+/* Hover */
+.youtube-thumbnail a:hover .youtube-play-button {
+    transform: translate(-50%, -50%) scale(1.12);
+    filter: drop-shadow(0 6px 15px rgba(255, 0, 0, 0.35));
 }
 
 
@@ -136,18 +183,12 @@ body {
 
 .synopsis {
     border-left: 3px solid #ffc107;
-
     padding-left: 15px;
-
     margin: 18px 0;
-
     font-style: italic;
-
     color: #ccc;
-
     line-height: 1.55;
 }
-
 
 .synopsis p {
     margin: 0;
@@ -160,60 +201,51 @@ body {
 
 .info-label {
     color: #ffc107;
-
     font-weight: 700;
-
     text-transform: uppercase;
-
     font-size: 0.75rem;
-
     margin-right: 6px;
 }
 
-
 .info-text {
     color: rgba(255, 255, 255, 0.8);
-
     font-size: 0.9rem;
-
     line-height: 1.5;
 }
 
-
 .movie-info .row p {
     margin-bottom: 10px;
-
     line-height: 1.45;
 }
 
 
 /* =========================================================
-   DESKTOP
+   DESKTOP (UPDATED FIXES)
    ========================================================= */
 
 @media (min-width: 769px) {
 
     .movie-detail-card {
-        /*
-         * Let the content determine the height.
-         */
         min-height: 0;
     }
 
-
+    /* Stretch poster container to match full column height */
     .poster-column {
-        align-items: flex-start;
+        align-items: stretch;
     }
 
-
+    /* Make poster fill left column completely without blank gaps */
     .movie-poster-img {
         width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 20px 0 0 20px;
+    }
 
-        height: auto;
-
-        object-fit: contain;
-
-        object-position: top center;
+    /* Cap maximum video width to prevent extreme expansion on ultra-wide screens */
+    .video-container {
+        max-width: 680px;
     }
 
 }
@@ -227,25 +259,20 @@ body {
 
     .movie-detail-card {
         margin-left: 20px;
-
         margin-right: 20px;
     }
-
 
     .movie-info {
         padding: 25px !important;
     }
 
-
     .movie-info h1 {
         font-size: 1.7rem;
     }
 
-
     .info-label {
         font-size: 0.7rem;
     }
-
 
     .info-text {
         font-size: 0.82rem;
@@ -262,71 +289,54 @@ body {
 
     .movie-detail-card {
         width: calc(100% - 20px);
-
         margin: 20px auto 30px;
-
         border-radius: 20px;
     }
 
-
     .poster-column {
         width: 100%;
-
         display: block;
     }
 
-
     .movie-poster-img {
-
         width: 100%;
-
-        /*
-         * Keep the mobile poster height
-         * that was already working well.
-         */
         height: 510px;
-
         object-fit: cover;
-
         object-position: center;
-
         border-radius: 20px 20px 0 0;
     }
-
 
     .movie-info {
         padding: 25px !important;
     }
 
-
     .movie-info h1 {
         font-size: 1.5rem;
-
         margin-bottom: 15px;
     }
 
-
     .synopsis {
         font-size: 0.9rem;
-
         padding-left: 12px;
-
         margin: 18px 0;
     }
-
 
     .info-label {
         font-size: 0.75rem;
     }
 
-
     .info-text {
         font-size: 0.85rem;
     }
 
-
     .movie-info .row {
         margin-top: 20px !important;
+    }
+
+    /* Smaller YouTube button on mobile */
+    .youtube-play-button {
+        width: 68px;
+        height: 48px;
     }
 
 }
@@ -340,33 +350,32 @@ body {
 
     .movie-detail-card {
         width: calc(100% - 12px);
-
         margin-top: 10px;
     }
-
 
     .movie-poster-img {
         height: 480px;
     }
 
-
     .movie-info {
         padding: 20px !important;
     }
-
 
     .movie-info h1 {
         font-size: 1.35rem;
     }
 
-
     .info-label {
         font-size: 0.7rem;
     }
 
-
     .info-text {
         font-size: 0.8rem;
+    }
+
+    .youtube-play-button {
+        width: 62px;
+        height: 44px;
     }
 
 }
@@ -374,20 +383,12 @@ body {
 </style>
 
 
-<!-- =========================================================
-     MOVIE DETAIL
-     ========================================================= -->
-
 <div class="container">
 
     <div class="movie-detail-card">
 
         <div class="row g-0">
 
-
-            <!-- =================================================
-                 POSTER
-                 ================================================= -->
 
             <div class="col-md-4 poster-column">
 
@@ -401,41 +402,60 @@ body {
             </div>
 
 
-            <!-- =================================================
-                 MOVIE INFORMATION
-                 ================================================= -->
-
             <div class="col-md-8 p-4 p-lg-5">
 
                 <div class="movie-info">
 
-
-                    <!-- TITLE -->
 
                     <h1>
                         Project: C & C
                     </h1>
 
 
-                    <!-- =================================================
-                         YOUTUBE VIDEO
-                         ================================================= -->
+                    <div class="video-container youtube-thumbnail">
 
-                    <div class="video-container">
+                        <a
+                            href="https://www.youtube.com/watch?v=e9l3cRJWJyk"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Watch Oh My Friend on YouTube"
+                        >
 
-                        <iframe
-                            src="https://www.youtube.com/embed/e9l3cRJWJyk"
-                            title="Oh My Friend - C and C Web Series"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen>
-                        </iframe>
+                            <img
+                                src="https://img.youtube.com/vi/e9l3cRJWJyk/maxresdefault.jpg"
+                                alt="Oh My Friend - C and C Web Series"
+                                loading="lazy"
+                            >
+
+
+                            <div class="youtube-play-button">
+
+                                <svg
+                                    viewBox="0 0 68 48"
+                                    aria-hidden="true"
+                                >
+
+                                    <path
+                                        class="youtube-play-bg"
+                                        d="M66.52 7.74a8.5 8.5 0 0 0-5.98-6C55.27 0 34 0 34 0S12.73 0 7.46 1.74a8.5 8.5 0 0 0-5.98 6A88.2 88.2 0 0 0 0 24a88.2 88.2 0 0 0 1.48 16.26 8.5 8.5 0 0 0 5.98 6C12.73 48 34 48 34 48s21.27 0 26.54-1.74a8.5 8.5 0 0 0 5.98-6A88.2 88.2 0 0 0 68 24a88.2 88.2 0 0 0-1.48-16.26z"
+                                    >
+                                    </path>
+
+
+                                    <path
+                                        class="youtube-play-triangle"
+                                        d="M45 24 27 14v20z"
+                                    >
+                                    </path>
+
+                                </svg>
+
+                            </div>
+
+                        </a>
 
                     </div>
 
-
-                    <!-- =================================================
-                         SYNOPSIS
-                         ================================================= -->
 
                     <div class="synopsis">
 
@@ -450,16 +470,8 @@ body {
                     </div>
 
 
-                    <!-- =================================================
-                         PROJECT INFORMATION
-                         ================================================= -->
-
                     <div class="row mt-4">
 
-
-                        <!-- =================================================
-                             LEFT INFORMATION
-                             ================================================= -->
 
                         <div class="col-sm-6">
 
@@ -503,10 +515,6 @@ body {
 
                         </div>
 
-
-                        <!-- =================================================
-                             RIGHT INFORMATION
-                             ================================================= -->
 
                         <div class="col-sm-6">
 
@@ -571,6 +579,5 @@ body {
     </div>
 
 </div>
-
 
 {% endblock %}

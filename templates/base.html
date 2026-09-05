@@ -3,6 +3,10 @@
 
 <head>
 
+    <!-- =====================================================
+         BASIC SEO
+         ===================================================== -->
+
     <meta charset="UTF-8">
 
     <meta
@@ -11,15 +15,170 @@
     >
 
     <title>
-        {{ title or "Homeentertainments" }}
+        {{ title or "Home Entertainments | Kannada Entertainment, Movies & Music" }}
     </title>
 
+    <meta
+        name="description"
+        content="{{ description or 'Home Entertainments is a Kannada entertainment production house creating movies, web series, music and original entertainment content.' }}"
+    >
+
+    <meta
+        name="robots"
+        content="index, follow"
+    >
+
+    <meta
+        name="author"
+        content="Home Entertainments"
+    >
+
+    <meta
+        name="language"
+        content="English"
+    >
+
+    <meta
+        name="theme-color"
+        content="#000000"
+    >
+
+
+    <!-- =====================================================
+         CANONICAL URL
+         ===================================================== -->
+
     <link
-    rel="icon"
-    type="image/png"
-    sizes="500x500"
-    href="{{ url_for('static', filename='images/h.png') }}"
->
+        rel="canonical"
+        href="{{ request.url_root.rstrip('/') }}{{ request.path }}"
+    >
+
+
+    <!-- =====================================================
+         FAVICON
+         ===================================================== -->
+
+    <link
+        rel="icon"
+        type="image/png"
+        sizes="500x500"
+        href="{{ url_for('static', filename='images/h.png') }}"
+    >
+
+
+    <!-- =====================================================
+         OPEN GRAPH
+         ===================================================== -->
+
+    <meta
+        property="og:type"
+        content="{{ og_type or 'website' }}"
+    >
+
+    <meta
+        property="og:title"
+        content="{{ title or 'Home Entertainments | Kannada Entertainment, Movies & Music' }}"
+    >
+
+    <meta
+        property="og:description"
+        content="{{ description or 'Home Entertainments is a Kannada entertainment production house creating movies, web series, music and original entertainment content.' }}"
+    >
+
+    <meta
+        property="og:url"
+        content="{{ request.url_root.rstrip('/') }}{{ request.path }}"
+    >
+
+    <meta
+        property="og:site_name"
+        content="Home Entertainments"
+    >
+
+    <meta
+        property="og:locale"
+        content="en_IN"
+    >
+
+    <meta
+        property="og:image"
+        content="{{ url_for('static', filename='images/home.png', _external=True) }}"
+    >
+
+    <meta
+        property="og:image:alt"
+        content="Home Entertainments"
+    >
+
+
+    <!-- =====================================================
+         TWITTER / X
+         ===================================================== -->
+
+    <meta
+        name="twitter:card"
+        content="summary_large_image"
+    >
+
+    <meta
+        name="twitter:title"
+        content="{{ title or 'Home Entertainments | Kannada Entertainment, Movies & Music' }}"
+    >
+
+    <meta
+        name="twitter:description"
+        content="{{ description or 'Home Entertainments is a Kannada entertainment production house creating movies, web series, music and original entertainment content.' }}"
+    >
+
+    <meta
+        name="twitter:image"
+        content="{{ url_for('static', filename='images/home.png', _external=True) }}"
+    >
+
+    <meta
+        name="twitter:image:alt"
+        content="Home Entertainments"
+    >
+
+
+    <!-- =====================================================
+         ORGANIZATION STRUCTURED DATA
+         Helps Google understand the official brand/entity.
+         ===================================================== -->
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Home Entertainments",
+        "url": "{{ url_for('home', _external=True) }}",
+        "logo": "{{ url_for('static', filename='images/home.png', _external=True) }}",
+        "description": "Home Entertainments is a Kannada entertainment production house creating movies, web series, music and original entertainment content.",
+        "sameAs": [
+            "https://www.youtube.com/@HomeEntertainmentsFilms",
+            "https://www.youtube.com/@HomeEntertainmentsMusic",
+            "https://www.youtube.com/channel/UCTNuEQxXgsPR5WeyLk9GsGA",
+            "https://www.instagram.com/homeentertainments",
+            "https://x.com/Homeentertains"
+        ]
+    }
+    </script>
+
+
+    <!-- =====================================================
+         WEBSITE STRUCTURED DATA
+         ===================================================== -->
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Home Entertainments",
+        "alternateName": "Home Entertainment",
+        "url": "{{ url_for('home', _external=True) }}",
+        "description": "Official website of Home Entertainments, a Kannada entertainment production house."
+    }
+    </script>
 
 
     <!-- =====================================================
@@ -406,21 +565,12 @@ body {
 
 @media (max-width: 991px) {
 
-
-    /* -----------------------------------------------------
-       BODY
-       ----------------------------------------------------- */
-
     body {
 
         padding-top: 115px;
 
     }
 
-
-    /* -----------------------------------------------------
-       OUTER NAVBAR
-       ----------------------------------------------------- */
 
     .cinematic-navbar {
 
@@ -448,10 +598,6 @@ body {
 
     }
 
-
-    /* -----------------------------------------------------
-       NAVBAR CARD
-       ----------------------------------------------------- */
 
     .cinematic-navbar > .container {
 
@@ -481,10 +627,6 @@ body {
 
     }
 
-
-    /* -----------------------------------------------------
-       MOBILE LOGO
-       ----------------------------------------------------- */
 
     .navbar-brand {
 
@@ -520,10 +662,6 @@ body {
     }
 
 
-    /* -----------------------------------------------------
-       MOBILE RIGHT SIDE
-       ----------------------------------------------------- */
-
     .mobile-navbar-actions {
 
         margin-left: auto;
@@ -539,10 +677,6 @@ body {
     }
 
 
-    /* -----------------------------------------------------
-       HAMBURGER
-       ----------------------------------------------------- */
-
     .navbar-toggler {
 
         width: 48px;
@@ -554,25 +688,31 @@ body {
     }
 
 
-    /* -----------------------------------------------------
-       MOBILE MENU
-       ----------------------------------------------------- */
-
     .navbar-collapse {
+
         background: rgba(0, 0, 0, 0.97) !important;
+
         border-radius: 0 0 15px 15px;
+
         backdrop-filter: none !important;
+
         -webkit-backdrop-filter: none !important;
+
     }
 
     .navbar-collapse .nav-link {
+
         color: #ffffff !important;
+
     }
 
     .navbar-collapse .nav-link:hover,
     .navbar-collapse .nav-link:focus {
+
         color: #f5c56d !important;
+
         background: black !important;
+
     }
 
     .navbar-collapse {
@@ -590,10 +730,6 @@ body {
         padding:
             15px 20px;
 
-        /*
-         * Transparent menu instead of solid box
-         */
-
         background:
             rgb(23, 3, 3) !important;
 
@@ -609,10 +745,6 @@ body {
 
     }
 
-
-    /* -----------------------------------------------------
-       MOBILE NAV LINKS
-       ----------------------------------------------------- */
 
     .navbar-nav {
 
@@ -659,10 +791,6 @@ body {
     }
 
 
-    /* -----------------------------------------------------
-       SOCIAL ICONS IN MOBILE MENU
-       ----------------------------------------------------- */
-
     .social-icons {
 
         display: flex !important;
@@ -698,7 +826,6 @@ body {
    ========================================================= */
 
 @media (max-width: 480px) {
-
 
     body {
 
@@ -744,10 +871,6 @@ body {
     }
 
 
-    /*
-     * Logo size kept exactly as provided
-     */
-
     .navbar-brand img {
 
         height: 80px;
@@ -792,7 +915,6 @@ body {
    ========================================================= */
 
 @media (max-width: 360px) {
-
 
     body {
 
@@ -1071,7 +1193,6 @@ body {
 
 @media (max-width: 768px) {
 
-
     .main-footer {
 
         padding:
@@ -1181,31 +1302,25 @@ body {
     <div class="container">
 
 
-        <!-- =================================================
-             LOGO
-             ================================================= -->
+        <!-- LOGO -->
 
         <a
             class="navbar-brand"
             href="{{ url_for('home') }}"
+            aria-label="Home Entertainments Home"
         >
 
             <img
-                src="/static/images/home.png"
-                alt="HOME ENTERTAINMENT"
+                src="{{ url_for('static', filename='images/home.png') }}"
+                alt="Home Entertainments logo"
             >
 
         </a>
 
 
-        <!-- =================================================
-             MOBILE ACTIONS
-             ================================================= -->
+        <!-- MOBILE ACTIONS -->
 
         <div class="mobile-navbar-actions">
-
-
-            <!-- HAMBURGER -->
 
             <button
                 class="navbar-toggler"
@@ -1214,7 +1329,7 @@ body {
                 data-bs-target="#navbarNav"
                 aria-controls="navbarNav"
                 aria-expanded="false"
-                aria-label="Toggle navigation"
+                aria-label="Open navigation menu"
             >
 
                 <span class="navbar-toggler-icon"></span>
@@ -1224,17 +1339,12 @@ body {
         </div>
 
 
-        <!-- =================================================
-             NAVIGATION
-             ================================================= -->
+        <!-- NAVIGATION -->
 
         <div
             class="collapse navbar-collapse justify-content-between"
             id="navbarNav"
         >
-
-
-            <!-- NAV LINKS -->
 
             <ul
                 class="navbar-nav mx-auto text-center"
@@ -1262,6 +1372,7 @@ body {
                     </a>
 
                 </li>
+
 
                 <li class="nav-item">
 
@@ -1313,18 +1424,17 @@ body {
             </ul>
 
 
-            <!-- =================================================
-                 SOCIAL ICONS
-                 ================================================= -->
+            <!-- SOCIAL ICONS -->
 
             <div
                 class="d-lg-flex align-items-center gap-3 text-center social-icons"
             >
 
                 <a
-                    href="https://www.instagram.com/homeentertainments?igsh=eGtkd25zbXFxcWcw"
+                    href="https://www.instagram.com/homeentertainments"
                     class="text-white"
-                    aria-label="Instagram"
+                    aria-label="Home Entertainments on Instagram"
+                    rel="noopener"
                 >
 
                     <i class="bi bi-instagram"></i>
@@ -1335,7 +1445,8 @@ body {
                 <a
                     href="https://www.youtube.com/@HomeEntertainmentsMusic"
                     class="text-white"
-                    aria-label="YouTube"
+                    aria-label="Home Entertainments Music on YouTube"
+                    rel="noopener"
                 >
 
                     <i class="bi bi-youtube"></i>
@@ -1343,53 +1454,19 @@ body {
                 </a>
 
 
-                <a
-                    href="#"
-                    class="text-white"
-                    aria-label="Facebook"
-                >
-
-                    <i class="bi bi-facebook"></i>
-
-                </a>
+                <!-- Facebook removed until official URL is available -->
 
 
                 <a
                     href="https://x.com/Homeentertains"
                     class="text-white"
-                    aria-label="X"
+                    aria-label="Home Entertainments on X"
+                    rel="noopener"
                 >
 
                     <i class="bi bi-twitter-x"></i>
 
                 </a>
-
-
-                <!-- LOGIN / LOGOUT - CURRENTLY DISABLED -->
-
-                <!--
-
-                {% if session.get('user') %}
-
-                    <a
-                        class="nav-link text-white auth-link"
-                        href="{{ url_for('logout') }}"
-                    >
-                        Logout
-                    </a>
-
-                {% else %}
-
-                    <a
-                        class="nav-link text-white auth-link"
-                        href="{{ url_for('login') }}"
-                    >
-                        Login
-                    </a>
-
-                {% endif %}
-
-                -->
 
             </div>
 
@@ -1421,13 +1498,10 @@ body {
 
     <div class="container">
 
-
         <div class="row">
 
 
-            <!-- =================================================
-                 COMPANY
-                 ================================================= -->
+            <!-- COMPANY -->
 
             <div
                 class="col-md-3 col-12 footer-column"
@@ -1451,15 +1525,16 @@ body {
 
                     <li>
 
-                        <a href="#">
+                        <a href="{{ url_for('movies') }}">
                             Movies
                         </a>
 
                     </li>
 
-                     <li>
 
-                        <a href="#">
+                    <li>
+
+                        <a href="{{ url_for('music') }}">
                             Music
                         </a>
 
@@ -1497,9 +1572,7 @@ body {
             </div>
 
 
-            <!-- =================================================
-                 ENTERTAINMENT
-                 ================================================= -->
+            <!-- ENTERTAINMENT -->
 
             <div
                 class="col-md-4 col-12 footer-column"
@@ -1516,6 +1589,7 @@ body {
 
                         <a
                             href="https://www.youtube.com/@HomeEntertainmentsFilms"
+                            rel="noopener"
                         >
                             Home Entertainment Film
                         </a>
@@ -1527,6 +1601,7 @@ body {
 
                         <a
                             href="https://www.youtube.com/@HomeEntertainmentsMusic"
+                            rel="noopener"
                         >
                             Home Entertainment Music
                         </a>
@@ -1538,6 +1613,7 @@ body {
 
                         <a
                             href="https://www.youtube.com/channel/UCTNuEQxXgsPR5WeyLk9GsGA"
+                            rel="noopener"
                         >
                             Home Entertainment Media
                         </a>
@@ -1549,9 +1625,7 @@ body {
             </div>
 
 
-            <!-- =================================================
-                 CONNECT WITH US
-                 ================================================= -->
+            <!-- CONNECT WITH US -->
 
             <div
                 class="col-md-5 col-12 footer-column"
@@ -1579,23 +1653,11 @@ body {
                     <a
                         href="https://www.youtube.com/@HomeEntertainmentsMusic"
                         class="social-icon"
-                        aria-label="YouTube"
+                        aria-label="Home Entertainments Music on YouTube"
+                        rel="noopener"
                     >
 
                         <i class="fab fa-youtube"></i>
-
-                    </a>
-
-
-                    <!-- FACEBOOK -->
-
-                    <a
-                        href="#"
-                        class="social-icon"
-                        aria-label="Facebook"
-                    >
-
-                        <i class="fab fa-facebook-f"></i>
 
                     </a>
 
@@ -1605,7 +1667,8 @@ body {
                     <a
                         href="https://x.com/Homeentertains"
                         class="social-icon"
-                        aria-label="X"
+                        aria-label="Home Entertainments on X"
+                        rel="noopener"
                     >
 
                         <i class="fab fa-x-twitter"></i>
@@ -1616,9 +1679,10 @@ body {
                     <!-- INSTAGRAM -->
 
                     <a
-                        href="https://www.instagram.com/homeentertainments?igsh=eGtkd25zbXFxcWcw"
+                        href="https://www.instagram.com/homeentertainments"
                         class="social-icon"
-                        aria-label="Instagram"
+                        aria-label="Home Entertainments on Instagram"
+                        rel="noopener"
                     >
 
                         <i class="fab fa-instagram"></i>
@@ -1626,17 +1690,7 @@ body {
                     </a>
 
 
-                    <!-- LINKEDIN -->
-
-                    <a
-                        href="#"
-                        class="social-icon"
-                        aria-label="LinkedIn"
-                    >
-
-                        <i class="fab fa-linkedin-in"></i>
-
-                    </a>
+                    <!-- LINKEDIN intentionally omitted until official URL is available -->
 
                 </div>
 
@@ -1645,9 +1699,7 @@ body {
         </div>
 
 
-        <!-- =================================================
-             COPYRIGHT
-             ================================================= -->
+        <!-- COPYRIGHT -->
 
         <div class="row">
 
