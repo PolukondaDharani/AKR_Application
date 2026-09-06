@@ -2,6 +2,7 @@
 {% block content %}
 
 <style>
+
 /* =========================================================
    HOME ENTERTAINMENTS — ABOUT PAGE
    Premium cinematic / glassmorphism design
@@ -28,16 +29,32 @@
     background: #030303;
 }
 
-/* Cinematic glow */
+/* =========================================================
+   CINEMATIC BACKGROUND
+   ========================================================= */
+
 .about-section::before {
     content: "";
     position: absolute;
     inset: 0;
     pointer-events: none;
+
     background:
-        radial-gradient(circle at 50% 8%, rgba(0, 0, 0, 0), transparent 28%),
-        radial-gradient(circle at 10% 45%, rgba(0, 0, 0, 0), transparent 30%),
-        radial-gradient(circle at 90% 75%, rgba(0, 0, 0, 0), transparent 28%);
+        radial-gradient(
+            circle at 50% 8%,
+            rgba(245,197,109,.025),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 10% 45%,
+            rgba(245,197,109,.015),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 75%,
+            rgba(245,197,109,.015),
+            transparent 28%
+        );
 }
 
 .about-section::after {
@@ -48,13 +65,20 @@
     bottom: 0;
     height: 220px;
     pointer-events: none;
-    background: linear-gradient(to bottom, transparent, #030303);
+
+    background:
+        linear-gradient(
+            to bottom,
+            transparent,
+            #030303
+        );
 }
 
 .content-wrapper {
     position: relative;
     z-index: 2;
 }
+
 
 /* =========================================================
    HERO / INTRO
@@ -70,10 +94,14 @@
     display: inline-flex;
     align-items: center;
     gap: 10px;
+
     margin-bottom: 18px;
+
     color: var(--gold);
+
     font-size: .68rem;
     font-weight: 700;
+
     letter-spacing: 4px;
     text-transform: uppercase;
 }
@@ -81,13 +109,25 @@
 .eyebrow::before,
 .eyebrow::after {
     content: "";
+
     width: 30px;
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold));
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--gold)
+        );
 }
 
 .eyebrow::after {
-    background: linear-gradient(90deg, var(--gold), transparent);
+    background:
+        linear-gradient(
+            90deg,
+            var(--gold),
+            transparent
+        );
 }
 
 .hero-title {
@@ -95,7 +135,7 @@
 
     font-size: clamp(3.2rem, 7vw, 6.8rem);
 
-    line-height: 0.95;
+    line-height: .95;
 
     font-weight: 900;
 
@@ -103,67 +143,101 @@
 
     text-transform: uppercase;
 
-    background: linear-gradient(
-        to bottom,
-        #fffbd4 0%,
-        #f9d783 35%,
-        #f5c56d 62%,
-        #9a7227 100%
-    );
+    background:
+        linear-gradient(
+            to bottom,
+            #fffbd4 0%,
+            #f9d783 35%,
+            #f5c56d 62%,
+            #9a7227 100%
+        );
 
     -webkit-background-clip: text;
     background-clip: text;
 
     -webkit-text-fill-color: transparent;
 
-    filter: drop-shadow(
-        0 0 20px
-        rgba(245,197,109,0.18)
-    );
+    filter:
+        drop-shadow(
+            0 0 20px
+            rgba(245,197,109,.18)
+        );
 }
 
 .hero-subtitle {
     max-width: 680px;
+
     margin: 22px auto 0;
+
     color: rgba(255,255,255,.68);
+
     font-size: 1rem;
+
     line-height: 1.8;
 }
 
+
 /* =========================================================
-   ABOUT COPY CARD
+   ABOUT DESCRIPTION
    ========================================================= */
 
 .about-description {
     position: relative;
+
     max-width: 800px;
+
     margin: 0 auto;
+
     padding: 36px 42px;
-    border: 1px solid var(--line);
+
+    border:
+        1px solid
+        var(--line);
+
     border-radius: 24px;
-    background: linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.025));
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.075),
+            rgba(255,255,255,.025)
+        );
+
     box-shadow:
         0 25px 80px rgba(0,0,0,.38),
         inset 0 1px 0 rgba(255,255,255,.08);
+
     backdrop-filter: blur(14px);
 }
 
 .about-description::before {
     content: "“";
+
     position: absolute;
+
     top: -25px;
     left: 28px;
-    color: rgba(245,197,109,.18);
+
+    color:
+        rgba(245,197,109,.18);
+
     font-family: Georgia, serif;
+
     font-size: 7rem;
+
     line-height: 1;
 }
 
 .about-description p {
     position: relative;
+
     margin: 0 0 17px;
-    color: rgba(255,255,255,.74);
+
+    color:
+        rgba(255,255,255,.74);
+
     font-size: .96rem;
+
     line-height: 1.9;
 }
 
@@ -177,11 +251,17 @@
 
 .about-ending {
     padding-top: 12px;
-    color: var(--gold) !important;
+
+    color:
+        var(--gold) !important;
+
     font-size: 1.05rem !important;
+
     line-height: 1.65 !important;
+
     letter-spacing: .5px;
 }
+
 
 /* =========================================================
    FOUNDER
@@ -189,36 +269,61 @@
 
 .founder-section {
     margin: 42px auto 0;
+
     text-align: center;
 }
 
 .founder-line {
     width: 55px;
     height: 1px;
+
     margin: 0 auto 13px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--gold),
+            transparent
+        );
 }
 
 .founder-label {
     margin: 0 0 12px;
+
     color: #777;
+
     font-size: .62rem;
+
     font-weight: 700;
+
     letter-spacing: 3px;
+
     text-transform: uppercase;
 }
 
 .founder-logo {
     width: 200px;
     height: 200px;
+
     object-fit: contain;
-    filter: drop-shadow(0 8px 20px rgba(245,197,109,.14));
-    transition: transform .35s ease;
+
+    filter:
+        drop-shadow(
+            0 8px 20px
+            rgba(245,197,109,.14)
+        );
+
+    transition:
+        transform .35s ease;
 }
 
 .founder-logo:hover {
-    transform: translateY(-5px) scale(1.04);
+    transform:
+        translateY(-5px)
+        scale(1.04);
 }
+
 
 /* =========================================================
    SECTION TITLES
@@ -230,37 +335,57 @@
 
 .section-heading {
     text-align: center;
+
     margin-bottom: 27px;
 }
 
 .section-kicker {
     margin-bottom: 8px;
+
     color: var(--gold);
+
     font-size: .58rem;
+
     font-weight: 700;
+
     letter-spacing: 3px;
+
     text-transform: uppercase;
 }
 
 .section-title {
     position: relative;
+
     display: inline-block;
+
     margin: 0;
+
     color: #fff;
+
     font-size: 1.65rem;
+
     font-weight: 750;
+
     letter-spacing: 1px;
 }
 
 .section-title::after {
     content: "";
+
     display: block;
+
     width: 42px;
     height: 2px;
+
     margin: 11px auto 0;
+
     background: var(--gold);
-    box-shadow: 0 0 12px rgba(245,197,109,.4);
+
+    box-shadow:
+        0 0 12px
+        rgba(245,197,109,.4);
 }
+
 
 /* =========================================================
    TEAM
@@ -272,139 +397,549 @@
 
 .team-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(205px, 1fr));
-    gap: 18px;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(220px, 1fr)
+        );
+
+    gap: 20px;
+
     max-width: 1120px;
+
     margin: 0 auto;
 }
 
+
+/* =========================================================
+   TEAM CARD
+   ========================================================= */
+
 .team-card {
-    height: 300px;
-    perspective: 1200px;
+    height: 330px;
+
+    perspective: 1400px;
+
+    cursor: pointer;
+
+    outline: none;
 }
 
 .card-inner {
     position: relative;
+
     width: 100%;
     height: 100%;
-    transition: transform .7s cubic-bezier(.2,.75,.2,1);
+
     transform-style: preserve-3d;
+
+    transition:
+        transform
+        .75s
+        cubic-bezier(.2,.75,.2,1);
+
+    border-radius: 22px;
 }
 
-.team-card:hover .card-inner {
+
+/* =========================================================
+   FLIPPED STATE
+   ========================================================= */
+
+.team-card.flipped .card-inner {
     transform: rotateY(180deg);
 }
+
+
+/* =========================================================
+   FRONT + BACK
+   ========================================================= */
 
 .card-front,
 .card-back {
     position: absolute;
+
     inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 22px;
+
+    width: 100%;
+    height: 100%;
+
     overflow: hidden;
-    border-radius: 20px;
-    border: 1px solid rgba(245,197,109,.18);
-    background:
-        radial-gradient(circle at 50% 0%, rgba(245,197,109,.08), transparent 42%),
-        linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.025));
-    box-shadow:
-        0 18px 50px rgba(0,0,0,.28),
-        inset 0 1px 0 rgba(255,255,255,.07);
-    backdrop-filter: blur(12px);
+
+    border-radius: 22px;
+
     backface-visibility: hidden;
+
+    -webkit-backface-visibility: hidden;
+
+    border:
+        1px solid
+        rgba(245,197,109,.22);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.45),
+        inset 0 1px 0 rgba(255,255,255,.08);
 }
+
+
+/* =========================================================
+   FRONT
+   ========================================================= */
+
+.card-front {
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: flex-start;
+
+    padding: 0;
+
+    background: #080808;
+
+    transform: rotateY(0deg);
+}
+
+
+/* =========================================================
+   FULL IMAGE
+   ========================================================= */
+
+.card-front img {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    margin: 0;
+
+    border: none;
+
+    border-radius: 0;
+
+    object-fit: cover;
+
+    transition:
+        transform .6s ease,
+        filter .6s ease;
+}
+
+
+/* =========================================================
+   CINEMATIC IMAGE OVERLAY
+   ========================================================= */
+
+.card-front::before {
+    content: "";
+
+    position: absolute;
+
+    z-index: 2;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(0,0,0,.95) 0%,
+            rgba(0,0,0,.65) 22%,
+            rgba(0,0,0,.18) 55%,
+            rgba(0,0,0,.02) 78%
+        );
+}
+
+
+/* =========================================================
+   GOLD INNER FRAME
+   ========================================================= */
 
 .card-front::after {
     content: "";
+
     position: absolute;
+
+    z-index: 4;
+
     inset: 9px;
-    border: 1px solid rgba(255,255,255,.045);
-    border-radius: 15px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    border-radius: 16px;
+
     pointer-events: none;
 }
 
-.card-front img {
+
+/* =========================================================
+   FRONT INFORMATION
+   ========================================================= */
+
+.team-front-info {
     position: relative;
-    z-index: 1;
-    width: 102px;
-    height: 102px;
-    margin-bottom: 17px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--gold);
-    box-shadow:
-        0 0 0 7px rgba(245,197,109,.07),
-        0 12px 35px rgba(0,0,0,.45);
+
+    z-index: 5;
+
+    width: 100%;
+
+    padding:
+        25px
+        22px
+        22px;
+
+    text-align: left;
 }
 
-.card-front h5 {
-    position: relative;
-    z-index: 1;
-    margin: 0 0 7px;
+.team-front-info h5 {
+    margin: 0 0 6px;
+
     color: #fff;
-    font-size: 1rem;
-    font-weight: 700;
+
+    font-size: 1.15rem;
+
+    font-weight: 800;
+
+    letter-spacing: .4px;
+
+    text-shadow:
+        0 2px 10px
+        rgba(0,0,0,.7);
 }
 
-.card-front p {
-    position: relative;
-    z-index: 1;
+.team-front-info p {
     margin: 0;
+
     color: var(--gold);
-    font-size: .62rem;
-    font-weight: 700;
-    letter-spacing: 1.5px;
+
+    font-size: .64rem;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
     text-transform: uppercase;
 }
 
-.card-back {
-    transform: rotateY(180deg);
-    text-align: center;
+
+/* =========================================================
+   FLIP ICON
+   ========================================================= */
+
+.flip-hint {
+    position: absolute;
+
+    right: 20px;
+    bottom: 21px;
+
+    z-index: 6;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 30px;
+    height: 30px;
+
+    border:
+        1px solid
+        rgba(245,197,109,.35);
+
+    border-radius: 50%;
+
     background:
-        radial-gradient(circle at 50% 0%, rgba(255,255,255,.35), transparent 45%),
-        linear-gradient(145deg, #f8d58f, #c99a45);
+        rgba(0,0,0,.45);
+
+    color: var(--gold);
+
+    font-size: .7rem;
+
+    backdrop-filter: blur(8px);
+}
+
+
+/* =========================================================
+   FRONT HOVER IMAGE EFFECT
+   ========================================================= */
+
+.team-card:hover .card-front img {
+    transform: scale(1.045);
+}
+
+
+/* =========================================================
+   BACK
+   ========================================================= */
+
+.card-back {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 30px 25px;
+
+    text-align: center;
+
     color: #080808;
-    border-color: rgba(255,255,255,.25);
+
+    transform: rotateY(180deg);
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(255,255,255,.5),
+            transparent 42%
+        ),
+        linear-gradient(
+            145deg,
+            #fff0c5,
+            #f5c56d 50%,
+            #b7832f
+        );
+
+    border-color:
+        rgba(255,255,255,.3);
 }
 
-.card-back strong {
-    font-size: 1.15rem;
+
+/* =========================================================
+   BACK DECORATION
+   ========================================================= */
+
+.card-back::before {
+    content: "";
+
+    position: absolute;
+
+    width: 170px;
+    height: 170px;
+
+    top: -85px;
+    right: -65px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.15);
 }
 
-.card-back p {
-    margin: 7px 0;
+
+/* =========================================================
+   BACK NAME
+   ========================================================= */
+
+.card-back h4 {
+    position: relative;
+
+    z-index: 2;
+
+    margin: 0 0 4px;
+
+    font-size: 1.3rem;
+
+    font-weight: 900;
 }
 
-.card-back p:last-child {
+
+/* =========================================================
+   BACK ROLE
+   ========================================================= */
+
+.card-back .back-role {
+    position: relative;
+
+    z-index: 2;
+
+    margin-bottom: 18px;
+
+    font-size: .65rem;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+
+    opacity: .7;
+}
+
+
+/* =========================================================
+   BIO
+   ========================================================= */
+
+.card-back .back-bio {
+    position: relative;
+
+    z-index: 2;
+
+    margin: 0;
+
+    max-width: 280px;
+
     font-size: .78rem;
-    line-height: 1.6;
+
+    line-height: 1.7;
+
     opacity: .78;
 }
 
-/* Mobile arrows */
+
+/* =========================================================
+   SOCIAL LINKS
+   ========================================================= */
+
+.team-social {
+    position: relative;
+
+    z-index: 5;
+
+    display: flex;
+
+    gap: 9px;
+
+    margin-top: 20px;
+}
+
+.team-social a {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+
+    border:
+        1px solid
+        rgba(0,0,0,.2);
+
+    border-radius: 50%;
+
+    color: #080808;
+
+    text-decoration: none;
+
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        color .25s ease;
+}
+
+.team-social a:hover {
+    transform: translateY(-3px);
+
+    background: #080808;
+
+    color: var(--gold);
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.flip-back {
+    position: absolute;
+
+    top: 17px;
+    right: 17px;
+
+    z-index: 10;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 32px;
+    height: 32px;
+
+    border:
+        1px solid
+        rgba(0,0,0,.2);
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.18);
+
+    color: #080808;
+
+    cursor: pointer;
+
+    transition:
+        transform .25s ease,
+        background .25s ease;
+}
+
+.flip-back:hover {
+    transform: rotate(-90deg);
+
+    background:
+        rgba(255,255,255,.35);
+}
+
+
+/* =========================================================
+   MOBILE ARROWS
+   ========================================================= */
+
 .nav-arrow {
     position: absolute;
+
     top: 50%;
-    z-index: 5;
+
+    z-index: 20;
+
     width: 38px;
     height: 38px;
+
     display: none;
+
     align-items: center;
+
     justify-content: center;
-    transform: translateY(-50%);
-    border: 1px solid rgba(245,197,109,.35);
+
+    transform:
+        translateY(-50%);
+
+    border:
+        1px solid
+        rgba(245,197,109,.35);
+
     border-radius: 50%;
-    background: rgba(8,8,8,.78);
+
+    background:
+        rgba(8,8,8,.78);
+
     color: var(--gold);
-    box-shadow: 0 8px 25px rgba(0,0,0,.4);
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.4);
+
     cursor: pointer;
 }
 
-.left-arrow { left: -4px; }
-.right-arrow { right: -4px; }
+.left-arrow {
+    left: -4px;
+}
+
+.right-arrow {
+    right: -4px;
+}
+
 
 /* =========================================================
    CHANNELS / BTS / PROJECTS
@@ -412,123 +947,246 @@
 
 .feature-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
     gap: 15px;
 }
 
 .two-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    grid-template-columns:
+        repeat(2, minmax(0,1fr));
+
     gap: 15px;
+
     max-width: 760px;
+
     margin: 0 auto;
+    
+    justify-content: center;
 }
+
+/* Center single items inside two-grid (e.g., Projects) */
+.two-grid > :only-child {
+    grid-column: 1 / -1;
+    max-width: 370px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.glass-card-link {
+    text-decoration: none;
+    display: block;
+    width: 100%;
+}
+
+/* =========================================================
+   GLASS CARDS
+   ========================================================= */
 
 .glass-card,
 .bts-box {
     position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
     min-height: 125px;
+
     padding: 25px 15px;
+
     overflow: hidden;
-    border: 1px solid rgba(255,255,255,.09);
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
     border-radius: 18px;
+
     background:
-        linear-gradient(145deg, rgba(255,255,255,.065), rgba(255,255,255,.018));
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.065),
+            rgba(255,255,255,.018)
+        );
+
     box-shadow:
         0 16px 40px rgba(0,0,0,.22),
-        inset 0 1px 0 rgba(255,255,255,.055);
+        inset 0 1px 0
+        rgba(255,255,255,.055);
+
     text-align: center;
+
     backdrop-filter: blur(12px);
-    transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+
+    transition:
+        transform .35s ease,
+        border-color .35s ease,
+        box-shadow .35s ease;
 }
 
 .glass-card::before,
 .bts-box::before {
     content: "";
+
     position: absolute;
+
     width: 100px;
     height: 100px;
+
     top: -55px;
     right: -35px;
+
     border-radius: 50%;
-    background: rgba(245,197,109,.08);
+
+    background:
+        rgba(245,197,109,.08);
+
     filter: blur(2px);
 }
 
 .glass-card:hover,
 .bts-box:hover {
-    transform: translateY(-6px);
-    border-color: rgba(245,197,109,.35);
-    box-shadow: 0 22px 55px rgba(0,0,0,.35);
+    transform:
+        translateY(-6px);
+
+    border-color:
+        rgba(245,197,109,.35);
+
+    box-shadow:
+        0 22px 55px
+        rgba(0,0,0,.35);
 }
 
 .glass-card i,
 .bts-box i {
     position: relative;
+
     z-index: 1;
+
     margin-bottom: 12px;
-    color: var(--gold) !important;
+
+    color:
+        var(--gold) !important;
+
     font-size: 1.55rem;
 }
 
 .glass-card h4,
-.bts-box h5 {
+.bts-box h5,
+.bts-box .coming-soon {
     position: relative;
+
     z-index: 1;
+
     margin: 0;
+
     color: #fff;
+
     font-size: .74rem;
+
     font-weight: 700;
+
     letter-spacing: 1.7px;
 }
 
+
+/* =========================================================
+   PROJECT IMAGE
+   ========================================================= */
+
 .project-img {
     height: 82px;
+
     width: 100%;
+
     margin-bottom: 14px;
-    border: 1px solid rgba(245,197,109,.12);
+
+    border:
+        1px solid
+        rgba(245,197,109,.12);
+
     border-radius: 12px;
+
     background:
-        linear-gradient(135deg, rgba(245,197,109,.09), rgba(255,255,255,.025));
-    color: rgba(255,255,255,.72);
+        linear-gradient(
+            135deg,
+            rgba(245,197,109,.09),
+            rgba(255,255,255,.025)
+        );
+
+    color:
+        rgba(255,255,255,.72);
+
     font-size: .68rem;
+
     font-weight: 700;
+
     letter-spacing: 1px;
+
     text-transform: uppercase;
 }
 
+
 /* =========================================================
-   REVEAL
+   REVEAL ANIMATION
    ========================================================= */
 
 .reveal {
     opacity: 0;
-    transform: translateY(28px);
-    transition: opacity .8s ease, transform .8s ease;
+
+    transform:
+        translateY(28px);
+
+    transition:
+        opacity .8s ease,
+        transform .8s ease;
 }
 
 .reveal.active {
     opacity: 1;
-    transform: translateY(0);
+
+    transform:
+        translateY(0);
 }
 
+
 /* =========================================================
-   RESPONSIVE
+   RESPONSIVE — TABLET / MOBILE
    ========================================================= */
 
 @media (max-width: 991px) {
+
     .about-section {
         margin-top: -115px !important;
+
         padding-top: 105px !important;
     }
 
+    /* Horizontal team slider */
+
     .team-grid {
         display: flex;
+
         overflow-x: auto;
+
         gap: 15px;
-        padding: 10px 18px 22px;
-        scroll-snap-type: x mandatory;
+
+        padding:
+            10px
+            18px
+            22px;
+
+        scroll-snap-type:
+            x mandatory;
+
         scrollbar-width: none;
+
         scroll-behavior: smooth;
     }
 
@@ -537,8 +1195,12 @@
     }
 
     .team-card {
-        min-width: 215px;
-        flex: 0 0 215px;
+        min-width: 235px;
+
+        flex: 0 0 235px;
+
+        height: 330px;
+
         scroll-snap-align: center;
     }
 
@@ -547,7 +1209,13 @@
     }
 }
 
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
 @media (max-width: 768px) {
+
     .about-section {
         padding-bottom: 70px !important;
     }
@@ -557,22 +1225,31 @@
     }
 
     .hero-title {
-        font-size: clamp(2.25rem, 13vw, 4rem);
+        font-size:
+            clamp(
+                2.25rem,
+                13vw,
+                4rem
+            );
+
         letter-spacing: -1.5px;
     }
 
     .hero-subtitle {
         padding: 0 15px;
+
         font-size: .86rem;
     }
 
     .about-description {
         padding: 30px 22px;
+
         border-radius: 20px;
     }
 
     .about-description p {
         font-size: .87rem;
+
         line-height: 1.8;
     }
 
@@ -586,32 +1263,39 @@
 
     .feature-grid {
         gap: 8px;
+
         padding: 0 5px;
     }
 
     .glass-card {
         min-height: 92px;
+
         padding: 17px 5px;
+
         border-radius: 14px;
     }
 
     .glass-card i {
         font-size: 1.15rem;
+
         margin-bottom: 8px;
     }
 
     .glass-card h4 {
         font-size: .58rem;
+
         letter-spacing: 1px;
     }
 
     .two-grid {
         gap: 10px;
+
         padding: 0 5px;
     }
 
     .bts-box {
         min-height: 105px;
+
         padding: 18px 8px;
     }
 
@@ -619,19 +1303,28 @@
         font-size: 1.25rem;
     }
 
-    .bts-box h5 {
+    .bts-box h5,
+    .bts-box .coming-soon {
         font-size: .62rem;
     }
 }
 
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
 @media (max-width: 480px) {
+
     .about-section {
         margin-top: -110px !important;
+
         padding-top: 90px !important;
     }
 
     .eyebrow {
         font-size: .55rem;
+
         letter-spacing: 2.5px;
     }
 
@@ -646,73 +1339,145 @@
 
     .about-description::before {
         font-size: 5rem;
+
         top: -16px;
     }
 
     .team-card {
-        min-width: 190px;
-        flex-basis: 190px;
-        height: 265px;
+        min-width: 205px;
+
+        flex-basis: 205px;
+
+        height: 290px;
     }
 
-    .card-front img {
-        width: 82px;
-        height: 82px;
+    .team-front-info {
+        padding:
+            21px
+            18px;
     }
 
-    .left-arrow { left: -2px; }
-    .right-arrow { right: -2px; }
+    .team-front-info h5 {
+        font-size: 1rem;
+    }
+
+    .team-front-info p {
+        font-size: .58rem;
+    }
+
+    .card-back {
+        padding: 25px 18px;
+    }
+
+    .card-back h4 {
+        font-size: 1.1rem;
+    }
+
+    .card-back .back-bio {
+        font-size: .72rem;
+    }
+
+    .left-arrow {
+        left: -2px;
+    }
+
+    .right-arrow {
+        right: -2px;
+    }
 }
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .card-inner,
+    .card-front img,
+    .reveal,
+    .glass-card,
+    .bts-box {
+        transition: none !important;
+    }
+}
+
 </style>
 
 
 <section class="about-section">
+
     <div class="container content-wrapper">
+
 
         <!-- =================================================
              HERO
              ================================================= -->
-        <div class="about-hero reveal slide-up">
-            <div class="eyebrow">Home Entertainments</div>
 
-            <h1 class="hero-title">Stories That<br>Stay With You</h1>
+        <div class="about-hero reveal slide-up">
+
+            <div class="eyebrow">
+                Home Entertainments
+            </div>
+
+            <h1 class="hero-title">
+                Stories That<br>
+                Stay With You
+            </h1>
 
             <p class="hero-subtitle">
-                A creative home where ideas become stories, stories become cinema,
-                and every frame is made to be felt.
+                A creative home where ideas become stories,
+                stories become cinema, and every frame is
+                made to be felt.
             </p>
+
         </div>
 
 
         <!-- =================================================
              INTRODUCTION
              ================================================= -->
+
         <div class="row align-items-center justify-content-center text-center">
+
             <div class="col-lg-9">
 
                 <div class="about-description reveal slide-up">
 
                     <p>
-                        At <strong>Home Entertainments</strong>, we see a production house
-                        as more than a place to create films. It is a home for ideas,
-                        a space where people come together, and a universe where
-                        imagination finds its voice.
+                        At <strong>Home Entertainments</strong>,
+                        we see a production house as more than
+                        a place to create films. It is a home for
+                        ideas, a space where people come together,
+                        and a universe where imagination finds
+                        its voice.
                     </p>
 
                     <p>
-                        We believe every great story starts with a feeling. From that
-                        feeling comes an idea, from an idea comes a story, and from
-                        a story comes cinema.
+                        We believe every great story starts with
+                        a feeling. From that feeling comes an idea,
+                        from an idea comes a story, and from a
+                        story comes cinema.
                     </p>
 
                     <p>
-                        We create with honesty, collaborate with passion, and strive
-                        to turn every story into an experience worth remembering.
+                        We create with honesty, collaborate with
+                        passion, and strive to turn every story
+                        into an experience worth remembering.
                     </p>
 
                     <p class="about-ending">
-                        <strong>Because cinema isn't just watched.</strong><br>
-                        <strong>It is felt.</strong>
+
+                        <strong>
+                            Because cinema isn't just watched.
+                        </strong>
+
+                        <br>
+
+                        <strong>
+                            It is felt.
+                        </strong>
+
                     </p>
 
                 </div>
@@ -721,178 +1486,488 @@
                 <!-- =================================================
                      FOUNDER
                      ================================================= -->
-                <div class="founder-section reveal slide-up" style="transition-delay:.15s;">
+
+                <div
+                    class="founder-section reveal slide-up"
+                    style="transition-delay:.15s;"
+                >
+
                     <div class="founder-line"></div>
 
-                    <p class="founder-label">Created By</p>
+                    <p class="founder-label">
+                        Created By
+                    </p>
 
                     <img
                         src="/static/images/akr_logo.png"
                         class="founder-logo"
                         alt="Founder"
                     >
+
                 </div>
 
             </div>
+
         </div>
 
 
         <!-- =================================================
              TEAM
              ================================================= -->
+
         <div class="section-block">
+
             <div class="section-heading reveal slide-up">
-                <div class="section-kicker">The people behind the frame</div>
-                <h2 class="section-title">Meet Our Team</h2>
+
+                <div class="section-kicker">
+                    The people behind the frame
+                </div>
+
+                <h2 class="section-title">
+                    Meet Our Team
+                </h2>
+
             </div>
 
+
             <div class="team-shell">
+
+
+                <!-- =================================================
+                     MOBILE PREVIOUS BUTTON
+                     ================================================= -->
 
                 <button
                     class="nav-arrow left-arrow"
                     onclick="slideTeam('left')"
-                    aria-label="Previous team members">
+                    aria-label="Previous team members"
+                    type="button"
+                >
+
                     <i class="fas fa-chevron-left"></i>
+
                 </button>
+
+
+                <!-- =================================================
+                     MOBILE NEXT BUTTON
+                     ================================================= -->
 
                 <button
                     class="nav-arrow right-arrow"
                     onclick="slideTeam('right')"
-                    aria-label="Next team members">
+                    aria-label="Next team members"
+                    type="button"
+                >
+
                     <i class="fas fa-chevron-right"></i>
+
                 </button>
 
-                <div class="team-grid" id="teamGrid">
+
+                <!-- =================================================
+                     TEAM GRID
+                     ================================================= -->
+
+                <div
+                    class="team-grid"
+                    id="teamGrid"
+                >
+
                     {% for member in team_members %}
-                    <div class="team-card reveal slide-up">
+
+                    <div
+                        class="team-card reveal slide-up"
+                        onclick="flipTeamCard(this)"
+                        tabindex="0"
+                        role="button"
+                        aria-label="View details of {{ member.name }}"
+                    >
+
                         <div class="card-inner">
 
+
+                            <!-- =====================================
+                                 FRONT — FULL IMAGE
+                                 ===================================== -->
+
                             <div class="card-front">
+
                                 <img
                                     src="{{ url_for('static', filename='images/' + member.image) }}"
                                     alt="{{ member.name }}"
+                                    loading="lazy"
                                 >
 
-                                <h5>{{ member.name.split(' ')[0] }}</h5>
 
-                                <p>{{ member.role }}</p>
+                                <div class="team-front-info">
+
+                                    <h5>
+                                        {{ member.name }}
+                                    </h5>
+
+                                    <p>
+                                        {{ member.role }}
+                                    </p>
+
+                                </div>
+
+
+                                <!-- Flip icon -->
+
+                                <div class="flip-hint">
+
+                                    <i class="fas fa-expand"></i>
+
+                                </div>
+
                             </div>
 
+
+                            <!-- =====================================
+                                 BACK — DETAILS
+                                 ===================================== -->
+
                             <div class="card-back">
-                                <p>
-                                    <strong>{{ member.name }}</strong>
+
+
+                                <!-- Back button -->
+
+                                <button
+                                    type="button"
+                                    class="flip-back"
+                                    onclick="
+                                        event.stopPropagation();
+                                        flipTeamCard(
+                                            this.closest('.team-card')
+                                        );
+                                    "
+                                    aria-label="Back to photo"
+                                >
+
+                                    <i class="fas fa-rotate-left"></i>
+
+                                </button>
+
+
+                                <!-- Name -->
+
+                                <h4>
+                                    {{ member.name }}
+                                </h4>
+
+
+                                <!-- Role -->
+
+                                <div class="back-role">
+                                    {{ member.role }}
+                                </div>
+
+
+                                <!-- Bio -->
+
+                                {% if member.bio %}
+
+                                <p class="back-bio">
+                                    {{ member.bio }}
                                 </p>
 
-                                <p>
-                                    {{ member.bio[:100] }}...
+                                {% else %}
+
+                                <p class="back-bio">
+                                    A passionate member of the
+                                    Home Entertainments creative
+                                    team, contributing talent and
+                                    dedication to every story we create.
                                 </p>
+
+                                {% endif %}
+
+
+                                <!-- =================================
+                                     SOCIAL LINKS
+                                     ================================= -->
+
+                                {% if member.social %}
+
+                                <div class="team-social">
+
+
+                                    <!-- Instagram -->
+
+                                    {% if member.social.instagram
+                                          and member.social.instagram != "#" %}
+
+                                    <a
+                                        href="{{ member.social.instagram }}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        onclick="event.stopPropagation();"
+                                        aria-label="Instagram"
+                                    >
+
+                                        <i class="fab fa-instagram"></i>
+
+                                    </a>
+
+                                    {% endif %}
+
+
+                                    <!-- Twitter -->
+
+                                    {% if member.social.twitter
+                                          and member.social.twitter != "#" %}
+
+                                    <a
+                                        href="{{ member.social.twitter }}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        onclick="event.stopPropagation();"
+                                        aria-label="Twitter"
+                                    >
+
+                                        <i class="fab fa-twitter"></i>
+
+                                    </a>
+
+                                    {% endif %}
+
+
+                                    <!-- LinkedIn -->
+
+                                    {% if member.social.linkedin
+                                          and member.social.linkedin != "#" %}
+
+                                    <a
+                                        href="{{ member.social.linkedin }}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        onclick="event.stopPropagation();"
+                                        aria-label="LinkedIn"
+                                    >
+
+                                        <i class="fab fa-linkedin-in"></i>
+
+                                    </a>
+
+                                    {% endif %}
+
+
+                                </div>
+
+                                {% endif %}
+
                             </div>
 
                         </div>
+
                     </div>
+
                     {% endfor %}
+
                 </div>
+
             </div>
+
         </div>
 
 
         <!-- =================================================
              CHANNELS
              ================================================= -->
+
         <div class="section-block reveal">
+
             <div class="section-heading">
-                <div class="section-kicker">Where our stories live</div>
-                <h2 class="section-title">Our Channels</h2>
+
+                <div class="section-kicker">
+                    Where our stories live
+                </div>
+
+                <h2 class="section-title">
+                    Our Channels
+                </h2>
+
             </div>
 
-            <div class="feature-grid">
-                <div class="glass-card">
-                    <i class="fab fa-youtube"></i>
-                    <h4>FILM</h4>
-                </div>
 
-                <div class="glass-card">
-                    <i class="fas fa-music"></i>
-                    <h4>MUSIC</h4>
-                </div>
+            <div class="two-grid">
 
-                <div class="glass-card">
-                    <i class="fas fa-broadcast-tower"></i>
-                    <h4>MEDIA</h4>
-                </div>
+                <a href="https://www.youtube.com/channel/UCGDM4hcT7Gq0B4mjT8pPE-g"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="glass-card-link">
+
+                    <div class="glass-card">
+
+                        <i class="fas fa-broadcast-tower"></i>
+
+                        <h4>
+                            FILMS
+                        </h4>
+
+                    </div>
+
+                </a>
+
+                <a href="https://www.youtube.com/channel/UCTNuEQxXgsPR5WeyLk9GsGA"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="glass-card-link">
+
+                    <div class="glass-card">
+
+                        <i class="fas fa-broadcast-tower"></i>
+
+                        <h4>
+                            MEDIA
+                        </h4>
+
+                    </div>
+
+                </a>
+
             </div>
+
         </div>
 
 
         <!-- =================================================
              BTS
              ================================================= -->
+
         <div class="section-block reveal">
+
             <div class="section-heading">
-                <div class="section-kicker">Behind the scenes</div>
-                <h2 class="section-title">BTS of Work</h2>
+
+                <div class="section-kicker">
+                    Behind the scenes
+                </div>
+
+                <h2 class="section-title">
+                    BTS of Work
+                </h2>
+
             </div>
+
 
             <div class="two-grid">
-                <div class="bts-box">
+
+                <!-- PHOTOS -->
+                <div class="bts-box coming-soon-box">
+
                     <i class="fas fa-camera-retro"></i>
-                    <h5>PHOTOS</h5>
+
+                    <span class="coming-soon">
+                        Coming Soon
+                    </span>
+
                 </div>
 
-                <div class="bts-box">
+
+                <!-- VIDEOS -->
+                <div class="bts-box coming-soon-box">
+
                     <i class="fas fa-video"></i>
-                    <h5>VIDEOS</h5>
+
+                    <span class="coming-soon">
+                        Coming Soon
+                    </span>
+
                 </div>
+
             </div>
+
         </div>
 
 
         <!-- =================================================
              PROJECTS
              ================================================= -->
+
         <div class="section-block reveal">
+
             <div class="section-heading">
-                <div class="section-kicker">What we're creating</div>
-                <h2 class="section-title">Projects</h2>
+
+                <div class="section-kicker">
+                    What we're creating
+                </div>
+
+                <h2 class="section-title">
+                    Projects
+                </h2>
+
             </div>
+
 
             <div class="two-grid">
-                <div class="glass-card">
-                    <div class="project-img d-flex align-items-center justify-content-center">
-                        C&D Web
-                    </div>
-                    <h4>C&D Series</h4>
-                </div>
 
                 <div class="glass-card">
-                    <div class="project-img d-flex align-items-center justify-content-center">
-                        Loading...
+
+                    <div
+                        class="project-img d-flex align-items-center justify-content-center"
+                    >
+                        C&C Web Series
                     </div>
-                    <h4>Upcoming</h4>
+
+                    <h4>
+                        Coming Soon
+                    </h4>
+
                 </div>
+
             </div>
+
         </div>
 
+
     </div>
+
 </section>
 
 
 <script>
+
 /* =========================================================
    REVEAL ANIMATIONS
    ========================================================= */
 
 function reveal() {
-    const reveals = document.querySelectorAll(".reveal");
 
-    reveals.forEach(el => {
-        const windowHeight = window.innerHeight;
-        const elementTop = el.getBoundingClientRect().top;
+    const reveals =
+        document.querySelectorAll(".reveal");
+
+    reveals.forEach(function(el) {
+
+        const windowHeight =
+            window.innerHeight;
+
+        const elementTop =
+            el.getBoundingClientRect().top;
 
         if (elementTop < windowHeight - 50) {
+
             el.classList.add("active");
+
         }
+
     });
+
+}
+
+
+/* =========================================================
+   TEAM CARD — CLICK TO FLIP
+   ========================================================= */
+
+function flipTeamCard(card) {
+
+    if (!card) {
+        return;
+    }
+
+    card.classList.toggle("flipped");
+
 }
 
 
@@ -901,26 +1976,85 @@ function reveal() {
    ========================================================= */
 
 function slideTeam(direction) {
-    const grid = document.getElementById("teamGrid");
 
-    if (!grid) return;
+    const grid =
+        document.getElementById("teamGrid");
 
-    const amount = Math.min(240, grid.clientWidth * 0.72);
+    if (!grid) {
+        return;
+    }
+
+    const amount =
+        Math.min(
+            240,
+            grid.clientWidth * .72
+        );
 
     grid.scrollBy({
-        left: direction === "left" ? -amount : amount,
+
+        left:
+            direction === "left"
+                ? -amount
+                : amount,
+
         behavior: "smooth"
+
     });
+
 }
+
+
+/* =========================================================
+   KEYBOARD ACCESSIBILITY
+   ========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        const card =
+            document.activeElement;
+
+        if (
+            card &&
+            card.classList.contains("team-card") &&
+            (
+                event.key === "Enter" ||
+                event.key === " "
+            )
+        ) {
+
+            event.preventDefault();
+
+            flipTeamCard(card);
+
+        }
+
+    }
+);
 
 
 /* =========================================================
    EVENTS
    ========================================================= */
 
-window.addEventListener("scroll", reveal, { passive: true });
-window.addEventListener("resize", reveal);
-document.addEventListener("DOMContentLoaded", reveal);
+window.addEventListener(
+    "scroll",
+    reveal,
+    { passive: true }
+);
+
+window.addEventListener(
+    "resize",
+    reveal
+);
+
+document.addEventListener(
+    "DOMContentLoaded",
+    reveal
+);
+
 </script>
+
 
 {% endblock %}

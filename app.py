@@ -874,70 +874,70 @@ def about():
         {
             "name": "Kodanda Ram",
             "role": "Actor",
-            "image": "image.png",
+            "image": "KodandaRam.jpeg",
             "bio": (
-                "Award-winning actor with "
-                "10+ years of experience in cinema."
+                "An actor and the Founder of Home Entertainments, passionate about cinema, storytelling, and bringing characters to life."
+                "Beginning his acting journey with dedication, creativity, and a vision to make a meaningful mark in the industry."
             ),
             "social": {
                 "instagram": "#",
                 "twitter": "#",
-                "linkedin": "#"
+                "linkedin": "https://www.linkedin.com/in/agraharam-kodanda-ram-0a4991297/"
             }
         },
 
+        # {
+        #     "name": "Manoj",
+        #     "role": "Director",
+        #     "image": "jane.jpg",
+        #     # "bio": (
+        #     #     "Creative director shaping "
+        #     #     "unique storytelling experiences."
+        #     # ),
+        #     "social": {
+        #         "instagram": "#",
+        #         "twitter": "#",
+        #         "linkedin": "#"
+        #     }
+        # },
+
         {
-            "name": "Jane Smith",
-            "role": "Director",
-            "image": "jane.jpg",
+            "name": "Bhargavi S Babu",
+            "role": "Actress",
+            "image": "BhargaviBabu.jpeg",
             "bio": (
-                "Creative director shaping "
-                "unique storytelling experiences."
+                "An emerging actress with experience in web series, passionate about storytelling and bringing characters to life with authenticity"
+                "With a growing interest in diverse roles, she continues to develop her craft and build her journey in the world of cinema."
             ),
             "social": {
-                "instagram": "#",
-                "twitter": "#",
-                "linkedin": "#"
+                "instagram": "https://www.instagram.com/bhargavi.s.babu/",
+                "facebook": "https://www.facebook.com/bhargavi.babu.3/",
+                "linkedin": "https://www.linkedin.com/in/bhargavi-s-babu-85188b173/"
             }
         },
 
         {
-            "name": "John Doe",
-            "role": "Actor",
-            "image": "john.jpg",
+            "name": "Harshith B. Gowda",
+            "role": "DOP,Colorist",
+            "image": "HarshitGowda.jpeg",
             "bio": (
-                "Award-winning actor with "
-                "10+ years of experience in cinema."
+                "A passionate Cinematographer and Colorist with 10+ years experience, dedicated to crafting visually compelling frames through creative camera work, lighting, and color."
+                # "Passionate about creating cinematic visuals and enhancing every frame to complement the story, mood, and overall creative vision."
             ),
             "social": {
-                "instagram": "#",
-                "twitter": "#",
-                "linkedin": "#"
+                "instagram": "https://www.instagram.com/harshith_b_gowda/",
+                "facebook": "https://www.facebook.com/harshith.bgowda.9/",
+                "linkedin": "https://www.linkedin.com/in/harshith-b-gowda-b10670206/"
             }
         },
 
         {
-            "name": "John Doe",
-            "role": "Actor",
-            "image": "john.jpg",
+            "name": "Madhu Sagar",
+            "role": "Cinematographer",
+            "image": "MadhuSagar.jpeg",
             "bio": (
-                "Award-winning actor with "
-                "10+ years of experience in cinema."
-            ),
-            "social": {
-                "instagram": "#",
-                "twitter": "#",
-                "linkedin": "#"
-            }
-        },
-
-        {
-            "name": "John Doe",
-            "role": "Actor",
-            "image": "john.jpg",
-            "bio": (
-                "Award-winning actor with "
-                "10+ years of experience in cinema."
+                "A passionate cinematographer with a strong eye for composition, lighting, and visual storytelling."
+                "Dedicated to creating immersive and cinematic visuals that bring every story and character to life."
             ),
             "social": {
                 "instagram": "#",
