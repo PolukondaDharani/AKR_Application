@@ -127,7 +127,7 @@ SITE_DESCRIPTION = (
     "music and original entertainment content."
 )
 
-SITE_URL = "https://www.homeentertainments.in"
+SITE_URL = "https://homeentertainments.in"
 
 
 # ============================================================
@@ -1312,15 +1312,10 @@ def sitemap():
 
     ]
 
-
-    today = datetime.date.today().isoformat()
-
-
     sitemap_xml = [
         '<?xml version="1.0" encoding="UTF-8"?>',
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
     ]
-
 
     for page in pages:
 
@@ -1328,18 +1323,15 @@ def sitemap():
             f"""
     <url>
         <loc>{page["loc"]}</loc>
-        <lastmod>{today}</lastmod>
         <changefreq>weekly</changefreq>
         <priority>{page["priority"]}</priority>
     </url>
 """
         )
 
-
     sitemap_xml.append(
         "</urlset>"
     )
-
 
     return Response(
         "\n".join(sitemap_xml),
@@ -1360,12 +1352,10 @@ Allow: /
 Sitemap: {SITE_URL}/sitemap.xml
 """
 
-
     return Response(
         robots_txt,
         mimetype="text/plain"
     )
-
 
 # ============================================================
 # RUN APPLICATION
