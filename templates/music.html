@@ -57,6 +57,7 @@ body {
 
 .music-page {
     position: relative;
+
     width: 100%;
     min-height: 100vh;
 
@@ -69,6 +70,7 @@ body {
         #000000;
 
     color: #ffffff;
+
     overflow: hidden;
 
     padding-bottom: 60px;
@@ -111,17 +113,19 @@ body {
 
 .music-header {
     position: relative;
+
     z-index: 2;
 
     text-align: center;
 
     width: 100%;
-    max-width: 950px;
+
+    max-width: 1000px;
 
     margin: 0 auto;
 
     padding:
-        115px 20px 55px;
+        115px 20px 50px;
 }
 
 
@@ -140,6 +144,7 @@ body {
    ========================================================= */
 
 .music-header h1 {
+
     margin: 0;
 
     font-size:
@@ -162,6 +167,7 @@ body {
 
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+
     background-clip: text;
 
     filter:
@@ -177,6 +183,7 @@ body {
    ========================================================= */
 
 .music-header p {
+
     max-width: 680px;
 
     margin:
@@ -196,27 +203,135 @@ body {
    ========================================================= */
 
 .music-area {
+
     position: relative;
+
     z-index: 2;
 
     width: 100%;
 
     padding:
-        25px 20px 0;
+        15px 20px 0;
 }
 
 
 /* =========================================================
-   SONG CONTAINER
+   SONGS WRAPPER
    ========================================================= */
 
-.song-container {
-    position: relative;
+.songs-wrapper {
 
     width: 100%;
-    max-width: 850px;
+
+    max-width: 1200px;
 
     margin: 0 auto;
+
+    position: relative;
+}
+
+
+/* =========================================================
+   CAROUSEL ARROW BUTTONS
+   Positioned only around the poster
+   ========================================================= */
+
+.carousel-arrow {
+
+    position: absolute;
+
+    /*
+     * Keep arrows around the upper/poster area.
+     * They will never sit over the text section.
+     */
+    top: 32%;
+
+    transform: translateY(-50%);
+
+    z-index: 20;
+
+    width: 36px;
+    height: 36px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(8,8,8,0.82);
+
+    border:
+        1px solid
+        rgba(212,175,55,0.45);
+
+    color:
+        var(--gold);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    box-shadow:
+        0 6px 18px
+        rgba(0,0,0,0.65);
+
+    transition:
+        all 0.3s ease;
+
+    backdrop-filter:
+        blur(5px);
+
+    -webkit-backdrop-filter:
+        blur(5px);
+}
+
+
+.carousel-arrow:hover {
+
+    background:
+        rgba(212,175,55,0.20);
+
+    border-color:
+        var(--gold);
+
+    color:
+        #ffffff;
+
+    transform:
+        translateY(-50%)
+        scale(1.08);
+}
+
+
+.carousel-arrow.prev {
+    left: -12px;
+}
+
+
+.carousel-arrow.next {
+    right: -12px;
+}
+
+
+/* =========================================================
+   SONG GRID
+   ========================================================= */
+
+.songs-grid {
+
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 28px;
+
+    align-items: stretch;
 }
 
 
@@ -225,7 +340,14 @@ body {
    ========================================================= */
 
 .song-card {
+
     position: relative;
+
+    display: flex;
+
+    flex-direction: column;
+
+    min-width: 0;
 
     overflow: hidden;
 
@@ -258,7 +380,12 @@ body {
 }
 
 
+/* =========================================================
+   CARD HOVER
+   ========================================================= */
+
 .song-card:hover {
+
     transform:
         translateY(-6px);
 
@@ -279,11 +406,16 @@ body {
    ========================================================= */
 
 .song-cover {
+
     position: relative;
 
     width: 100%;
 
-    aspect-ratio: 1 / 1;
+    /*
+     * IMPORTANT:
+     * Keep original portrait poster proportion.
+     */
+    aspect-ratio: 4 / 5;
 
     overflow: hidden;
 
@@ -298,6 +430,7 @@ body {
    ========================================================= */
 
 .youtube-link {
+
     position: relative;
 
     display: block;
@@ -316,10 +449,16 @@ body {
    ========================================================= */
 
 .song-cover img {
+
     width: 100%;
     height: 100%;
 
+    /*
+     * Fill poster without changing the 4:5 frame.
+     */
     object-fit: cover;
+
+    object-position: center;
 
     display: block;
 
@@ -332,6 +471,7 @@ body {
 
 
 .song-card:hover .song-cover img {
+
     transform:
         scale(1.045);
 
@@ -346,6 +486,7 @@ body {
    ========================================================= */
 
 .play-overlay {
+
     position: absolute;
 
     inset: 0;
@@ -368,6 +509,7 @@ body {
 
 
 .youtube-link:hover .play-overlay {
+
     background:
         radial-gradient(
             circle,
@@ -382,6 +524,7 @@ body {
    ========================================================= */
 
 .youtube-play-wrapper {
+
     position: relative;
 
     display: flex;
@@ -396,12 +539,13 @@ body {
    ========================================================= */
 
 .youtube-play-wrapper::before {
+
     content: "";
 
     position: absolute;
 
-    width: 125px;
-    height: 125px;
+    width: 115px;
+    height: 115px;
 
     border-radius: 50%;
 
@@ -435,11 +579,13 @@ body {
    ========================================================= */
 
 .youtube-play-button {
+
     position: relative;
+
     z-index: 2;
 
-    width: 88px;
-    height: 62px;
+    width: 82px;
+    height: 58px;
 
     display: flex;
 
@@ -448,7 +594,7 @@ body {
 
     background: #ff0000;
 
-    border-radius: 17px;
+    border-radius: 16px;
 
     box-shadow:
         0 15px 45px
@@ -468,17 +614,18 @@ body {
    ========================================================= */
 
 .youtube-play-button span {
+
     width: 0;
     height: 0;
 
     border-top:
-        12px solid transparent;
+        11px solid transparent;
 
     border-bottom:
-        12px solid transparent;
+        11px solid transparent;
 
     border-left:
-        19px solid #ffffff;
+        18px solid #ffffff;
 
     margin-left: 5px;
 }
@@ -508,10 +655,15 @@ body {
    ========================================================= */
 
 .song-info {
+
+    display: flex;
+
+    flex-direction: column;
+
+    flex: 1;
+
     padding:
-        35px
-        28px
-        28px;
+        30px 22px 22px;
 }
 
 
@@ -520,27 +672,29 @@ body {
    ========================================================= */
 
 .song-meta {
+
     display: flex;
 
     align-items: center;
     justify-content: space-between;
 
-    gap: 15px;
+    gap: 12px;
 
     margin-bottom: 14px;
 }
 
 
 /* =========================================================
-   FIRST SINGLE
+   RELEASE LABEL
    ========================================================= */
 
 .song-number {
+
     font-size: 9px;
 
     font-weight: 800;
 
-    letter-spacing: 3px;
+    letter-spacing: 2.5px;
 
     text-transform: uppercase;
 
@@ -554,6 +708,7 @@ body {
 
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+
     background-clip: text;
 }
 
@@ -563,6 +718,7 @@ body {
    ========================================================= */
 
 .song-badge {
+
     display: inline-flex;
 
     align-items: center;
@@ -570,7 +726,7 @@ body {
     min-height: 25px;
 
     padding:
-        0 11px;
+        0 10px;
 
     border-radius: 100px;
 
@@ -588,9 +744,11 @@ body {
 
     font-weight: 700;
 
-    letter-spacing: 1.5px;
+    letter-spacing: 1.2px;
 
     text-transform: uppercase;
+
+    white-space: nowrap;
 }
 
 
@@ -599,16 +757,17 @@ body {
    ========================================================= */
 
 .song-info h2 {
+
     margin: 0;
 
     font-size:
-        clamp(30px, 5vw, 42px);
+        clamp(27px, 3vw, 38px);
 
-    line-height: 1;
+    line-height: 1.05;
 
     font-weight: 900;
 
-    letter-spacing: -1.5px;
+    letter-spacing: -1px;
 
     color: #ffffff;
 }
@@ -619,14 +778,17 @@ body {
    ========================================================= */
 
 .artist {
+
     margin-top: 12px;
 
     color:
         rgba(255,255,255,0.52);
 
-    font-size: 12px;
+    font-size: 11px;
 
     line-height: 1.7;
+
+    min-height: 38px;
 }
 
 
@@ -635,12 +797,13 @@ body {
    ========================================================= */
 
 .song-divider {
+
     width: 100%;
 
     height: 1px;
 
     margin:
-        25px 0 22px;
+        22px 0 20px;
 
     background:
         linear-gradient(
@@ -656,12 +819,13 @@ body {
    ========================================================= */
 
 .streaming-title {
-    margin-bottom: 14px;
+
+    margin-bottom: 12px;
 
     color:
         var(--gold);
 
-    font-size: 11px;
+    font-size: 10px;
 
     font-weight: 800;
 
@@ -672,16 +836,17 @@ body {
 
 
 /* =========================================================
-   PLATFORM BUTTONS — DESKTOP
+   PLATFORM BUTTONS
    ========================================================= */
 
 .platforms {
+
     display: grid;
 
     grid-template-columns:
         repeat(2, minmax(0, 1fr));
 
-    gap: 12px;
+    gap: 10px;
 
     width: 100%;
 }
@@ -692,6 +857,7 @@ body {
    ========================================================= */
 
 .platform-btn {
+
     position: relative;
 
     display: flex;
@@ -699,14 +865,14 @@ body {
     align-items: center;
     justify-content: flex-start;
 
-    gap: 13px;
+    gap: 10px;
 
     width: 100%;
 
-    min-height: 54px;
+    min-height: 48px;
 
     padding:
-        0 18px;
+        0 13px;
 
     border-radius: 9px;
 
@@ -726,11 +892,9 @@ body {
 
     text-decoration: none;
 
-    font-size: 13px;
+    font-size: 11px;
 
     font-weight: 750;
-
-    letter-spacing: 0.2px;
 
     transition:
         transform 0.25s ease,
@@ -742,15 +906,16 @@ body {
 
 
 /* =========================================================
-   PLATFORM LOGO — ORIGINAL BRAND COLORS
+   PLATFORM LOGO
    ========================================================= */
 
 .platform-btn i {
+
     flex: 0 0 auto;
 
-    width: 27px;
+    width: 23px;
 
-    font-size: 22px;
+    font-size: 19px;
 
     line-height: 1;
 
@@ -761,34 +926,25 @@ body {
 
 
 /* =========================================================
-   ORIGINAL BRAND COLORS
+   BRAND COLORS
    ========================================================= */
 
-/* YouTube */
 .platform-youtube i {
     color: #FF0000;
 }
 
-
-/* Spotify */
 .platform-spotify i {
     color: #1DB954;
 }
 
-
-/* Apple */
 .platform-apple i {
     color: #FFFFFF;
 }
 
-
-/* Instagram */
 .platform-instagram i {
     color: #E4405F;
 }
 
-
-/* Amazon */
 .platform-amazon i {
     color: #FF9900;
 }
@@ -799,7 +955,10 @@ body {
    ========================================================= */
 
 .platform-btn span {
+
     flex: 1;
+
+    white-space: nowrap;
 }
 
 
@@ -808,11 +967,12 @@ body {
    ========================================================= */
 
 .platform-btn::after {
+
     content: "↗";
 
     flex: 0 0 auto;
 
-    font-size: 16px;
+    font-size: 14px;
 
     font-weight: 700;
 
@@ -870,7 +1030,7 @@ body {
 
 
 /* =========================================================
-   YOUTUBE BUTTON — SLIGHTLY MORE PROMINENT
+   YOUTUBE BUTTON
    ========================================================= */
 
 .platform-youtube {
@@ -903,9 +1063,9 @@ body {
 
     gap: 4px;
 
-    height: 25px;
+    height: 22px;
 
-    margin-top: 30px;
+    margin-top: 24px;
 
     opacity: 0.45;
 }
@@ -981,12 +1141,38 @@ body {
 
 
 /* =========================================================
+   MOBILE SWIPE INDICATOR
+   ========================================================= */
+
+.mobile-scroll-hint {
+
+    display: none;
+
+    text-align: center;
+
+    margin-top: 18px;
+
+    color:
+        rgba(212,175,55,0.42);
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
    FOOTER
    ========================================================= */
 
 .music-footer {
 
     position: relative;
+
     z-index: 2;
 
     text-align: center;
@@ -1012,17 +1198,61 @@ body {
 @media (max-width: 991px) {
 
     .music-header {
+
         padding:
             110px 20px 45px;
     }
 
+
     .music-area {
+
         padding:
             20px;
     }
 
-    .song-container {
-        max-width: 760px;
+
+    .songs-grid {
+
+        gap: 20px;
+    }
+
+
+    .song-info {
+
+        padding:
+            27px 18px 20px;
+    }
+
+
+    .platform-btn {
+
+        font-size: 10px;
+
+        padding:
+            0 11px;
+    }
+
+
+    /*
+     * Smaller arrows on tablet
+     */
+
+    .carousel-arrow {
+
+        width: 32px;
+        height: 32px;
+
+        font-size: 12px;
+    }
+
+
+    .carousel-arrow.prev {
+        left: -10px;
+    }
+
+
+    .carousel-arrow.next {
+        right: -10px;
     }
 }
 
@@ -1031,124 +1261,333 @@ body {
    MOBILE
    ========================================================= */
 
-@media (max-width: 576px) {
+@media (max-width: 768px) {
 
     .music-header {
+
         padding:
-            105px 15px 35px;
+            85px 15px 25px;
     }
 
 
     .music-header h1 {
-        font-size: 2.7rem;
+
+        font-size: 2.2rem;
 
         letter-spacing: 2px;
     }
 
 
     .music-header p {
-        font-size: 0.82rem;
 
-        line-height: 1.7;
+        font-size: 0.8rem;
 
-        margin-top: 20px;
+        line-height: 1.5;
+
+        margin-top: 12px;
     }
 
 
     .music-area {
+
         padding:
-            15px 15px 0;
+            10px 15px 0;
     }
 
+
+    .songs-wrapper {
+
+        width: 100%;
+
+        overflow: visible;
+
+        position: relative;
+    }
+
+
+    /* =====================================================
+       MOBILE ARROWS
+       Small and ONLY over poster
+       ===================================================== */
+
+    .carousel-arrow {
+
+        width: 28px;
+        height: 28px;
+
+        font-size: 10px;
+
+        background:
+            rgba(5,5,5,0.78);
+
+        border:
+            1px solid
+            rgba(212,175,55,0.45);
+
+        box-shadow:
+            0 4px 12px
+            rgba(0,0,0,0.65);
+
+        /*
+         * Around the upper-middle of poster.
+         * They won't reach song information.
+         */
+        top: 30%;
+    }
+
+
+    .carousel-arrow.prev {
+
+        left: 6px;
+    }
+
+
+    .carousel-arrow.next {
+
+        right: 6px;
+    }
+
+
+    .carousel-arrow:hover {
+
+        transform:
+            translateY(-50%)
+            scale(1.05);
+    }
+
+
+    /* =====================================================
+       HORIZONTAL MOBILE CAROUSEL
+       ===================================================== */
+
+    .songs-grid {
+
+        display: flex;
+
+        flex-direction: row;
+
+        gap: 0;
+
+        width: 100%;
+
+        overflow-x: auto;
+
+        overflow-y: hidden;
+
+        padding: 0;
+
+        scroll-snap-type:
+            x mandatory;
+
+        scroll-behavior:
+            smooth;
+
+        -webkit-overflow-scrolling:
+            touch;
+
+        scrollbar-width:
+            none;
+    }
+
+
+    .songs-grid::-webkit-scrollbar {
+
+        display: none;
+    }
+
+
+    /* =====================================================
+       MOBILE CARD
+       ===================================================== */
 
     .song-card {
-        padding: 8px;
 
-        border-radius: 10px;
+        flex:
+            0 0 100%;
+
+        width: 100%;
+
+        max-width: 100%;
+
+        scroll-snap-align:
+            center;
+
+        padding: 10px;
+
+        border-radius: 12px;
+
+        transform:
+            none !important;
     }
 
+
+    .song-card:hover {
+
+        transform:
+            none !important;
+    }
+
+
+    /* =====================================================
+       IMPORTANT:
+       KEEP ACTUAL POSTER RATIO
+       ===================================================== */
 
     .song-cover {
-        border-radius: 7px;
+
+        width: 100%;
+
+        /*
+         * DO NOT USE 16:9 HERE.
+         * This keeps your original poster shape.
+         */
+        aspect-ratio:
+            4 / 5;
+
+        border-radius: 8px;
+
+        overflow: hidden;
     }
 
 
-    /* -----------------------------------------
-       MOBILE YOUTUBE PLAY BUTTON
-       ----------------------------------------- */
+    .song-cover img {
+
+        width: 100%;
+        height: 100%;
+
+        object-fit:
+            cover;
+
+        object-position:
+            center;
+    }
+
+
+    /* =====================================================
+       PLAY BUTTON
+       ===================================================== */
 
     .youtube-play-button {
-        width: 70px;
-        height: 49px;
 
-        border-radius: 13px;
+        width: 52px;
+
+        height: 36px;
+
+        border-radius: 9px;
     }
 
 
     .youtube-play-button span {
-        border-top-width: 10px;
 
-        border-bottom-width: 10px;
+        border-top-width: 7px;
 
-        border-left-width: 16px;
+        border-bottom-width: 7px;
+
+        border-left-width: 12px;
+
+        margin-left: 3px;
     }
 
 
     .youtube-play-wrapper::before {
-        width: 100px;
-        height: 100px;
+
+        width: 72px;
+
+        height: 72px;
     }
 
 
-    /* -----------------------------------------
+    /* =====================================================
        SONG INFORMATION
-       ----------------------------------------- */
+       ===================================================== */
 
     .song-info {
+
         padding:
-            25px
-            12px
-            18px;
+            14px 8px 8px;
     }
 
 
     .song-meta {
-        align-items: flex-start;
+
+        margin-bottom: 8px;
+    }
+
+
+    .song-number {
+
+        font-size: 8px;
+
+        letter-spacing: 1.5px;
+    }
+
+
+    .song-badge {
+
+        min-height: 20px;
+
+        padding:
+            0 8px;
+
+        font-size: 7px;
     }
 
 
     .song-info h2 {
-        font-size: 29px;
+
+        font-size: 20px;
+
+        line-height: 1.1;
+
+        letter-spacing: -0.5px;
     }
 
 
     .artist {
-        font-size: 11px;
-    }
 
+        margin-top: 6px;
 
-    /* -----------------------------------------
-       STREAMING
-       ----------------------------------------- */
-
-    .streaming-title {
         font-size: 10px;
 
-        margin-bottom: 12px;
+        line-height: 1.4;
+
+        min-height: auto;
     }
 
 
-    /* -----------------------------------------
-       MOBILE PLATFORM BUTTONS
-       ----------------------------------------- */
+    .song-divider {
+
+        margin:
+            12px 0;
+    }
+
+
+    /* =====================================================
+       STREAMING
+       ===================================================== */
+
+    .streaming-title {
+
+        font-size: 9px;
+
+        margin-bottom: 8px;
+
+        letter-spacing: 1.8px;
+    }
+
+
+    /* =====================================================
+       PLATFORM BUTTONS
+       ===================================================== */
 
     .platforms {
 
-        display: flex;
+        display: grid;
 
-        flex-direction: column;
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
 
-        gap: 10px;
+        gap: 8px;
 
         width: 100%;
     }
@@ -1158,52 +1597,67 @@ body {
 
         width: 100%;
 
-        min-height: 58px;
+        min-height: 38px;
 
         padding:
-            0 18px;
+            0 10px;
 
-        border-radius: 10px;
+        border-radius: 7px;
 
-        gap: 14px;
+        gap: 8px;
 
-        font-size: 14px;
-
-        font-weight: 750;
+        font-size: 10px;
     }
 
 
     .platform-btn i {
 
-        width: 29px;
+        width: 18px;
 
-        font-size: 23px;
+        font-size: 14px;
     }
 
 
     .platform-btn::after {
 
-        font-size: 17px;
+        font-size: 11px;
     }
 
 
-    /* -----------------------------------------
+    /* =====================================================
+       MOBILE SWIPE TEXT
+       ===================================================== */
+
+    .mobile-scroll-hint {
+
+        display: block;
+
+        margin-top: 14px;
+
+        font-size: 8px;
+    }
+
+
+    /* =====================================================
        SOUND WAVE
-       ----------------------------------------- */
+       ===================================================== */
 
     .sound-wave {
-        margin-top: 27px;
+
+        margin-top: 14px;
+
+        height: 16px;
     }
 
 
-    /* -----------------------------------------
+    /* =====================================================
        FOOTER
-       ----------------------------------------- */
+       ===================================================== */
 
     .music-footer {
 
         padding:
-            45px 20px 0;
+            30px 20px 0;
 
         font-size: 8px;
     }
@@ -1219,46 +1673,78 @@ body {
     .music-header {
 
         padding:
-            95px 12px 30px;
+            75px 10px 20px;
     }
 
 
     .music-header h1 {
 
-        font-size: 2.35rem;
-    }
-
-
-    .song-meta {
-
-        flex-direction: column;
-
-        gap: 8px;
+        font-size:
+            1.9rem;
     }
 
 
     .song-info h2 {
 
-        font-size: 26px;
+        font-size:
+            18px;
     }
 
 
     .platform-btn {
 
-        min-height: 56px;
+        min-height:
+            36px;
 
         padding:
-            0 16px;
+            0 8px;
 
-        font-size: 13px;
+        font-size:
+            9.5px;
     }
 
 
     .platform-btn i {
 
-        width: 27px;
+        width:
+            16px;
 
-        font-size: 22px;
+        font-size:
+            13px;
+    }
+
+
+    /*
+     * Extra-small arrows
+     */
+
+    .carousel-arrow {
+
+        width:
+            26px;
+
+        height:
+            26px;
+
+        font-size:
+            9px;
+
+        top:
+            30%;
+    }
+
+
+    .carousel-arrow.prev {
+
+        left:
+            5px;
+    }
+
+
+    .carousel-arrow.next {
+
+        right:
+            5px;
     }
 }
 
@@ -1268,17 +1754,18 @@ body {
    ========================================================= */
 
 .youtube-link:focus,
-.platform-btn:focus {
+.platform-btn:focus,
+.carousel-arrow:focus {
 
     outline:
         2px solid
         rgba(212,175,55,0.55);
 
-    outline-offset: 2px;
+    outline-offset:
+        2px;
 }
 
 </style>
-
 
 <!-- =========================================================
      MUSIC PAGE
@@ -1286,60 +1773,95 @@ body {
 
 <section class="music-page">
 
+<!-- =====================================================
+     HEADER
+====================================================== -->
 
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
+<header class="music-header">
 
-    <header class="music-header">
+    <div class="music-header-content">
 
-        <div class="music-header-content">
+        <h1>
+            OUR MUSIC
+        </h1>
 
-            <h1>
-                OUR MUSIC
-            </h1>
+        <p>
+            Original music from our stories, created with passion
+            and made to be heard beyond the screen.
+        </p>
 
-            <p>
-                Original music from our stories, created with passion
-                and made to be heard beyond the screen.
-            </p>
+    </div>
 
-        </div>
-
-    </header>
+</header>
 
 
-    <!-- =====================================================
-         MUSIC AREA
-    ====================================================== -->
+<!-- =====================================================
+     MUSIC AREA
+====================================================== -->
 
-    <div class="music-area">
+<div class="music-area">
 
-        <div class="song-container">
+    <div class="songs-wrapper">
+
+
+        <!-- =================================================
+             NAVIGATION ARROWS
+        ================================================== -->
+
+        <button
+            type="button"
+            class="carousel-arrow prev"
+            id="prevSongBtn"
+            aria-label="Previous Song"
+        >
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+
+
+        <button
+            type="button"
+            class="carousel-arrow next"
+            id="nextSongBtn"
+            aria-label="Next Song"
+        >
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
+
+
+        <!-- =================================================
+             SONGS
+        ================================================== -->
+
+        <div
+            class="songs-grid"
+            id="songsGrid"
+        >
+
+
+            <!-- =================================================
+                 SONG 2 — MURIDHA MANASUGALU
+            ================================================== -->
 
             <article class="song-card">
 
 
-                <!-- =================================================
-                     SONG COVER
-                ================================================== -->
+                <!-- SONG COVER -->
 
                 <div class="song-cover">
 
                     <a
-                        href="https://www.youtube.com/watch?v=e9l3cRJWJyk"
+                        href="https://www.youtube.com/watch?v=UI5KfuKAG8U"
                         target="_blank"
                         rel="noopener noreferrer"
                         class="youtube-link"
                     >
 
                         <img
-                            src="{{ url_for('static', filename='images/songposter.jpeg') }}"
-                            alt="Oh My Friend"
+                            src="{{ url_for('static', filename='images/muridhamanusagalu.jpeg') }}"
+                            alt="Muridha Manasugalu"
+                            loading="lazy"
                         >
 
-
-                        <!-- PLAY BUTTON -->
 
                         <div class="play-overlay">
 
@@ -1360,9 +1882,7 @@ body {
                 </div>
 
 
-                <!-- =================================================
-                     SONG INFORMATION
-                ================================================== -->
+                <!-- SONG INFORMATION -->
 
                 <div class="song-info">
 
@@ -1372,7 +1892,225 @@ body {
                     <div class="song-meta">
 
                         <div class="song-number">
-                            FIRST SINGLE
+                            OUR RELEASE
+                        </div>
+
+                        <div class="song-badge">
+                            C &amp; C WEB SERIES
+                        </div>
+
+                    </div>
+
+
+                    <!-- TITLE -->
+
+                    <h2>
+                        Muridha Manasugalu
+                    </h2>
+
+
+                    <!-- CREDITS -->
+
+                    <div class="artist">
+
+                        Lyrics by Manoj
+                        ·
+                        Vocals by Satya Radhakrishna
+
+                    </div>
+
+
+                    <!-- DIVIDER -->
+
+                    <div class="song-divider"></div>
+
+
+                    <!-- STREAMING -->
+
+                    <div class="streaming-title">
+                        LISTEN NOW
+                    </div>
+
+
+                    <!-- PLATFORMS -->
+
+                    <div class="platforms">
+
+
+                        <!-- YOUTUBE -->
+
+                        <a
+                            href="https://www.youtube.com/watch?v=UI5KfuKAG8U"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="platform-btn platform-youtube"
+                            aria-label="Listen on YouTube"
+                        >
+
+                            <i class="fa-brands fa-youtube"></i>
+
+                            <span>
+                                YouTube
+                            </span>
+
+                        </a>
+
+
+                        <!-- SPOTIFY -->
+
+                        <a
+                            href="https://open.spotify.com/track/7dz1GUBjty229BtIgl388z?si=1O6aoVp7RfKD8SRDbmrChg&utm_source=whatsapp"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="platform-btn platform-spotify"
+                            aria-label="Listen on Spotify"
+                        >
+
+                            <i class="fa-brands fa-spotify"></i>
+
+                            <span>
+                                Spotify
+                            </span>
+
+                        </a>
+
+
+                        <!-- APPLE MUSIC -->
+
+                        <a
+                            href="https://music.apple.com/in/album/muridha-manasugalu-feat-c-c-webseries/6802068973?i=6802068975&ls"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="platform-btn platform-apple"
+                            aria-label="Listen on Apple Music"
+                        >
+
+                            <i class="fa-brands fa-apple"></i>
+
+                            <span>
+                                Apple Music
+                            </span>
+
+                        </a>
+
+
+                        <!-- INSTAGRAM -->
+
+                        <a
+                            href="https://www.instagram.com/reels/audio/1310004127759307/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="platform-btn platform-instagram"
+                            aria-label="Listen on Instagram"
+                        >
+
+                            <i class="fa-brands fa-instagram"></i>
+
+                            <span>
+                                Instagram
+                            </span>
+
+                        </a>
+
+
+                        <!-- AMAZON MUSIC -->
+
+                        <a
+                            href="https://music.amazon.in/albums/B0HFGJJ1J1?trackAsin=B0HFGJVNBP&do=play&ts=1789197956&ref=dm_sh_rf0QtTqhNd5kiHZAssz5bn31B&referrer=dm_sh_whatsapp"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="platform-btn platform-amazon"
+                            aria-label="Listen on Amazon Music"
+                        >
+
+                            <i class="fa-brands fa-amazon"></i>
+
+                            <span>
+                                Amazon Music
+                            </span>
+
+                        </a>
+
+
+                    </div>
+
+
+                    <!-- SOUND WAVE -->
+
+                    <div class="sound-wave">
+
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+
+                    </div>
+
+
+                </div>
+
+            </article>
+
+
+            <!-- =================================================
+                 SONG 1 — OH MY FRIEND
+            ================================================== -->
+
+            <article class="song-card">
+
+
+                <!-- SONG COVER -->
+
+                <div class="song-cover">
+
+                    <a
+                        href="https://www.youtube.com/watch?v=e9l3cRJWJyk"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="youtube-link"
+                    >
+
+                        <img
+                            src="{{ url_for('static', filename='images/songposter.jpeg') }}"
+                            alt="Oh My Friend"
+                            loading="lazy"
+                        >
+
+
+                        <div class="play-overlay">
+
+                            <div class="youtube-play-wrapper">
+
+                                <div class="youtube-play-button">
+
+                                    <span></span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+
+                <!-- SONG INFORMATION -->
+
+                <div class="song-info">
+
+
+                    <!-- META -->
+
+                    <div class="song-meta">
+
+                        <div class="song-number">
+                            OUR RELEASE
                         </div>
 
                         <div class="song-badge">
@@ -1412,9 +2150,7 @@ body {
                     </div>
 
 
-                    <!-- =================================================
-                         PLATFORM BUTTONS
-                    ================================================== -->
+                    <!-- PLATFORMS -->
 
                     <div class="platforms">
 
@@ -1517,9 +2253,7 @@ body {
                     </div>
 
 
-                    <!-- =================================================
-                         SOUND WAVE
-                    ================================================== -->
+                    <!-- SOUND WAVE -->
 
                     <div class="sound-wave">
 
@@ -1539,22 +2273,121 @@ body {
 
             </article>
 
+
         </div>
 
+
+        <!-- MOBILE HINT -->
+
+        <div class="mobile-scroll-hint">
+
+            SWIPE OR USE ARROWS TO DISCOVER MORE TRACKS
+
+        </div>
+
+
     </div>
 
+</div>
 
-    <!-- =====================================================
-         FOOTER
-    ====================================================== -->
 
-    <div class="music-footer">
+<!-- =====================================================
+     FOOTER
+====================================================== -->
 
-        © HOME ENTERTAINMENTS · ALL RIGHTS RESERVED
+<footer class="music-footer">
 
-    </div>
+    HOME ENTERTAINMENTS MUSIC
 
+</footer>
 
 </section>
+
+<!-- =========================================================
+     CAROUSEL NAVIGATION SCRIPT
+     ========================================================= -->
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const songsGrid =
+        document.getElementById('songsGrid');
+
+    const prevBtn =
+        document.getElementById('prevSongBtn');
+
+    const nextBtn =
+        document.getElementById('nextSongBtn');
+
+
+    if (!songsGrid || !prevBtn || !nextBtn) {
+        return;
+    }
+
+
+    function scrollGrid(direction) {
+
+        const card =
+            songsGrid.querySelector('.song-card');
+
+
+        if (!card) {
+            return;
+        }
+
+
+        const cardWidth =
+            card.getBoundingClientRect().width;
+
+
+        const gap =
+            parseFloat(
+                window.getComputedStyle(songsGrid).gap
+            ) || 0;
+
+
+        const scrollAmount =
+            cardWidth + gap;
+
+
+        songsGrid.scrollBy({
+
+            left:
+                direction === 'next'
+                    ? scrollAmount
+                    : -scrollAmount,
+
+            behavior:
+                'smooth'
+
+        });
+
+    }
+
+
+    prevBtn.addEventListener(
+        'click',
+        function () {
+
+            scrollGrid('prev');
+
+        }
+    );
+
+
+    nextBtn.addEventListener(
+        'click',
+        function () {
+
+            scrollGrid('next');
+
+        }
+    );
+
+
+});
+
+</script>
 
 {% endblock %}
