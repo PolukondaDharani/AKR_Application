@@ -1,0 +1,549 @@
+{% extends "base.html" %}
+
+{% block title %}Book Tickets | {{ show["title"] }}{% endblock %}
+
+{% block content %}
+
+<style>
+
+    .booking-form-page {
+        min-height: 80vh;
+        padding: 70px 20px;
+
+        background:
+            radial-gradient(
+                circle at top right,
+                rgba(212,175,55,0.08),
+                transparent 35%
+            ),
+            radial-gradient(
+                circle at bottom left,
+                rgba(212,175,55,0.05),
+                transparent 35%
+            );
+    }
+
+
+    .booking-form-container {
+        max-width: 850px;
+        margin: auto;
+    }
+
+
+    .booking-back {
+        display: inline-block;
+        margin-bottom: 25px;
+
+        color: #aaa;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+
+    .booking-back:hover {
+        color: #d4af37;
+    }
+
+
+    .booking-card {
+        background: rgba(255,255,255,0.04);
+
+        border: 1px solid
+            rgba(212,175,55,0.25);
+
+        border-radius: 20px;
+
+        padding: 35px;
+
+        backdrop-filter: blur(12px);
+
+        box-shadow:
+            0 20px 50px
+            rgba(0,0,0,0.25);
+    }
+
+
+    .booking-title {
+        color: #d4af37;
+        font-size: 34px;
+        margin: 0 0 8px;
+    }
+
+
+    .booking-subtitle {
+        color: #aaa;
+        margin-bottom: 30px;
+    }
+
+
+    .show-details {
+        display: grid;
+
+        grid-template-columns:
+            repeat(auto-fit, minmax(180px, 1fr));
+
+        gap: 15px;
+
+        margin-bottom: 35px;
+    }
+
+
+    .detail-box {
+        padding: 16px;
+
+        border-radius: 12px;
+
+        background:
+            rgba(212,175,55,0.06);
+
+        border: 1px solid
+            rgba(212,175,55,0.12);
+    }
+
+
+    .detail-label {
+        display: block;
+
+        color: #888;
+
+        font-size: 12px;
+
+        margin-bottom: 6px;
+    }
+
+
+    .detail-value {
+        color: #fff;
+
+        font-size: 15px;
+
+        font-weight: 600;
+    }
+
+
+    .available-box {
+        padding: 15px;
+
+        margin-bottom: 30px;
+
+        border-radius: 10px;
+
+        text-align: center;
+
+        background:
+            rgba(143,214,148,0.08);
+
+        border: 1px solid
+            rgba(143,214,148,0.2);
+
+        color: #8fd694;
+    }
+
+
+    .form-group {
+        margin-bottom: 22px;
+    }
+
+
+    .form-group label {
+        display: block;
+
+        color: #ddd;
+
+        margin-bottom: 8px;
+
+        font-size: 14px;
+    }
+
+
+    .form-group input {
+        width: 100%;
+
+        padding: 14px;
+
+        border-radius: 9px;
+
+        border: 1px solid
+            rgba(255,255,255,0.14);
+
+        background:
+            rgba(0,0,0,0.25);
+
+        color: #fff;
+
+        font-size: 15px;
+
+        outline: none;
+    }
+
+
+    .form-group input:focus {
+        border-color: #d4af37;
+
+        box-shadow:
+            0 0 0 2px
+            rgba(212,175,55,0.12);
+    }
+
+
+    .quantity-row {
+        display: grid;
+
+        grid-template-columns:
+            1fr 1fr;
+
+        gap: 20px;
+    }
+
+
+    .total-box {
+        margin: 25px 0;
+
+        padding: 20px;
+
+        border-radius: 12px;
+
+        background:
+            rgba(212,175,55,0.08);
+
+        border: 1px solid
+            rgba(212,175,55,0.18);
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+    }
+
+
+    .total-label {
+        color: #aaa;
+    }
+
+
+    .total-amount {
+        color: #d4af37;
+
+        font-size: 25px;
+
+        font-weight: 700;
+    }
+
+
+    .submit-btn {
+        width: 100%;
+
+        padding: 15px;
+
+        border: none;
+
+        border-radius: 10px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #d4af37,
+                #b89020
+            );
+
+        color: #111;
+
+        font-size: 16px;
+
+        font-weight: 700;
+
+        cursor: pointer;
+
+        transition: 0.25s ease;
+    }
+
+
+    .submit-btn:hover {
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 8px 20px
+            rgba(212,175,55,0.25);
+    }
+
+
+    @media (max-width:600px) {
+
+        .booking-form-page {
+            padding: 45px 15px;
+        }
+
+        .booking-card {
+            padding: 25px 20px;
+        }
+
+        .booking-title {
+            font-size: 28px;
+        }
+
+        .quantity-row {
+            grid-template-columns: 1fr;
+        }
+    }
+
+</style>
+
+
+<section class="booking-form-page">
+
+    <div class="booking-form-container">
+
+        <a
+            href="{{ url_for('booking') }}"
+            class="booking-back"
+        >
+            ← Back to Shows
+        </a>
+
+
+        <div class="booking-card">
+
+            <h1 class="booking-title">
+                Book Your Tickets
+            </h1>
+
+            <p class="booking-subtitle">
+                {{ show["title"] }}
+            </p>
+
+
+            <div class="show-details">
+
+                <div class="detail-box">
+
+                    <span class="detail-label">
+                        Theatre
+                    </span>
+
+                    <span class="detail-value">
+                        {{ show["theatre"] }}
+                    </span>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <span class="detail-label">
+                        Location
+                    </span>
+
+                    <span class="detail-value">
+                        {{ show["location"] }}
+                    </span>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <span class="detail-label">
+                        Date
+                    </span>
+
+                    <span class="detail-value">
+                        {{ show["show_date"] }}
+                    </span>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <span class="detail-label">
+                        Time
+                    </span>
+
+                    <span class="detail-value">
+                        {{ show["show_time"] }}
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="available-box">
+
+                🎟️
+
+                <strong>
+                    {{ available }}
+                </strong>
+
+                tickets currently available
+
+            </div>
+
+
+            <form
+                method="POST"
+                action="{{ url_for('book_show', show_id=show['id']) }}"
+            >
+
+                <div class="form-group">
+
+                    <label for="customer_name">
+                        Full Name *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="customer_name"
+                        name="customer_name"
+                        placeholder="Enter your full name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="quantity-row">
+
+                    <div class="form-group">
+
+                        <label for="phone">
+                            Phone Number *
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            placeholder="Enter phone number"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email Address *
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter email address"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="quantity">
+                        Number of Tickets *
+                    </label>
+
+                    <input
+                        type="number"
+                        id="quantity"
+                        name="quantity"
+                        min="1"
+                        max="{{ available }}"
+                        value="1"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="total-box">
+
+                    <span class="total-label">
+                        Total Amount
+                    </span>
+
+                    <span
+                        class="total-amount"
+                        id="totalAmount"
+                    >
+                        ₹{{ "%.0f"|format(show["ticket_price"]) }}
+                    </span>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="submit-btn"
+                >
+                    🎟️ Confirm Booking
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+
+    const quantityInput =
+        document.getElementById("quantity");
+
+    const totalAmount =
+        document.getElementById("totalAmount");
+
+    const ticketPrice =
+        {{ show["ticket_price"]|float }};
+
+
+    function updateTotal() {
+
+        let quantity =
+            parseInt(quantityInput.value) || 0;
+
+        const max =
+            parseInt(quantityInput.max);
+
+
+        if (quantity < 1) {
+            quantity = 1;
+        }
+
+        if (quantity > max) {
+            quantity = max;
+        }
+
+
+        quantityInput.value = quantity;
+
+
+        const total =
+            ticketPrice * quantity;
+
+
+        totalAmount.textContent =
+            "₹" + total.toFixed(0);
+    }
+
+
+    quantityInput.addEventListener(
+        "input",
+        updateTotal
+    );
+
+
+    updateTotal();
+
+</script>
+
+{% endblock %}
+

@@ -1,0 +1,434 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if show %}
+        Edit Show | Booking Admin
+    {% else %}
+        Add Show | Booking Admin
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+    .show-admin-page {
+        min-height: 80vh;
+
+        padding: 60px 20px;
+    }
+
+
+    .show-admin-container {
+        max-width: 700px;
+
+        margin: auto;
+    }
+
+
+    .show-admin-card {
+        background:
+            rgba(255,255,255,0.04);
+
+        border: 1px solid
+            rgba(212,175,55,0.22);
+
+        border-radius: 18px;
+
+        padding: 35px;
+
+        backdrop-filter: blur(12px);
+    }
+
+
+    h1 {
+        color: #d4af37;
+
+        margin-top: 0;
+
+        margin-bottom: 8px;
+    }
+
+
+    .subtitle {
+        color: #888;
+
+        margin-bottom: 30px;
+    }
+
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+
+    label {
+        display: block;
+
+        color: #ddd;
+
+        margin-bottom: 7px;
+
+        font-size: 14px;
+    }
+
+
+    input {
+        width: 100%;
+
+        padding: 13px;
+
+        border-radius: 8px;
+
+        border: 1px solid
+            rgba(255,255,255,0.13);
+
+        background:
+            rgba(0,0,0,0.25);
+
+        color: #fff;
+
+        outline: none;
+    }
+
+
+    input:focus {
+        border-color: #d4af37;
+    }
+
+
+    .two-columns {
+        display: grid;
+
+        grid-template-columns:
+            1fr 1fr;
+
+        gap: 18px;
+    }
+
+
+    .buttons {
+        display: flex;
+
+        gap: 12px;
+
+        margin-top: 30px;
+    }
+
+
+    .btn {
+        padding: 13px 20px;
+
+        border-radius: 9px;
+
+        text-decoration: none;
+
+        font-weight: 700;
+
+        border: none;
+
+        cursor: pointer;
+    }
+
+
+    .save {
+        background:
+            linear-gradient(
+                135deg,
+                #d4af37,
+                #b89020
+            );
+
+        color: #111;
+    }
+
+
+    .cancel {
+        background:
+            rgba(255,255,255,0.08);
+
+        color: #ccc;
+    }
+
+
+    .capacity-note {
+        padding: 12px;
+
+        margin-top: 8px;
+
+        border-radius: 8px;
+
+        background:
+            rgba(212,175,55,0.07);
+
+        color: #aaa;
+
+        font-size: 12px;
+
+        line-height: 1.5;
+    }
+
+
+    @media (max-width:600px) {
+
+        .show-admin-card {
+            padding: 25px 20px;
+        }
+
+        .two-columns {
+            grid-template-columns: 1fr;
+        }
+
+        .buttons {
+            flex-direction: column;
+        }
+
+    }
+
+</style>
+
+
+<section class="show-admin-page">
+
+    <div class="show-admin-container">
+
+        <div class="show-admin-card">
+
+            {% if show %}
+
+                <h1>
+                    Edit Show
+                </h1>
+
+                <p class="subtitle">
+                    Update theatre, date, price or capacity.
+                </p>
+
+                <form
+                    method="POST"
+                    action="{{ url_for(
+                        'booking_admin_edit_show',
+                        show_id=show['id']
+                    ) }}"
+                >
+
+            {% else %}
+
+                <h1>
+                    Add New Show
+                </h1>
+
+                <p class="subtitle">
+                    Create a new C&C theatre screening.
+                </p>
+
+                <form
+                    method="POST"
+                    action="{{ url_for(
+                        'booking_admin_add_show'
+                    ) }}"
+                >
+
+            {% endif %}
+
+
+                <div class="form-group">
+
+                    <label for="title">
+                        Show Title *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        value="{{ show['title'] if show else 'C&C – Chiru & Charu' }}"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="theatre">
+                        Theatre *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="theatre"
+                        name="theatre"
+                        value="{{ show['theatre'] if show else '' }}"
+                        placeholder="Example: PVR Orion Mall"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="location">
+                        Location *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="location"
+                        name="location"
+                        value="{{ show['location'] if show else '' }}"
+                        placeholder="Example: Bengaluru"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="two-columns">
+
+                    <div class="form-group">
+
+                        <label for="show_date">
+                            Show Date *
+                        </label>
+
+                        <input
+                            type="date"
+                            id="show_date"
+                            name="show_date"
+                            value="{{ show['show_date'] if show else '' }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="show_time">
+                            Show Time *
+                        </label>
+
+                        <input
+                            type="time"
+                            id="show_time"
+                            name="show_time"
+                            value="{{ show['show_time'] if show else '' }}"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="two-columns">
+
+                    <div class="form-group">
+
+                        <label for="ticket_price">
+                            Ticket Price (₹) *
+                        </label>
+
+                        <input
+                            type="number"
+                            id="ticket_price"
+                            name="ticket_price"
+                            min="0"
+                            step="1"
+                            value="{{ show['ticket_price'] if show else '150' }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="capacity">
+                            Total Capacity *
+                        </label>
+
+                        <input
+                            type="number"
+                            id="capacity"
+                            name="capacity"
+                            min="1"
+                            value="{{ show['capacity'] if show else '100' }}"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                {% if show %}
+
+                    <div class="capacity-note">
+
+                        Existing bookings are protected.
+
+                        Capacity cannot be reduced below the
+                        number of currently
+                        <strong>PENDING</strong> or
+                        <strong>CONFIRMED</strong> tickets.
+
+                    </div>
+
+                {% endif %}
+
+
+                <div class="form-group"
+                     style="margin-top:20px;">
+
+                    <label for="payment_link">
+                        Payment Link (Optional)
+                    </label>
+
+                    <input
+                        type="url"
+                        id="payment_link"
+                        name="payment_link"
+                        value="{{ show['payment_link'] if show else '' }}"
+                        placeholder="https://..."
+                    >
+
+                </div>
+
+
+                <div class="buttons">
+
+                    <button
+                        type="submit"
+                        class="btn save"
+                    >
+                        {% if show %}
+                            Save Changes
+                        {% else %}
+                            Add Show
+                        {% endif %}
+                    </button>
+
+
+                    <a
+                        href="{{ url_for('booking_admin') }}"
+                        class="btn cancel"
+                    >
+                        Cancel
+                    </a>
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
+

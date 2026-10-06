@@ -1,0 +1,456 @@
+{% extends "base.html" %}
+
+{% block title %}Complete Payment | C&C - Chiru & Charu | Home Entertainments{% endblock %}
+
+{% block content %}
+
+<style>
+    body {
+        background: #050505;
+        color: #fff;
+        margin: 0;
+    }
+
+    .payment-page {
+        min-height: 100vh;
+        padding: 110px 20px 80px;
+        background:
+            radial-gradient(circle at 20% 10%, rgba(212, 175, 55, 0.12), transparent 35%),
+            radial-gradient(circle at 80% 40%, rgba(212, 175, 55, 0.08), transparent 35%),
+            #050505;
+    }
+
+    .payment-container {
+        width: min(900px, 100%);
+        margin: 0 auto;
+    }
+
+    .payment-header {
+        text-align: center;
+        margin-bottom: 35px;
+    }
+
+    .kicker {
+        color: #d4af37;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+    }
+
+    .payment-header h1 {
+        margin: 0;
+        font-size: clamp(32px, 5vw, 52px);
+        font-weight: 800;
+    }
+
+    .payment-header p {
+        color: #aaa;
+        margin-top: 12px;
+        font-size: 16px;
+    }
+
+    .payment-card {
+        background: rgba(255, 255, 255, 0.045);
+        border: 1px solid rgba(212, 175, 55, 0.25);
+        border-radius: 24px;
+        padding: 30px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(14px);
+    }
+
+    .booking-summary {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+        margin-bottom: 30px;
+    }
+
+    .summary-item {
+        background: rgba(255, 255, 255, 0.035);
+        border-radius: 14px;
+        padding: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .summary-label {
+        color: #888;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 6px;
+    }
+
+    .summary-value {
+        font-size: 16px;
+        font-weight: 600;
+        color: #fff;
+    }
+
+    .amount-box {
+        text-align: center;
+        padding: 25px;
+        margin: 25px 0;
+        border-radius: 18px;
+        background: linear-gradient(
+            135deg,
+            rgba(212, 175, 55, 0.13),
+            rgba(212, 175, 55, 0.04)
+        );
+        border: 1px solid rgba(212, 175, 55, 0.3);
+    }
+
+    .amount-label {
+        color: #aaa;
+        font-size: 13px;
+        margin-bottom: 5px;
+    }
+
+    .amount {
+        color: #d4af37;
+        font-size: 38px;
+        font-weight: 800;
+    }
+
+    .upi-section {
+        text-align: center;
+        padding: 25px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.035);
+        margin-bottom: 25px;
+    }
+
+    .upi-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .upi-id {
+        display: inline-block;
+        padding: 10px 16px;
+        border-radius: 10px;
+        background: #111;
+        border: 1px solid rgba(212, 175, 55, 0.3);
+        color: #d4af37;
+        font-weight: 700;
+        margin-bottom: 18px;
+        word-break: break-all;
+    }
+
+    .pay-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 230px;
+        padding: 15px 24px;
+        border-radius: 12px;
+        border: none;
+        background: #d4af37;
+        color: #050505;
+        font-weight: 800;
+        font-size: 16px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: 0.25s ease;
+    }
+
+    .pay-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(212, 175, 55, 0.25);
+    }
+
+    .instruction {
+        margin-top: 18px;
+        color: #999;
+        font-size: 13px;
+        line-height: 1.7;
+    }
+
+    .utr-section {
+        margin-top: 30px;
+        padding-top: 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .utr-section h2 {
+        font-size: 22px;
+        margin-bottom: 8px;
+    }
+
+    .utr-section p {
+        color: #999;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .utr-form {
+        margin-top: 20px;
+    }
+
+    .utr-form label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .utr-form input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 14px 15px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: #101010;
+        color: #fff;
+        outline: none;
+        font-size: 15px;
+    }
+
+    .utr-form input:focus {
+        border-color: #d4af37;
+    }
+
+    .submit-button {
+        margin-top: 15px;
+        width: 100%;
+        padding: 15px;
+        border: none;
+        border-radius: 11px;
+        background: #fff;
+        color: #050505;
+        font-weight: 800;
+        font-size: 15px;
+        cursor: pointer;
+        transition: 0.25s ease;
+    }
+
+    .submit-button:hover {
+        background: #d4af37;
+    }
+
+    .warning {
+        margin-top: 20px;
+        padding: 14px 16px;
+        border-radius: 12px;
+        background: rgba(255, 180, 0, 0.06);
+        border: 1px solid rgba(255, 180, 0, 0.18);
+        color: #bbb;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    .back-link {
+        display: block;
+        text-align: center;
+        margin-top: 25px;
+        color: #888;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .back-link:hover {
+        color: #d4af37;
+    }
+
+    @media (max-width: 600px) {
+        .payment-page {
+            padding: 90px 15px 60px;
+        }
+
+        .payment-card {
+            padding: 20px;
+            border-radius: 18px;
+        }
+
+        .booking-summary {
+            grid-template-columns: 1fr;
+        }
+
+        .amount {
+            font-size: 32px;
+        }
+    }
+</style>
+
+<div class="payment-page">
+
+    <div class="payment-container">
+
+        <div class="payment-header">
+            <div class="kicker">C&C • THEATRICAL SCREENING</div>
+
+            <h1>Complete Your Booking</h1>
+
+            <p>
+                Pay securely using UPI and submit your UTR to confirm your booking.
+            </p>
+        </div>
+
+
+        <div class="payment-card">
+
+            <div class="booking-summary">
+
+                <div class="summary-item">
+                    <div class="summary-label">Booking ID</div>
+                    <div class="summary-value">
+                        {{ booking["booking_code"] }}
+                    </div>
+                </div>
+
+                <div class="summary-item">
+                    <div class="summary-label">Customer</div>
+                    <div class="summary-value">
+                        {{ booking["customer_name"] }}
+                    </div>
+                </div>
+
+                <div class="summary-item">
+                    <div class="summary-label">Show</div>
+                    <div class="summary-value">
+                        {{ show["title"] }}
+                    </div>
+                </div>
+
+                <div class="summary-item">
+                    <div class="summary-label">Theatre</div>
+                    <div class="summary-value">
+                        {{ show["theatre"] }}
+                    </div>
+                </div>
+
+                <div class="summary-item">
+                    <div class="summary-label">Date</div>
+                    <div class="summary-value">
+                        {{ show["show_date"] }}
+                    </div>
+                </div>
+
+                <div class="summary-item">
+                    <div class="summary-label">Time</div>
+                    <div class="summary-value">
+                        {{ show["show_time"] }}
+                    </div>
+                </div>
+
+                <div class="summary-item">
+                    <div class="summary-label">Tickets</div>
+                    <div class="summary-value">
+                        {{ booking["quantity"] }}
+                    </div>
+                </div>
+
+                <div class="summary-item">
+                    <div class="summary-label">Ticket Price</div>
+                    <div class="summary-value">
+                        ₹{{ "%.2f"|format(show["ticket_price"]) }}
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="amount-box">
+
+                <div class="amount-label">
+                    Total Amount to Pay
+                </div>
+
+                <div class="amount">
+                    ₹{{ "%.2f"|format(booking["total_amount"]) }}
+                </div>
+
+            </div>
+
+
+            <div class="upi-section">
+
+                <div class="upi-title">
+                    Pay using UPI
+                </div>
+
+                <div class="upi-id">
+                    {{ upi_id }}
+                </div>
+
+                <br>
+
+                <a
+                    href="{{ upi_url }}"
+                    class="pay-button"
+                >
+                    Pay ₹{{ "%.2f"|format(booking["total_amount"]) }} via UPI
+                </a>
+
+                <div class="instruction">
+                    Tap the button above to open your UPI app.
+                    Complete the payment for the exact amount shown above.
+                </div>
+
+            </div>
+
+
+            <div class="utr-section">
+
+                <h2>Already Paid?</h2>
+
+                <p>
+                    After completing the UPI payment, enter the UTR /
+                    Transaction Reference Number below.
+                    Our team will verify the payment before confirming your booking.
+                </p>
+
+                <form method="POST"
+      action="{{ url_for('submit_booking_payment', booking_id=booking['id']) }}">
+
+                    <label for="utr">
+                        UTR / Transaction Reference Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="utr"
+                        name="utr"
+                        placeholder="Enter your UTR number"
+                        minlength="6"
+                        maxlength="100"
+                        required
+                        autocomplete="off"
+                    >
+
+                    <button
+                        type="submit"
+                        class="submit-button"
+                    >
+                        Submit Payment Details
+                    </button>
+
+                </form>
+
+                <div class="warning">
+                    ⚠️ Your booking is temporarily reserved for
+                    <strong>{{ pending_minutes }} minutes</strong>.
+                    Please complete the payment and submit your UTR within this
+                    time. Once the UTR is submitted, your booking will remain
+                    reserved while our team verifies the payment.
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('booking') }}"
+            class="back-link"
+        >
+            ← Back to Shows
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

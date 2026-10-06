@@ -1,0 +1,938 @@
+{% extends "base.html" %}
+
+{% block title %}Book Tickets | C&C - Chiru & Charu | Home Entertainments{% endblock %}
+
+{% block content %}
+
+<style>
+    body {
+        background-color: #050505;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* =========================================================
+       BOOKING PAGE
+    ========================================================= */
+
+    .booking-page {
+        position: relative;
+        min-height: calc(100vh - 100px);
+        padding: 110px 20px 80px;
+        overflow: hidden;
+
+        background:
+            radial-gradient(
+                circle at 15% 15%,
+                rgba(212, 175, 55, 0.10),
+                transparent 32%
+            ),
+            radial-gradient(
+                circle at 85% 80%,
+                rgba(212, 175, 55, 0.07),
+                transparent 35%
+            ),
+            #050505;
+    }
+
+    /* =========================================================
+       BACKGROUND GLOW
+    ========================================================= */
+
+    .booking-page::before {
+        content: "";
+        position: absolute;
+        width: 420px;
+        height: 420px;
+        top: -180px;
+        right: -150px;
+
+        background: rgba(212, 175, 55, 0.06);
+        filter: blur(90px);
+        border-radius: 50%;
+        pointer-events: none;
+    }
+
+    .booking-page::after {
+        content: "";
+        position: absolute;
+        width: 350px;
+        height: 350px;
+        bottom: -180px;
+        left: -150px;
+
+        background: rgba(212, 175, 55, 0.04);
+        filter: blur(90px);
+        border-radius: 50%;
+        pointer-events: none;
+    }
+
+    /* =========================================================
+       CONTAINER
+    ========================================================= */
+
+    .booking-container {
+        position: relative;
+        z-index: 2;
+
+        width: 100%;
+        max-width: 1150px;
+        margin: auto;
+    }
+
+    /* =========================================================
+       HERO
+    ========================================================= */
+
+    .booking-hero {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 48px;
+    }
+
+    .booking-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+
+        padding: 7px 15px;
+
+        border: 1px solid rgba(212, 175, 55, 0.25);
+        border-radius: 30px;
+
+        background: rgba(212, 175, 55, 0.06);
+
+        color: #d4af37;
+
+        font-size: 11px;
+        font-weight: 700;
+
+        letter-spacing: 2px;
+        text-transform: uppercase;
+
+        margin-bottom: 18px;
+    }
+
+    .booking-kicker::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+
+        background: #d4af37;
+        border-radius: 50%;
+
+        box-shadow: 0 0 10px rgba(212, 175, 55, 0.7);
+    }
+
+    .booking-hero h1 {
+        margin: 0;
+
+        font-size: clamp(38px, 6vw, 64px);
+        line-height: 1.05;
+
+        font-weight: 800;
+        letter-spacing: -1.5px;
+
+        background: linear-gradient(
+            90deg,
+            #b8860b,
+            #d4af37,
+            #f4df9b,
+            #d4af37,
+            #b8860b
+        );
+
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .booking-hero .subtitle {
+        max-width: 650px;
+
+        margin: 18px auto 0;
+
+        color: #a5a5a5;
+
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+    .booking-hero .subtitle strong {
+        color: #fff;
+        font-weight: 600;
+    }
+
+    /* =========================================================
+       FRIENDSHIP MESSAGE
+    ========================================================= */
+
+    .friendship-message {
+        max-width: 680px;
+        margin: 0 auto 38px;
+
+        padding: 15px 20px;
+
+        text-align: center;
+
+        border-left: 2px solid #d4af37;
+        border-right: 2px solid #d4af37;
+
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(212, 175, 55, 0.04),
+            transparent
+        );
+
+        color: #b8b8b8;
+
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .friendship-message strong {
+        color: #d4af37;
+    }
+
+    /* =========================================================
+       SHOW GRID
+    ========================================================= */
+
+    .show-grid {
+        display: grid;
+
+        grid-template-columns:
+            repeat(auto-fit, minmax(320px, 1fr));
+
+        gap: 28px;
+    }
+
+    /* =========================================================
+       SHOW CARD
+    ========================================================= */
+
+    .show-card {
+        position: relative;
+
+        padding: 0;
+
+        overflow: hidden;
+
+        border-radius: 22px;
+
+        background:
+            linear-gradient(
+                145deg,
+                rgba(255,255,255,0.065),
+                rgba(255,255,255,0.025)
+            );
+
+        border: 1px solid rgba(212, 175, 55, 0.18);
+
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+
+        box-shadow:
+            0 20px 60px rgba(0,0,0,0.35);
+
+        transition:
+            transform 0.35s ease,
+            border-color 0.35s ease,
+            box-shadow 0.35s ease;
+    }
+
+    .show-card:hover {
+        transform: translateY(-7px);
+
+        border-color: rgba(212, 175, 55, 0.55);
+
+        box-shadow:
+            0 25px 70px rgba(0,0,0,0.5),
+            0 0 35px rgba(212,175,55,0.08);
+    }
+
+    /* =========================================================
+       CARD TOP
+    ========================================================= */
+
+    .show-card-top {
+        padding: 28px 28px 20px;
+
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .show-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+
+        padding: 6px 11px;
+
+        border-radius: 20px;
+
+        background: rgba(212,175,55,0.09);
+
+        color: #d4af37;
+
+        font-size: 10px;
+        font-weight: 700;
+
+        letter-spacing: 1.4px;
+        text-transform: uppercase;
+    }
+
+    .show-badge::before {
+        content: "●";
+        font-size: 7px;
+    }
+
+    .show-card h2 {
+        margin: 18px 0 0;
+
+        color: #fff;
+
+        font-size: 25px;
+        line-height: 1.25;
+
+        font-weight: 700;
+    }
+
+    /* =========================================================
+       SHOW INFORMATION
+    ========================================================= */
+
+    .show-info {
+        padding: 22px 28px 5px;
+
+        display: flex;
+        flex-direction: column;
+
+        gap: 15px;
+    }
+
+    .show-info-row {
+        display: flex;
+        align-items: center;
+
+        gap: 13px;
+
+        color: #c5c5c5;
+
+        font-size: 14px;
+    }
+
+    .show-info-row .icon {
+        width: 34px;
+        height: 34px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex-shrink: 0;
+
+        border-radius: 9px;
+
+        background: rgba(212,175,55,0.07);
+
+        border: 1px solid rgba(212,175,55,0.12);
+
+        font-size: 16px;
+    }
+
+    .show-info-row .info-content {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .show-info-row .label {
+        color: #666;
+
+        font-size: 10px;
+
+        text-transform: uppercase;
+
+        letter-spacing: 1px;
+    }
+
+    .show-info-row .value {
+        color: #ddd;
+
+        font-size: 14px;
+    }
+
+    /* =========================================================
+       PRICE + SEATS
+    ========================================================= */
+
+    .price-section {
+        display: flex;
+
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 15px;
+
+        margin: 20px 28px;
+
+        padding: 18px;
+
+        border-radius: 14px;
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(212,175,55,0.09),
+                rgba(212,175,55,0.025)
+            );
+
+        border: 1px solid rgba(212,175,55,0.14);
+    }
+
+    .price-label {
+        color: #777;
+
+        font-size: 10px;
+
+        letter-spacing: 1.2px;
+
+        text-transform: uppercase;
+
+        margin-bottom: 4px;
+    }
+
+    .price {
+        color: #f1d592;
+
+        font-size: 28px;
+
+        font-weight: 800;
+    }
+
+    .availability {
+        text-align: right;
+
+        font-size: 12px;
+        line-height: 1.5;
+
+        color: #8fd694;
+    }
+
+    .availability .seat-icon {
+        display: block;
+
+        font-size: 18px;
+
+        margin-bottom: 2px;
+    }
+
+    .sold-out {
+        color: #ff7777;
+        font-weight: 700;
+    }
+
+    /* =========================================================
+       BOOK BUTTON
+    ========================================================= */
+
+    .book-area {
+        padding: 0 28px 28px;
+    }
+
+    .book-btn {
+        position: relative;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        width: 100%;
+
+        min-height: 52px;
+
+        border: none;
+        border-radius: 12px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #b8860b,
+                #d4af37,
+                #f1d592
+            );
+
+        color: #080808;
+
+        text-decoration: none;
+
+        font-size: 15px;
+
+        font-weight: 800;
+
+        letter-spacing: 0.5px;
+
+        overflow: hidden;
+
+        transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease;
+    }
+
+    .book-btn::after {
+        content: "";
+
+        position: absolute;
+
+        top: 0;
+        left: -100%;
+
+        width: 70%;
+        height: 100%;
+
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,0.35),
+            transparent
+        );
+
+        transform: skewX(-20deg);
+
+        transition: left 0.6s ease;
+    }
+
+    .book-btn:hover::after {
+        left: 140%;
+    }
+
+    .book-btn:hover {
+        color: #000;
+
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 10px 30px rgba(212,175,55,0.28);
+    }
+
+    .book-btn:active {
+        transform: scale(0.98);
+    }
+
+    .book-btn.disabled {
+        background: #292929;
+
+        color: #777;
+
+        cursor: not-allowed;
+
+        pointer-events: none;
+
+        box-shadow: none;
+    }
+
+    /* =========================================================
+       BOTTOM MESSAGE
+    ========================================================= */
+
+    .booking-note {
+        margin-top: 42px;
+
+        text-align: center;
+
+        color: #666;
+
+        font-size: 12px;
+
+        line-height: 1.7;
+    }
+
+    .booking-note span {
+        color: #d4af37;
+    }
+
+    /* =========================================================
+       EMPTY STATE
+    ========================================================= */
+
+    .empty-state {
+        max-width: 650px;
+
+        margin: 30px auto 0;
+
+        padding: 65px 30px;
+
+        text-align: center;
+
+        border-radius: 22px;
+
+        background: rgba(255,255,255,0.025);
+
+        border: 1px solid rgba(212,175,55,0.14);
+    }
+
+    .empty-icon {
+        width: 70px;
+        height: 70px;
+
+        margin: 0 auto 22px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 50%;
+
+        background: rgba(212,175,55,0.07);
+
+        border: 1px solid rgba(212,175,55,0.18);
+
+        font-size: 28px;
+    }
+
+    .empty-state h2 {
+        margin-bottom: 10px;
+
+        color: #fff;
+
+        font-size: 25px;
+    }
+
+    .empty-state p {
+        margin: 0;
+
+        color: #777;
+
+        font-size: 14px;
+    }
+
+    /* =========================================================
+       MOBILE
+    ========================================================= */
+
+    @media (max-width: 700px) {
+
+        .booking-page {
+            padding: 42px 15px 60px;
+        }
+
+        .booking-hero {
+            margin-bottom: 35px;
+        }
+
+        .booking-hero h1 {
+            font-size: 40px;
+            letter-spacing: -1px;
+        }
+
+        .booking-hero .subtitle {
+            font-size: 14px;
+        }
+
+        .friendship-message {
+            font-size: 13px;
+
+            margin-bottom: 30px;
+
+            padding: 12px 15px;
+        }
+
+        .show-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .show-card-top {
+            padding: 23px 22px 18px;
+        }
+
+        .show-info {
+            padding: 20px 22px 5px;
+        }
+
+        .price-section {
+            margin: 18px 22px;
+        }
+
+        .book-area {
+            padding: 0 22px 22px;
+        }
+    }
+
+    @media (max-width: 380px) {
+
+        .booking-hero h1 {
+            font-size: 34px;
+        }
+
+        .price {
+            font-size: 24px;
+        }
+
+        .show-card h2 {
+            font-size: 22px;
+        }
+    }
+</style>
+
+
+<section class="booking-page">
+
+    <div class="booking-container">
+
+        <!-- HERO -->
+        <div class="booking-hero">
+
+            <div class="booking-kicker">
+                C&C • THEATRICAL SCREENING
+            </div>
+
+            <h1>
+                Book Your Seat
+            </h1>
+
+            <p class="subtitle">
+                Experience
+                <strong>C&C (Chiru & Charu)</strong>
+                on the big screen —
+                with your friends, your memories and your college gang. ❤️
+            </p>
+
+        </div>
+
+
+        <!-- FRIENDSHIP MESSAGE -->
+        <div class="friendship-message">
+
+            <strong>Don't come alone.</strong>
+            Bring your best friend, your college gang
+            and make a memory worth remembering. 🎬❤️
+
+        </div>
+
+
+        <!-- SHOWS -->
+        {% if shows %}
+
+            <div class="show-grid">
+
+                {% for show in shows %}
+
+                    <div class="show-card">
+
+                        <!-- CARD HEADER -->
+                        <div class="show-card-top">
+
+                            <span class="show-badge">
+                                LIVE SHOW
+                            </span>
+
+                            <h2>
+                                {{ show["title"] }}
+                            </h2>
+
+                        </div>
+
+
+                        <!-- SHOW DETAILS -->
+                        <div class="show-info">
+
+                            <div class="show-info-row">
+
+                                <span class="icon">
+                                    🎬
+                                </span>
+
+                                <div class="info-content">
+
+                                    <span class="label">
+                                        Theatre
+                                    </span>
+
+                                    <span class="value">
+                                        {{ show["theatre"] }}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="show-info-row">
+
+                                <span class="icon">
+                                    📍
+                                </span>
+
+                                <div class="info-content">
+
+                                    <span class="label">
+                                        Location
+                                    </span>
+
+                                    <span class="value">
+                                        {{ show["location"] }}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="show-info-row">
+
+                                <span class="icon">
+                                    📅
+                                </span>
+
+                                <div class="info-content">
+
+                                    <span class="label">
+                                        Date
+                                    </span>
+
+                                    <span class="value">
+                                        {{ show["show_date"] }}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="show-info-row">
+
+                                <span class="icon">
+                                    ⏰
+                                </span>
+
+                                <div class="info-content">
+
+                                    <span class="label">
+                                        Showtime
+                                    </span>
+
+                                    <span class="value">
+                                        {{ show["show_time"] }}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- PRICE + AVAILABILITY -->
+                        <div class="price-section">
+
+                            <div>
+
+                                <div class="price-label">
+                                    Ticket Price
+                                </div>
+
+                                <div class="price">
+                                    ₹{{ "%.0f"|format(show["ticket_price"]) }}
+                                </div>
+
+                            </div>
+
+
+                            <div class="availability">
+
+                                {% if show["available"] > 0 %}
+
+                                    <span class="seat-icon">
+                                        🎟️
+                                    </span>
+
+                                    {{ show["available"] }} seats available
+
+                                {% else %}
+
+                                    <span class="sold-out">
+                                        SOLD OUT
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- BUTTON -->
+                        <div class="book-area">
+
+                            {% if show["available"] > 0 %}
+
+                                <a
+                                    href="{{ url_for('book_show', show_id=show['id']) }}"
+                                    class="book-btn"
+                                >
+                                    🎟️ &nbsp; Book My Tickets
+                                </a>
+
+                            {% else %}
+
+                                <a class="book-btn disabled">
+                                    SOLD OUT
+                                </a>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- BOTTOM NOTE -->
+            <div class="booking-note">
+
+                🎬
+                <span>C&C (Chiru & Charu)</span>
+                &nbsp;•&nbsp;
+                A Home Entertainments presentation
+
+                <br>
+
+                Seats are limited.
+                Book your tickets early and enjoy the show with your friends. ❤️
+
+            </div>
+
+
+        {% else %}
+
+            <!-- EMPTY STATE -->
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    🎬
+                </div>
+
+                <h2>
+                    Shows Coming Soon
+                </h2>
+
+                <p>
+                    Ticket bookings are not available yet.
+                    Stay connected with us for the screening announcement.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}
