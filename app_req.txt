@@ -8,3 +8,4 @@ python-dotenv
 google_auth_oauthlib
 gunicorn
 psycopg[binary]
+razorpay

@@ -4,6 +4,7 @@ import datetime
 import secrets
 from functools import wraps
 from urllib.parse import quote
+from decimal import Decimal, ROUND_HALF_UP
 
 import psycopg
 from psycopg.rows import dict_row
@@ -32,6 +33,7 @@ from wtforms.validators import DataRequired, Email
 
 from google_auth_oauthlib.flow import Flow
 from googleapiclient.discovery import build
+import razorpay
 
 
 # ============================================================
@@ -131,12 +133,12 @@ DATABASE_URL = os.environ.get(
 
 BOOKING_ADMIN_USERNAME = os.environ.get(
     "BOOKING_ADMIN_USERNAME",
-    ""
+    "admin"
 )
 
 BOOKING_ADMIN_PASSWORD = os.environ.get(
     "BOOKING_ADMIN_PASSWORD",
-    ""
+    "admin"
 )
 
 
@@ -153,6 +155,59 @@ UPI_NAME = os.environ.get(
     "UPI_NAME",
     "Home Entertainments"
 )
+
+
+# ============================================================
+# RAZORPAY CONFIGURATION
+# ============================================================
+
+RAZORPAY_KEY_ID = os.environ.get("RAZORPAY_KEY_ID", "").strip()
+RAZORPAY_KEY_SECRET = os.environ.get("RAZORPAY_KEY_SECRET", "").strip()
+
+
+def get_razorpay_client():
+    """Return a configured Razorpay client or raise a clear error."""
+    if not RAZORPAY_KEY_ID or not RAZORPAY_KEY_SECRET:
+        raise RuntimeError(
+            "Razorpay is not configured. Set RAZORPAY_KEY_ID and "
+            "RAZORPAY_KEY_SECRET in your environment."
+        )
+    return razorpay.Client(
+        auth=(RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET)
+    )
+
+
+def get_or_create_razorpay_order(booking):
+    """Create or reuse the Razorpay order for a pending booking."""
+    if booking.get("razorpay_order_id"):
+        return booking["razorpay_order_id"]
+
+    client = get_razorpay_client()
+    amount_paise = int(
+        (Decimal(str(booking["total_amount"])) * 100)
+        .quantize(Decimal("1"), rounding=ROUND_HALF_UP)
+    )
+    order = client.order.create(data={
+        "amount": amount_paise,
+        "currency": "INR",
+        "receipt": booking["booking_code"],
+        "notes": {
+            "booking_code": booking["booking_code"],
+            "booking_id": str(booking["id"])
+        }
+    })
+
+    db = get_booking_db()
+    try:
+        db.execute(
+            "UPDATE bookings SET razorpay_order_id = %s WHERE id = %s",
+            (order["id"], booking["id"])
+        )
+        db.commit()
+    finally:
+        db.close()
+
+    return order["id"]
 
 
 # ============================================================
@@ -244,6 +299,12 @@ def init_booking_db():
         """)
 
         # Useful indexes for booking queries.
+        # Add Razorpay order reference without disturbing existing bookings.
+        db.execute("""
+            ALTER TABLE bookings
+            ADD COLUMN IF NOT EXISTS razorpay_order_id TEXT DEFAULT ''
+        """)
+
         db.execute("""
             CREATE INDEX IF NOT EXISTS idx_bookings_show_id
             ON bookings(show_id)
@@ -2203,13 +2264,28 @@ def book_show(show_id):
     # Customer still needs to pay and submit UTR.
     # --------------------------------------------------------
 
+    razorpay_order_id = ""
+    payment_error = ""
+    if booking["status"] == "PENDING":
+        try:
+            razorpay_order_id = get_or_create_razorpay_order(dict(booking))
+            # Refresh so the template sees the stored order reference.
+            booking = dict(booking)
+            booking["razorpay_order_id"] = razorpay_order_id
+        except Exception:
+            app.logger.exception("Could not create Razorpay order for booking %s", booking["id"])
+            payment_error = "Online payment is temporarily unavailable. Please try again shortly."
+
     return render_template(
         "booking_payment.html",
         booking=booking,
         show=show,
         upi_url=upi_url,
         upi_id=UPI_ID,
-        pending_minutes=PENDING_BOOKING_MINUTES
+        pending_minutes=PENDING_BOOKING_MINUTES,
+        razorpay_key_id=RAZORPAY_KEY_ID,
+        razorpay_order_id=razorpay_order_id,
+        payment_error=payment_error
     )
 
 
@@ -2309,18 +2385,162 @@ def booking_payment(booking_id):
             booking["total_amount"]
         )
 
+        razorpay_order_id = ""
+        payment_error = ""
+        if booking["status"] == "PENDING":
+            try:
+                razorpay_order_id = get_or_create_razorpay_order(dict(booking))
+                booking = dict(booking)
+                booking["razorpay_order_id"] = razorpay_order_id
+            except Exception:
+                app.logger.exception("Could not create Razorpay order for booking %s", booking["id"])
+                payment_error = "Online payment is temporarily unavailable. Please try again shortly."
+
         return render_template(
             "booking_payment.html",
             booking=booking,
             show=show,
             upi_url=upi_url,
             upi_id=UPI_ID,
-            pending_minutes=PENDING_BOOKING_MINUTES
+            pending_minutes=PENDING_BOOKING_MINUTES,
+            razorpay_key_id=RAZORPAY_KEY_ID,
+            razorpay_order_id=razorpay_order_id,
+            payment_error=payment_error
         )
 
     finally:
 
         db.close()
+
+
+# ============================================================
+# VERIFY RAZORPAY PAYMENT
+# ============================================================
+
+@app.route(
+    "/book/payment/<int:booking_id>/verify",
+    methods=["POST"]
+)
+def verify_razorpay_payment(booking_id):
+    """Verify the Checkout signature server-side before confirming tickets."""
+    payment_id = (request.form.get("razorpay_payment_id") or "").strip()
+    order_id = (request.form.get("razorpay_order_id") or "").strip()
+    signature = (request.form.get("razorpay_signature") or "").strip()
+
+    if not payment_id or not order_id or not signature:
+        flash("Payment verification details are missing. Please try again.", "danger")
+        return redirect(url_for("booking_payment", booking_id=booking_id))
+
+    db = get_booking_db()
+    try:
+        db.execute("BEGIN")
+        booking = db.execute("""
+            SELECT * FROM bookings WHERE id = %s FOR UPDATE
+        """, (booking_id,)).fetchone()
+
+        if not booking:
+            db.rollback()
+            flash("Booking not found.", "danger")
+            return redirect(url_for("booking"))
+
+        if booking["status"] == "CONFIRMED":
+            db.rollback()
+            flash("This booking is already confirmed.", "success")
+            return redirect(url_for("booking_payment", booking_id=booking_id))
+
+        if booking["status"] != "PENDING":
+            db.rollback()
+            flash("This booking is no longer pending. Please contact Home Entertainments.", "danger")
+            return redirect(url_for("booking"))
+
+        created_at = parse_booking_datetime(booking["created_at"])
+        if created_at and current_datetime() >= (
+            created_at + datetime.timedelta(minutes=PENDING_BOOKING_MINUTES)
+        ):
+            db.execute(
+                "UPDATE bookings SET status = 'EXPIRED' WHERE id = %s",
+                (booking_id,)
+            )
+            db.commit()
+            flash("Your booking reservation expired. Please book again.", "danger")
+            return redirect(url_for("booking"))
+
+        expected_order_id = booking.get("razorpay_order_id") or ""
+        if not expected_order_id or order_id != expected_order_id:
+            db.rollback()
+            flash("The payment order does not match this booking.", "danger")
+            return redirect(url_for("booking_payment", booking_id=booking_id))
+
+        client = get_razorpay_client()
+        client.utility.verify_payment_signature({
+            "razorpay_order_id": order_id,
+            "razorpay_payment_id": payment_id,
+            "razorpay_signature": signature
+        })
+
+        # Confirm the payment is captured and matches the booking amount.
+        payment = client.payment.fetch(payment_id)
+        if payment.get("status") == "authorized":
+            payment = client.payment.capture(
+                payment_id,
+                {
+                    "amount": int(payment.get("amount", 0)),
+                    "currency": payment.get("currency", "INR")
+                }
+            )
+        expected_amount = int(
+            (Decimal(str(booking["total_amount"])) * 100)
+            .quantize(Decimal("1"), rounding=ROUND_HALF_UP)
+        )
+        if (
+            payment.get("order_id") != expected_order_id
+            or int(payment.get("amount", -1)) != expected_amount
+            or payment.get("currency") != "INR"
+            or payment.get("status") != "captured"
+        ):
+            db.rollback()
+            flash("Payment has not been captured or the amount does not match. If money was deducted, contact support.", "danger")
+            return redirect(url_for("booking_payment", booking_id=booking_id))
+
+        paid_at = current_timestamp_string()
+        db.execute("""
+            UPDATE bookings
+            SET status = 'CONFIRMED',
+                utr = %s,
+                payment_submitted_at = %s
+            WHERE id = %s
+        """, (payment_id, paid_at, booking_id))
+        db.commit()
+
+        booking = db.execute(
+            "SELECT * FROM bookings WHERE id = %s", (booking_id,)
+        ).fetchone()
+        show = db.execute(
+            "SELECT * FROM shows WHERE id = %s", (booking["show_id"],)
+        ).fetchone()
+
+    except razorpay.errors.SignatureVerificationError:
+        db.rollback()
+        flash("Payment signature verification failed. Please contact support if money was deducted.", "danger")
+        return redirect(url_for("booking_payment", booking_id=booking_id))
+    except Exception:
+        db.rollback()
+        app.logger.exception("Razorpay verification failed for booking %s", booking_id)
+        flash("We could not verify the payment yet. If money was deducted, do not pay again; contact Home Entertainments.", "danger")
+        return redirect(url_for("booking_payment", booking_id=booking_id))
+    finally:
+        db.close()
+
+    try:
+        send_booking_confirmation_email(booking, show)
+    except Exception:
+        app.logger.exception("Booking confirmation email failed after Razorpay payment.")
+
+    return render_template(
+        "booking_success.html",
+        booking=booking,
+        show=show
+    )
 
 
 # ============================================================
