@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
-{% block title %}Complete Payment | C&C - Chiru & Charu | Home Entertainments{% endblock %}
+{% block title %}
+Complete Payment | C&C - Chiru & Charu | Home Entertainments
+{% endblock %}
 
 {% block content %}
 
@@ -15,8 +17,16 @@
         min-height: 100vh;
         padding: 110px 20px 80px;
         background:
-            radial-gradient(circle at 20% 10%, rgba(212, 175, 55, 0.12), transparent 35%),
-            radial-gradient(circle at 80% 40%, rgba(212, 175, 55, 0.08), transparent 35%),
+            radial-gradient(
+                circle at 20% 10%,
+                rgba(212, 175, 55, 0.12),
+                transparent 35%
+            ),
+            radial-gradient(
+                circle at 80% 40%,
+                rgba(212, 175, 55, 0.08),
+                transparent 35%
+            ),
             #050505;
     }
 
@@ -43,12 +53,14 @@
         margin: 0;
         font-size: clamp(32px, 5vw, 52px);
         font-weight: 800;
+        line-height: 1.1;
     }
 
     .payment-header p {
         color: #aaa;
         margin-top: 12px;
         font-size: 16px;
+        line-height: 1.6;
     }
 
     .payment-card {
@@ -86,11 +98,12 @@
         font-size: 16px;
         font-weight: 600;
         color: #fff;
+        word-break: break-word;
     }
 
     .amount-box {
         text-align: center;
-        padding: 25px;
+        padding: 28px;
         margin: 25px 0;
         border-radius: 18px;
         background: linear-gradient(
@@ -109,42 +122,49 @@
 
     .amount {
         color: #d4af37;
-        font-size: 38px;
+        font-size: 40px;
         font-weight: 800;
     }
 
-    .upi-section {
+    .razorpay-section {
         text-align: center;
-        padding: 25px;
+        padding: 30px 25px;
         border-radius: 18px;
         background: rgba(255, 255, 255, 0.035);
         margin-bottom: 25px;
     }
 
-    .upi-title {
-        font-size: 18px;
+    .razorpay-title {
+        font-size: 20px;
         font-weight: 700;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
     }
 
-    .upi-id {
-        display: inline-block;
-        padding: 10px 16px;
-        border-radius: 10px;
-        background: #111;
-        border: 1px solid rgba(212, 175, 55, 0.3);
-        color: #d4af37;
-        font-weight: 700;
-        margin-bottom: 18px;
-        word-break: break-all;
+    .razorpay-description {
+        color: #999;
+        font-size: 14px;
+        line-height: 1.7;
+        max-width: 620px;
+        margin: 0 auto 22px;
+    }
+
+    .error-alert {
+        background: rgba(239, 68, 68, 0.15);
+        border: 1px solid rgba(239, 68, 68, 0.4);
+        color: #fca5a5;
+        padding: 14px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        font-size: 14px;
     }
 
     .pay-button {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-width: 230px;
-        padding: 15px 24px;
+        gap: 10px;
+        min-width: 260px;
+        padding: 16px 26px;
         border-radius: 12px;
         border: none;
         background: #d4af37;
@@ -153,7 +173,7 @@
         font-size: 16px;
         text-decoration: none;
         cursor: pointer;
-        transition: 0.25s ease;
+        transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
     }
 
     .pay-button:hover {
@@ -161,73 +181,66 @@
         box-shadow: 0 10px 30px rgba(212, 175, 55, 0.25);
     }
 
-    .instruction {
-        margin-top: 18px;
-        color: #999;
-        font-size: 13px;
-        line-height: 1.7;
+    .pay-button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
     }
 
-    .utr-section {
-        margin-top: 30px;
-        padding-top: 30px;
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
+    .lock-icon {
+        font-size: 17px;
     }
 
-    .utr-section h2 {
-        font-size: 22px;
-        margin-bottom: 8px;
+    .secure-note {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 16px;
+        color: #888;
+        font-size: 12px;
+        line-height: 1.5;
     }
 
-    .utr-section p {
-        color: #999;
-        font-size: 14px;
-        line-height: 1.6;
+    .secure-note strong {
+        color: #aaa;
     }
 
-    .utr-form {
+    .payment-methods {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
         margin-top: 20px;
     }
 
-    .utr-form label {
-        display: block;
-        margin-bottom: 8px;
-        font-size: 14px;
+    .method {
+        padding: 7px 12px;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.025);
+        color: #888;
+        font-size: 11px;
         font-weight: 600;
     }
 
-    .utr-form input {
-        width: 100%;
-        box-sizing: border-box;
-        padding: 14px 15px;
-        border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        background: #101010;
-        color: #fff;
-        outline: none;
-        font-size: 15px;
-    }
-
-    .utr-form input:focus {
-        border-color: #d4af37;
-    }
-
-    .submit-button {
-        margin-top: 15px;
-        width: 100%;
+    .timer-box {
+        margin-top: 25px;
         padding: 15px;
-        border: none;
-        border-radius: 11px;
-        background: #fff;
-        color: #050505;
+        border-radius: 12px;
+        background: rgba(255, 180, 0, 0.05);
+        border: 1px solid rgba(255, 180, 0, 0.15);
+        text-align: center;
+        color: #aaa;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    .timer {
+        color: #d4af37;
         font-weight: 800;
         font-size: 15px;
-        cursor: pointer;
-        transition: 0.25s ease;
-    }
-
-    .submit-button:hover {
-        background: #d4af37;
     }
 
     .warning {
@@ -236,7 +249,7 @@
         border-radius: 12px;
         background: rgba(255, 180, 0, 0.06);
         border: 1px solid rgba(255, 180, 0, 0.18);
-        color: #bbb;
+        color: #aaa;
         font-size: 13px;
         line-height: 1.6;
     }
@@ -248,10 +261,65 @@
         color: #888;
         text-decoration: none;
         font-size: 14px;
+        transition: 0.2s ease;
     }
 
     .back-link:hover {
         color: #d4af37;
+    }
+
+    .payment-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.82);
+        backdrop-filter: blur(8px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 99999;
+        padding: 20px;
+    }
+
+    .payment-overlay.active {
+        display: flex;
+    }
+
+    .processing-card {
+        width: min(420px, 100%);
+        padding: 35px 25px;
+        text-align: center;
+        border-radius: 20px;
+        background: #111;
+        border: 1px solid rgba(212, 175, 55, 0.25);
+        box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6);
+    }
+
+    .spinner {
+        width: 42px;
+        height: 42px;
+        margin: 0 auto 20px;
+        border-radius: 50%;
+        border: 3px solid rgba(255, 255, 255, 0.12);
+        border-top-color: #d4af37;
+        animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .processing-card h3 {
+        margin: 0 0 8px;
+        font-size: 20px;
+    }
+
+    .processing-card p {
+        margin: 0;
+        color: #999;
+        font-size: 13px;
+        line-height: 1.6;
     }
 
     @media (max-width: 600px) {
@@ -271,186 +339,237 @@
         .amount {
             font-size: 32px;
         }
+
+        .razorpay-section {
+            padding: 25px 15px;
+        }
+
+        .pay-button {
+            width: 100%;
+            min-width: 0;
+        }
     }
 </style>
 
-<div class="payment-page">
+<!-- Razorpay Checkout Script -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
+<div class="payment-page">
     <div class="payment-container">
 
         <div class="payment-header">
             <div class="kicker">C&C • THEATRICAL SCREENING</div>
-
             <h1>Complete Your Booking</h1>
-
-            <p>
-                Pay securely using UPI and submit your UTR to confirm your booking.
-            </p>
+            <p>Your seats are reserved temporarily. Complete payment via Razorpay to confirm your tickets.</p>
         </div>
-
 
         <div class="payment-card">
 
-            <div class="booking-summary">
+            {% if payment_error %}
+            <div class="error-alert">
+                ⚠️ {{ payment_error }}
+            </div>
+            {% endif %}
 
+            <div class="booking-summary">
                 <div class="summary-item">
                     <div class="summary-label">Booking ID</div>
-                    <div class="summary-value">
-                        {{ booking["booking_code"] }}
-                    </div>
+                    <div class="summary-value">{{ booking["booking_code"] }}</div>
                 </div>
 
                 <div class="summary-item">
                     <div class="summary-label">Customer</div>
-                    <div class="summary-value">
-                        {{ booking["customer_name"] }}
-                    </div>
+                    <div class="summary-value">{{ booking["customer_name"] }}</div>
                 </div>
 
                 <div class="summary-item">
                     <div class="summary-label">Show</div>
-                    <div class="summary-value">
-                        {{ show["title"] }}
-                    </div>
+                    <div class="summary-value">{{ show["title"] }}</div>
                 </div>
 
                 <div class="summary-item">
                     <div class="summary-label">Theatre</div>
-                    <div class="summary-value">
-                        {{ show["theatre"] }}
-                    </div>
+                    <div class="summary-value">{{ show["theatre"] }}</div>
+                </div>
+
+                <div class="summary-item">
+                    <div class="summary-label">Location</div>
+                    <div class="summary-value">{{ show["location"] }}</div>
                 </div>
 
                 <div class="summary-item">
                     <div class="summary-label">Date</div>
-                    <div class="summary-value">
-                        {{ show["show_date"] }}
-                    </div>
+                    <div class="summary-value">{{ show["show_date"] }}</div>
                 </div>
 
                 <div class="summary-item">
                     <div class="summary-label">Time</div>
-                    <div class="summary-value">
-                        {{ show["show_time"] }}
-                    </div>
+                    <div class="summary-value">{{ show["show_time"] }}</div>
                 </div>
 
                 <div class="summary-item">
                     <div class="summary-label">Tickets</div>
-                    <div class="summary-value">
-                        {{ booking["quantity"] }}
-                    </div>
+                    <div class="summary-value">{{ booking["quantity"] }}</div>
                 </div>
 
                 <div class="summary-item">
                     <div class="summary-label">Ticket Price</div>
-                    <div class="summary-value">
-                        ₹{{ "%.2f"|format(show["ticket_price"]) }}
-                    </div>
+                    <div class="summary-value">₹{{ "%.2f"|format(show["ticket_price"]) }}</div>
                 </div>
-
             </div>
-
 
             <div class="amount-box">
-
-                <div class="amount-label">
-                    Total Amount to Pay
-                </div>
-
-                <div class="amount">
-                    ₹{{ "%.2f"|format(booking["total_amount"]) }}
-                </div>
-
+                <div class="amount-label">Total Amount to Pay</div>
+                <div class="amount">₹{{ "%.2f"|format(booking["total_amount"]) }}</div>
             </div>
 
-
-            <div class="upi-section">
-
-                <div class="upi-title">
-                    Pay using UPI
+            <div class="razorpay-section">
+                <div class="razorpay-title">Secure Online Payment</div>
+                <div class="razorpay-description">
+                    Pay securely using Razorpay gateway. Supports UPI, Google Pay, PhonePe, Debit/Credit Cards, and Net Banking.
                 </div>
 
-                <div class="upi-id">
-                    {{ upi_id }}
-                </div>
-
-                <br>
-
-                <a
-                    href="{{ upi_url }}"
+                <button
+                    type="button"
+                    id="payButton"
                     class="pay-button"
+                    onclick="startRazorpayPayment()"
                 >
-                    Pay ₹{{ "%.2f"|format(booking["total_amount"]) }} via UPI
-                </a>
+                    <span class="lock-icon">🔒</span>
+                    Pay ₹{{ "%.2f"|format(booking["total_amount"]) }}
+                </button>
 
-                <div class="instruction">
-                    Tap the button above to open your UPI app.
-                    Complete the payment for the exact amount shown above.
+                <div class="secure-note">
+                    🔐 <span>Secure payment powered by <strong>Razorpay</strong></span>
                 </div>
 
+                <div class="payment-methods">
+                    <span class="method">UPI</span>
+                    <span class="method">GPay / PhonePe</span>
+                    <span class="method">Cards</span>
+                    <span class="method">Net Banking</span>
+                    <span class="method">Wallets</span>
+                </div>
             </div>
 
+            <div class="timer-box">
+                Your booking is temporarily reserved for <span class="timer">{{ pending_minutes }} minutes</span>.<br>
+                Please complete your payment before the reservation expires.
+            </div>
 
-            <div class="utr-section">
-
-                <h2>Already Paid?</h2>
-
-                <p>
-                    After completing the UPI payment, enter the UTR /
-                    Transaction Reference Number below.
-                    Our team will verify the payment before confirming your booking.
-                </p>
-
-                <form method="POST"
-      action="{{ url_for('submit_booking_payment', booking_id=booking['id']) }}">
-
-                    <label for="utr">
-                        UTR / Transaction Reference Number
-                    </label>
-
-                    <input
-                        type="text"
-                        id="utr"
-                        name="utr"
-                        placeholder="Enter your UTR number"
-                        minlength="6"
-                        maxlength="100"
-                        required
-                        autocomplete="off"
-                    >
-
-                    <button
-                        type="submit"
-                        class="submit-button"
-                    >
-                        Submit Payment Details
-                    </button>
-
-                </form>
-
-                <div class="warning">
-                    ⚠️ Your booking is temporarily reserved for
-                    <strong>{{ pending_minutes }} minutes</strong>.
-                    Please complete the payment and submit your UTR within this
-                    time. Once the UTR is submitted, your booking will remain
-                    reserved while our team verifies the payment.
-                </div>
-
+            <div class="warning">
+                ⚠️ <strong>Important:</strong> Do not refresh or close this page while payment verification is in progress.
             </div>
 
         </div>
 
-
-        <a
-            href="{{ url_for('booking') }}"
-            class="back-link"
-        >
+        <a href="{{ url_for('booking_page') }}" class="back-link">
             ← Back to Shows
         </a>
 
     </div>
-
 </div>
+
+<div id="paymentOverlay" class="payment-overlay">
+    <div class="processing-card">
+        <div class="spinner"></div>
+        <h3>Verifying Your Payment</h3>
+        <p>Please wait while we securely verify your payment with Razorpay...</p>
+    </div>
+</div>
+
+<form
+    id="paymentVerifyForm"
+    method="POST"
+    action="{{ url_for('verify_razorpay_payment', booking_id=booking['id']) }}"
+    style="display:none;"
+>
+    <input type="hidden" name="razorpay_payment_id" id="razorpay_payment_id">
+    <input type="hidden" name="razorpay_order_id" id="razorpay_order_id">
+    <input type="hidden" name="razorpay_signature" id="razorpay_signature">
+</form>
+
+<script>
+    const razorpayKeyId = "{{ razorpay_key_id }}";
+    const razorpayOrderId = "{{ razorpay_order_id }}";
+    const razorpayAmount = {{ razorpay_amount_paise or 0 }};
+    const bookingCode = "{{ booking['booking_code']|e }}";
+
+    function startRazorpayPayment() {
+        const payButton = document.getElementById("payButton");
+        const overlay = document.getElementById("paymentOverlay");
+
+        if (!razorpayKeyId || razorpayKeyId === "None" || razorpayKeyId === "") {
+            alert("Payment Gateway Key ID is missing. Please set RAZORPAY_KEY_ID in environment variables.");
+            return;
+        }
+
+        if (!razorpayOrderId || razorpayOrderId === "None" || razorpayOrderId === "") {
+            alert("Order ID was not generated properly. Please try booking again.");
+            return;
+        }
+
+        payButton.disabled = true;
+        payButton.innerHTML = "Opening Secure Payment...";
+
+        const options = {
+            key: razorpayKeyId,
+            amount: razorpayAmount,
+            currency: "INR",
+            name: "Home Entertainments",
+            description: "{{ show['title']|e }} - Theatre Booking",
+            order_id: razorpayOrderId,
+            prefill: {
+                name: "{{ booking['customer_name']|e }}",
+                email: "{{ booking['email']|e }}",
+                contact: "{{ booking['phone']|e }}"
+            },
+            notes: {
+                booking_code: bookingCode
+            },
+            theme: {
+                color: "#d4af37"
+            },
+            modal: {
+                escape: true,
+                backdropclose: false,
+                ondismiss: function() {
+                    payButton.disabled = false;
+                    payButton.innerHTML = '<span class="lock-icon">🔒</span> Pay ₹{{ "%.2f"|format(booking["total_amount"]) }}';
+                }
+            },
+            handler: function(response) {
+                document.getElementById("razorpay_payment_id").value = response.razorpay_payment_id;
+                document.getElementById("razorpay_order_id").value = response.razorpay_order_id;
+                document.getElementById("razorpay_signature").value = response.razorpay_signature;
+
+                overlay.classList.add("active");
+                document.getElementById("paymentVerifyForm").submit();
+            }
+        };
+
+        try {
+            const razorpay = new Razorpay(options);
+
+            razorpay.on("payment.failed", function(response) {
+                payButton.disabled = false;
+                payButton.innerHTML = '<span class="lock-icon">🔒</span> Pay ₹{{ "%.2f"|format(booking["total_amount"]) }}';
+                
+                let message = "Payment failed. Please try again.";
+                if (response && response.error && response.error.description) {
+                    message = response.error.description;
+                }
+                alert(message);
+            });
+
+            razorpay.open();
+        } catch (error) {
+            console.error("Razorpay Error:", error);
+            payButton.disabled = false;
+            payButton.innerHTML = '<span class="lock-icon">🔒</span> Pay ₹{{ "%.2f"|format(booking["total_amount"]) }}';
+            alert("Unable to open Razorpay payment gateway. Please verify your internet connection or try again.");
+        }
+    }
+</script>
 
 {% endblock %}
