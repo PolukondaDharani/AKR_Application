@@ -1900,25 +1900,36 @@ def razorpay_webhook():
 def booking_success(booking_id):
     with get_db() as db:
         booking = db.execute("""
-            SELECT
-                b.*,
-                s.title,
-                s.theatre,
-                s.location,
-                s.show_date,
-                s.show_time,
-                s.ticket_price
-            FROM bookings b
-            JOIN shows s
-                ON s.id = b.show_id
-            WHERE b.id = %s
+            SELECT *
+            FROM bookings
+            WHERE id = %s
         """, (booking_id,)).fetchone()
 
-    if not booking:
-        flash("Booking not found.", "danger")
-        return redirect(url_for("booking_page"))
+        if not booking:
+            flash("Booking not found.", "danger")
+            return redirect(url_for("booking_page"))
 
-    return render_template("booking_success.html", booking=booking)
+        if booking["status"] != "CONFIRMED":
+            flash("Payment is not confirmed yet.", "warning")
+            return redirect(
+                url_for("booking_payment", booking_id=booking_id)
+            )
+
+        show = db.execute("""
+            SELECT *
+            FROM shows
+            WHERE id = %s
+        """, (booking["show_id"],)).fetchone()
+
+        if not show:
+            flash("Show details not found.", "danger")
+            return redirect(url_for("booking_page"))
+
+    return render_template(
+        "booking_success.html",
+        booking=booking,
+        show=show
+    )
 
 
 # ============================================================
