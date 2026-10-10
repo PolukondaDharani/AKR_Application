@@ -99,7 +99,7 @@ os.makedirs(
 
 DATABASE_URL = os.environ.get(
     "DATABASE_URL",
-    "postgresql://homeentertainments:VkyHnTGzXj6kfielnFyZhQzi7IFbyPWd@dpg-db2obiu7bikc73acnpe0-a.oregon-postgres.render.com/homeentertainmentsdb"
+    ""
 )
 
 BOOKING_ADMIN_USERNAME = os.environ.get(
