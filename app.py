@@ -99,7 +99,7 @@ os.makedirs(
 
 DATABASE_URL = os.environ.get(
     "DATABASE_URL",
-    ""
+    "postgresql://homeentertainments:VkyHnTGzXj6kfielnFyZhQzi7IFbyPWd@dpg-db2obiu7bikc73acnpe0-a.oregon-postgres.render.com/homeentertainmentsdb"
 )
 
 BOOKING_ADMIN_USERNAME = os.environ.get(
@@ -1373,8 +1373,14 @@ def book_show(show_id):
             )
             db.commit()
 
+            # FIX: Add available seats to the show dictionary
+            # show["available_seats"] = available_seats
+            # show["available"] = available_seats
+
+
             return render_template(
-                "booking.html",
+                "book_show.html",
+                # shows=[show],
                 show=show,
                 available_seats=available_seats,
                 available=available_seats
