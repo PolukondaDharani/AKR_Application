@@ -3,547 +3,381 @@
 {% block title %}Book Tickets | {{ show["title"] }}{% endblock %}
 
 {% block content %}
-
 <style>
-
-    .booking-form-page {
-        min-height: 80vh;
-        padding: 70px 20px;
-
-        background:
-            radial-gradient(
-                circle at top right,
-                rgba(212,175,55,0.08),
-                transparent 35%
-            ),
-            radial-gradient(
-                circle at bottom left,
-                rgba(212,175,55,0.05),
-                transparent 35%
-            );
-    }
-
-
-    .booking-form-container {
-        max-width: 850px;
-        margin: auto;
-    }
-
-
-    .booking-back {
-        display: inline-block;
-        margin-bottom: 25px;
-
-        color: #aaa;
-        text-decoration: none;
-        font-size: 14px;
-    }
-
-
-    .booking-back:hover {
-        color: #d4af37;
-    }
-
-
-    .booking-card {
-        background: rgba(255,255,255,0.04);
-
-        border: 1px solid
-            rgba(212,175,55,0.25);
-
-        border-radius: 20px;
-
-        padding: 35px;
-
-        backdrop-filter: blur(12px);
-
-        box-shadow:
-            0 20px 50px
-            rgba(0,0,0,0.25);
-    }
-
-
-    .booking-title {
-        color: #d4af37;
-        font-size: 34px;
-        margin: 0 0 8px;
-    }
-
-
-    .booking-subtitle {
-        color: #aaa;
-        margin-bottom: 30px;
-    }
-
-
-    .show-details {
-        display: grid;
-
-        grid-template-columns:
-            repeat(auto-fit, minmax(180px, 1fr));
-
-        gap: 15px;
-
-        margin-bottom: 35px;
-    }
-
-
-    .detail-box {
-        padding: 16px;
-
-        border-radius: 12px;
-
-        background:
-            rgba(212,175,55,0.06);
-
-        border: 1px solid
-            rgba(212,175,55,0.12);
-    }
-
-
-    .detail-label {
-        display: block;
-
-        color: #888;
-
-        font-size: 12px;
-
-        margin-bottom: 6px;
-    }
-
-
-    .detail-value {
-        color: #fff;
-
-        font-size: 15px;
-
-        font-weight: 600;
-    }
-
-
-    .available-box {
-        padding: 15px;
-
-        margin-bottom: 30px;
-
-        border-radius: 10px;
-
-        text-align: center;
-
-        background:
-            rgba(143,214,148,0.08);
-
-        border: 1px solid
-            rgba(143,214,148,0.2);
-
-        color: #8fd694;
-    }
-
-
-    .form-group {
-        margin-bottom: 22px;
-    }
-
-
-    .form-group label {
-        display: block;
-
-        color: #ddd;
-
-        margin-bottom: 8px;
-
-        font-size: 14px;
-    }
-
-
-    .form-group input {
-        width: 100%;
-
-        padding: 14px;
-
-        border-radius: 9px;
-
-        border: 1px solid
-            rgba(255,255,255,0.14);
-
-        background:
-            rgba(0,0,0,0.25);
-
-        color: #fff;
-
-        font-size: 15px;
-
-        outline: none;
-    }
-
-
-    .form-group input:focus {
-        border-color: #d4af37;
-
-        box-shadow:
-            0 0 0 2px
-            rgba(212,175,55,0.12);
-    }
-
-
-    .quantity-row {
-        display: grid;
-
-        grid-template-columns:
-            1fr 1fr;
-
-        gap: 20px;
-    }
-
-
-    .total-box {
-        margin: 25px 0;
-
-        padding: 20px;
-
-        border-radius: 12px;
-
-        background:
-            rgba(212,175,55,0.08);
-
-        border: 1px solid
-            rgba(212,175,55,0.18);
-
-        display: flex;
-
-        justify-content: space-between;
-
-        align-items: center;
-    }
-
-
-    .total-label {
-        color: #aaa;
-    }
-
-
-    .total-amount {
-        color: #d4af37;
-
-        font-size: 25px;
-
-        font-weight: 700;
-    }
-
-
-    .submit-btn {
-        width: 100%;
-
-        padding: 15px;
-
-        border: none;
-
-        border-radius: 10px;
-
-        background:
-            linear-gradient(
-                135deg,
-                #d4af37,
-                #b89020
-            );
-
-        color: #111;
-
-        font-size: 16px;
-
-        font-weight: 700;
-
-        cursor: pointer;
-
-        transition: 0.25s ease;
-    }
-
-
-    .submit-btn:hover {
-        transform: translateY(-2px);
-
-        box-shadow:
-            0 8px 20px
-            rgba(212,175,55,0.25);
-    }
-
-
-    @media (max-width:600px) {
-
-        .booking-form-page {
-            padding: 45px 15px;
-        }
-
-        .booking-card {
-            padding: 25px 20px;
-        }
-
-        .booking-title {
-            font-size: 28px;
-        }
-
-        .quantity-row {
-            grid-template-columns: 1fr;
-        }
-    }
-
+/* =========================================================
+   GLOBAL RESET & VARIABLES
+   ========================================================= */
+html,
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #000000 !important;
+    overflow-x: hidden;
+}
+
+:root {
+    --gold-light: #fff8ce;
+    --gold-soft: #f1d592;
+    --gold: #d4af37;
+    --gold-dark: #8f6817;
+    --gold-glow: rgba(212,175,55,0.14);
+    --gold-border: rgba(212,175,55,0.22);
+    --white: #ffffff;
+    --muted: rgba(255,255,255,0.58);
+}
+
+.booking-form-page * { 
+    box-sizing: border-box; 
+}
+
+/* =========================================================
+   BOOKING PAGE WRAPPER
+   ========================================================= */
+.booking-form-page {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    padding: 125px 20px 60px;
+    background: 
+        radial-gradient(circle at 85% 8%, rgba(212, 175, 55, .10), transparent 30%),
+        radial-gradient(circle at 10% 90%, rgba(212, 175, 55, .05), transparent 35%),
+        linear-gradient(135deg, #080808 0%, #11110f 55%, #080808 100%);
+    color: var(--white);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    overflow: hidden;
+}
+
+.booking-form-container { 
+    max-width: 980px; 
+    margin: 0 auto; 
+    position: relative;
+    z-index: 2;
+}
+
+.booking-form-page .booking-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin: 0 0 24px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: color .2s ease, transform .2s ease;
+}
+
+.booking-form-page .booking-back:hover {
+    color: var(--gold-soft);
+    transform: translateX(-3px);
+}
+
+/* =========================================================
+   BOOKING CARD
+   ========================================================= */
+.booking-card {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(145deg, rgba(24, 24, 24, .98), rgba(13, 13, 13, .98));
+    border: 1px solid var(--gold-border);
+    border-radius: 20px;
+    padding: clamp(24px, 4vw, 44px);
+    box-shadow: 0 24px 65px rgba(0, 0, 0, .48), inset 0 1px 0 rgba(255, 255, 255, .035);
+}
+
+.booking-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), #f2d675, var(--gold), transparent);
+}
+
+.booking-title {
+    background: linear-gradient(to bottom, var(--gold-light) 0%, var(--gold-soft) 30%, var(--gold) 65%, var(--gold-dark) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: clamp(28px, 4vw, 40px);
+    line-height: 1.2;
+    font-weight: 750;
+    margin: 0 0 8px;
+    letter-spacing: -.7px;
+}
+
+.booking-subtitle { 
+    color: var(--muted); 
+    font-size: 17px; 
+    margin: 0 0 30px; 
+}
+
+.booking-subtitle::before {
+    content: "";
+    display: inline-block;
+    width: 24px; height: 2px;
+    margin: 0 9px 5px 0;
+    background: var(--gold);
+}
+
+/* =========================================================
+   SHOW DETAILS GRID
+   ========================================================= */
+.booking-show-details {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 25px;
+}
+
+.booking-detail-box {
+    min-width: 0;
+    padding: 18px 17px;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, .35);
+    border: 1px solid var(--gold-border);
+    transition: border-color .2s ease, transform .2s ease, background .2s ease;
+}
+
+.booking-detail-box:hover {
+    border-color: rgba(212, 175, 55, .55);
+    background: rgba(212, 175, 55, .045);
+    transform: translateY(-2px);
+}
+
+.booking-detail-label {
+    display: block;
+    color: var(--muted);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 9px;
+}
+
+.booking-detail-value {
+    display: block;
+    color: var(--white);
+    font-size: 15px;
+    font-weight: 650;
+    overflow-wrap: anywhere;
+}
+
+.booking-available-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 15px 18px;
+    margin-bottom: 30px;
+    border-radius: 12px;
+    text-align: center;
+    background: rgba(46, 213, 115, .07);
+    border: 1px solid rgba(46, 213, 115, .24);
+    color: #79df9d;
+    font-size: 15px;
+}
+
+.booking-available-box .ticket-symbol { font-size: 19px; }
+
+/* =========================================================
+   FORM STYLING
+   ========================================================= */
+.booking-form-group { margin-bottom: 21px; min-width: 0; }
+
+.booking-form-group label {
+    display: block;
+    color: #e0e0e0;
+    margin-bottom: 9px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.booking-form-group input {
+    display: block;
+    width: 100%;
+    min-height: 50px;
+    padding: 13px 15px;
+    border-radius: 9px;
+    border: 1px solid rgba(255, 255, 255, .13);
+    background: #090909;
+    color: var(--white);
+    font-size: 15px;
+    outline: none;
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.booking-form-group input::placeholder { color: #777; opacity: 1; }
+
+.booking-form-group input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, .13);
+}
+
+.booking-form-group input:disabled { opacity: .55; cursor: not-allowed; }
+
+.booking-contact-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+.booking-total-box {
+    margin: 27px 0 22px;
+    padding: 20px 22px;
+    border-radius: 12px;
+    background: linear-gradient(110deg, rgba(212, 175, 55, .12), rgba(0, 0, 0, .28));
+    border: 1px solid rgba(212, 175, 55, .32);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.booking-total-label { color: #c0c0c0; font-size: 14px; font-weight: 600; }
+.booking-total-amount { color: var(--gold-soft); font-size: clamp(24px, 4vw, 32px); font-weight: 750; }
+
+.booking-submit-btn {
+    display: block;
+    width: 100%;
+    min-height: 54px;
+    padding: 15px 20px;
+    border: 0;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #f0d46c 0%, var(--gold) 50%, #b89020 100%);
+    color: #101010;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: .2px;
+    cursor: pointer;
+    transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+    box-shadow: 0 7px 22px rgba(212, 175, 55, .16);
+}
+
+.booking-submit-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    filter: brightness(1.06);
+    box-shadow: 0 10px 28px rgba(212, 175, 55, .28);
+}
+
+.booking-submit-btn:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
+
+.booking-form-note { color: #858585; font-size: 12px; text-align: center; margin: 14px 0 0; }
+
+@media (max-width: 800px) {
+    .booking-show-details { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 600px) {
+    .booking-form-page { padding: 105px 14px 35px; }
+    .booking-card { border-radius: 15px; padding: 27px 19px; }
+    .booking-subtitle { margin-bottom: 24px; }
+    .booking-show-details { gap: 10px; }
+    .booking-detail-box { padding: 14px 12px; }
+    .booking-detail-value { font-size: 14px; }
+    .booking-contact-row { grid-template-columns: 1fr; gap: 0; }
+    .booking-total-box { padding: 17px; }
+}
 </style>
 
-
 <section class="booking-form-page">
-
     <div class="booking-form-container">
-
-        <a
-            href="{{ url_for('booking') }}"
-            class="booking-back"
-        >
-            ← Back to Shows
-        </a>
-
+        <a href="{{ url_for('booking') }}" class="booking-back">← <span>Back to Shows</span></a>
 
         <div class="booking-card">
+            <h1 class="booking-title">Book Your Tickets</h1>
+            <p class="booking-subtitle">{{ show["title"] }}</p>
 
-            <h1 class="booking-title">
-                Book Your Tickets
-            </h1>
-
-            <p class="booking-subtitle">
-                {{ show["title"] }}
-            </p>
-
-
-            <div class="show-details">
-
-                <div class="detail-box">
-
-                    <span class="detail-label">
-                        Theatre
-                    </span>
-
-                    <span class="detail-value">
-                        {{ show["theatre"] }}
-                    </span>
-
+            <div class="booking-show-details">
+                <div class="booking-detail-box">
+                    <span class="booking-detail-label">Theatre</span>
+                    <span class="booking-detail-value">{{ show["theatre"] }}</span>
                 </div>
-
-
-                <div class="detail-box">
-
-                    <span class="detail-label">
-                        Location
-                    </span>
-
-                    <span class="detail-value">
-                        {{ show["location"] }}
-                    </span>
-
+                <div class="booking-detail-box">
+                    <span class="booking-detail-label">Location</span>
+                    <span class="booking-detail-value">{{ show["location"] }}</span>
                 </div>
-
-
-                <div class="detail-box">
-
-                    <span class="detail-label">
-                        Date
-                    </span>
-
-                    <span class="detail-value">
-                        {{ show["show_date"] }}
-                    </span>
-
+                <div class="booking-detail-box">
+                    <span class="booking-detail-label">Date</span>
+                    <span class="booking-detail-value">{{ show["show_date"] }}</span>
                 </div>
-
-
-                <div class="detail-box">
-
-                    <span class="detail-label">
-                        Time
-                    </span>
-
-                    <span class="detail-value">
-                        {{ show["show_time"] }}
-                    </span>
-
+                <div class="booking-detail-box">
+                    <span class="booking-detail-label">Time</span>
+                    <span class="booking-detail-value">{{ show["show_time"] }}</span>
                 </div>
-
             </div>
 
-
-            <div class="available-box">
-
-                🎟️
-
-                <strong>
-                    {{ available }}
-                </strong>
-
-                tickets currently available
-
+            <div class="booking-available-box" role="status">
+                <span class="ticket-symbol">🎟️</span>
+                <span><strong>{{ available }}</strong> ticket{% if available != 1 %}s{% endif %} currently available</span>
             </div>
 
-
-            <form
-                method="POST"
-                action="{{ url_for('book_show', show_id=show['id']) }}"
-            >
-
-                <div class="form-group">
-
-                    <label for="customer_name">
-                        Full Name *
-                    </label>
-
-                    <input
-                        type="text"
-                        id="customer_name"
-                        name="customer_name"
-                        placeholder="Enter your full name"
-                        required
-                    >
-
+            <form method="POST" action="{{ url_for('book_show', show_id=show['id']) }}" id="bookingForm">
+                <div class="booking-form-group">
+                    <label for="customer_name">Full Name *</label>
+                    <input type="text" id="customer_name" name="customer_name"
+                           placeholder="Enter your full name" autocomplete="name"
+                           maxlength="120" required {% if available|int < 1 %}disabled{% endif %}>
                 </div>
 
-
-                <div class="quantity-row">
-
-                    <div class="form-group">
-
-                        <label for="phone">
-                            Phone Number *
-                        </label>
-
-                        <input
-                            type="tel"
-                            id="phone"
-                            name="phone"
-                            placeholder="Enter phone number"
-                            required
-                        >
-
+                <div class="booking-contact-row">
+                    <div class="booking-form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" name="phone"
+                               placeholder="Enter phone number" autocomplete="tel"
+                               maxlength="25" required {% if available|int < 1 %}disabled{% endif %}>
                     </div>
-
-
-                    <div class="form-group">
-
-                        <label for="email">
-                            Email Address *
-                        </label>
-
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            placeholder="Enter email address"
-                            required
-                        >
-
+                    <div class="booking-form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email"
+                               placeholder="Enter email address" autocomplete="email"
+                               maxlength="254" required {% if available|int < 1 %}disabled{% endif %}>
                     </div>
-
                 </div>
 
-
-                <div class="form-group">
-
-                    <label for="quantity">
-                        Number of Tickets *
-                    </label>
-
-                    <input
-                        type="number"
-                        id="quantity"
-                        name="quantity"
-                        min="1"
-                        max="{{ available }}"
-                        value="1"
-                        required
-                    >
-
+                <div class="booking-form-group">
+                    <label for="quantity">Number of Tickets *</label>
+                    <input type="number" id="quantity" name="quantity"
+                           min="1" max="{{ available }}" value="1"
+                           inputmode="numeric" required
+                           {% if available|int < 1 %}disabled{% endif %}>
                 </div>
 
-
-                <div class="total-box">
-
-                    <span class="total-label">
-                        Total Amount
-                    </span>
-
-                    <span
-                        class="total-amount"
-                        id="totalAmount"
-                    >
-                        ₹{{ "%.0f"|format(show["ticket_price"]) }}
-                    </span>
-
+                <div class="booking-total-box">
+                    <span class="booking-total-label">Total Amount</span>
+                    <span class="booking-total-amount" id="totalAmount"
+                          data-price="{{ show['ticket_price']|float }}">₹{{ "%.2f"|format(show["ticket_price"]|float) }}</span>
                 </div>
 
-
-                <button
-                    type="submit"
-                    class="submit-btn"
-                >
-                    🎟️ Confirm Booking
-                </button>
-
+                {% if available|int > 0 %}
+                    <button type="submit" class="booking-submit-btn">🎟️ Continue to Payment</button>
+                {% else %}
+                    <button type="button" class="booking-submit-btn" disabled>Sold Out</button>
+                {% endif %}
+                <p class="booking-form-note">Please check your show details before continuing to payment.</p>
             </form>
-
         </div>
-
     </div>
-
 </section>
 
-
 <script>
+(() => {
+    const quantityInput = document.getElementById("quantity");
+    const totalAmount = document.getElementById("totalAmount");
+    if (!quantityInput || !totalAmount) return;
 
-    const quantityInput =
-        document.getElementById("quantity");
-
-    const totalAmount =
-        document.getElementById("totalAmount");
-
-    const ticketPrice =
-        {{ show["ticket_price"]|float }};
-
+    const ticketPrice = Number(totalAmount.dataset.price || 0);
+    const maxTickets = Number(quantityInput.max || 0);
 
     function updateTotal() {
-
-        let quantity =
-            parseInt(quantityInput.value) || 0;
-
-        const max =
-            parseInt(quantityInput.max);
-
-
-        if (quantity < 1) {
-            quantity = 1;
+        let quantity = Number.parseInt(quantityInput.value, 10);
+        if (!Number.isFinite(quantity) || quantity < 1) {
+            totalAmount.textContent = "₹" + (ticketPrice).toFixed(2);
+            return;
         }
-
-        if (quantity > max) {
-            quantity = max;
+        if (maxTickets > 0 && quantity > maxTickets) {
+            quantity = maxTickets;
+            quantityInput.value = String(quantity);
         }
-
-
-        quantityInput.value = quantity;
-
-
-        const total =
-            ticketPrice * quantity;
-
-
-        totalAmount.textContent =
-            "₹" + total.toFixed(0);
+        totalAmount.textContent = "₹" + (ticketPrice * quantity).toFixed(2);
     }
 
-
-    quantityInput.addEventListener(
-        "input",
-        updateTotal
-    );
-
-
+    quantityInput.addEventListener("input", updateTotal);
+    quantityInput.addEventListener("change", updateTotal);
     updateTotal();
-
+})();
 </script>
-
 {% endblock %}
-
