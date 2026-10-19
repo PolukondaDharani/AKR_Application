@@ -795,8 +795,8 @@ def send_booking_confirmation_email(booking, show):
     status = booking["status"]
 
     if status == "CONFIRMED":
-        email_subject = f"C&C Booking Confirmed - {booking['booking_code']}"
-        main_message = "Your payment has been verified and your booking is confirmed."
+        email_subject = f"🎟️ Your Show Pass: {show['title']} (Booking ID: {booking['booking_code']})"
+        main_message = "Your payment has been verified successfully and your tickets are confirmed."
     elif status == "PAYMENT SUBMITTED":
         email_subject = f"C&C Payment Submitted - {booking['booking_code']}"
         main_message = "Your payment details have been submitted successfully. Our team will verify the payment and confirm your booking."
@@ -812,28 +812,101 @@ def send_booking_confirmation_email(booking, show):
 
     utr_value = booking["utr"] if booking.get("utr") else "Not submitted"
 
-    html = f"""
-    <div style="font-family:Arial,sans-serif;max-width:650px;margin:auto;">
-        <h2 style="color:#b89020;">Home Entertainments</h2>
-        <h3>C&C – Chiru & Charu | Booking</h3>
-        <p>Hi {escape(booking["customer_name"])},</p>
-        <p>{escape(main_message)}</p>
-        <table cellpadding="8" cellspacing="0" style="border-collapse:collapse;width:100%;">
-            <tr><td><strong>Booking ID</strong></td><td>{escape(booking["booking_code"])}</td></tr>
-            <tr><td><strong>Show</strong></td><td>{escape(show["title"])}</td></tr>
-            <tr><td><strong>Theatre</strong></td><td>{escape(show["theatre"])}</td></tr>
-            <tr><td><strong>Location</strong></td><td>{escape(show["location"])}</td></tr>
-            <tr><td><strong>Date</strong></td><td>{escape(show["show_date"])}</td></tr>
-            <tr><td><strong>Time</strong></td><td>{escape(show["show_time"])}</td></tr>
-            <tr><td><strong>Tickets</strong></td><td>{booking["quantity"]}</td></tr>
-            <tr><td><strong>Total</strong></td><td>₹{float(booking["total_amount"]):.2f}</td></tr>
-            <tr><td><strong>Status</strong></td><td>{escape(status)}</td></tr>
-            <tr><td><strong>UTR / Transaction ID</strong></td><td>{escape(utr_value)}</td></tr>
-        </table>
-        <p>Please keep your Booking ID for reference.</p>
-        <p>Regards,<br><strong>Home Entertainments</strong></p>
-    </div>
-    """
+    if status == "CONFIRMED":
+        html = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="utf-8">
+            <style>
+                body {{ background-color: #080808; color: #f5f5f5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; }}
+                .email-wrapper {{ max-width: 600px; margin: 0 auto; padding: 30px 15px; background-color: #080808; }}
+                .ticket-card {{ background: linear-gradient(145deg, #181818, #0d0d0d); border: 1px solid rgba(212,175,55,0.35); border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }}
+                .ticket-header {{ background: linear-gradient(135deg, #d4af37, #aa8c2c); color: #000; padding: 20px; text-align: center; font-weight: 800; font-size: 20px; letter-spacing: 1px; }}
+                .ticket-body {{ padding: 25px; }}
+                .show-title {{ color: #d4af37; font-size: 24px; font-weight: 750; margin: 0 0 15px 0; text-align: center; }}
+                .pass-code-box {{ background: rgba(212,175,55,0.08); border: 1px dashed rgba(212,175,55,0.5); border-radius: 10px; padding: 15px; text-align: center; margin-bottom: 20px; }}
+                .pass-label {{ display: block; font-size: 11px; color: #a6a6ad; letter-spacing: 1.2px; margin-bottom: 5px; }}
+                .pass-code {{ font-size: 22px; font-weight: 800; color: #f0d36d; letter-spacing: 1px; }}
+                .detail-table {{ width: 100%; border-collapse: collapse; margin-bottom: 20px; }}
+                .detail-table td {{ padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 14px; }}
+                .detail-label {{ color: #999; }}
+                .detail-val {{ color: #fff; font-weight: 600; text-align: right; }}
+                .footer-note {{ text-align: center; font-size: 12px; color: #777; margin-top: 20px; line-height: 1.5; }}
+            </style>
+        </head>
+        <body>
+            <div class="email-wrapper">
+                <div class="ticket-card">
+                    <div class="ticket-header">HOME ENTERTAINMENTS — DIGITAL PASS</div>
+                    <div class="ticket-body">
+                        <h2 class="show-title">{escape(show['title'])}</h2>
+                        
+                        <div class="pass-code-box">
+                            <span class="pass-label">BOOKING REFERENCE CODE</span>
+                            <span class="pass-code">{escape(booking['booking_code'])}</span>
+                        </div>
+
+                        <table class="detail-table">
+                            <tr>
+                                <td class="detail-label">Name</td>
+                                <td class="detail-val">{escape(booking['customer_name'])}</td>
+                            </tr>
+                            <tr>
+                                <td class="detail-label">Theatre</td>
+                                <td class="detail-val">{escape(show['theatre'])}</td>
+                            </tr>
+                            <tr>
+                                <td class="detail-label">Location</td>
+                                <td class="detail-val">{escape(show['location'])}</td>
+                            </tr>
+                            <tr>
+                                <td class="detail-label">Date & Time</td>
+                                <td class="detail-val">{escape(show['show_date'])} at {escape(show['show_time'])}</td>
+                            </tr>
+                            <tr>
+                                <td class="detail-label">Tickets Admitted</td>
+                                <td class="detail-val">{booking['quantity']}</td>
+                            </tr>
+                            <tr>
+                                <td class="detail-label">Total Amount Paid</td>
+                                <td class="detail-val">₹{float(booking['total_amount']):.2f}</td>
+                            </tr>
+                        </table>
+
+                        <div class="footer-note">
+                            Please present this digital pass or your Booking Reference Code at the venue entrance.<br>
+                            Enjoy the show!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </body>
+        </html>
+        """
+    else:
+        html = f"""
+        <div style="font-family:Arial,sans-serif;max-width:650px;margin:auto;">
+            <h2 style="color:#b89020;">Home Entertainments</h2>
+            <h3>C&C – Chiru & Charu | Booking</h3>
+            <p>Hi {escape(booking["customer_name"])},</p>
+            <p>{escape(main_message)}</p>
+            <table cellpadding="8" cellspacing="0" style="border-collapse:collapse;width:100%;">
+                <tr><td><strong>Booking ID</strong></td><td>{escape(booking["booking_code"])}</td></tr>
+                <tr><td><strong>Show</strong></td><td>{escape(show["title"])}</td></tr>
+                <tr><td><strong>Theatre</strong></td><td>{escape(show["theatre"])}</td></tr>
+                <tr><td><strong>Location</strong></td><td>{escape(show["location"])}</td></tr>
+                <tr><td><strong>Date</strong></td><td>{escape(show["show_date"])}</td></tr>
+                <tr><td><strong>Time</strong></td><td>{escape(show["show_time"])}</td></tr>
+                <tr><td><strong>Tickets</strong></td><td>{booking["quantity"]}</td></tr>
+                <tr><td><strong>Total</strong></td><td>₹{float(booking["total_amount"]):.2f}</td></tr>
+                <tr><td><strong>Status</strong></td><td>{escape(status)}</td></tr>
+                <tr><td><strong>UTR / Transaction ID</strong></td><td>{escape(utr_value)}</td></tr>
+            </table>
+            <p>Please keep your Booking ID for reference.</p>
+            <p>Regards,<br><strong>Home Entertainments</strong></p>
+        </div>
+        """
 
     resend.Emails.send({
         "from": RESEND_FROM_EMAIL,
