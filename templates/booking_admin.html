@@ -70,6 +70,30 @@
         font-size: 14px;
     }
 
+    .admin-header-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .clear-db-btn {
+        background-color: #dc2626;
+        color: #ffffff;
+        padding: 10px 16px;
+        border: 1px solid rgba(220, 38, 38, 0.4);
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 13px;
+        cursor: pointer;
+        transition: 0.25s ease;
+    }
+
+    .clear-db-btn:hover {
+        background-color: #b91c1c;
+        box-shadow: 0 4px 14px rgba(220, 38, 38, 0.35);
+    }
+
     .logout {
         color: #ff8888;
 
@@ -535,6 +559,11 @@
             align-items: flex-start;
         }
 
+        .admin-header-actions {
+            width: 100%;
+            justify-content: flex-start;
+        }
+
         .admin-header h1 {
             font-size: 28px;
         }
@@ -599,13 +628,22 @@
 
             </div>
 
+            <div class="admin-header-actions">
 
-            <a
-                href="{{ url_for('booking_admin_logout') }}"
-                class="logout"
-            >
-                Logout
-            </a>
+                <form action="{{ url_for('booking_admin_clear_all_data') }}" method="POST" style="margin: 0;" onsubmit="return confirm('⚠️ WARNING: This will permanently delete ALL shows and ALL booking data! This action cannot be undone. Are you sure you want to proceed?');">
+                    <button type="submit" class="clear-db-btn">
+                        🗑️ Clear Database
+                    </button>
+                </form>
+
+                <a
+                    href="{{ url_for('booking_admin_logout') }}"
+                    class="logout"
+                >
+                    Logout
+                </a>
+
+            </div>
 
         </div>
 

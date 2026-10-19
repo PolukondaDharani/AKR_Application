@@ -1446,14 +1446,8 @@ def book_show(show_id):
             )
             db.commit()
 
-            # FIX: Add available seats to the show dictionary
-            # show["available_seats"] = available_seats
-            # show["available"] = available_seats
-
-
             return render_template(
                 "book_show.html",
-                # shows=[show],
                 show=show,
                 available_seats=available_seats,
                 available=available_seats
@@ -1698,7 +1692,6 @@ def booking_payment(booking_id):
     )
 
 
-
 # ============================================================
 # SUBMIT UTR / PAYMENT
 # ============================================================
@@ -1868,6 +1861,18 @@ def verify_razorpay_payment(booking_id):
             ))
             db.commit()
 
+            updated_booking = db.execute(
+                "SELECT * FROM bookings WHERE id = %s", (booking_id,)
+            ).fetchone()
+            show = db.execute(
+                "SELECT * FROM shows WHERE id = %s", (updated_booking["show_id"],)
+            ).fetchone()
+
+        try:
+            send_booking_confirmation_email(updated_booking, show)
+        except Exception as e:
+            app.logger.exception("Razorpay confirmation email failed: %s", e)
+
         return redirect(url_for("booking_success", booking_id=booking_id))
 
     except razorpay.errors.SignatureVerificationError:
@@ -1957,6 +1962,18 @@ def razorpay_webhook():
                     booking["id"]
                 ))
                 db.commit()
+
+                updated_booking = db.execute(
+                    "SELECT * FROM bookings WHERE id = %s", (booking["id"],)
+                ).fetchone()
+                show = db.execute(
+                    "SELECT * FROM shows WHERE id = %s", (updated_booking["show_id"],)
+                ).fetchone()
+
+            try:
+                send_booking_confirmation_email(updated_booking, show)
+            except Exception as e:
+                app.logger.exception("Razorpay webhook confirmation email failed: %s", e)
 
         except Exception as e:
             app.logger.exception("Razorpay webhook error: %s", e)
@@ -2278,6 +2295,21 @@ def delete_booking_show(show_id):
 
 
 # ============================================================
+# CLEAR ALL DATABASE DATA
+# ============================================================
+
+@app.route("/admin/database/clear-all", methods=["POST"])
+@admin_required
+def booking_admin_clear_all_data():
+    with get_db() as db:
+        db.execute("TRUNCATE TABLE shows, bookings RESTART IDENTITY CASCADE;")
+        db.commit()
+
+    flash("All shows and bookings have been permanently deleted.", "warning")
+    return redirect(url_for("booking_admin"))
+
+
+# ============================================================
 # UPDATE BOOKING STATUS ROUTE
 # ============================================================
 
@@ -2317,6 +2349,18 @@ def booking_admin_update_booking_status(booking_id):
             WHERE id = %s
         """, (status, booking_id))
         db.commit()
+
+        updated_booking = db.execute(
+            "SELECT * FROM bookings WHERE id = %s", (booking_id,)
+        ).fetchone()
+        show = db.execute(
+            "SELECT * FROM shows WHERE id = %s", (updated_booking["show_id"],)
+        ).fetchone()
+
+    try:
+        send_booking_confirmation_email(updated_booking, show)
+    except Exception as e:
+        app.logger.exception("Admin status update email failed: %s", e)
 
     flash("Booking status updated.", "success")
     return redirect(url_for("booking_admin"))
