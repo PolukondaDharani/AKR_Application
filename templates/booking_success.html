@@ -116,6 +116,35 @@ body {
     overflow-wrap: anywhere; 
 }
 
+/* QR Code Display Styling */
+.qr-container {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.qr-box {
+    background: #ffffff;
+    padding: 12px;
+    border-radius: 8px;
+    display: inline-block;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.qr-label {
+    color: #a6a6ad;
+    font-size: 12px;
+    letter-spacing: 1.2px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
 .details { 
     text-align: left; 
     border: 1px solid rgba(255,255,255,.1); 
@@ -209,6 +238,9 @@ body {
 }
 </style>
 
+<!-- Load QRCode.js library from CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
 <section class="success-page">
     <div class="success-card">
         <div class="success-icon" aria-hidden="true">🎉</div>
@@ -220,6 +252,12 @@ body {
         <div class="booking-id">
             <span class="booking-id-label">YOUR BOOKING ID</span>
             <span class="booking-code">{{ booking["booking_code"] }}</span>
+        </div>
+
+        <!-- Dynamic QR Code Card Section -->
+        <div class="qr-container">
+            <span class="qr-label">Scan at Entrance Gate</span>
+            <div class="qr-box" id="qrcode"></div>
         </div>
 
         <div class="details">
@@ -235,7 +273,7 @@ body {
 
         <p class="success-note">
             A confirmation email will be sent to <strong>{{ booking["email"] }}</strong> if the email service is configured.
-            Please save your booking ID for reference.
+            Please show this QR code or your booking ID at the venue entrance.
         </p>
 
         <div class="buttons">
@@ -244,4 +282,21 @@ body {
         </div>
     </div>
 </section>
+
+<!-- Script to generate the QR code dynamically on page load -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const qrToken = "{{ booking.qr_token }}";
+        if (qrToken) {
+            new QRCode(document.getElementById("qrcode"), {
+                text: qrToken,
+                width: 170,
+                height: 170,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+    });
+</script>
 {% endblock %}

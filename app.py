@@ -169,91 +169,11 @@ def get_db():
 
 
 # ============================================================
-# DATABASE INITIALIZATION
+# QR TOKEN HELPER
 # ============================================================
 
-def init_booking_db():
-    """
-    Create booking tables and indexes if they do not exist.
-    """
-
-    db = get_booking_db()
-
-    try:
-
-        db.execute("""
-            CREATE TABLE IF NOT EXISTS shows (
-                id BIGSERIAL PRIMARY KEY,
-                title TEXT NOT NULL,
-                theatre TEXT NOT NULL,
-                location TEXT NOT NULL,
-                show_date TEXT NOT NULL,
-                show_time TEXT NOT NULL,
-                ticket_price NUMERIC(10, 2) NOT NULL DEFAULT 0,
-                capacity INTEGER NOT NULL DEFAULT 0,
-                payment_link TEXT DEFAULT '',
-                active INTEGER NOT NULL DEFAULT 1,
-                created_at TEXT NOT NULL
-            )
-        """)
-
-        db.execute("""
-            CREATE TABLE IF NOT EXISTS bookings (
-                id BIGSERIAL PRIMARY KEY,
-                booking_code TEXT UNIQUE NOT NULL,
-                show_id BIGINT NOT NULL,
-                customer_name TEXT NOT NULL,
-                phone TEXT NOT NULL,
-                email TEXT NOT NULL,
-                quantity INTEGER NOT NULL,
-                total_amount NUMERIC(10, 2) NOT NULL,
-                status TEXT NOT NULL DEFAULT 'PENDING',
-                utr TEXT DEFAULT '',
-                payment_submitted_at TEXT DEFAULT '',
-                created_at TEXT NOT NULL,
-
-                CONSTRAINT fk_booking_show
-                    FOREIGN KEY (show_id)
-                    REFERENCES shows(id)
-                    ON DELETE CASCADE,
-
-                CONSTRAINT booking_quantity_positive
-                    CHECK (quantity > 0),
-
-                CONSTRAINT booking_total_nonnegative
-                    CHECK (total_amount >= 0)
-            )
-        """)
-
-        # Useful indexes for booking queries.
-        db.execute("""
-            CREATE INDEX IF NOT EXISTS idx_bookings_show_id
-            ON bookings(show_id)
-        """)
-
-        db.execute("""
-            CREATE INDEX IF NOT EXISTS idx_bookings_status
-            ON bookings(status)
-        """)
-
-        db.execute("""
-            CREATE INDEX IF NOT EXISTS idx_bookings_show_status
-            ON bookings(show_id, status)
-        """)
-
-        db.execute("""
-            CREATE INDEX IF NOT EXISTS idx_bookings_created_at
-            ON bookings(created_at)
-        """)
-
-        db.commit()
-
-    except Exception:
-        db.rollback()
-        raise
-
-    finally:
-        db.close()
+def generate_qr_token():
+    return secrets.token_urlsafe(16)
 
 
 # ============================================================
@@ -327,28 +247,6 @@ def get_razorpay_client():
             RAZORPAY_KEY_SECRET
         )
     )
-
-
-# ============================================================
-# UPI CONFIGURATION
-# ============================================================
-
-UPI_ID = os.environ.get(
-    "UPI_ID",
-    "kodandaram66661@ybl"
-)
-
-UPI_NAME = os.environ.get(
-    "UPI_NAME",
-    "Home Entertainments"
-)
-
-
-# ============================================================
-# BOOKING SETTINGS
-# ============================================================
-
-PENDING_BOOKING_MINUTES = 10
 
 
 # ============================================================
@@ -1002,6 +900,24 @@ def init_booking_db():
         """)
 
         # ----------------------------------------------------
+        # QR CODE & CHECK-IN MIGRATION
+        # ----------------------------------------------------
+        db.execute("""
+            ALTER TABLE bookings
+            ADD COLUMN IF NOT EXISTS qr_token TEXT UNIQUE
+        """)
+
+        db.execute("""
+            ALTER TABLE bookings
+            ADD COLUMN IF NOT EXISTS is_checked_in INTEGER NOT NULL DEFAULT 0
+        """)
+
+        db.execute("""
+            ALTER TABLE bookings
+            ADD COLUMN IF NOT EXISTS checked_in_at TEXT DEFAULT ''
+        """)
+
+        # ----------------------------------------------------
         # INDEXES
         # ----------------------------------------------------
         db.execute("""
@@ -1014,6 +930,12 @@ def init_booking_db():
             CREATE UNIQUE INDEX IF NOT EXISTS idx_bookings_razorpay_payment_id
             ON bookings(razorpay_payment_id)
             WHERE razorpay_payment_id IS NOT NULL AND razorpay_payment_id <> ''
+        """)
+
+        db.execute("""
+            CREATE UNIQUE INDEX IF NOT EXISTS idx_bookings_qr_token
+            ON bookings(qr_token)
+            WHERE qr_token IS NOT NULL AND qr_token <> ''
         """)
 
         db.execute("""
@@ -1082,12 +1004,6 @@ def booking_available_seats(db, show_id, capacity):
 # ============================================================
 
 def create_razorpay_order(booking, show):
-    """Create a Razorpay order after validating the booking amount.
-
-    Razorpay expects the amount in paise. This application requires at least
-    ₹1.00 (100 paise); reject zero/negative or below-minimum totals before
-    calling the Razorpay API.
-    """
     client = get_razorpay_client()
     amount_paise = money_to_paise(booking["total_amount"])
 
@@ -1539,6 +1455,7 @@ def book_show(show_id):
 
         booking_code = generate_booking_code()
         created_at = current_timestamp_string()
+        qr_token = generate_qr_token()
 
         booking_row = db.execute("""
             INSERT INTO bookings (
@@ -1550,9 +1467,10 @@ def book_show(show_id):
                 quantity,
                 total_amount,
                 status,
-                created_at
+                created_at,
+                qr_token
             )
-            VALUES (%s, %s, %s, %s, %s, %s, %s, 'PENDING', %s)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, 'PENDING', %s, %s)
             RETURNING *
         """, (
             booking_code,
@@ -1562,7 +1480,8 @@ def book_show(show_id):
             email,
             quantity,
             total_amount,
-            created_at
+            created_at,
+            qr_token
         )).fetchone()
 
         db.commit()
@@ -1636,7 +1555,7 @@ def book_show(show_id):
 
 
 # ============================================================
-# PAYMENT PAGE (FIXED TO INCLUDE RAZORPAY KEYS)
+# PAYMENT PAGE
 # ============================================================
 
 @app.route("/book/payment/<int:booking_id>", methods=["GET"])
@@ -2107,6 +2026,69 @@ def booking_admin():
         shows=shows_list,
         bookings=bookings
     )
+
+
+# ============================================================
+# GATE SCANNER ROUTES
+# ============================================================
+
+@app.route("/admin/scanner", methods=["GET"])
+@admin_required
+def scanner_page():
+    return render_template("scanner.html")
+
+
+@app.route("/admin/scanner/verify", methods=["POST"])
+@admin_required
+def scanner_verify_ticket():
+    data = request.get_json() or {}
+    qr_token = data.get("qr_token", "").strip()
+
+    if not qr_token:
+        return jsonify({"status": "error", "message": "Invalid QR code data."}), 400
+
+    with get_db() as db:
+        booking = db.execute("""
+            SELECT b.*, s.title, s.show_date, s.show_time
+            FROM bookings b
+            JOIN shows s ON s.id = b.show_id
+            WHERE b.qr_token = %s
+            FOR UPDATE
+        """, (qr_token,)).fetchone()
+
+        if not booking:
+            return jsonify({"status": "error", "message": "Ticket not found in system."}), 404
+
+        if booking["status"] != "CONFIRMED":
+            return jsonify({
+                "status": "error", 
+                "message": f"Ticket is not confirmed! Status: {booking['status']}"
+            }), 400
+
+        if booking["is_checked_in"] == 1:
+            return jsonify({
+                "status": "already_in",
+                "message": f"⚠️ ALREADY CHECKED IN at {booking['checked_in_at']}",
+                "customer_name": booking["customer_name"],
+                "booking_code": booking["booking_code"]
+            }), 400
+
+        checked_in_at = current_timestamp_string()
+        db.execute("""
+            UPDATE bookings
+            SET is_checked_in = 1, checked_in_at = %s
+            WHERE id = %s
+        """, (checked_in_at, booking["id"]))
+        db.commit()
+
+        return jsonify({
+            "status": "success",
+            "message": "✅ ENTRY GRANTED",
+            "customer_name": booking["customer_name"],
+            "booking_code": booking["booking_code"],
+            "quantity": booking["quantity"],
+            "show_title": booking["title"]
+        })
 
 
 # ============================================================
