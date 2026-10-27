@@ -692,6 +692,9 @@ def send_booking_confirmation_email(booking, show):
     customer_email = booking["email"]
     status = booking["status"]
 
+    qr_data = booking.get('qr_token') or booking['booking_code']
+    qr_api_url = f"https://api.qrserver.com/v1/create-qr-code/?size=160x160&data={qr_data}"
+
     if status == "CONFIRMED":
         email_subject = f"🎟️ Your Show Pass: {show['title']} (Booking ID: {booking['booking_code']})"
         main_message = "Your payment has been verified successfully and your tickets are confirmed."
