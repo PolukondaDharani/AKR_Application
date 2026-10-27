@@ -278,14 +278,16 @@ body {
 
         <div class="buttons">
             <a href="{{ url_for('booking') }}" class="success-btn success-btn-primary">← Back to Shows</a>
+            <a href="#" id="whatsappShareBtn" class="success-btn success-btn-secondary" target="_blank">Share via WhatsApp</a>
             <a href="{{ url_for('home') }}" class="success-btn success-btn-secondary">Return Home</a>
         </div>
     </div>
 </section>
 
-<!-- Script to generate the QR code dynamically on page load -->
+<!-- Script to generate the QR code and dynamic WhatsApp link on page load -->
 <script>
     document.addEventListener("DOMContentLoaded", function() {
+        // 1. Generate QR Code
         const qrToken = "{{ booking.qr_token }}";
         if (qrToken) {
             new QRCode(document.getElementById("qrcode"), {
@@ -296,6 +298,19 @@ body {
                 colorLight: "#ffffff",
                 correctLevel: QRCode.CorrectLevel.H
             });
+        }
+
+        // 2. Build WhatsApp Share Link
+        const showTitle = "{{ show['title'] }}";
+        const bookingCode = "{{ booking['booking_code'] }}";
+        const passUrl = window.location.href;
+        
+        const message = `🎟️ Here is my digital pass for *${showTitle}*!\nBooking ID: *${bookingCode}*\n\nView QR Code pass here: ${passUrl}`;
+        const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
+        
+        const shareBtn = document.getElementById("whatsappShareBtn");
+        if (shareBtn) {
+            shareBtn.href = whatsappUrl;
         }
     });
 </script>

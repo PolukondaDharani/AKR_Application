@@ -745,6 +745,11 @@ def send_booking_confirmation_email(booking, show):
                             <span class="pass-code">{escape(booking['booking_code'])}</span>
                         </div>
 
+                        <div class="qr-box">
+                            <span class="pass-label" style="margin-bottom: 8px;">SCAN AT ENTRANCE</span>
+                            <img src="{qr_api_url}" alt="Ticket QR Code" class="qr-img">
+                        </div>
+
                         <table class="detail-table">
                             <tr>
                                 <td class="detail-label">Name</td>
