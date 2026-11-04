@@ -55,6 +55,23 @@
             color: #fca5a5;
             border: 1px solid #dc2626;
         }
+        .ok-btn {
+            display: block;
+            width: 100%;
+            margin-top: 15px;
+            padding: 12px;
+            background-color: #d4af37;
+            color: #0d0d0d;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .ok-btn:hover {
+            background-color: #e6c547;
+        }
         .back-link {
             display: inline-block;
             margin-top: 20px;
@@ -74,7 +91,10 @@
         <p style="color: #aaa; font-size: 13px; margin-bottom: 20px;">Point camera at attendee's QR code pass</p>
         
         <div id="reader"></div>
-        <div id="result" class="result-box"></div>
+        <div id="result" class="result-box">
+            <div id="result-text"></div>
+            <button id="okButton" class="ok-btn" onclick="resetScanner()">OK / Scan Next Ticket</button>
+        </div>
 
         <a href="{{ url_for('booking_admin') }}" class="back-link">&larr; Back to Admin Dashboard</a>
     </div>
@@ -94,7 +114,7 @@
             if (!isScanning) return;
             isScanning = false;
             
-            // Temporarily pause scanner UI
+            // Pause scanner UI immediately upon a successful read
             html5QrcodeScanner.pause();
 
             fetch('/admin/scanner/verify', {
@@ -105,36 +125,34 @@
             .then(response => response.json().then(data => ({ status: response.status, body: data })))
             .then(res => {
                 const resultDiv = document.getElementById('result');
+                const resultText = document.getElementById('result-text');
                 resultDiv.style.display = 'block';
                 
                 if (res.status === 200) {
                     resultDiv.className = 'result-box success';
-                    resultDiv.innerHTML = `${res.body.message}<br><small style="font-size:14px;font-weight:normal;color:#fff;">${res.body.customer_name} (${res.body.quantity} Tickets) - ${res.body.show_title}</small>`;
+                    resultText.innerHTML = `${res.body.message}<br><small style="font-size:14px;font-weight:normal;color:#fff;">${res.body.customer_name} (${res.body.quantity} Tickets) - ${res.body.show_title}</small>`;
                 } else {
                     resultDiv.className = 'result-box error';
-                    resultDiv.innerHTML = `${res.body.message}`;
+                    resultText.innerHTML = `${res.body.message}`;
                 }
-
-                // Resume scanning after 3 seconds
-                setTimeout(() => {
-                    resultDiv.style.display = 'none';
-                    isScanning = true;
-                    html5QrcodeScanner.resume();
-                }, 3000);
+                // Scanner stays paused until the user clicks the "OK" button (handled by resetScanner)
             })
             .catch(err => {
                 console.error(err);
                 const resultDiv = document.getElementById('result');
+                const resultText = document.getElementById('result-text');
                 resultDiv.style.display = 'block';
                 resultDiv.className = 'result-box error';
-                resultDiv.innerHTML = "❌ Network error verifying ticket.";
-                
-                setTimeout(() => {
-                    resultDiv.style.display = 'none';
-                    isScanning = true;
-                    html5QrcodeScanner.resume();
-                }, 3000);
+                resultText.innerHTML = "❌ Network error verifying ticket.";
+                // Scanner stays paused until user clicks "OK"
             });
+        }
+
+        function resetScanner() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'none';
+            isScanning = true;
+            html5QrcodeScanner.resume();
         }
 
         html5QrcodeScanner.render(onScanSuccess);

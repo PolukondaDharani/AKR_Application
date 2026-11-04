@@ -4,20 +4,13 @@
 
 <style>
 
-/* =========================================================
-   PAGE
-   ========================================================= */
-
+/* PAGE */
 body {
     background: #000;
     color: #fff;
 }
 
-
-/* =========================================================
-   MOVIE DETAIL CARD
-   ========================================================= */
-
+/* MOVIE DETAIL CARD */
 .movie-detail-card {
     background: #111;
     border: 1px solid rgba(255, 193, 7, 0.25);
@@ -28,11 +21,7 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-
-/* =========================================================
-   POSTER
-   ========================================================= */
-
+/* POSTER */
 .poster-column {
     display: flex;
     align-items: flex-start;
@@ -49,13 +38,10 @@ body {
     border-radius: 20px 0 0 20px;
 }
 
-
-/* =========================================================
-   MOVIE INFORMATION
-   ========================================================= */
-
+/* MOVIE INFORMATION */
 .movie-info {
     width: 100%;
+    text-align: center;
 }
 
 .movie-info h1 {
@@ -66,175 +52,103 @@ body {
     margin: 0 0 15px;
 }
 
-
-/* =========================================================
-   YOUTUBE VIDEO CONTAINER
-   ========================================================= */
-
-.video-container {
-    position: relative;
-    width: 100%;
-    padding-bottom: 56.25%;
-    height: 0;
-    overflow: hidden;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    border: 1px solid #333;
-    background: #000;
+/* COMING SOON SECTION */
+.coming-soon-section {
+    padding: 35px 15px;
+    text-align: center;
+    background: linear-gradient(
+        145deg,
+        #111,
+        #191919,
+        #0b0b0b
+    );
+    border: 1px solid rgba(255, 193, 7, 0.2);
+    border-radius: 15px;
+    margin-bottom: 25px;
 }
 
-
-/* =========================================================
-   YOUTUBE THUMBNAIL
-   ========================================================= */
-
-.youtube-thumbnail {
-    cursor: pointer;
-}
-
-.youtube-thumbnail a {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: block;
-    text-decoration: none;
-    overflow: hidden;
-}
-
-.youtube-thumbnail img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
-}
-
-
-/* =========================================================
-   DARK OVERLAY
-   ========================================================= */
-
-.youtube-thumbnail a::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.18);
-    z-index: 1;
-    transition: background 0.3s ease;
-}
-
-.youtube-thumbnail a:hover::after {
-    background: rgba(0, 0, 0, 0.05);
-}
-
-.youtube-thumbnail a:hover img {
-    transform: scale(1.02);
-}
-
-
-/* =========================================================
-   YOUTUBE PLAY BUTTON
-   ========================================================= */
-
-.youtube-play-button {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 82px;
-    height: 58px;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-    transition:
-        transform 0.25s ease,
-        filter 0.25s ease;
-}
-
-.youtube-play-button svg {
-    display: block;
-    width: 100%;
-    height: 100%;
-}
-
-/* YouTube RED background */
-.youtube-play-bg {
-    fill: #ff0000;
-}
-
-/* YouTube WHITE play triangle */
-.youtube-play-triangle {
-    fill: #ffffff;
-}
-
-/* Hover */
-.youtube-thumbnail a:hover .youtube-play-button {
-    transform: translate(-50%, -50%) scale(1.12);
-    filter: drop-shadow(0 6px 15px rgba(255, 0, 0, 0.35));
-}
-
-
-/* =========================================================
-   SYNOPSIS
-   ========================================================= */
-
-.synopsis {
-    border-left: 3px solid #ffc107;
-    padding-left: 15px;
-    margin: 18px 0;
-    font-style: italic;
-    color: #ccc;
-    line-height: 1.55;
-}
-
-.synopsis p {
-    margin: 0;
-}
-
-
-/* =========================================================
-   INFORMATION LABELS
-   ========================================================= */
-
-.info-label {
+.coming-soon-text {
     color: #ffc107;
-    font-weight: 700;
+    font-size: 2.7rem;
+    font-weight: 900;
+    letter-spacing: 4px;
     text-transform: uppercase;
-    font-size: 0.75rem;
-    margin-right: 6px;
+    margin-bottom: 15px;
+    text-shadow: 0 0 20px rgba(255, 193, 7, 0.25);
 }
 
-.info-text {
-    color: rgba(255, 255, 255, 0.8);
+.coming-soon-subtitle {
+    color: #ddd;
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 0;
+}
+
+/* DIVIDER */
+.gold-divider {
+    width: 80px;
+    height: 3px;
+    background: #ffc107;
+    margin: 20px auto;
+    border-radius: 5px;
+}
+
+/* YOUTUBE SECTION */
+.youtube-section {
+    text-align: center;
+    padding: 20px 10px 10px;
+}
+
+.youtube-section h3 {
+    color: #ffc107;
+    font-size: 1.15rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.youtube-section p {
+    color: #bbb;
     font-size: 0.9rem;
-    line-height: 1.5;
+    margin-bottom: 20px;
 }
 
-.movie-info .row p {
-    margin-bottom: 10px;
-    line-height: 1.45;
+/* YOUTUBE BUTTON */
+.youtube-channel-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: #ff0000;
+    color: #fff;
+    text-decoration: none;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(255, 0, 0, 0.2);
 }
 
+.youtube-channel-btn:hover {
+    background: #cc0000;
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 0, 0, 0.35);
+}
 
-/* =========================================================
-   DESKTOP (UPDATED FIXES)
-   ========================================================= */
+.youtube-channel-btn i {
+    font-size: 1.5rem;
+}
 
+/* DESKTOP */
 @media (min-width: 769px) {
 
-    .movie-detail-card {
-        min-height: 0;
-    }
-
-    /* Stretch poster container to match full column height */
     .poster-column {
         align-items: stretch;
     }
 
-    /* Make poster fill left column completely without blank gaps */
     .movie-poster-img {
         width: 100%;
         height: 100%;
@@ -243,18 +157,9 @@ body {
         border-radius: 20px 0 0 20px;
     }
 
-    /* Cap maximum video width to prevent extreme expansion on ultra-wide screens */
-    .video-container {
-        max-width: 680px;
-    }
-
 }
 
-
-/* =========================================================
-   MEDIUM LAPTOPS
-   ========================================================= */
-
+/* MEDIUM LAPTOPS */
 @media (min-width: 769px) and (max-width: 1100px) {
 
     .movie-detail-card {
@@ -270,21 +175,13 @@ body {
         font-size: 1.7rem;
     }
 
-    .info-label {
-        font-size: 0.7rem;
-    }
-
-    .info-text {
-        font-size: 0.82rem;
+    .coming-soon-text {
+        font-size: 2.2rem;
     }
 
 }
 
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
+/* MOBILE */
 @media (max-width: 768px) {
 
     .movie-detail-card {
@@ -312,40 +209,29 @@ body {
 
     .movie-info h1 {
         font-size: 1.5rem;
-        margin-bottom: 15px;
     }
 
-    .synopsis {
+    .coming-soon-section {
+        padding: 30px 12px;
+    }
+
+    .coming-soon-text {
+        font-size: 2rem;
+        letter-spacing: 2px;
+    }
+
+    .coming-soon-subtitle {
         font-size: 0.9rem;
-        padding-left: 12px;
-        margin: 18px 0;
     }
 
-    .info-label {
-        font-size: 0.75rem;
-    }
-
-    .info-text {
-        font-size: 0.85rem;
-    }
-
-    .movie-info .row {
-        margin-top: 20px !important;
-    }
-
-    /* Smaller YouTube button on mobile */
-    .youtube-play-button {
-        width: 68px;
-        height: 48px;
+    .youtube-channel-btn {
+        padding: 14px 22px;
+        font-size: 0.9rem;
     }
 
 }
 
-
-/* =========================================================
-   SMALL PHONES
-   ========================================================= */
-
+/* SMALL PHONES */
 @media (max-width: 480px) {
 
     .movie-detail-card {
@@ -365,17 +251,15 @@ body {
         font-size: 1.35rem;
     }
 
-    .info-label {
-        font-size: 0.7rem;
+    .coming-soon-text {
+        font-size: 1.65rem;
+        letter-spacing: 1px;
     }
 
-    .info-text {
-        font-size: 0.8rem;
-    }
-
-    .youtube-play-button {
-        width: 62px;
-        height: 44px;
+    .youtube-channel-btn {
+        width: 100%;
+        padding: 14px 10px;
+        font-size: 0.85rem;
     }
 
 }
@@ -389,12 +273,12 @@ body {
 
         <div class="row g-0">
 
-
+            <!-- POSTER -->
             <div class="col-md-4 poster-column">
 
                 <img
                     src="/static/images/songposter.jpeg"
-                    alt="C & C Movie Poster"
+                    alt="C & C Web Series Poster"
                     class="movie-poster-img"
                     loading="lazy"
                 >
@@ -402,171 +286,65 @@ body {
             </div>
 
 
+            <!-- CONTENT -->
             <div class="col-md-8 p-4 p-lg-5">
 
                 <div class="movie-info">
-
 
                     <h1>
                         Project: C & C
                     </h1>
 
 
-                    <div class="video-container youtube-thumbnail">
+                    <!-- COMING SOON -->
+                    <div class="coming-soon-section">
 
-                        <a
-                            href="https://www.youtube.com/watch?v=e9l3cRJWJyk"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label="Watch Oh My Friend on YouTube"
-                        >
+                        <div class="coming-soon-text">
+                            Coming Soon
+                        </div>
 
-                            <img
-                                src="https://img.youtube.com/vi/e9l3cRJWJyk/maxresdefault.jpg"
-                                alt="Oh My Friend - C and C Web Series"
-                                loading="lazy"
-                            >
+                        <div class="gold-divider"></div>
 
+                        <p class="coming-soon-subtitle">
+                            Something exciting is on its way!
 
-                            <div class="youtube-play-button">
+                            <br>
 
-                                <svg
-                                    viewBox="0 0 68 48"
-                                    aria-hidden="true"
-                                >
+                            Get ready to experience
+                            <strong>C & C (Chiru & Charu)</strong>.
 
-                                    <path
-                                        class="youtube-play-bg"
-                                        d="M66.52 7.74a8.5 8.5 0 0 0-5.98-6C55.27 0 34 0 34 0S12.73 0 7.46 1.74a8.5 8.5 0 0 0-5.98 6A88.2 88.2 0 0 0 0 24a88.2 88.2 0 0 0 1.48 16.26 8.5 8.5 0 0 0 5.98 6C12.73 48 34 48 34 48s21.27 0 26.54-1.74a8.5 8.5 0 0 0 5.98-6A88.2 88.2 0 0 0 68 24a88.2 88.2 0 0 0-1.48-16.26z"
-                                    >
-                                    </path>
+                            <br>
 
-
-                                    <path
-                                        class="youtube-play-triangle"
-                                        d="M45 24 27 14v20z"
-                                    >
-                                    </path>
-
-                                </svg>
-
-                            </div>
-
-                        </a>
-
-                    </div>
-
-
-                    <div class="synopsis">
-
-                        <p>
-                            Experience "Oh My Friend", the first single
-                            from the upcoming Kannada original web series
-                            C&C (Chiru & Charu). A heartfelt song
-                            celebrating friendship, emotions, and
-                            unforgettable memories.
+                            Stay tuned for more updates.
                         </p>
 
                     </div>
 
 
-                    <div class="row mt-4">
+                    <!-- YOUTUBE CHANNEL -->
+                    <div class="youtube-section">
 
+                        <h3>
+                            Explore More of Our Work
+                        </h3>
 
-                        <div class="col-sm-6">
+                        <p>
+                            In the meantime, check out our 
+                            songs and videos on our YouTube channel.
+                        </p>
 
-                            <p>
+                        <a
+                            href="https://www.youtube.com/@HomeEntertainmentsFilms"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="youtube-channel-btn"
+                        >
 
-                                <span class="info-label">
-                                    Director, Lyrics, Writer:
-                                </span>
+                            <i class="fab fa-youtube"></i>
 
-                                <span class="info-text">
-                                    Manoj
-                                </span>
+                            CHECK OUT OUR CHANNEL
 
-                            </p>
-
-
-                            <p>
-
-                                <span class="info-label">
-                                    Music:
-                                </span>
-
-                                <span class="info-text">
-                                    Sathya Radhakrishna
-                                </span>
-
-                            </p>
-
-
-                            <p>
-
-                                <span class="info-label">
-                                    Singers:
-                                </span>
-
-                                <span class="info-text">
-                                    Sathya Radhakrishna, Thanusha
-                                </span>
-
-                            </p>
-
-                        </div>
-
-
-                        <div class="col-sm-6">
-
-                            <p>
-
-                                <span class="info-label">
-                                    Cast:
-                                </span>
-
-                                <span class="info-text">
-                                    Agraharam Kodanda Ram,
-                                    Bhargavi,
-                                    Madhur,
-                                    Vindhya,
-                                    Amar Aryan,
-                                    Pooja Shaliyan,
-                                    Harsha Ashoka,
-                                    Shivanand Hegde,
-                                    Sunil,
-                                    Sowmya Satheesh
-                                </span>
-
-                            </p>
-
-
-                            <p>
-
-                                <span class="info-label">
-                                    Actors:
-                                </span>
-
-                                <span class="info-text">
-                                    Agraharam Kodanda Ram,
-                                    Bhargavi
-                                </span>
-
-                            </p>
-
-
-                            <p>
-
-                                <span class="info-label">
-                                    Release:
-                                </span>
-
-                                <span class="info-text">
-                                    August 2026
-                                </span>
-
-                            </p>
-
-                        </div>
+                        </a>
 
                     </div>
 
