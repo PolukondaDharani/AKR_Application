@@ -29,7 +29,19 @@ body {
 .booking-form-page * { 
     box-sizing: border-box; 
 }
+.location-link {
+    color: #d4af37;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.3s ease;
+}
 
+.location-link:hover {
+    color: #fff;
+    text-decoration: underline;
+}
 /* =========================================================
    BOOKING PAGE WRAPPER
    ========================================================= */
@@ -287,9 +299,19 @@ body {
                     <span class="booking-detail-value">{{ show["theatre"] }}</span>
                 </div>
                 <div class="booking-detail-box">
-                    <span class="booking-detail-label">Location</span>
-                    <span class="booking-detail-value">{{ show["location"] }}</span>
-                </div>
+    <span class="booking-detail-label">Location</span>
+
+    <a
+        href="https://www.google.com/maps/search/?api=1&query={{ show['location']|urlencode }}"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="booking-detail-value location-link"
+    >
+        <i class="fas fa-map-marker-alt"></i>
+        {{ show["location"] }}
+        <i class="fas fa-external-link-alt"></i>
+    </a>
+</div>
                 <div class="booking-detail-box">
                     <span class="booking-detail-label">Date</span>
                     <span class="booking-detail-value">{{ show["show_date"] }}</span>

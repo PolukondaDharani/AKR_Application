@@ -1111,29 +1111,23 @@ def about():
                 "in the industry."
             ),
             "social": {
-                "instagram": "#",
-                "twitter": "#",
-                "linkedin": "https://www.linkedin.com/in/agraharam-kodanda-ram-0a4991297/"
+                "instagram": "https://www.instagram.com/agraharamkodandaram/"
             }
         },
         {
-            "name": "Bhargavi S Babu",
-            "role": "Actress",
-            "image": "BhargaviBabu.jpeg",
-            "bio": (
-                "An emerging actress with experience in web series, "
-                "passionate about storytelling and bringing characters "
-                "to life with authenticity"
-                "With a growing interest in diverse roles, she continues "
-                "to develop her craft and build her journey in the world "
-                "of cinema."
-            ),
-            "social": {
-                "instagram": "https://www.instagram.com/bhargavi.s.babu/",
-                "facebook": "https://www.facebook.com/bhargavi.babu.3/",
-                "linkedin": "https://www.linkedin.com/in/bhargavi-s-babu-85188b173/"
-            }
-        },
+                    "name": "Manoj Manchu",
+                    "role": "Director",
+                    "image": "Manoj.png",
+                    "bio": (
+                        "A passionate director and wordsmith,"
+                        "dedicated to writing deeply moving narratives and soulful songs."
+                        "He brings stories to life by harmonizing striking visuals"
+                        "with the lyrical power of his own pen."
+                    ),
+                    "social": {
+                        "instagram": "https://www.instagram.com/dr_manoj_n_?utm_source=qr&mdxt=MWI5cmo1aGhxOXVkMA%3D%3D"
+                    }
+                },
         {
             "name": "Harshith B. Gowda",
             "role": "DOP,Colorist",
@@ -1145,9 +1139,7 @@ def about():
                 "lighting, and color."
             ),
             "social": {
-                "instagram": "https://www.instagram.com/harshith_b_gowda/",
-                "facebook": "https://www.facebook.com/harshith.bgowda.9/",
-                "linkedin": "https://www.linkedin.com/in/harshith-b-gowda-b10670206/"
+                "instagram": "https://www.instagram.com/harshith_b_gowda/"
             }
         },
         {
@@ -1161,11 +1153,55 @@ def about():
                 "that bring every story and character to life."
             ),
             "social": {
-                "instagram": "#",
-                "twitter": "#",
-                "linkedin": "#"
+                "instagram": "https://www.instagram.com/ll_madhusagar_ll/"
             }
-        }
+        },
+        {
+                    "name": "Bhargavi S Babu",
+                    "role": "Actress",
+                    "image": "BhargaviBabu.jpeg",
+                    "bio": (
+                        "A dynamic talent in web series, bringing raw authenticity "
+                        "depth to every character she plays. "
+                        "A magnetic podcast host and natural leader whose infectious energy uplifts"
+                        "and inspires everyone around her"
+                        "she is fearlessly shaping her own unique artistic journey. "
+                    ),
+                    "social": {
+                        "instagram": "https://www.instagram.com/bhargavi.s.babu/"
+                    }
+                },
+                {
+                                    "name": "Pooja Shaliyan",
+                                    "role": "Actress",
+                                    "image": "pooja.png",
+                                    "bio": (
+                                        "An emerging actress with experience in web series, "
+                                        "passionate about storytelling and bringing characters "
+                                        "to life with authenticity"
+                                        "With a growing interest in diverse roles, she continues "
+                                        "to develop her craft and build her journey in the world "
+                                        "of cinema."
+                                    ),
+                                    "social": {
+                                        "instagram": "https://www.instagram.com/poojcshaliyan/"
+                                    }
+                                },
+                                {
+                                                    "name": "Amar Aryan",
+                                                    "role": "Actor",
+                                                    "image": "amar.png",
+                                                    "bio": (
+                                                        "A versatile and dedicated screen actor with a deep-rooted passion, "
+                                                        "for character-driven storytelling "
+                                                        "Known for bringing emotional depth, authenticity, and"
+                                                        "strong screen presence to every role. "
+
+                                                    ),
+                                                    "social": {
+                                                        "instagram": "https://www.instagram.com/amar.rishan?exln=MWRkbm8zZGd6cGRtaA%3D%3D"
+                                                    }
+                                                }
     ]
     return render_seo_template("about.html", "about", team_members=team_members)
 

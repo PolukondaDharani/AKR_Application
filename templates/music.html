@@ -1,2229 +1,975 @@
+
 {% extends "base.html" %}
 
 {% block content %}
 
-<!-- =========================================================
-     FONT AWESOME — STREAMING PLATFORM LOGOS
-     ========================================================= -->
-
-<link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
 
-/* =========================================================
-   GLOBAL RESET
-   ========================================================= */
+/* =====================================================
+   GLOBAL & THEME
+===================================================== */
 
-html,
-body {
-    margin: 0 !important;
-    padding: 0 !important;
-    background: #000000 !important;
-}
-
-body {
-    overflow-x: hidden;
+:root {
+    --gold-light: #fff8ce;
+    --gold-soft: #f1d592;
+    --gold: #d4af37;
+    --gold-dark: #8f6817;
+    --gold-border: rgba(212,175,55,0.25);
+    --white: #ffffff;
+    --muted: rgba(255,255,255,0.58);
 }
 
 * {
     box-sizing: border-box;
 }
 
-
-/* =========================================================
-   GOLD VARIABLES
-   ========================================================= */
-
-:root {
-
-    --gold-light: #fff8ce;
-    --gold-soft: #f1d592;
-    --gold: #d4af37;
-    --gold-dark: #8f6817;
-
-    --gold-glow: rgba(212,175,55,0.14);
-    --gold-border: rgba(212,175,55,0.22);
-
-    --white: #ffffff;
-    --muted: rgba(255,255,255,0.58);
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #000 !important;
 }
 
+body {
+    overflow-x: hidden;
+}
 
-/* =========================================================
-   MAIN MUSIC PAGE
-   ========================================================= */
+/* =====================================================
+   MAIN PAGE
+===================================================== */
 
 .music-page {
-
     position: relative;
-
     width: 100%;
     min-height: 100vh;
-
-    background:
-        radial-gradient(
-            circle at 50% 13%,
-            rgba(212,175,55,0.085),
-            transparent 30%
-        ),
-        #000000;
-
-    color: #ffffff;
-
-    overflow: hidden;
-
     padding-bottom: 60px;
+    overflow: hidden;
+    color: var(--white);
+    background:
+        radial-gradient(circle at 50% 10%, rgba(212,175,55,0.09), transparent 35%),
+        #000;
 }
 
-
-/* =========================================================
-   SUBTLE GOLD LIGHT
-   ========================================================= */
-
 .music-page::before {
-
     content: "";
-
     position: absolute;
-
     width: 500px;
     height: 500px;
-
     top: -250px;
     left: 50%;
-
     transform: translateX(-50%);
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(212,175,55,0.10),
-            transparent 68%
-        );
-
+    background: radial-gradient(circle, rgba(212,175,55,0.1), transparent 68%);
     filter: blur(60px);
-
     pointer-events: none;
 }
 
-
-/* =========================================================
+/* =====================================================
    HEADER
-   ========================================================= */
+===================================================== */
 
 .music-header {
-
     position: relative;
-
     z-index: 2;
-
-    text-align: center;
-
     width: 100%;
-
     max-width: 1000px;
-
-    margin: 0 auto;
-
-    padding:
-        115px 20px 50px;
+    margin: auto;
+    padding: 115px 20px 45px;
+    text-align: center;
 }
-
-
-/* =========================================================
-   HEADER CONTENT
-   ========================================================= */
-
-.music-header-content {
-
-    position: relative;
-
-    z-index: 2;
-}
-
-
-/* =========================================================
-   MAIN TITLE
-   ========================================================= */
 
 .music-header h1 {
-
     margin: 0;
-
-    font-size:
-        clamp(3.2rem, 8vw, 7rem);
-
+    font-size: clamp(3.2rem, 8vw, 7rem);
     line-height: 0.95;
-
     font-weight: 900;
-
     letter-spacing: 4px;
 
-    background:
-        linear-gradient(
-            to bottom,
-            var(--gold-light) 0%,
-            var(--gold-soft) 30%,
-            var(--gold) 65%,
-            var(--gold-dark) 100%
-        );
+    background: linear-gradient(
+        to bottom,
+        var(--gold-light),
+        var(--gold-soft) 30%,
+        var(--gold) 65%,
+        var(--gold-dark)
+    );
 
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-
     background-clip: text;
 
-    filter:
-        drop-shadow(
-            0 0 20px
-            rgba(212,175,55,0.18)
-        );
+    filter: drop-shadow(0 0 20px rgba(212,175,55,0.18));
 }
 
-
-/* =========================================================
-   DESCRIPTION
-   ========================================================= */
-
 .music-header p {
-
     max-width: 680px;
-
-    margin:
-        25px auto 0;
-
-    color:
-        rgba(255,255,255,0.72);
-
+    margin: 25px auto 0;
+    color: rgba(255,255,255,0.72);
     font-size: 1rem;
-
     line-height: 1.8;
 }
 
-
-/* =========================================================
+/* =====================================================
    MUSIC AREA
-   ========================================================= */
+===================================================== */
 
 .music-area {
-
     position: relative;
-
     z-index: 2;
-
     width: 100%;
-
-    padding:
-        15px 20px 0;
+    padding: 15px 25px 0;
 }
-
-
-/* =========================================================
-   SONGS WRAPPER
-   ========================================================= */
 
 .songs-wrapper {
-
-    width: 100%;
-
-    max-width: 1200px;
-
-    margin: 0 auto;
-
     position: relative;
+    width: 100%;
+    max-width: 1250px;
+    margin: 0 auto;
 }
 
-
-/* =========================================================
-   CAROUSEL ARROWS
-   ========================================================= */
-
-.carousel-arrow {
-
-    position: absolute;
-
-    top: 32%;
-
-    transform:
-        translateY(-50%);
-
-    z-index: 20;
-
-    width: 36px;
-    height: 36px;
-
-    border-radius: 50%;
-
-    background:
-        rgba(8,8,8,0.82);
-
-    border:
-        1px solid
-        rgba(212,175,55,0.45);
-
-    color:
-        var(--gold);
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    cursor: pointer;
-
-    font-size: 13px;
-
-    box-shadow:
-        0 6px 18px
-        rgba(0,0,0,0.65);
-
-    transition:
-        all 0.3s ease;
-
-    backdrop-filter:
-        blur(5px);
-
-    -webkit-backdrop-filter:
-        blur(5px);
-}
-
-.carousel-arrow:hover {
-
-    background:
-        rgba(212,175,55,0.20);
-
-    border-color:
-        var(--gold);
-
-    color:
-        #ffffff;
-
-    transform:
-        translateY(-50%)
-        scale(1.08);
-}
-
-.carousel-arrow.prev {
-    left: -12px;
-}
-
-.carousel-arrow.next {
-    right: -12px;
-}
-
-
-/* =========================================================
-   SONG GRID
-   ========================================================= */
+/* =====================================================
+   SONG GRID - DESKTOP
+===================================================== */
 
 .songs-grid {
-
-    width: 100%;
-
     display: grid;
-
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
-    gap: 28px;
-
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    width: 100%;
     align-items: stretch;
 }
 
-
-/* =========================================================
+/* =====================================================
    SONG CARD
-   ========================================================= */
+===================================================== */
 
 .song-card {
-
     position: relative;
-
     display: flex;
-
     flex-direction: column;
-
     min-width: 0;
-
+    height: 100%;
     overflow: hidden;
-
     padding: 12px;
 
+    border: 1px solid var(--gold-border);
     border-radius: 14px;
 
-    background:
-        linear-gradient(
-            145deg,
-            #151515,
-            #080808
-        );
-
-    border:
-        1px solid
-        rgba(212,175,55,0.22);
+    background: linear-gradient(145deg, #151515, #080808);
 
     box-shadow:
-        0 30px 90px
-        rgba(0,0,0,0.70),
+        0 30px 90px rgba(0,0,0,0.7),
+        inset 0 1px 0 rgba(255,255,255,0.04);
 
-        inset 0 1px 0
-        rgba(255,255,255,0.04);
-
-    transition:
-        transform 0.35s ease,
-        border-color 0.35s ease,
-        box-shadow 0.35s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .song-card:hover {
-
-    transform:
-        translateY(-6px);
-
-    border-color:
-        rgba(212,175,55,0.48);
+    border-color: rgba(212,175,55,0.5);
 
     box-shadow:
-        0 40px 110px
-        rgba(0,0,0,0.82),
-
-        0 0 45px
-        rgba(212,175,55,0.045);
+        0 35px 90px rgba(0,0,0,0.8),
+        0 0 35px rgba(212,175,55,0.05);
 }
 
-
-/* =========================================================
+/* =====================================================
    POSTER
-   ========================================================= */
+===================================================== */
 
 .song-cover {
-
     position: relative;
-
     width: 100%;
-
-    aspect-ratio:
-        4 / 5;
-
+    aspect-ratio: 4 / 5;
     overflow: hidden;
-
     border-radius: 9px;
-
-    background: #111111;
+    background: #111;
+    flex-shrink: 0;
 }
-
-
-/* =========================================================
-   YOUTUBE LINK
-   ========================================================= */
 
 .youtube-link {
-
-    position: relative;
-
     display: block;
-
+    position: relative;
     width: 100%;
     height: 100%;
-
     text-decoration: none;
-
-    cursor: pointer;
 }
 
-
-/* =========================================================
-   POSTER IMAGE
-   ========================================================= */
-
 .song-cover img {
-
+    display: block;
     width: 100%;
     height: 100%;
-
     object-fit: cover;
-
     object-position: center;
-
-    display: block;
-
-    transition:
-        transform 0.8s
-        cubic-bezier(.2,.7,.2,1),
-
-        filter 0.5s ease;
+    transition: transform 0.7s ease, filter 0.5s ease;
 }
 
 .song-card:hover .song-cover img {
-
-    transform:
-        scale(1.045);
-
-    filter:
-        brightness(0.88)
-        contrast(1.05);
+    transform: scale(1.04);
+    filter: brightness(0.88);
 }
 
-
-/* =========================================================
-   PLAY OVERLAY
-   ========================================================= */
+/* =====================================================
+   YOUTUBE PLAY OVERLAY
+===================================================== */
 
 .play-overlay {
-
     position: absolute;
-
     inset: 0;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
-    background:
-        radial-gradient(
-            circle,
-            rgba(0,0,0,0.03),
-            rgba(0,0,0,0.28)
-        );
-
-    transition:
-        background 0.4s ease;
+    background: radial-gradient(
+        circle,
+        rgba(0,0,0,0.03),
+        rgba(0,0,0,0.28)
+    );
 }
-
-.youtube-link:hover .play-overlay {
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(0,0,0,0.05),
-            rgba(0,0,0,0.40)
-        );
-}
-
-
-/* =========================================================
-   PLAY BUTTON WRAPPER
-   ========================================================= */
 
 .youtube-play-wrapper {
-
     position: relative;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 }
 
-
-/* =========================================================
-   GOLD OUTER RING
-   ========================================================= */
-
 .youtube-play-wrapper::before {
-
     content: "";
-
     position: absolute;
-
     width: 115px;
     height: 115px;
-
+    border: 1px solid rgba(212,175,55,0.45);
     border-radius: 50%;
-
-    border:
-        1px solid
-        rgba(212,175,55,0.45);
-
-    background:
-        rgba(212,175,55,0.035);
-
-    opacity: 0.85;
-
-    transition:
-        transform 0.4s ease,
-        opacity 0.4s ease;
+    background: rgba(212,175,55,0.035);
+    transition: transform 0.3s ease;
 }
 
-.youtube-link:hover
-.youtube-play-wrapper::before {
-
-    transform:
-        scale(1.15);
-
-    opacity: 1;
+.youtube-link:hover .youtube-play-wrapper::before {
+    transform: scale(1.15);
 }
-
-
-/* =========================================================
-   YOUTUBE PLAY BUTTON
-   ========================================================= */
 
 .youtube-play-button {
-
     position: relative;
-
     z-index: 2;
-
     width: 82px;
     height: 58px;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
-    background:
-        #ff0000;
-
     border-radius: 16px;
-
-    box-shadow:
-        0 15px 45px
-        rgba(0,0,0,0.65),
-
-        0 0 30px
-        rgba(255,0,0,0.18);
-
-    transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
+    background: #ff0000;
+    box-shadow: 0 15px 45px rgba(0,0,0,0.65);
+    transition: transform 0.3s ease;
 }
-
 
 .youtube-play-button span {
-
     width: 0;
     height: 0;
-
-    border-top:
-        11px solid transparent;
-
-    border-bottom:
-        11px solid transparent;
-
-    border-left:
-        18px solid #ffffff;
-
     margin-left: 5px;
+    border-top: 11px solid transparent;
+    border-bottom: 11px solid transparent;
+    border-left: 18px solid white;
 }
 
-
-.youtube-link:hover
-.youtube-play-button {
-
-    transform:
-        scale(1.10);
-
-    box-shadow:
-        0 18px 55px
-        rgba(0,0,0,0.75),
-
-        0 0 40px
-        rgba(255,0,0,0.25);
+.youtube-link:hover .youtube-play-button {
+    transform: scale(1.1);
 }
 
-
-/* =========================================================
-   MOBILE YOUTUBE CTA
-   ========================================================= */
+/* =====================================================
+   MOBILE YOUTUBE BUTTON
+===================================================== */
 
 .mobile-youtube-cta {
-
     display: none;
-
-    text-decoration: none;
-
+    width: 100%;
+    min-height: 50px;
+    margin-top: 12px;
+    padding: 0 18px;
     align-items: center;
-
     justify-content: center;
-
     gap: 9px;
 
-    width: 100%;
-
-    min-height: 50px;
-
-    margin-top: 12px;
-
-    padding:
-        0 18px;
-
+    border: 1px solid rgba(255,70,70,0.45);
     border-radius: 9px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #ff0000,
-            #c40000
-        );
+    background: linear-gradient(135deg, #ff0000, #c40000);
 
-    border:
-        1px solid
-        rgba(255,70,70,0.45);
-
-    color:
-        #ffffff;
-
+    color: white;
+    text-decoration: none;
     font-size: 12px;
-
     font-weight: 900;
-
     letter-spacing: 1.2px;
-
     text-transform: uppercase;
 
-    box-shadow:
-        0 10px 30px
-        rgba(255,0,0,0.18);
-
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
+    box-shadow: 0 10px 30px rgba(255,0,0,0.18);
 }
 
 .mobile-youtube-cta i {
-
-    font-size: 18px;
+    font-size: 19px;
 }
 
 .mobile-youtube-cta:hover {
-
-    color:
-        #ffffff;
-
-    transform:
-        translateY(-2px);
-
-    box-shadow:
-        0 14px 35px
-        rgba(255,0,0,0.28);
+    color: white;
 }
 
-
-/* =========================================================
+/* =====================================================
    SONG INFORMATION
-   ========================================================= */
+===================================================== */
 
 .song-info {
-
     display: flex;
-
     flex-direction: column;
-
     flex: 1;
-
-    padding:
-        30px 22px 22px;
+    min-width: 0;
+    padding: 25px 15px 15px;
 }
 
-
-/* =========================================================
-   META ROW
-   ========================================================= */
-
 .song-meta {
-
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
-
-    gap: 12px;
-
+    gap: 8px;
     margin-bottom: 14px;
 }
 
-
-/* =========================================================
-   RELEASE LABEL
-   ========================================================= */
-
 .song-number {
-
     font-size: 9px;
-
     font-weight: 800;
-
-    letter-spacing: 2.5px;
-
+    letter-spacing: 2px;
     text-transform: uppercase;
 
-    background:
-        linear-gradient(
-            to bottom,
-            var(--gold-light),
-            var(--gold),
-            var(--gold-dark)
-        );
+    background: linear-gradient(
+        to bottom,
+        var(--gold-light),
+        var(--gold),
+        var(--gold-dark)
+    );
 
     -webkit-background-clip: text;
-
     -webkit-text-fill-color: transparent;
-
-    background-clip: text;
 }
-
-
-/* =========================================================
-   BADGE
-   ========================================================= */
 
 .song-badge {
-
     display: inline-flex;
-
     align-items: center;
-
+    justify-content: center;
     min-height: 25px;
-
-    padding:
-        0 10px;
-
+    padding: 0 9px;
+    border: 1px solid rgba(212,175,55,0.22);
     border-radius: 100px;
-
-    background:
-        rgba(212,175,55,0.07);
-
-    border:
-        1px solid
-        rgba(212,175,55,0.22);
-
-    color:
-        var(--gold-soft);
-
+    background: rgba(212,175,55,0.07);
+    color: var(--gold-soft);
     font-size: 8px;
-
     font-weight: 700;
-
-    letter-spacing: 1.2px;
-
-    text-transform: uppercase;
-
+    letter-spacing: 1px;
     white-space: nowrap;
 }
-
-
-/* =========================================================
-   SONG TITLE
-   ========================================================= */
 
 .song-info h2 {
-
     margin: 0;
-
-    font-size:
-        clamp(27px, 3vw, 38px);
-
-    line-height: 1.05;
-
+    color: white;
+    font-size: clamp(24px, 2.1vw, 34px);
+    line-height: 1.15;
     font-weight: 900;
-
-    letter-spacing: -1px;
-
-    color:
-        #ffffff;
+    letter-spacing: -0.7px;
 }
-
-
-/* =========================================================
-   ARTIST / CREDITS
-   ========================================================= */
 
 .artist {
-
+    min-height: 42px;
     margin-top: 12px;
-
-    color:
-        rgba(255,255,255,0.52);
-
+    color: rgba(255,255,255,0.55);
     font-size: 11px;
-
     line-height: 1.7;
-
-    min-height: 38px;
 }
-
-
-/* =========================================================
-   DIVIDER
-   ========================================================= */
 
 .song-divider {
-
     width: 100%;
-
     height: 1px;
-
-    margin:
-        22px 0 20px;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(212,175,55,0.30),
-            transparent
-        );
+    margin: 20px 0;
+    background: linear-gradient(
+        90deg,
+        rgba(212,175,55,0.35),
+        transparent
+    );
 }
 
-
-/* =========================================================
-   STREAMING TITLE
-   ========================================================= */
-
 .streaming-title {
-
-    margin-bottom: 12px;
-
-    color:
-        var(--gold);
-
+    margin-bottom: 13px;
+    color: var(--gold);
     font-size: 10px;
-
     font-weight: 800;
-
-    letter-spacing: 2.5px;
-
+    letter-spacing: 2px;
     text-transform: uppercase;
 }
 
-
-/* =========================================================
-   PLATFORM GRID — DESKTOP
-   ========================================================= */
+/* =====================================================
+   STREAMING PLATFORMS
+===================================================== */
 
 .platforms {
-
     display: grid;
-
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
-
     width: 100%;
 }
-
-
-/* =========================================================
-   PLATFORM BUTTON
-   ========================================================= */
 
 .platform-btn {
-
-    position: relative;
-
     display: flex;
-
     align-items: center;
-
     justify-content: flex-start;
-
     gap: 10px;
-
     width: 100%;
-
+    min-width: 0;
     min-height: 48px;
+    padding: 0 12px;
 
-    padding:
-        0 13px;
-
+    border: 1px solid rgba(212,175,55,0.22);
     border-radius: 9px;
 
-    border:
-        1px solid
-        rgba(212,175,55,0.22);
+    background: linear-gradient(
+        145deg,
+        rgba(255,255,255,0.055),
+        rgba(255,255,255,0.018)
+    );
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,0.055),
-            rgba(255,255,255,0.018)
-        );
-
-    color:
-        rgba(255,255,255,0.82);
-
+    color: rgba(255,255,255,0.85);
     text-decoration: none;
-
     font-size: 11px;
+    font-weight: 800;
 
-    font-weight: 750;
-
-    transition:
-        transform 0.25s ease,
-        background 0.25s ease,
-        color 0.25s ease,
-        border-color 0.25s ease,
-        box-shadow 0.25s ease;
+    transition: all 0.25s ease;
 }
-
-
-/* =========================================================
-   PLATFORM ICON
-   ========================================================= */
 
 .platform-btn i {
-
-    flex:
-        0 0 auto;
-
+    flex: 0 0 23px;
     width: 23px;
-
-    font-size: 19px;
-
+    font-size: 20px;
     line-height: 1;
-
-    transition:
-        transform 0.25s ease,
-        filter 0.25s ease;
 }
-
-
-/* =========================================================
-   BRAND COLORS
-   ========================================================= */
-
-.platform-youtube i {
-    color: #FF0000;
-}
-
-.platform-spotify i {
-    color: #1DB954;
-}
-
-.platform-apple i {
-    color: #FFFFFF;
-}
-
-.platform-instagram i {
-    color: #E4405F;
-}
-
-.platform-amazon i {
-    color: #FF9900;
-}
-
-
-/* =========================================================
-   PLATFORM TEXT
-   ========================================================= */
 
 .platform-btn span {
-
     flex: 1;
-
     white-space: nowrap;
 }
 
-
-/* =========================================================
-   EXTERNAL LINK ARROW
-   ========================================================= */
-
 .platform-btn::after {
-
-    content:
-        "↗";
-
-    flex:
-        0 0 auto;
-
+    content: "↗";
+    flex-shrink: 0;
+    color: rgba(212,175,55,0.7);
     font-size: 14px;
-
-    font-weight: 700;
-
-    color:
-        rgba(212,175,55,0.65);
-
-    transition:
-        transform 0.25s ease,
-        color 0.25s ease;
 }
-
-
-/* =========================================================
-   PLATFORM HOVER
-   ========================================================= */
 
 .platform-btn:hover {
-
-    transform:
-        translateY(-3px);
-
-    background:
-        rgba(212,175,55,0.10);
-
-    color:
-        #ffffff;
-
-    border-color:
-        rgba(212,175,55,0.55);
-
-    box-shadow:
-        0 10px 28px
-        rgba(212,175,55,0.12);
+    transform: translateY(-3px);
+    color: white;
+    border-color: var(--gold);
+    background: rgba(212,175,55,0.1);
+    box-shadow: 0 10px 25px rgba(212,175,55,0.1);
 }
 
+/* Brand colors */
 
-.platform-btn:hover i {
-
-    transform:
-        scale(1.12);
-
-    filter:
-        brightness(1.15);
-}
-
-
-.platform-btn:hover::after {
-
-    color:
-        var(--gold);
-
-    transform:
-        translate(2px, -2px);
-}
-
-
-/* =========================================================
-   YOUTUBE PLATFORM
-   ========================================================= */
-
-.platform-youtube {
-
-    border-color:
-        rgba(255,0,0,0.22);
-}
-
+.platform-youtube i { color: #ff0000; }
+.platform-spotify i { color: #1DB954; }
+.platform-apple i { color: #ffffff; }
+.platform-instagram i { color: #E4405F; }
+.platform-amazon i { color: #FF9900; }
 
 .platform-youtube:hover {
-
-    border-color:
-        rgba(255,0,0,0.55);
-
-    background:
-        rgba(255,0,0,0.055);
+    border-color: rgba(255,0,0,0.6);
+    background: rgba(255,0,0,0.06);
 }
-
-
-/* =========================================================
-   SPOTIFY
-   ========================================================= */
 
 .platform-spotify {
-
-    border-color:
-        rgba(29,185,84,0.30);
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(29,185,84,0.09),
-            rgba(29,185,84,0.025)
-        );
+    border-color: rgba(29,185,84,0.3);
+    background: linear-gradient(
+        135deg,
+        rgba(29,185,84,0.09),
+        rgba(29,185,84,0.025)
+    );
 }
-
-
-.platform-spotify i {
-
-    color:
-        #1DB954;
-}
-
 
 .platform-spotify:hover {
-
-    border-color:
-        rgba(29,185,84,0.65);
-
-    background:
-        rgba(29,185,84,0.12);
-
-    box-shadow:
-        0 12px 35px
-        rgba(29,185,84,0.14);
+    border-color: rgba(29,185,84,0.65);
+    background: rgba(29,185,84,0.12);
 }
-
-
-/* =========================================================
-   APPLE MUSIC
-   ========================================================= */
 
 .platform-apple:hover {
-
-    background:
-        rgba(255,255,255,0.065);
+    background: rgba(255,255,255,0.07);
 }
-
-
-/* =========================================================
-   INSTAGRAM
-   ========================================================= */
 
 .platform-instagram:hover {
-
-    border-color:
-        rgba(228,64,95,0.50);
-
-    background:
-        rgba(228,64,95,0.065);
+    border-color: rgba(228,64,95,0.5);
+    background: rgba(228,64,95,0.07);
 }
-
-
-/* =========================================================
-   AMAZON MUSIC
-   ========================================================= */
 
 .platform-amazon:hover {
-
-    border-color:
-        rgba(255,153,0,0.50);
-
-    background:
-        rgba(255,153,0,0.065);
+    border-color: rgba(255,153,0,0.5);
+    background: rgba(255,153,0,0.07);
 }
 
-
-/* =========================================================
+/* =====================================================
    SOUND WAVE
-   ========================================================= */
+===================================================== */
 
 .sound-wave {
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     gap: 4px;
-
     height: 22px;
-
-    margin-top: 24px;
-
+    margin-top: auto;
+    padding-top: 18px;
     opacity: 0.45;
 }
 
-
 .sound-wave span {
-
     display: block;
-
     width: 2px;
-
     height: 8px;
-
     border-radius: 10px;
-
-    background:
-        var(--gold);
-
-    animation:
-        musicWave
-        1.1s
-        ease-in-out
-        infinite;
+    background: var(--gold);
+    animation: musicWave 1.1s ease-in-out infinite;
 }
 
-
-.sound-wave span:nth-child(2) {
-    height: 15px;
-    animation-delay: .1s;
-}
-
-.sound-wave span:nth-child(3) {
-    height: 21px;
-    animation-delay: .2s;
-}
-
-.sound-wave span:nth-child(4) {
-    height: 12px;
-    animation-delay: .3s;
-}
-
-.sound-wave span:nth-child(5) {
-    height: 18px;
-    animation-delay: .4s;
-}
-
-.sound-wave span:nth-child(6) {
-    height: 9px;
-    animation-delay: .5s;
-}
-
-.sound-wave span:nth-child(7) {
-    height: 16px;
-    animation-delay: .6s;
-}
-
-.sound-wave span:nth-child(8) {
-    height: 7px;
-    animation-delay: .7s;
-}
-
+.sound-wave span:nth-child(2) { height: 15px; animation-delay: .1s; }
+.sound-wave span:nth-child(3) { height: 21px; animation-delay: .2s; }
+.sound-wave span:nth-child(4) { height: 12px; animation-delay: .3s; }
+.sound-wave span:nth-child(5) { height: 18px; animation-delay: .4s; }
+.sound-wave span:nth-child(6) { height: 9px; animation-delay: .5s; }
+.sound-wave span:nth-child(7) { height: 16px; animation-delay: .6s; }
+.sound-wave span:nth-child(8) { height: 7px; animation-delay: .7s; }
 
 @keyframes musicWave {
-
-    0%,
-    100% {
-
-        transform:
-            scaleY(.55);
-    }
-
-    50% {
-
-        transform:
-            scaleY(1);
-    }
+    0%, 100% { transform: scaleY(.55); }
+    50% { transform: scaleY(1); }
 }
 
+/* =====================================================
+   CAROUSEL ARROWS
+===================================================== */
 
-/* =========================================================
-   MOBILE SWIPE HINT
-   ========================================================= */
+.carousel-arrow {
+    position: absolute;
+    top: 35%;
+    z-index: 20;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(212,175,55,0.45);
+    border-radius: 50%;
+
+    background: rgba(8,8,8,0.9);
+    color: var(--gold);
+    font-size: 13px;
+
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.65);
+    backdrop-filter: blur(5px);
+}
+
+.carousel-arrow:hover {
+    background: rgba(212,175,55,0.2);
+    color: white;
+}
+
+.carousel-arrow.prev {
+    left: -18px;
+}
+
+.carousel-arrow.next {
+    right: -18px;
+}
+
+/* Hide arrows when all cards are visible */
+
+@media (min-width: 769px) {
+    .carousel-arrow {
+        display: none;
+    }
+}
 
 .mobile-scroll-hint {
-
     display: none;
-
-    text-align: center;
-
-    margin-top: 18px;
-
-    color:
-        rgba(212,175,55,0.42);
-
-    font-size: 9px;
-
-    font-weight: 700;
-
-    letter-spacing: 2px;
-
-    text-transform: uppercase;
 }
 
-
-/* =========================================================
+/* =====================================================
    FOOTER
-   ========================================================= */
+===================================================== */
 
 .music-footer {
-
     position: relative;
-
     z-index: 2;
-
+    padding: 55px 20px 0;
     text-align: center;
-
-    padding:
-        55px 20px 0;
-
-    color:
-        rgba(212,175,55,0.35);
-
+    color: rgba(212,175,55,0.4);
     font-size: 9px;
-
     font-weight: 700;
-
     letter-spacing: 2px;
 }
 
-
-/* =========================================================
+/* =====================================================
    TABLET
-   ========================================================= */
+===================================================== */
 
-@media (max-width: 991px) {
+@media (max-width: 991px) and (min-width: 769px) {
 
     .music-header {
-
-        padding:
-            110px 20px 45px;
+        padding: 105px 20px 40px;
     }
-
 
     .music-area {
-
-        padding:
-            20px;
+        padding: 15px 20px 0;
     }
 
-
     .songs-grid {
-
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 20px;
     }
 
-
     .song-info {
-
-        padding:
-            27px 18px 20px;
+        padding: 24px 14px 15px;
     }
 
+    .song-info h2 {
+        font-size: 27px;
+    }
 
     .platform-btn {
-
+        padding: 0 10px;
         font-size: 10px;
-
-        padding:
-            0 11px;
-    }
-
-
-    .carousel-arrow {
-
-        width: 32px;
-
-        height: 32px;
-
-        font-size: 12px;
-    }
-
-
-    .carousel-arrow.prev {
-        left: -10px;
-    }
-
-
-    .carousel-arrow.next {
-        right: -10px;
     }
 }
 
-
-/* =========================================================
+/* =====================================================
    MOBILE
-   ========================================================= */
+===================================================== */
 
 @media (max-width: 768px) {
 
-
-    /* -----------------------------------------------------
-       HEADER
-       ----------------------------------------------------- */
+    .music-page {
+        padding-bottom: 35px;
+    }
 
     .music-header {
-
-        padding:
-            85px 15px 25px;
+        padding: 85px 15px 25px;
     }
-
 
     .music-header h1 {
-
-        font-size:
-            2.2rem;
-
-        letter-spacing:
-            2px;
+        font-size: 2.2rem;
+        letter-spacing: 2px;
     }
-
 
     .music-header p {
-
-        font-size:
-            0.8rem;
-
-        line-height:
-            1.5;
-
-        margin-top:
-            12px;
+        margin-top: 12px;
+        font-size: 0.8rem;
+        line-height: 1.6;
     }
-
-
-    /* -----------------------------------------------------
-       MUSIC AREA
-       ----------------------------------------------------- */
 
     .music-area {
-
-        padding:
-            10px 15px 0;
+        padding: 10px 15px 0;
     }
-
 
     .songs-wrapper {
-
-        width:
-            100%;
-
-        overflow:
-            visible;
-
-        position:
-            relative;
+        width: 100%;
+        overflow: visible;
     }
 
-
-    /* -----------------------------------------------------
-       MOBILE ARROWS
-       ----------------------------------------------------- */
-
-    .carousel-arrow {
-
-        width:
-            28px;
-
-        height:
-            28px;
-
-        font-size:
-            10px;
-
-        background:
-            rgba(5,5,5,0.78);
-
-        border:
-            1px solid
-            rgba(212,175,55,0.45);
-
-        box-shadow:
-            0 4px 12px
-            rgba(0,0,0,0.65);
-
-        top:
-            30%;
-    }
-
-
-    .carousel-arrow.prev {
-
-        left:
-            6px;
-    }
-
-
-    .carousel-arrow.next {
-
-        right:
-            6px;
-    }
-
-
-    /* -----------------------------------------------------
-       MOBILE HORIZONTAL CAROUSEL
-       ----------------------------------------------------- */
+    /* Horizontal carousel */
 
     .songs-grid {
+        display: flex;
+        flex-direction: row;
+        gap: 0;
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 0;
 
-        display:
-            flex;
-
-        flex-direction:
-            row;
-
-        gap:
-            0;
-
-        width:
-            100%;
-
-        overflow-x:
-            auto;
-
-        overflow-y:
-            hidden;
-
-        padding:
-            0;
-
-        scroll-snap-type:
-            x mandatory;
-
-        scroll-behavior:
-            smooth;
-
-        -webkit-overflow-scrolling:
-            touch;
-
-        scrollbar-width:
-            none;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
     }
-
 
     .songs-grid::-webkit-scrollbar {
-
-        display:
-            none;
+        display: none;
     }
-
-
-    /* -----------------------------------------------------
-       MOBILE CARD
-       ----------------------------------------------------- */
 
     .song-card {
-
-        flex:
-            0 0 100%;
-
-        width:
-            100%;
-
-        max-width:
-            100%;
-
-        scroll-snap-align:
-            center;
-
-        padding:
-            10px;
-
-        border-radius:
-            12px;
-
-        transform:
-            none !important;
+        flex: 0 0 100%;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        padding: 10px;
+        border-radius: 12px;
+        scroll-snap-align: center;
     }
-
 
     .song-card:hover {
-
-        transform:
-            none !important;
+        transform: none;
     }
 
-
-    /* -----------------------------------------------------
-       POSTER
-       ----------------------------------------------------- */
+    /* Poster */
 
     .song-cover {
-
-        width:
-            100%;
-
-        aspect-ratio:
-            4 / 5;
-
-        border-radius:
-            8px;
-
-        overflow:
-            hidden;
+        width: 100%;
+        aspect-ratio: 4 / 5;
+        border-radius: 8px;
     }
-
 
     .song-cover img {
-
-        width:
-            100%;
-
-        height:
-            100%;
-
-        object-fit:
-            cover;
-
-        object-position:
-            center;
+        object-fit: cover;
     }
 
-
-    /* -----------------------------------------------------
-       PLAY BUTTON
-       ----------------------------------------------------- */
+    /* Play button */
 
     .youtube-play-button {
-
-        width:
-            52px;
-
-        height:
-            36px;
-
-        border-radius:
-            9px;
+        width: 52px;
+        height: 36px;
+        border-radius: 9px;
     }
-
 
     .youtube-play-button span {
-
-        border-top-width:
-            7px;
-
-        border-bottom-width:
-            7px;
-
-        border-left-width:
-            12px;
-
-        margin-left:
-            3px;
+        border-top-width: 7px;
+        border-bottom-width: 7px;
+        border-left-width: 12px;
+        margin-left: 3px;
     }
-
 
     .youtube-play-wrapper::before {
-
-        width:
-            72px;
-
-        height:
-            72px;
+        width: 72px;
+        height: 72px;
     }
 
-
-    /* -----------------------------------------------------
-       MOBILE YOUTUBE CTA
-       ----------------------------------------------------- */
+    /* Mobile YouTube CTA */
 
     .mobile-youtube-cta {
-
-        display:
-            flex;
+        display: flex;
     }
 
-
-    /* -----------------------------------------------------
-       SONG INFORMATION
-       ----------------------------------------------------- */
+    /* Song information */
 
     .song-info {
-
-        padding:
-            14px 8px 8px;
+        padding: 15px 8px 8px;
     }
-
 
     .song-meta {
-
-        margin-bottom:
-            8px;
+        margin-bottom: 9px;
     }
-
 
     .song-number {
-
-        font-size:
-            8px;
-
-        letter-spacing:
-            1.5px;
+        font-size: 8px;
+        letter-spacing: 1.5px;
     }
-
 
     .song-badge {
-
-        min-height:
-            20px;
-
-        padding:
-            0 8px;
-
-        font-size:
-            7px;
+        min-height: 21px;
+        padding: 0 7px;
+        font-size: 7px;
     }
-
 
     .song-info h2 {
-
-        font-size:
-            20px;
-
-        line-height:
-            1.1;
-
-        letter-spacing:
-            -0.5px;
+        font-size: 21px;
+        line-height: 1.15;
     }
-
 
     .artist {
-
-        margin-top:
-            6px;
-
-        font-size:
-            10px;
-
-        line-height:
-            1.4;
-
-        min-height:
-            auto;
+        min-height: auto;
+        margin-top: 7px;
+        font-size: 10px;
+        line-height: 1.5;
     }
-
-
-    /* -----------------------------------------------------
-       DIVIDER
-       ----------------------------------------------------- */
 
     .song-divider {
-
-        margin:
-            12px 0;
+        margin: 13px 0;
     }
-
-
-    /* -----------------------------------------------------
-       STREAMING TITLE
-       ----------------------------------------------------- */
 
     .streaming-title {
-
-        font-size:
-            9px;
-
-        margin-bottom:
-            9px;
-
-        letter-spacing:
-            1.8px;
+        margin-bottom: 10px;
+        font-size: 9px;
+        letter-spacing: 1.5px;
     }
 
-
-    /* =====================================================
-       MOBILE PLATFORM SECTION
-
-       IMPORTANT:
-       ALL FOUR SECONDARY PLATFORMS ARE NOW THE SAME SIZE.
-       ===================================================== */
+    /* Equal-sized platform buttons */
 
     .platforms {
-
-        display:
-            flex;
-
-        flex-direction:
-            column;
-
-        gap:
-            10px;
-
-        width:
-            100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
     }
-
-
-    /* -----------------------------------------------------
-       ALL MOBILE PLATFORM BUTTONS
-       ----------------------------------------------------- */
 
     .platform-btn {
-
-        display:
-            flex;
-
-        width:
-            100%;
-
-        min-height:
-            56px;
-
-        padding:
-            0 15px;
-
-        border-radius:
-            10px;
-
-        gap:
-            12px;
-
-        font-size:
-            12px;
-
-        font-weight:
-            800;
+        width: 100%;
+        min-height: 56px;
+        padding: 0 15px;
+        gap: 12px;
+        border-radius: 10px;
+        font-size: 12px;
+        font-weight: 800;
     }
-
-
-    /* -----------------------------------------------------
-       ALL PLATFORM ICONS
-       ----------------------------------------------------- */
 
     .platform-btn i {
-
-        width:
-            28px;
-
-        font-size:
-            23px;
+        flex: 0 0 28px;
+        width: 28px;
+        font-size: 23px;
     }
-
-
-    /* -----------------------------------------------------
-       ALL PLATFORM ARROWS
-       ----------------------------------------------------- */
 
     .platform-btn::after {
-
-        font-size:
-            15px;
+        font-size: 15px;
     }
 
-
-    /* -----------------------------------------------------
-       SPOTIFY
-       Same size as every other platform now.
-       ----------------------------------------------------- */
-
-    .platform-spotify {
-
-        min-height:
-            56px;
-
-        padding:
-            0 15px;
-
-        gap:
-            12px;
-
-        border-radius:
-            10px;
-    }
-
-
-    .platform-spotify i {
-
-        width:
-            28px;
-
-        font-size:
-            23px;
-    }
-
-
-    .platform-spotify span {
-
-        font-size:
-            12px;
-
-        font-weight:
-            800;
-    }
-
-
-    /* -----------------------------------------------------
-       APPLE
-       ----------------------------------------------------- */
-
-    .platform-apple {
-
-        min-height:
-            56px;
-    }
-
-
-    /* -----------------------------------------------------
-       INSTAGRAM
-       ----------------------------------------------------- */
-
-    .platform-instagram {
-
-        min-height:
-            56px;
-    }
-
-
-    /* -----------------------------------------------------
-       AMAZON
-       ----------------------------------------------------- */
-
-    .platform-amazon {
-
-        min-height:
-            56px;
-    }
-
-
-    /* -----------------------------------------------------
-       HIDE DUPLICATE YOUTUBE BUTTON
-
-       YouTube is already the primary large CTA above.
-       ----------------------------------------------------- */
+    /* YouTube already highlighted above */
 
     .platform-youtube {
-
-        display:
-            none;
+        display: none;
     }
 
+    /* Carousel arrows */
 
-    /* -----------------------------------------------------
-       SWIPE HINT
-       ----------------------------------------------------- */
+    .carousel-arrow {
+        display: flex;
+        width: 30px;
+        height: 30px;
+        top: 28%;
+        font-size: 11px;
+        background: rgba(5,5,5,0.85);
+    }
+
+    .carousel-arrow.prev {
+        left: 5px;
+    }
+
+    .carousel-arrow.next {
+        right: 5px;
+    }
+
+    /* Swipe hint */
 
     .mobile-scroll-hint {
-
-        display:
-            block;
-
-        margin-top:
-            14px;
-
-        font-size:
-            8px;
+        display: block;
+        margin-top: 15px;
+        text-align: center;
+        color: rgba(212,175,55,0.5);
+        font-size: 8px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
     }
-
-
-    /* -----------------------------------------------------
-       SOUND WAVE
-       ----------------------------------------------------- */
 
     .sound-wave {
-
-        margin-top:
-            16px;
-
-        height:
-            16px;
+        margin-top: auto;
+        padding-top: 16px;
+        height: 22px;
     }
 
-
-    /* -----------------------------------------------------
-       FOOTER
-       ----------------------------------------------------- */
-
     .music-footer {
-
-        padding:
-            30px 20px 0;
-
-        font-size:
-            8px;
+        padding-top: 30px;
+        font-size: 8px;
     }
 }
 
-
-/* =========================================================
+/* =====================================================
    SMALL PHONES
-   ========================================================= */
+===================================================== */
 
 @media (max-width: 380px) {
 
-
     .music-header {
-
-        padding:
-            75px 10px 20px;
+        padding: 75px 10px 20px;
     }
-
 
     .music-header h1 {
-
-        font-size:
-            1.9rem;
+        font-size: 1.9rem;
     }
-
 
     .song-card {
-
-        padding:
-            8px;
+        padding: 8px;
     }
-
 
     .song-info h2 {
-
-        font-size:
-            18px;
+        font-size: 19px;
     }
-
-
-    /* -----------------------------------------------------
-       YOUTUBE CTA
-       ----------------------------------------------------- */
 
     .mobile-youtube-cta {
-
-        min-height:
-            47px;
-
-        margin-top:
-            10px;
-
-        font-size:
-            10px;
-
-        gap:
-            7px;
+        min-height: 47px;
+        margin-top: 10px;
+        font-size: 10px;
     }
-
-
-    .mobile-youtube-cta i {
-
-        font-size:
-            16px;
-    }
-
-
-    /* -----------------------------------------------------
-       ALL PLATFORM BUTTONS
-       ----------------------------------------------------- */
 
     .platform-btn {
-
-        min-height:
-            52px;
-
-        padding:
-            0 12px;
-
-        border-radius:
-            9px;
-
-        gap:
-            10px;
-
-        font-size:
-            11px;
+        min-height: 52px;
+        padding: 0 12px;
+        font-size: 11px;
     }
-
 
     .platform-btn i {
-
-        width:
-            25px;
-
-        font-size:
-            21px;
+        flex-basis: 25px;
+        width: 25px;
+        font-size: 21px;
     }
-
-
-    .platform-btn::after {
-
-        font-size:
-            14px;
-    }
-
-
-    .platform-spotify {
-
-        min-height:
-            52px;
-
-        padding:
-            0 12px;
-    }
-
-
-    .platform-spotify i {
-
-        width:
-            25px;
-
-        font-size:
-            21px;
-    }
-
-
-    .platform-spotify span {
-
-        font-size:
-            11px;
-    }
-
-
-    /* -----------------------------------------------------
-       ARROWS
-       ----------------------------------------------------- */
 
     .carousel-arrow {
-
-        width:
-            26px;
-
-        height:
-            26px;
-
-        font-size:
-            9px;
-
-        top:
-            30%;
-    }
-
-
-    .carousel-arrow.prev {
-
-        left:
-            5px;
-    }
-
-
-    .carousel-arrow.next {
-
-        right:
-            5px;
+        width: 27px;
+        height: 27px;
+        top: 28%;
     }
 }
 
-
-/* =========================================================
+/* =====================================================
    ACCESSIBILITY
-   ========================================================= */
+===================================================== */
 
 .youtube-link:focus,
 .mobile-youtube-cta:focus,
 .platform-btn:focus,
 .carousel-arrow:focus {
+    outline: 2px solid rgba(212,175,55,0.7);
+    outline-offset: 3px;
+}
 
-    outline:
-        2px solid
-        rgba(212,175,55,0.55);
+@media (prefers-reduced-motion: reduce) {
+    .sound-wave span {
+        animation: none;
+    }
 
-    outline-offset:
-        2px;
+    .songs-grid {
+        scroll-behavior: auto;
+    }
 }
 
 </style>
 
 
-<!-- =========================================================
+<!-- =====================================================
      MUSIC PAGE
-     ========================================================= -->
+===================================================== -->
 
 <section class="music-page">
 
-
-    <!-- =====================================================
-         HEADER
-         ===================================================== -->
+    <!-- HEADER -->
 
     <header class="music-header">
 
-        <div class="music-header-content">
+        <h1>TRAILER OUT</h1>
 
-            <h1>
-                OUR MUSIC
-            </h1>
-
-            <p>
-                Original music from our stories, created with passion
-                and made to be heard beyond the screen.
-            </p>
-
-        </div>
+        <p>
+            Original webseries from our stories, created with passion
+            and made to be heard beyond the screen.
+        </p>
 
     </header>
 
 
-    <!-- =====================================================
-         MUSIC AREA
-         ===================================================== -->
+    <!-- MUSIC AREA -->
 
     <div class="music-area">
 
         <div class="songs-wrapper">
 
-
-            <!-- =================================================
-                 NAVIGATION ARROWS
-                 ================================================== -->
+            <!-- CAROUSEL ARROWS -->
 
             <button
                 type="button"
@@ -2233,7 +979,6 @@ body {
             >
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
-
 
             <button
                 type="button"
@@ -2245,43 +990,32 @@ body {
             </button>
 
 
-            <!-- =================================================
-                 SONGS
-                 ================================================== -->
+            <!-- SONG GRID -->
 
-            <div
-                class="songs-grid"
-                id="songsGrid"
-            >
+            <div class="songs-grid" id="songsGrid">
 
 
-                <!-- =================================================
-                     SONG 1 — OH MY FRIEND
-                     ================================================== -->
+                <!-- =========================================
+                     OFFICIAL TRAILER
+                ========================================== -->
 
                 <article class="song-card">
-
-
-                    <!-- =================================================
-                         SONG COVER
-                         ================================================== -->
 
                     <div class="song-cover">
 
                         <a
-                            href="https://www.youtube.com/watch?v=e9l3cRJWJyk"
+                            href="https://www.youtube.com/watch?v=hD5gQwgFGJA"
                             target="_blank"
                             rel="noopener noreferrer"
                             class="youtube-link"
-                            aria-label="Watch Oh My Friend on YouTube"
+                            aria-label="Watch Official Trailer"
                         >
 
                             <img
-                                src="{{ url_for('static', filename='images/songposter.jpeg') }}"
-                                alt="Oh My Friend"
+                                src="{{ url_for('static', filename='images/trailer.png') }}"
+                                alt="Official Trailer"
                                 loading="lazy"
                             >
-
 
                             <div class="play-overlay">
 
@@ -2300,12 +1034,10 @@ body {
                     </div>
 
 
-                    <!-- =================================================
-                         MOBILE YOUTUBE CTA
-                         ================================================== -->
+                    <!-- MOBILE YOUTUBE -->
 
                     <a
-                        href="https://www.youtube.com/watch?v=e9l3cRJWJyk"
+                        href="https://www.youtube.com/watch?v=hD5gQwgFGJA"
                         target="_blank"
                         rel="noopener noreferrer"
                         class="mobile-youtube-cta"
@@ -2313,21 +1045,14 @@ body {
 
                         <i class="fa-brands fa-youtube"></i>
 
-                        <span>
-                            Watch on YouTube
-                        </span>
+                        <span>Watch on YouTube</span>
 
                     </a>
 
 
-                    <!-- =================================================
-                         SONG INFORMATION
-                         ================================================== -->
+                    <!-- INFORMATION -->
 
                     <div class="song-info">
-
-
-                        <!-- META -->
 
                         <div class="song-meta">
 
@@ -2341,45 +1066,142 @@ body {
 
                         </div>
 
-
-                        <!-- TITLE -->
-
-                        <h2>
-                            Oh My Friend
-                        </h2>
-
-
-                        <!-- CREDITS -->
+                        <h2>Official Trailer</h2>
 
                         <div class="artist">
-
-                            Lyrics by Manoj
-                            ·
-                            Vocals by Satya Radhakrishna, Thanusha
-
+                            Official Trailer · C &amp; C Web Series
                         </div>
-
-
-                        <!-- DIVIDER -->
 
                         <div class="song-divider"></div>
 
+                        <div class="streaming-title">
+                            WATCH ON SOCIAL PLATFORMS
+                        </div>
 
-                        <!-- STREAMING TITLE -->
+                        <div class="platforms">
+
+                            <a
+                                href="https://www.instagram.com/homeentertainments/p/DfuY3etzndO/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="platform-btn platform-instagram"
+                                aria-label="Watch on Instagram"
+                            >
+
+                                <i class="fa-brands fa-instagram"></i>
+
+                                <span>Instagram</span>
+
+                            </a>
+
+                        </div>
+
+                        <div class="sound-wave">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- =========================================
+                     SONG 1 — OH MY FRIEND
+                ========================================== -->
+
+                <article class="song-card">
+
+                    <div class="song-cover">
+
+                        <a
+                            href="https://www.youtube.com/watch?v=e9l3cRJWJyk"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="youtube-link"
+                            aria-label="Watch Oh My Friend"
+                        >
+
+                            <img
+                                src="{{ url_for('static', filename='images/songposter.jpeg') }}"
+                                alt="Oh My Friend"
+                                loading="lazy"
+                            >
+
+                            <div class="play-overlay">
+
+                                <div class="youtube-play-wrapper">
+
+                                    <div class="youtube-play-button">
+                                        <span></span>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </a>
+
+                    </div>
+
+
+                    <!-- MOBILE YOUTUBE -->
+
+                    <a
+                        href="https://www.youtube.com/watch?v=e9l3cRJWJyk"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="mobile-youtube-cta"
+                    >
+
+                        <i class="fa-brands fa-youtube"></i>
+
+                        <span>Watch on YouTube</span>
+
+                    </a>
+
+
+                    <!-- INFORMATION -->
+
+                    <div class="song-info">
+
+                        <div class="song-meta">
+
+                            <div class="song-number">
+                                OUR RELEASE
+                            </div>
+
+                            <div class="song-badge">
+                                C &amp; C WEB SERIES
+                            </div>
+
+                        </div>
+
+                        <h2>Oh My Friend</h2>
+
+                        <div class="artist">
+                            Lyrics by Manoj
+                            ·
+                            Vocals by Satya Radhakrishna, Thanusha
+                        </div>
+
+                        <div class="song-divider"></div>
 
                         <div class="streaming-title">
                             LISTEN ON OTHER PLATFORMS
                         </div>
 
 
-                        <!-- =================================================
-                             PLATFORM BUTTONS
-                             ================================================== -->
-
                         <div class="platforms">
 
-
-                            <!-- YOUTUBE — DESKTOP -->
+                            <!-- YOUTUBE -->
 
                             <a
                                 href="https://www.youtube.com/watch?v=e9l3cRJWJyk"
@@ -2391,9 +1213,7 @@ body {
 
                                 <i class="fa-brands fa-youtube"></i>
 
-                                <span>
-                                    YouTube
-                                </span>
+                                <span>YouTube</span>
 
                             </a>
 
@@ -2410,9 +1230,7 @@ body {
 
                                 <i class="fa-brands fa-spotify"></i>
 
-                                <span>
-                                    Spotify
-                                </span>
+                                <span>Spotify</span>
 
                             </a>
 
@@ -2429,9 +1247,7 @@ body {
 
                                 <i class="fa-brands fa-apple"></i>
 
-                                <span>
-                                    Apple Music
-                                </span>
+                                <span>Apple Music</span>
 
                             </a>
 
@@ -2448,9 +1264,7 @@ body {
 
                                 <i class="fa-brands fa-instagram"></i>
 
-                                <span>
-                                    Instagram
-                                </span>
+                                <span>Instagram</span>
 
                             </a>
 
@@ -2467,20 +1281,14 @@ body {
 
                                 <i class="fa-brands fa-amazon"></i>
 
-                                <span>
-                                    Amazon Music
-                                </span>
+                                <span>Amazon Music</span>
 
                             </a>
 
-
                         </div>
 
-
-                        <!-- SOUND WAVE -->
 
                         <div class="sound-wave">
-
                             <span></span>
                             <span></span>
                             <span></span>
@@ -2489,25 +1297,19 @@ body {
                             <span></span>
                             <span></span>
                             <span></span>
-
                         </div>
-
 
                     </div>
 
                 </article>
 
 
-                <!-- =================================================
+
+                <!-- =========================================
                      SONG 2 — MURIDHA MANASUGALU
-                     ================================================== -->
+                ========================================== -->
 
                 <article class="song-card">
-
-
-                    <!-- =================================================
-                         SONG COVER
-                         ================================================== -->
 
                     <div class="song-cover">
 
@@ -2516,7 +1318,7 @@ body {
                             target="_blank"
                             rel="noopener noreferrer"
                             class="youtube-link"
-                            aria-label="Watch Muridha Manasugalu on YouTube"
+                            aria-label="Watch Muridha Manasugalu"
                         >
 
                             <img
@@ -2524,7 +1326,6 @@ body {
                                 alt="Muridha Manasugalu"
                                 loading="lazy"
                             >
-
 
                             <div class="play-overlay">
 
@@ -2543,9 +1344,7 @@ body {
                     </div>
 
 
-                    <!-- =================================================
-                         MOBILE YOUTUBE CTA
-                         ================================================== -->
+                    <!-- MOBILE YOUTUBE -->
 
                     <a
                         href="https://www.youtube.com/watch?v=UI5KfuKAG8U"
@@ -2556,21 +1355,14 @@ body {
 
                         <i class="fa-brands fa-youtube"></i>
 
-                        <span>
-                            Watch on YouTube
-                        </span>
+                        <span>Watch on YouTube</span>
 
                     </a>
 
 
-                    <!-- =================================================
-                         SONG INFORMATION
-                         ================================================== -->
+                    <!-- INFORMATION -->
 
                     <div class="song-info">
-
-
-                        <!-- META -->
 
                         <div class="song-meta">
 
@@ -2584,45 +1376,24 @@ body {
 
                         </div>
 
-
-                        <!-- TITLE -->
-
-                        <h2>
-                            Muridha Manasugalu
-                        </h2>
-
-
-                        <!-- CREDITS -->
+                        <h2>Muridha Manasugalu</h2>
 
                         <div class="artist">
-
                             Lyrics by Manoj
                             ·
                             Vocals by Satya Radhakrishna
-
                         </div>
 
-
-                        <!-- DIVIDER -->
-
                         <div class="song-divider"></div>
-
-
-                        <!-- STREAMING TITLE -->
 
                         <div class="streaming-title">
                             LISTEN ON OTHER PLATFORMS
                         </div>
 
 
-                        <!-- =================================================
-                             PLATFORM BUTTONS
-                             ================================================== -->
-
                         <div class="platforms">
 
-
-                            <!-- YOUTUBE — DESKTOP -->
+                            <!-- YOUTUBE -->
 
                             <a
                                 href="https://www.youtube.com/watch?v=UI5KfuKAG8U"
@@ -2634,9 +1405,7 @@ body {
 
                                 <i class="fa-brands fa-youtube"></i>
 
-                                <span>
-                                    YouTube
-                                </span>
+                                <span>YouTube</span>
 
                             </a>
 
@@ -2653,9 +1422,7 @@ body {
 
                                 <i class="fa-brands fa-spotify"></i>
 
-                                <span>
-                                    Spotify
-                                </span>
+                                <span>Spotify</span>
 
                             </a>
 
@@ -2672,9 +1439,7 @@ body {
 
                                 <i class="fa-brands fa-apple"></i>
 
-                                <span>
-                                    Apple Music
-                                </span>
+                                <span>Apple Music</span>
 
                             </a>
 
@@ -2691,9 +1456,7 @@ body {
 
                                 <i class="fa-brands fa-instagram"></i>
 
-                                <span>
-                                    Instagram
-                                </span>
+                                <span>Instagram</span>
 
                             </a>
 
@@ -2710,20 +1473,14 @@ body {
 
                                 <i class="fa-brands fa-amazon"></i>
 
-                                <span>
-                                    Amazon Music
-                                </span>
+                                <span>Amazon Music</span>
 
                             </a>
 
-
                         </div>
 
-
-                        <!-- SOUND WAVE -->
 
                         <div class="sound-wave">
-
                             <span></span>
                             <span></span>
                             <span></span>
@@ -2732,9 +1489,7 @@ body {
                             <span></span>
                             <span></span>
                             <span></span>
-
                         </div>
-
 
                     </div>
 
@@ -2744,130 +1499,112 @@ body {
             </div>
 
 
-            <!-- =================================================
-                 MOBILE SWIPE HINT
-                 ================================================== -->
+            <!-- MOBILE SWIPE HINT -->
 
             <div class="mobile-scroll-hint">
-
                 SWIPE OR USE ARROWS TO DISCOVER MORE TRACKS
-
             </div>
-
 
         </div>
 
     </div>
 
 
-    <!-- =====================================================
-         FOOTER
-         ===================================================== -->
+    <!-- FOOTER -->
 
     <footer class="music-footer">
-
         HOME ENTERTAINMENTS MUSIC
-
     </footer>
-
 
 </section>
 
 
-<!-- =========================================================
-     CAROUSEL NAVIGATION SCRIPT
-     ========================================================= -->
+<!-- =====================================================
+     CAROUSEL JAVASCRIPT
+===================================================== -->
 
 <script>
 
-document.addEventListener(
-    'DOMContentLoaded',
-    function () {
+document.addEventListener('DOMContentLoaded', function () {
 
-        const songsGrid =
-            document.getElementById('songsGrid');
+    const songsGrid = document.getElementById('songsGrid');
 
-        const prevBtn =
-            document.getElementById('prevSongBtn');
+    const prevBtn = document.getElementById('prevSongBtn');
 
-        const nextBtn =
-            document.getElementById('nextSongBtn');
+    const nextBtn = document.getElementById('nextSongBtn');
 
+    if (!songsGrid || !prevBtn || !nextBtn) {
+        return;
+    }
 
-        if (
-            !songsGrid ||
-            !prevBtn ||
-            !nextBtn
-        ) {
+    function scrollGrid(direction) {
+
+        const cards = songsGrid.querySelectorAll('.song-card');
+
+        if (!cards.length) {
             return;
         }
 
+        const cardWidth = cards[0].getBoundingClientRect().width;
 
-        function scrollGrid(direction) {
+        const styles = window.getComputedStyle(songsGrid);
 
-            const card =
-                songsGrid.querySelector('.song-card');
+        const gap = parseFloat(styles.columnGap) || 0;
 
+        const scrollAmount = cardWidth + gap;
 
-            if (!card) {
-                return;
+        const maxScroll = songsGrid.scrollWidth - songsGrid.clientWidth;
+
+        if (direction === 'next') {
+
+            if (songsGrid.scrollLeft >= maxScroll - 5) {
+
+                songsGrid.scrollTo({
+                    left: 0,
+                    behavior: 'smooth'
+                });
+
+            } else {
+
+                songsGrid.scrollBy({
+                    left: scrollAmount,
+                    behavior: 'smooth'
+                });
+
             }
 
+        } else {
 
-            const cardWidth =
-                card.getBoundingClientRect().width;
+            if (songsGrid.scrollLeft <= 5) {
 
+                songsGrid.scrollTo({
+                    left: maxScroll,
+                    behavior: 'smooth'
+                });
 
-            const gap =
-                parseFloat(
-                    window.getComputedStyle(
-                        songsGrid
-                    ).gap
-                ) || 0;
+            } else {
 
+                songsGrid.scrollBy({
+                    left: -scrollAmount,
+                    behavior: 'smooth'
+                });
 
-            const scrollAmount =
-                cardWidth + gap;
-
-
-            songsGrid.scrollBy({
-
-                left:
-                    direction === 'next'
-                        ? scrollAmount
-                        : -scrollAmount,
-
-                behavior:
-                    'smooth'
-
-            });
+            }
 
         }
 
-
-        prevBtn.addEventListener(
-            'click',
-            function () {
-
-                scrollGrid('prev');
-
-            }
-        );
-
-
-        nextBtn.addEventListener(
-            'click',
-            function () {
-
-                scrollGrid('next');
-
-            }
-        );
-
     }
-);
+
+    prevBtn.addEventListener('click', function () {
+        scrollGrid('prev');
+    });
+
+    nextBtn.addEventListener('click', function () {
+        scrollGrid('next');
+    });
+
+});
 
 </script>
-
 
 {% endblock %}
