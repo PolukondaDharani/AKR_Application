@@ -776,14 +776,16 @@
 
         <span class="label">Location</span>
 
-        <a href="https://www.google.com/search?q={{ show['location'] | urlencode }}"
-           target="_blank"
-           rel="noopener noreferrer"
-           class="value location-link">
-
-            {{ show["location"] }}
-
-        </a>
+        <a
+    href="{{ show['location'] }}"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="booking-detail-value location-link"
+>
+        <i class="fas fa-map-marker-alt"></i>
+        {{ show["location"] }}
+        <i class="fas fa-external-link-alt"></i>
+    </a>
 
     </div>
 
