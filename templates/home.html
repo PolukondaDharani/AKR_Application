@@ -24,7 +24,54 @@ body {
     box-sizing: border-box;
 }
 
+.poster-video {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 9 / 16; /* Matches vertical/shorts video format */
+    background: #000;
+    overflow: hidden;
+    border-radius: 12px; /* Adjust as per your card style */
+}
 
+.poster-video img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image fills the container without distortion */
+}
+
+/* YouTube style play button overlay */
+.youtube-play-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.2); /* Slight dim effect */
+    transition: background 0.2s ease;
+}
+
+.poster-video-link:hover .youtube-play-overlay {
+    background: rgba(0, 0, 0, 0.4); /* Darker on hover */
+}
+
+.youtube-play-icon {
+    width: 68px;
+    height: 48px;
+    background-color: #ff0000 !important; /* Forces the red color */
+    border-radius: 12px;
+    color: #ffffff !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    padding-left: 2px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.poster-video-link:hover .youtube-play-icon {
+    background-color: #cc0000; /* Darker red on hover */
+    transform: scale(1.1);
+}
 /* =========================================================
    HERO CAROUSEL
    ========================================================= */
@@ -987,9 +1034,12 @@ body {
 @media (max-width: 768px) {
 
     #homeCarousel {
+        height: 72vh;
+        height: 72svh;
+        height: 72dvh;
 
-        min-height: 650px;
-
+        min-height: 460px;
+        max-height: 620px;
     }
 
 
@@ -1160,9 +1210,12 @@ body {
 @media (max-width: 360px) {
 
     #homeCarousel {
+        height: 68vh;
+        height: 68svh;
+        height: 68dvh;
 
-        min-height: 600px;
-
+        min-height: 420px;
+        max-height: 520px;
     }
 
 
@@ -1425,6 +1478,40 @@ body {
             id="portfolioSlider"
         >
 
+        <!-- =================================================
+                POSTER 0--TRAILER
+                 ================================================= -->
+
+            <div class="poster-card released">
+
+
+                <a href="https://www.youtube.com/watch?v=hD5gQwgFGJA" target="_blank" rel="noopener noreferrer">
+    <img
+        src="/static/images/trailer.png"
+        alt="Official Trailer"
+        class="poster-img"
+        loading="lazy"
+    >
+</a>
+
+
+                <div class="poster-title">
+
+                    OFFICIAL TRAILER 
+
+                </div>
+
+
+                <div class="poster-year">
+
+                    Released
+
+                </div>
+
+
+            </div>
+
+
 
             <!-- =================================================
                  POSTER 1
@@ -1466,6 +1553,7 @@ body {
 
             <div class="poster-card upcoming">
 
+                                <a href="https://www.youtube.com/watch?v=e9l3cRJWJyk" target="_blank" rel="noopener noreferrer">
 
                 <img
                     src="/static/images/muridhamanusagalu.jpeg"
@@ -1474,7 +1562,7 @@ body {
                     loading="lazy"
                 >
 
-
+</a>
                 <div class="poster-title">
 
                     MURIDHA MANASUGALU LYRICAL VIDEO
@@ -1556,8 +1644,54 @@ body {
 
         <div class="poster-slider">
 
+<!-- =================================================
+                 EVENT 1 (Aligned with Event 2)
+                 ================================================= -->
+
+<div class="poster-card">
+    <a href="https://www.youtube.com/watch?v=3fmcuLT0Zp0" target="_blank" rel="noopener noreferrer" class="poster-video-link">
+        <div class="poster-video">
+            <img src="https://img.youtube.com/vi/3fmcuLT0Zp0/hqdefault.jpg" alt="Dasara Event Glimpse" loading="lazy">
+            <div class="youtube-play-overlay">
+                <div class="youtube-play-icon">▶</div>
+            </div>
+        </div>
+    </a>
+
+    <div class="poster-title">
+        Dasara Event Glimpse
+    </div>
+
+    <div class="poster-year">
+        Event - 2026
+    </div>
+</div>
+
+
+<!-- =================================================
+                 EVENT 2
+                 ================================================= -->
+
+<div class="poster-card">
+    <a href="https://www.youtube.com/watch?v=7s0qqwjN3Mg" target="_blank" rel="noopener noreferrer" class="poster-video-link">
+        <div class="poster-video">
+            <img src="https://img.youtube.com/vi/7s0qqwjN3Mg/hqdefault.jpg" alt="Promotion - Anjanadri Betta" loading="lazy">
+            <div class="youtube-play-overlay">
+                <div class="youtube-play-icon">▶</div>
+            </div>
+        </div>
+    </a>
+
+    <div class="poster-title">
+        Promotion - Anjanadri Betta
+    </div>
+
+    <div class="poster-year">
+        Event - 2026
+    </div>
+</div>
             <!-- =================================================
-                 EVENT 1
+                 EVENT 3
                  ================================================= -->
 
             <div class="poster-card">
@@ -1596,7 +1730,7 @@ body {
 
 
             <!-- =================================================
-                 EVENT 2
+                 EVENT 4
                  ================================================= -->
 
             <div class="poster-card">
@@ -1634,7 +1768,7 @@ body {
 
 
             <!-- =================================================
-                 EVENT 3
+                 EVENT 5
                  ================================================= -->
 
             <div class="poster-card">
@@ -1672,7 +1806,7 @@ body {
 
 
             <!-- =================================================
-                 EVENT 4
+                 EVENT 6
                  ================================================= -->
 
             <div class="poster-card">
@@ -1710,7 +1844,7 @@ body {
 
 
                     <!-- =================================================
-                 EVENT 5
+                 EVENT 7
                  ================================================= -->
 
             <div class="poster-card">

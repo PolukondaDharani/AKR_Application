@@ -1117,7 +1117,7 @@ def about():
         {
                     "name": "Manoj Manchu",
                     "role": "Director",
-                    "image": "Manoj.png",
+                    "image": "Manoj.jpg",
                     "bio": (
                         "A passionate director and wordsmith,"
                         "dedicated to writing deeply moving narratives and soulful songs."

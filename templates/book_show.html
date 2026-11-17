@@ -302,11 +302,11 @@ body {
     <span class="booking-detail-label">Location</span>
 
     <a
-        href="https://www.google.com/maps/search/?api=1&query={{ show['location']|urlencode }}"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="booking-detail-value location-link"
-    >
+    href="https://www.google.com/search?q={{ show['location']|urlencode }}"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="booking-detail-value location-link"
+>
         <i class="fas fa-map-marker-alt"></i>
         {{ show["location"] }}
         <i class="fas fa-external-link-alt"></i>

@@ -14,7 +14,15 @@
     /* =========================================================
        BOOKING PAGE
     ========================================================= */
+.location-link {
+    color: inherit;
+    text-decoration: none;
+}
 
+.location-link:hover {
+    color: #d4af37;
+    text-decoration: underline;
+}
     .booking-page {
         position: relative;
         min-height: calc(100vh - 100px);
@@ -762,23 +770,24 @@
 
                             <div class="show-info-row">
 
-                                <span class="icon">
-                                    📍
-                                </span>
+    <span class="icon">📍</span>
 
-                                <div class="info-content">
+    <div class="info-content">
 
-                                    <span class="label">
-                                        Location
-                                    </span>
+        <span class="label">Location</span>
 
-                                    <span class="value">
-                                        {{ show["location"] }}
-                                    </span>
+        <a href="https://www.google.com/search?q={{ show['location'] | urlencode }}"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="value location-link">
 
-                                </div>
+            {{ show["location"] }}
 
-                            </div>
+        </a>
+
+    </div>
+
+</div>
 
 
                             <div class="show-info-row">
