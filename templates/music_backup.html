@@ -1,0 +1,1610 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+/* =====================================================
+   GLOBAL & THEME
+===================================================== */
+
+:root {
+    --gold-light: #fff8ce;
+    --gold-soft: #f1d592;
+    --gold: #d4af37;
+    --gold-dark: #8f6817;
+    --gold-border: rgba(212,175,55,0.25);
+    --white: #ffffff;
+    --muted: rgba(255,255,255,0.58);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #000 !important;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+/* =====================================================
+   MAIN PAGE
+===================================================== */
+
+.music-page {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    padding-bottom: 60px;
+    overflow: hidden;
+    color: var(--white);
+    background:
+        radial-gradient(circle at 50% 10%, rgba(212,175,55,0.09), transparent 35%),
+        #000;
+}
+
+.music-page::before {
+    content: "";
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    top: -250px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(circle, rgba(212,175,55,0.1), transparent 68%);
+    filter: blur(60px);
+    pointer-events: none;
+}
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.music-header {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
+    padding: 115px 20px 45px;
+    text-align: center;
+}
+
+.music-header h1 {
+    margin: 0;
+    font-size: clamp(3.2rem, 8vw, 7rem);
+    line-height: 0.95;
+    font-weight: 900;
+    letter-spacing: 4px;
+
+    background: linear-gradient(
+        to bottom,
+        var(--gold-light),
+        var(--gold-soft) 30%,
+        var(--gold) 65%,
+        var(--gold-dark)
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+
+    filter: drop-shadow(0 0 20px rgba(212,175,55,0.18));
+}
+
+.music-header p {
+    max-width: 680px;
+    margin: 25px auto 0;
+    color: rgba(255,255,255,0.72);
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+/* =====================================================
+   MUSIC AREA
+===================================================== */
+
+.music-area {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 15px 25px 0;
+}
+
+.songs-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1250px;
+    margin: 0 auto;
+}
+
+/* =====================================================
+   SONG GRID - DESKTOP
+===================================================== */
+
+.songs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    width: 100%;
+    align-items: stretch;
+}
+
+/* =====================================================
+   SONG CARD
+===================================================== */
+
+.song-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    height: 100%;
+    overflow: hidden;
+    padding: 12px;
+
+    border: 1px solid var(--gold-border);
+    border-radius: 14px;
+
+    background: linear-gradient(145deg, #151515, #080808);
+
+    box-shadow:
+        0 30px 90px rgba(0,0,0,0.7),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.song-card:hover {
+    border-color: rgba(212,175,55,0.5);
+
+    box-shadow:
+        0 35px 90px rgba(0,0,0,0.8),
+        0 0 35px rgba(212,175,55,0.05);
+}
+
+/* =====================================================
+   POSTER
+===================================================== */
+
+.song-cover {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: 9px;
+    background: #111;
+    flex-shrink: 0;
+}
+
+.youtube-link {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+}
+
+.song-cover img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.7s ease, filter 0.5s ease;
+}
+
+.song-card:hover .song-cover img {
+    transform: scale(1.04);
+    filter: brightness(0.88);
+}
+
+/* =====================================================
+   YOUTUBE PLAY OVERLAY
+===================================================== */
+
+.play-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: radial-gradient(
+        circle,
+        rgba(0,0,0,0.03),
+        rgba(0,0,0,0.28)
+    );
+}
+
+.youtube-play-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.youtube-play-wrapper::before {
+    content: "";
+    position: absolute;
+    width: 115px;
+    height: 115px;
+    border: 1px solid rgba(212,175,55,0.45);
+    border-radius: 50%;
+    background: rgba(212,175,55,0.035);
+    transition: transform 0.3s ease;
+}
+
+.youtube-link:hover .youtube-play-wrapper::before {
+    transform: scale(1.15);
+}
+
+.youtube-play-button {
+    position: relative;
+    z-index: 2;
+    width: 82px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    background: #ff0000;
+    box-shadow: 0 15px 45px rgba(0,0,0,0.65);
+    transition: transform 0.3s ease;
+}
+
+.youtube-play-button span {
+    width: 0;
+    height: 0;
+    margin-left: 5px;
+    border-top: 11px solid transparent;
+    border-bottom: 11px solid transparent;
+    border-left: 18px solid white;
+}
+
+.youtube-link:hover .youtube-play-button {
+    transform: scale(1.1);
+}
+
+/* =====================================================
+   MOBILE YOUTUBE BUTTON
+===================================================== */
+
+.mobile-youtube-cta {
+    display: none;
+    width: 100%;
+    min-height: 50px;
+    margin-top: 12px;
+    padding: 0 18px;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    border: 1px solid rgba(255,70,70,0.45);
+    border-radius: 9px;
+
+    background: linear-gradient(135deg, #ff0000, #c40000);
+
+    color: white;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+
+    box-shadow: 0 10px 30px rgba(255,0,0,0.18);
+}
+
+.mobile-youtube-cta i {
+    font-size: 19px;
+}
+
+.mobile-youtube-cta:hover {
+    color: white;
+}
+
+/* =====================================================
+   SONG INFORMATION
+===================================================== */
+
+.song-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    padding: 25px 15px 15px;
+}
+
+.song-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.song-number {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+
+    background: linear-gradient(
+        to bottom,
+        var(--gold-light),
+        var(--gold),
+        var(--gold-dark)
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.song-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 25px;
+    padding: 0 9px;
+    border: 1px solid rgba(212,175,55,0.22);
+    border-radius: 100px;
+    background: rgba(212,175,55,0.07);
+    color: var(--gold-soft);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+.song-info h2 {
+    margin: 0;
+    color: white;
+    font-size: clamp(24px, 2.1vw, 34px);
+    line-height: 1.15;
+    font-weight: 900;
+    letter-spacing: -0.7px;
+}
+
+.artist {
+    min-height: 42px;
+    margin-top: 12px;
+    color: rgba(255,255,255,0.55);
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+.song-divider {
+    width: 100%;
+    height: 1px;
+    margin: 20px 0;
+    background: linear-gradient(
+        90deg,
+        rgba(212,175,55,0.35),
+        transparent
+    );
+}
+
+.streaming-title {
+    margin-bottom: 13px;
+    color: var(--gold);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* =====================================================
+   STREAMING PLATFORMS
+===================================================== */
+
+.platforms {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    width: 100%;
+}
+
+.platform-btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    width: 100%;
+    min-width: 0;
+    min-height: 48px;
+    padding: 0 12px;
+
+    border: 1px solid rgba(212,175,55,0.22);
+    border-radius: 9px;
+
+    background: linear-gradient(
+        145deg,
+        rgba(255,255,255,0.055),
+        rgba(255,255,255,0.018)
+    );
+
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 800;
+
+    transition: all 0.25s ease;
+}
+
+.platform-btn i {
+    flex: 0 0 23px;
+    width: 23px;
+    font-size: 20px;
+    line-height: 1;
+}
+
+.platform-btn span {
+    flex: 1;
+    white-space: nowrap;
+}
+
+.platform-btn::after {
+    content: "↗";
+    flex-shrink: 0;
+    color: rgba(212,175,55,0.7);
+    font-size: 14px;
+}
+
+.platform-btn:hover {
+    transform: translateY(-3px);
+    color: white;
+    border-color: var(--gold);
+    background: rgba(212,175,55,0.1);
+    box-shadow: 0 10px 25px rgba(212,175,55,0.1);
+}
+
+/* Brand colors */
+
+.platform-youtube i { color: #ff0000; }
+.platform-spotify i { color: #1DB954; }
+.platform-apple i { color: #ffffff; }
+.platform-instagram i { color: #E4405F; }
+.platform-amazon i { color: #FF9900; }
+
+.platform-youtube:hover {
+    border-color: rgba(255,0,0,0.6);
+    background: rgba(255,0,0,0.06);
+}
+
+.platform-spotify {
+    border-color: rgba(29,185,84,0.3);
+    background: linear-gradient(
+        135deg,
+        rgba(29,185,84,0.09),
+        rgba(29,185,84,0.025)
+    );
+}
+
+.platform-spotify:hover {
+    border-color: rgba(29,185,84,0.65);
+    background: rgba(29,185,84,0.12);
+}
+
+.platform-apple:hover {
+    background: rgba(255,255,255,0.07);
+}
+
+.platform-instagram:hover {
+    border-color: rgba(228,64,95,0.5);
+    background: rgba(228,64,95,0.07);
+}
+
+.platform-amazon:hover {
+    border-color: rgba(255,153,0,0.5);
+    background: rgba(255,153,0,0.07);
+}
+
+/* =====================================================
+   SOUND WAVE
+===================================================== */
+
+.sound-wave {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    height: 22px;
+    margin-top: auto;
+    padding-top: 18px;
+    opacity: 0.45;
+}
+
+.sound-wave span {
+    display: block;
+    width: 2px;
+    height: 8px;
+    border-radius: 10px;
+    background: var(--gold);
+    animation: musicWave 1.1s ease-in-out infinite;
+}
+
+.sound-wave span:nth-child(2) { height: 15px; animation-delay: .1s; }
+.sound-wave span:nth-child(3) { height: 21px; animation-delay: .2s; }
+.sound-wave span:nth-child(4) { height: 12px; animation-delay: .3s; }
+.sound-wave span:nth-child(5) { height: 18px; animation-delay: .4s; }
+.sound-wave span:nth-child(6) { height: 9px; animation-delay: .5s; }
+.sound-wave span:nth-child(7) { height: 16px; animation-delay: .6s; }
+.sound-wave span:nth-child(8) { height: 7px; animation-delay: .7s; }
+
+@keyframes musicWave {
+    0%, 100% { transform: scaleY(.55); }
+    50% { transform: scaleY(1); }
+}
+
+/* =====================================================
+   CAROUSEL ARROWS
+===================================================== */
+
+.carousel-arrow {
+    position: absolute;
+    top: 35%;
+    z-index: 20;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(212,175,55,0.45);
+    border-radius: 50%;
+
+    background: rgba(8,8,8,0.9);
+    color: var(--gold);
+    font-size: 13px;
+
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.65);
+    backdrop-filter: blur(5px);
+}
+
+.carousel-arrow:hover {
+    background: rgba(212,175,55,0.2);
+    color: white;
+}
+
+.carousel-arrow.prev {
+    left: -18px;
+}
+
+.carousel-arrow.next {
+    right: -18px;
+}
+
+/* Hide arrows when all cards are visible */
+
+@media (min-width: 769px) {
+    .carousel-arrow {
+        display: none;
+    }
+}
+
+.mobile-scroll-hint {
+    display: none;
+}
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.music-footer {
+    position: relative;
+    z-index: 2;
+    padding: 55px 20px 0;
+    text-align: center;
+    color: rgba(212,175,55,0.4);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 991px) and (min-width: 769px) {
+
+    .music-header {
+        padding: 105px 20px 40px;
+    }
+
+    .music-area {
+        padding: 15px 20px 0;
+    }
+
+    .songs-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+    }
+
+    .song-info {
+        padding: 24px 14px 15px;
+    }
+
+    .song-info h2 {
+        font-size: 27px;
+    }
+
+    .platform-btn {
+        padding: 0 10px;
+        font-size: 10px;
+    }
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 768px) {
+
+    .music-page {
+        padding-bottom: 35px;
+    }
+
+    .music-header {
+        padding: 85px 15px 25px;
+    }
+
+    .music-header h1 {
+        font-size: 2.2rem;
+        letter-spacing: 2px;
+    }
+
+    .music-header p {
+        margin-top: 12px;
+        font-size: 0.8rem;
+        line-height: 1.6;
+    }
+
+    .music-area {
+        padding: 10px 15px 0;
+    }
+
+    .songs-wrapper {
+        width: 100%;
+        overflow: visible;
+    }
+
+    /* Horizontal carousel */
+
+    .songs-grid {
+        display: flex;
+        flex-direction: row;
+        gap: 0;
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 0;
+
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .songs-grid::-webkit-scrollbar {
+        display: none;
+    }
+
+    .song-card {
+        flex: 0 0 100%;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        padding: 10px;
+        border-radius: 12px;
+        scroll-snap-align: center;
+    }
+
+    .song-card:hover {
+        transform: none;
+    }
+
+    /* Poster */
+
+    .song-cover {
+        width: 100%;
+        aspect-ratio: 4 / 5;
+        border-radius: 8px;
+    }
+
+    .song-cover img {
+        object-fit: cover;
+    }
+
+    /* Play button */
+
+    .youtube-play-button {
+        width: 52px;
+        height: 36px;
+        border-radius: 9px;
+    }
+
+    .youtube-play-button span {
+        border-top-width: 7px;
+        border-bottom-width: 7px;
+        border-left-width: 12px;
+        margin-left: 3px;
+    }
+
+    .youtube-play-wrapper::before {
+        width: 72px;
+        height: 72px;
+    }
+
+    /* Mobile YouTube CTA */
+
+    .mobile-youtube-cta {
+        display: flex;
+    }
+
+    /* Song information */
+
+    .song-info {
+        padding: 15px 8px 8px;
+    }
+
+    .song-meta {
+        margin-bottom: 9px;
+    }
+
+    .song-number {
+        font-size: 8px;
+        letter-spacing: 1.5px;
+    }
+
+    .song-badge {
+        min-height: 21px;
+        padding: 0 7px;
+        font-size: 7px;
+    }
+
+    .song-info h2 {
+        font-size: 21px;
+        line-height: 1.15;
+    }
+
+    .artist {
+        min-height: auto;
+        margin-top: 7px;
+        font-size: 10px;
+        line-height: 1.5;
+    }
+
+    .song-divider {
+        margin: 13px 0;
+    }
+
+    .streaming-title {
+        margin-bottom: 10px;
+        font-size: 9px;
+        letter-spacing: 1.5px;
+    }
+
+    /* Equal-sized platform buttons */
+
+    .platforms {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .platform-btn {
+        width: 100%;
+        min-height: 56px;
+        padding: 0 15px;
+        gap: 12px;
+        border-radius: 10px;
+        font-size: 12px;
+        font-weight: 800;
+    }
+
+    .platform-btn i {
+        flex: 0 0 28px;
+        width: 28px;
+        font-size: 23px;
+    }
+
+    .platform-btn::after {
+        font-size: 15px;
+    }
+
+    /* YouTube already highlighted above */
+
+    .platform-youtube {
+        display: none;
+    }
+
+    /* Carousel arrows */
+
+    .carousel-arrow {
+        display: flex;
+        width: 30px;
+        height: 30px;
+        top: 28%;
+        font-size: 11px;
+        background: rgba(5,5,5,0.85);
+    }
+
+    .carousel-arrow.prev {
+        left: 5px;
+    }
+
+    .carousel-arrow.next {
+        right: 5px;
+    }
+
+    /* Swipe hint */
+
+    .mobile-scroll-hint {
+        display: block;
+        margin-top: 15px;
+        text-align: center;
+        color: rgba(212,175,55,0.5);
+        font-size: 8px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+    }
+
+    .sound-wave {
+        margin-top: auto;
+        padding-top: 16px;
+        height: 22px;
+    }
+
+    .music-footer {
+        padding-top: 30px;
+        font-size: 8px;
+    }
+}
+
+/* =====================================================
+   SMALL PHONES
+===================================================== */
+
+@media (max-width: 380px) {
+
+    .music-header {
+        padding: 75px 10px 20px;
+    }
+
+    .music-header h1 {
+        font-size: 1.9rem;
+    }
+
+    .song-card {
+        padding: 8px;
+    }
+
+    .song-info h2 {
+        font-size: 19px;
+    }
+
+    .mobile-youtube-cta {
+        min-height: 47px;
+        margin-top: 10px;
+        font-size: 10px;
+    }
+
+    .platform-btn {
+        min-height: 52px;
+        padding: 0 12px;
+        font-size: 11px;
+    }
+
+    .platform-btn i {
+        flex-basis: 25px;
+        width: 25px;
+        font-size: 21px;
+    }
+
+    .carousel-arrow {
+        width: 27px;
+        height: 27px;
+        top: 28%;
+    }
+}
+
+/* =====================================================
+   ACCESSIBILITY
+===================================================== */
+
+.youtube-link:focus,
+.mobile-youtube-cta:focus,
+.platform-btn:focus,
+.carousel-arrow:focus {
+    outline: 2px solid rgba(212,175,55,0.7);
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sound-wave span {
+        animation: none;
+    }
+
+    .songs-grid {
+        scroll-behavior: auto;
+    }
+}
+
+</style>
+
+
+<!-- =====================================================
+     MUSIC PAGE
+===================================================== -->
+
+<section class="music-page">
+
+    <!-- HEADER -->
+
+    <header class="music-header">
+
+        <h1>TRAILER OUT</h1>
+
+        <p>
+            Original webseries from our stories, created with passion
+            and made to be heard beyond the screen.
+        </p>
+
+    </header>
+
+
+    <!-- MUSIC AREA -->
+
+    <div class="music-area">
+
+        <div class="songs-wrapper">
+
+            <!-- CAROUSEL ARROWS -->
+
+            <button
+                type="button"
+                class="carousel-arrow prev"
+                id="prevSongBtn"
+                aria-label="Previous Song"
+            >
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+
+            <button
+                type="button"
+                class="carousel-arrow next"
+                id="nextSongBtn"
+                aria-label="Next Song"
+            >
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
+
+            <!-- SONG GRID -->
+
+            <div class="songs-grid" id="songsGrid">
+
+
+                <!-- =========================================
+                     OFFICIAL TRAILER
+                ========================================== -->
+
+                <article class="song-card">
+
+                    <div class="song-cover">
+
+                        <a
+                            href="https://www.youtube.com/watch?v=hD5gQwgFGJA"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="youtube-link"
+                            aria-label="Watch Official Trailer"
+                        >
+
+                            <img
+                                src="{{ url_for('static', filename='images/trailer.png') }}"
+                                alt="Official Trailer"
+                                loading="lazy"
+                            >
+
+                            <div class="play-overlay">
+
+                                <div class="youtube-play-wrapper">
+
+                                    <div class="youtube-play-button">
+                                        <span></span>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </a>
+
+                    </div>
+
+
+                    <!-- MOBILE YOUTUBE -->
+
+                    <a
+                        href="https://www.youtube.com/watch?v=hD5gQwgFGJA"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="mobile-youtube-cta"
+                    >
+
+                        <i class="fa-brands fa-youtube"></i>
+
+                        <span>Watch on YouTube</span>
+
+                    </a>
+
+
+                    <!-- INFORMATION -->
+
+                    <div class="song-info">
+
+                        <div class="song-meta">
+
+                            <div class="song-number">
+                                OUR RELEASE
+                            </div>
+
+                            <div class="song-badge">
+                                C &amp; C WEB SERIES
+                            </div>
+
+                        </div>
+
+                        <h2>Official Trailer</h2>
+
+                        <div class="artist">
+                            Official Trailer · C &amp; C Web Series
+                        </div>
+
+                        <div class="song-divider"></div>
+
+                        <div class="streaming-title">
+                            WATCH ON SOCIAL PLATFORMS
+                        </div>
+
+                        <div class="platforms">
+
+                            <a
+                                href="https://www.instagram.com/homeentertainments/p/DfuY3etzndO/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="platform-btn platform-instagram"
+                                aria-label="Watch on Instagram"
+                            >
+
+                                <i class="fa-brands fa-instagram"></i>
+
+                                <span>Instagram</span>
+
+                            </a>
+
+                        </div>
+
+                        <div class="sound-wave">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- =========================================
+                     SONG 1 — OH MY FRIEND
+                ========================================== -->
+
+                <article class="song-card">
+
+                    <div class="song-cover">
+
+                        <a
+                            href="https://www.youtube.com/watch?v=e9l3cRJWJyk"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="youtube-link"
+                            aria-label="Watch Oh My Friend"
+                        >
+
+                            <img
+                                src="{{ url_for('static', filename='images/songposter.jpeg') }}"
+                                alt="Oh My Friend"
+                                loading="lazy"
+                            >
+
+                            <div class="play-overlay">
+
+                                <div class="youtube-play-wrapper">
+
+                                    <div class="youtube-play-button">
+                                        <span></span>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </a>
+
+                    </div>
+
+
+                    <!-- MOBILE YOUTUBE -->
+
+                    <a
+                        href="https://www.youtube.com/watch?v=e9l3cRJWJyk"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="mobile-youtube-cta"
+                    >
+
+                        <i class="fa-brands fa-youtube"></i>
+
+                        <span>Watch on YouTube</span>
+
+                    </a>
+
+
+                    <!-- INFORMATION -->
+
+                    <div class="song-info">
+
+                        <div class="song-meta">
+
+                            <div class="song-number">
+                                OUR RELEASE
+                            </div>
+
+                            <div class="song-badge">
+                                C &amp; C WEB SERIES
+                            </div>
+
+                        </div>
+
+                        <h2>Oh My Friend</h2>
+
+                        <div class="artist">
+                            Lyrics by Manoj
+                            ·
+                            Vocals by Satya Radhakrishna, Thanusha
+                        </div>
+
+                        <div class="song-divider"></div>
+
+                        <div class="streaming-title">
+                            LISTEN ON OTHER PLATFORMS
+                        </div>
+
+
+                        <div class="platforms">
+
+                            <!-- YOUTUBE -->
+
+                            <a
+                                href="https://www.youtube.com/watch?v=e9l3cRJWJyk"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="platform-btn platform-youtube"
+                                aria-label="Listen on YouTube"
+                            >
+
+                                <i class="fa-brands fa-youtube"></i>
+
+                                <span>YouTube</span>
+
+                            </a>
+
+
+                            <!-- SPOTIFY -->
+
+                            <a
+                                href="https://open.spotify.com/album/1duytcLt0SZjZIfF3VSbcy?si=UqLd-_MTSGuwAfAFZjXn7Q"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="platform-btn platform-spotify"
+                                aria-label="Listen on Spotify"
+                            >
+
+                                <i class="fa-brands fa-spotify"></i>
+
+                                <span>Spotify</span>
+
+                            </a>
+
+
+                            <!-- APPLE MUSIC -->
+
+                            <a
+                                href="https://music.apple.com/in/album/oh-my-friend-feat-c-c-webseries/6792831783?i=6792831785&ls"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="platform-btn platform-apple"
+                                aria-label="Listen on Apple Music"
+                            >
+
+                                <i class="fa-brands fa-apple"></i>
+
+                                <span>Apple Music</span>
+
+                            </a>
+
+
+                            <!-- INSTAGRAM -->
+
+                            <a
+                                href="https://www.instagram.com/reels/audio/2273212450087732"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="platform-btn platform-instagram"
+                                aria-label="Listen on Instagram"
+                            >
+
+                                <i class="fa-brands fa-instagram"></i>
+
+                                <span>Instagram</span>
+
+                            </a>
+
+
+                            <!-- AMAZON MUSIC -->
+
+                            <a
+                                href="https://music.amazon.in/albums/B0H9NK51Q8?trackAsin=B0H9NMC17W"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="platform-btn platform-amazon"
+                                aria-label="Listen on Amazon Music"
+                            >
+
+                                <i class="fa-brands fa-amazon"></i>
+
+                                <span>Amazon Music</span>
+
+                            </a>
+
+                        </div>
+
+
+                        <div class="sound-wave">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- =========================================
+                     SONG 2 — MURIDHA MANASUGALU
+                ========================================== -->
+
+                <article class="song-card">
+
+                    <div class="song-cover">
+
+                        <a
+                            href="https://www.youtube.com/watch?v=UI5KfuKAG8U"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="youtube-link"
+                            aria-label="Watch Muridha Manasugalu"
+                        >
+
+                            <img
+                                src="{{ url_for('static', filename='images/muridhamanusagalu.jpeg') }}"
+                                alt="Muridha Manasugalu"
+                                loading="lazy"
+                            >
+
+                            <div class="play-overlay">
+
+                                <div class="youtube-play-wrapper">
+
+                                    <div class="youtube-play-button">
+                                        <span></span>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </a>
+
+                    </div>
+
+
+                    <!-- MOBILE YOUTUBE -->
+
+                    <a
+                        href="https://www.youtube.com/watch?v=UI5KfuKAG8U"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="mobile-youtube-cta"
+                    >
+
+                        <i class="fa-brands fa-youtube"></i>
+
+                        <span>Watch on YouTube</span>
+
+                    </a>
+
+
+                    <!-- INFORMATION -->
+
+                    <div class="song-info">
+
+                        <div class="song-meta">
+
+                            <div class="song-number">
+                                OUR RELEASE
+                            </div>
+
+                            <div class="song-badge">
+                                C &amp; C WEB SERIES
+                            </div>
+
+                        </div>
+
+                        <h2>Muridha Manasugalu</h2>
+
+                        <div class="artist">
+                            Lyrics by Manoj
+                            ·
+                            Vocals by Satya Radhakrishna
+                        </div>
+
+                        <div class="song-divider"></div>
+
+                        <div class="streaming-title">
+                            LISTEN ON OTHER PLATFORMS
+                        </div>
+
+
+                        <div class="platforms">
+
+                            <!-- YOUTUBE -->
+
+                            <a
+                                href="https://www.youtube.com/watch?v=UI5KfuKAG8U"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="platform-btn platform-youtube"
+                                aria-label="Listen on YouTube"
+                            >
+
+                                <i class="fa-brands fa-youtube"></i>
+
+                                <span>YouTube</span>
+
+                            </a>
+
+
+                            <!-- SPOTIFY -->
+
+                            <a
+                                href="https://open.spotify.com/track/7dz1GUBjty229BtIgl388z?si=1O6aoVp7RfKD8SRDbmrChg&utm_source=whatsapp"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="platform-btn platform-spotify"
+                                aria-label="Listen on Spotify"
+                            >
+
+                                <i class="fa-brands fa-spotify"></i>
+
+                                <span>Spotify</span>
+
+                            </a>
+
+
+                            <!-- APPLE MUSIC -->
+
+                            <a
+                                href="https://music.apple.com/in/album/muridha-manasugalu-feat-c-c-webseries/6802068973?i=6802068975&ls"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="platform-btn platform-apple"
+                                aria-label="Listen on Apple Music"
+                            >
+
+                                <i class="fa-brands fa-apple"></i>
+
+                                <span>Apple Music</span>
+
+                            </a>
+
+
+                            <!-- INSTAGRAM -->
+
+                            <a
+                                href="https://www.instagram.com/reels/audio/1310004127759307/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="platform-btn platform-instagram"
+                                aria-label="Listen on Instagram"
+                            >
+
+                                <i class="fa-brands fa-instagram"></i>
+
+                                <span>Instagram</span>
+
+                            </a>
+
+
+                            <!-- AMAZON MUSIC -->
+
+                            <a
+                                href="https://music.amazon.in/albums/B0HFGJJ1J1?trackAsin=B0HFGJVNBP&do=play&ts=1789197956&ref=dm_sh_rf0QtTqhNd5kiHZAssz5bn31B&referrer=dm_sh_whatsapp"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="platform-btn platform-amazon"
+                                aria-label="Listen on Amazon Music"
+                            >
+
+                                <i class="fa-brands fa-amazon"></i>
+
+                                <span>Amazon Music</span>
+
+                            </a>
+
+                        </div>
+
+
+                        <div class="sound-wave">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+            </div>
+
+
+            <!-- MOBILE SWIPE HINT -->
+
+            <div class="mobile-scroll-hint">
+                SWIPE OR USE ARROWS TO DISCOVER MORE TRACKS
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <footer class="music-footer">
+        HOME ENTERTAINMENTS MUSIC
+    </footer>
+
+</section>
+
+
+<!-- =====================================================
+     CAROUSEL JAVASCRIPT
+===================================================== -->
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const songsGrid = document.getElementById('songsGrid');
+
+    const prevBtn = document.getElementById('prevSongBtn');
+
+    const nextBtn = document.getElementById('nextSongBtn');
+
+    if (!songsGrid || !prevBtn || !nextBtn) {
+        return;
+    }
+
+    function scrollGrid(direction) {
+
+        const cards = songsGrid.querySelectorAll('.song-card');
+
+        if (!cards.length) {
+            return;
+        }
+
+        const cardWidth = cards[0].getBoundingClientRect().width;
+
+        const styles = window.getComputedStyle(songsGrid);
+
+        const gap = parseFloat(styles.columnGap) || 0;
+
+        const scrollAmount = cardWidth + gap;
+
+        const maxScroll = songsGrid.scrollWidth - songsGrid.clientWidth;
+
+        if (direction === 'next') {
+
+            if (songsGrid.scrollLeft >= maxScroll - 5) {
+
+                songsGrid.scrollTo({
+                    left: 0,
+                    behavior: 'smooth'
+                });
+
+            } else {
+
+                songsGrid.scrollBy({
+                    left: scrollAmount,
+                    behavior: 'smooth'
+                });
+
+            }
+
+        } else {
+
+            if (songsGrid.scrollLeft <= 5) {
+
+                songsGrid.scrollTo({
+                    left: maxScroll,
+                    behavior: 'smooth'
+                });
+
+            } else {
+
+                songsGrid.scrollBy({
+                    left: -scrollAmount,
+                    behavior: 'smooth'
+                });
+
+            }
+
+        }
+
+    }
+
+    prevBtn.addEventListener('click', function () {
+        scrollGrid('prev');
+    });
+
+    nextBtn.addEventListener('click', function () {
+        scrollGrid('next');
+    });
+
+});
+
+</script>
+
+{% endblock %}

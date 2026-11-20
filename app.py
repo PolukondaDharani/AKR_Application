@@ -1290,7 +1290,7 @@ def music():
 class CollaborationForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired(), Email()])
-    organization = StringField("Organization", validators=[DataRequired()])
+    organization = StringField("Organization")
     message = TextAreaField("Message", validators=[DataRequired()])
 
 
@@ -1304,7 +1304,13 @@ def collaboration():
         {"name": "Partner 3", "description": "Cultural Foundation", "logo": "partner3.png"}
     ]
 
-    if form.validate_on_submit():
+    if request.method == "POST":
+        if not form.validate_on_submit():
+            for field_name, errors in form.errors.items():
+                for err in errors:
+                    flash(f"{field_name.title()}: {err}", "danger")
+            return redirect(url_for("collaboration"))
+
         try:
             form_data = get_form_data()
             collaboration_file = request.files.get("file")
@@ -1321,19 +1327,10 @@ def collaboration():
                     uploaded_filename=collaboration_file.filename
                 )
             else:
-                if RESEND_API_KEY and RESEND_FROM_EMAIL:
-                    resend.Emails.send({
-                        "from": RESEND_FROM_EMAIL,
-                        "to": [MAIL_RECEIVER],
-                        "subject": "New Collaboration Request",
-                        "html": f"""
-                            <h2>New Collaboration Request</h2>
-                            <p><strong>Name:</strong> {escape(form.name.data)}</p>
-                            <p><strong>Email:</strong> {escape(form.email.data)}</p>
-                            <p><strong>Organization:</strong> {escape(form.organization.data)}</p>
-                            <p><strong>Message:</strong> {escape(form.message.data)}</p>
-                        """
-                    })
+                send_submission_email(
+                    subject="New Collaboration Request",
+                    form_data=form_data
+                )
 
             flash("Your collaboration request has been sent.", "success")
             return redirect(url_for("collaboration"))
